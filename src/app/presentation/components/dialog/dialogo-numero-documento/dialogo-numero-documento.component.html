@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Número de Documento</h2>
+<mat-dialog-content>
+  <p>Este es el número de documento generado para la compra:</p>
+  <div class="numero-container">
+    <span>{{ data.numeroDocumento }}</span>
+    <button mat-icon-button color="primary" (click)="copiar()">
+      <mat-icon>content_copy</mat-icon>
+    </button>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

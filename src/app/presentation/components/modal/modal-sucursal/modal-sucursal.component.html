@@ -1,0 +1,71 @@
+<h2>Seleccione una sucursal</h2>
+
+<mat-form-field appearance="outline" class="buscador">
+  <mat-label>Buscar Sucursal</mat-label>
+  <input
+    matInput
+    #inputBuscador
+    (keyup)="aplicarFiltro($event)"
+    placeholder="Ingrese nombre o código"
+  />
+  <button mat-icon-button matSuffix *ngIf="filtro" (click)="limpiarFiltro(inputBuscador)">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>
+
+<div class="sucursal-scroll">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let sucursal">{{ sucursal.id_Sucursal }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="codigo">
+      <th mat-header-cell *matHeaderCellDef>Código</th>
+      <td mat-cell *matCellDef="let sucursal">{{ sucursal.codigo }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <td mat-cell *matCellDef="let sucursal">{{ sucursal.nombre_Sucursal }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="direccion">
+      <th mat-header-cell *matHeaderCellDef>Dirección</th>
+      <td mat-cell *matCellDef="let sucursal">{{ sucursal.direccion_Sucursal }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="estado">
+      <th mat-header-cell *matHeaderCellDef>Estado</th>
+      <td
+        class="table__cell"
+        mat-cell
+        *matCellDef="let element"
+        [ngClass]="{
+          'table__estado-activo': element.estado,
+          'table__estado-no-activo': !element.estado
+        }"
+      >
+        {{ getEstado(element.estado) }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="accion">
+      <th mat-header-cell *matHeaderCellDef>Acción</th>
+      <td mat-cell *matCellDef="let sucursal">
+        <div style="display: flex; justify-content: center">
+          <button mat-button color="primary" (click)="seleccionarSucursal(sucursal)">
+            <mat-icon>check_circle</mat-icon> Seleccionar
+          </button>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+  </table>
+</div>
+
+<div class="boton-cerrar">
+  <button mat-button (click)="cerrar()">Cerrar</button>
+</div>

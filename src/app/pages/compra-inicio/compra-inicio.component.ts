@@ -1,12 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ModalProveedorComponent } from '../../components/modal/modal-proveedor/modal-proveedor.component';
+import { ModalProveedorComponent } from '../../presentation/components/modal/modal-proveedor/modal-proveedor.component';
 import { IProveedor } from '../../core/interfaces/proveedor';
 import { MatDialog } from '@angular/material/dialog';
 import { ITransportista } from '../../core/interfaces/transportista';
-import { ModalTransportistaComponent } from '../../components/modal/modal-transportista/modal-transportista.component';
+import { ModalTransportistaComponent } from '../../presentation/components/modal/modal-transportista/modal-transportista.component';
 import { IProducto } from '../../core/interfaces/producto';
-import { ModalProductoComponent } from '../../components/modal/modal-producto/modal-producto.component';
+import { ModalProductoComponent } from '../../presentation/components/modal/modal-producto/modal-producto.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { IDetalleCompra } from '../../core/interfaces/detalle-compra';
@@ -14,9 +14,9 @@ import { ICompra } from '../../core/interfaces/compra';
 import { CompraService } from '../../core/services/compra.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoginService } from '../../core/services/login.service';
-import { DialogoNumeroDocumentoComponent } from '../../components/dialog/dialogo-numero-documento/dialogo-numero-documento.component';
+import { DialogoNumeroDocumentoComponent } from '../../presentation/components/dialog/dialogo-numero-documento/dialogo-numero-documento.component';
 import { ISucursal } from '../../core/interfaces/sucursal';
-import { ModalSucursalComponent } from '../../components/modal/modal-sucursal/modal-sucursal.component';
+import { ModalSucursalComponent } from '../../presentation/components/modal/modal-sucursal/modal-sucursal.component';
 import { MaterialModule } from '../../shared/ui/material-module';
 
 @Component({

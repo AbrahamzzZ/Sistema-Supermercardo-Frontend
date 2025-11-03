@@ -4,7 +4,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { TransportistaService } from '../../core/services/transportista.service';
 import { ITransportista } from '../../core/interfaces/transportista';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
+import { DialogoConfirmacionComponent } from '../../presentation/components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgClass } from '@angular/common';
 import { Metodos } from '../../shared/utility/metodos';

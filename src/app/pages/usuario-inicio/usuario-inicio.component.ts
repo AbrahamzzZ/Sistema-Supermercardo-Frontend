@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router, RouterOutlet } from '@angular/router';
 import { UsuarioService } from '../../core/services/usuario.service';
 import { IUsuario } from '../../core/interfaces/usuario';
-import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
+import { DialogoConfirmacionComponent } from '../../presentation/components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatPaginator } from '@angular/material/paginator';

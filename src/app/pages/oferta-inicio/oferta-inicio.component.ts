@@ -9,7 +9,7 @@ import { OfertaService } from '../../core/services/oferta.service';
 import { IOferta } from '../../core/interfaces/oferta';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
+import { DialogoConfirmacionComponent } from '../../presentation/components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { Metodos } from '../../shared/utility/metodos';
 import { NgClass } from '@angular/common';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';

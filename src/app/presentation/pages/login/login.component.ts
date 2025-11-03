@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from '../../core/services/login.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ILogin } from '../../core/interfaces/Dto/login';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MaterialModule } from '../../shared/ui/material-module';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ILogin } from '../../../core/interfaces/Dto/login';
+import { LoginService } from '../../../core/services/login.service';
+import { MaterialModule } from '../../../shared/ui/material-module';
 
 @Component({
   selector: 'app-login',

@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ICategoria } from '../../core/interfaces/categoria';
 import { MatDialog } from '@angular/material/dialog';
 import { Metodos } from '../../shared/utility/metodos';
-import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
+import { DialogoConfirmacionComponent } from '../../presentation/components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { NgClass } from '@angular/common';
 import { MaterialModule } from '../../shared/ui/material-module';
