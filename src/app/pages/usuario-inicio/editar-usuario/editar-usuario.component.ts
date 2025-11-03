@@ -1,30 +1,20 @@
 import { Component, HostListener, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { Validaciones } from '../../../../utility/validaciones';
-import { UsuarioService } from '../../../../services/usuario.service';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Validaciones } from '../../../shared/utility/validaciones';
+import { UsuarioService } from '../../../core/services/usuario.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IUsuario } from '../../../interfaces/usuario';
+import { IUsuario } from '../../../core/interfaces/usuario';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { IRol } from '../../../interfaces/rol';
-import { RolService } from '../../../../services/rol.service';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { IRol } from '../../../core/interfaces/rol';
+import { RolService } from '../../../core/services/rol.service';
+import { MatSelectChange } from '@angular/material/select';
+import { MaterialModule } from '../../../shared/ui/material-module';
 
 @Component({
   selector: 'app-editar-usuario',
   standalone: true,
   imports: [
-    MatCardModule,
-    MatInput,
-    MatFormFieldModule,
-    MatButton,
-    MatCheckboxModule,
-    MatSelectModule,
-    ReactiveFormsModule
+    MaterialModule
   ],
   templateUrl: './editar-usuario.component.html',
   styleUrl: './editar-usuario.component.scss'

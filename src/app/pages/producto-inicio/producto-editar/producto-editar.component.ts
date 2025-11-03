@@ -1,30 +1,20 @@
 import { Component, HostListener, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { ProductoService } from '../../../../services/producto.service';
-import { Validaciones } from '../../../../utility/validaciones';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { ProductoService } from '../../../core/services/producto.service';
+import { Validaciones } from '../../../shared/utility/validaciones';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IProducto } from '../../../interfaces/producto';
+import { IProducto } from '../../../core/interfaces/producto';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { CategoriaService } from '../../../../services/categoria.service';
-import { ICategoria } from '../../../interfaces/categoria';
+import { MatSelectChange } from '@angular/material/select';
+import { CategoriaService } from '../../../core/services/categoria.service';
+import { ICategoria } from '../../../core/interfaces/categoria';
+import { MaterialModule } from '../../../shared/ui/material-module';
 
 @Component({
   selector: 'app-producto-editar',
   standalone: true,
   imports: [
-    MatCardModule,
-    MatInput,
-    MatFormFieldModule,
-    MatButton,
-    MatCheckboxModule,
-    ReactiveFormsModule,
-    MatSelectModule
+    MaterialModule
   ],
   templateUrl: './producto-editar.component.html',
   styleUrl: './producto-editar.component.scss'

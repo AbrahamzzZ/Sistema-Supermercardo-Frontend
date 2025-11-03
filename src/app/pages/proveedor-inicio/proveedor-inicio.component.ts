@@ -1,31 +1,23 @@
 import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
+import { MatTableDataSource} from '@angular/material/table';
 import { Router, RouterOutlet } from '@angular/router';
-import { ProveedorService } from '../../../services/proveedor.service';
-import { IProveedor } from '../../interfaces/proveedor';
+import { ProveedorService } from '../../core/services/proveedor.service';
+import { IProveedor } from '../../core/interfaces/proveedor';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { NgClass } from '@angular/common';
-import { Metodos } from '../../../utility/metodos';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { Metodos } from '../../shared/utility/metodos';
+import { MatPaginator } from '@angular/material/paginator';
+import { MaterialModule } from '../../shared/ui/material-module';
 
 @Component({
   selector: 'app-proveedor-inicio',
   standalone: true,
   imports: [
-    MatTableModule,
-    MatButtonModule,
-    MatIcon,
-    MatFormFieldModule,
-    MatInputModule,
+    MaterialModule,
     RouterOutlet,
     NgClass,
-    MatPaginatorModule
   ],
   templateUrl: './proveedor-inicio.component.html',
   styleUrl: './proveedor-inicio.component.scss'

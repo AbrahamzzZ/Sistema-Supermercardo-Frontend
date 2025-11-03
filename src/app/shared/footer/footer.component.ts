@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
+import { MaterialModule } from '../ui/material-module';
+
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [MatCardModule, MatIconModule],
+  imports: [MaterialModule],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
 })

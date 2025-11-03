@@ -1,32 +1,24 @@
 import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router, RouterOutlet } from '@angular/router';
-import { ProductoService } from '../../../services/producto.service';
-import { IProducto } from '../../interfaces/producto';
+import { ProductoService } from '../../core/services/producto.service';
+import { IProducto } from '../../core/interfaces/producto';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgClass } from '@angular/common';
-import { Metodos } from '../../../utility/metodos';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { IProductoCategoria } from '../../interfaces/Dto/iproducto-categoria';
+import { Metodos } from '../../shared/utility/metodos';
+import { MatPaginator } from '@angular/material/paginator';
+import { IProductoCategoria } from '../../core/interfaces/Dto/iproducto-categoria';
+import { MaterialModule } from '../../shared/ui/material-module';
 
 @Component({
   selector: 'app-producto-inicio',
   standalone: true,
   imports: [
-    MatTableModule,
-    MatButtonModule,
-    MatIcon,
-    MatFormFieldModule,
-    MatInputModule,
+    MaterialModule,
     RouterOutlet,
     NgClass,
-    MatPaginatorModule
   ],
   templateUrl: './producto-inicio.component.html',
   styleUrl: './producto-inicio.component.scss'

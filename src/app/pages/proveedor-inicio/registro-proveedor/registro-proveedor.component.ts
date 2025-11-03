@@ -1,30 +1,21 @@
 import { Component, HostListener, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { Validaciones } from '../../../../utility/validaciones';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Validaciones } from '../../../shared/utility/validaciones';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { IProveedor } from '../../../interfaces/proveedor';
-import { Metodos } from '../../../../utility/metodos';
-import { ProveedorService } from '../../../../services/proveedor.service';
+import { IProveedor } from '../../../core/interfaces/proveedor';
+import { Metodos } from '../../../shared/utility/metodos';
+import { ProveedorService } from '../../../core/services/proveedor.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guard';
+import { CanComponentDeactive } from '../../../core/guards/formulario-incompleto.guard';
 import { Observable } from 'rxjs';
+import { MaterialModule } from '../../../shared/ui/material-module';
 
 @Component({
   selector: 'app-proveedor',
   standalone: true,
   imports: [
-    MatCardModule,
-    MatInput,
-    MatFormFieldModule,
-    MatButton,
-    MatCheckboxModule,
-    ReactiveFormsModule
+    MaterialModule
   ],
   templateUrl: './registro-proveedor.component.html',
   styleUrl: './registro-proveedor.component.scss'

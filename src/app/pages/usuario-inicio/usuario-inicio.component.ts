@@ -1,32 +1,24 @@
 import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router, RouterOutlet } from '@angular/router';
-import { UsuarioService } from '../../../services/usuario.service';
-import { IUsuario } from '../../interfaces/usuario';
+import { UsuarioService } from '../../core/services/usuario.service';
+import { IUsuario } from '../../core/interfaces/usuario';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { NgClass } from '@angular/common';
-import { Metodos } from '../../../utility/metodos';
-import { IUsuarioRol } from '../../interfaces/Dto/iusuario-rol';
+import { Metodos } from '../../shared/utility/metodos';
+import { IUsuarioRol } from '../../core/interfaces/Dto/iusuario-rol';
+import { MaterialModule } from '../../shared/ui/material-module';
 
 @Component({
   selector: 'app-usuario-inicio',
   standalone: true,
   imports: [
-    MatTableModule,
-    MatButtonModule,
-    MatIcon,
-    MatFormFieldModule,
-    MatInputModule,
+    MaterialModule,
     RouterOutlet,
     NgClass,
-    MatPaginatorModule
   ],
   templateUrl: './usuario-inicio.component.html',
   styleUrl: './usuario-inicio.component.scss'

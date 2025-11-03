@@ -5,9 +5,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ISucursal } from '../../../interfaces/sucursal';
+import { ISucursal } from '../../../core/interfaces/sucursal';
 import { MatDialogRef } from '@angular/material/dialog';
-import { SucursalService } from '../../../../services/sucursal.service';
+import { SucursalService } from '../../../core/services/sucursal.service';
 
 @Component({
   selector: 'app-modal-sucursal',

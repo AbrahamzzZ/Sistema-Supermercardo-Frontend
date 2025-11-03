@@ -1,38 +1,37 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/api/appsettings';
-import { ISucursal } from '../app/interfaces/sucursal';
+import { ICategoria } from '../interfaces/categoria';
 import { IApi } from '../setting/api/api';
-import { ISucursalNegocio } from '../app/interfaces/Dto/sucursal-negocio';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SucursalService {
+export class CategoriaService {
   private http = inject(HttpClient);
-  private apiUrl: string = appsettings.apiUrl + 'Sucursal';
+  private apiUrl: string = appsettings.apiUrl + 'Categoria';
 
   lista() {
-    return this.http.get<ISucursalNegocio[]>(this.apiUrl);
+    return this.http.get<ICategoria[]>(this.apiUrl);
   }
 
   listaPaginada(pageNumber: number, pageSize: number) {
     return this.http.get<{
-      data: ISucursal[];
+      data: ICategoria[];
       totalCount: number;
     }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 
   obtener(id: number) {
-    return this.http.get<ISucursalNegocio>(`${this.apiUrl}/${id}`);
+    return this.http.get<ICategoria>(`${this.apiUrl}/${id}`);
   }
 
-  registrar(sucursal: ISucursal) {
-    return this.http.post<IApi>(this.apiUrl, sucursal);
+  registrar(categoria: ICategoria) {
+    return this.http.post<IApi>(this.apiUrl, categoria);
   }
 
-  editar(sucursal: Partial<ISucursal>) {
-    return this.http.put<IApi>(`${this.apiUrl}/${sucursal.id_Sucursal}`, sucursal);
+  editar(categoria: Partial<ICategoria>) {
+    return this.http.put<IApi>(`${this.apiUrl}/${categoria.id_Categoria}`, categoria);
   }
 
   eliminar(id: number) {

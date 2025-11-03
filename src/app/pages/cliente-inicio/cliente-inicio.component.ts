@@ -1,29 +1,21 @@
 import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router, RouterOutlet } from '@angular/router';
-import { ClienteService } from '../../../services/cliente.service';
-import { ICliente } from '../../interfaces/cliente';
+import { ClienteService } from '../../core/services/cliente.service';
+import { ICliente } from '../../core/interfaces/cliente';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { Metodos } from '../../../utility/metodos';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { Metodos } from '../../shared/utility/metodos';
+import { MatPaginator} from '@angular/material/paginator';
+import { MaterialModule } from '../../shared/ui/material-module';
 
 @Component({
   selector: 'app-cliente-inicio',
   standalone: true,
   imports: [
-    MatTableModule,
-    MatButtonModule,
-    MatIcon,
-    MatFormFieldModule,
-    MatInputModule,
+    MaterialModule,
     RouterOutlet,
-    MatPaginatorModule
   ],
   templateUrl: './cliente-inicio.component.html',
   styleUrl: './cliente-inicio.component.scss'

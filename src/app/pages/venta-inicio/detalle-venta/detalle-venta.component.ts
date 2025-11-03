@@ -1,31 +1,19 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIcon } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { VentaService } from '../../../../services/venta.service';
+import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
+import { VentaService } from '../../../core/services/venta.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { MaterialModule } from '../../../shared/ui/material-module';
 
 @Component({
   selector: 'app-detalle-venta',
   standalone: true,
   imports: [
-    MatButtonModule,
-    MatCardModule,
-    MatSelectModule,
-    ReactiveFormsModule,
+    MaterialModule,
     FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTableModule,
-    MatIcon,
     CurrencyPipe
   ],
   templateUrl: './detalle-venta.component.html',

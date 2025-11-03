@@ -1,26 +1,17 @@
 import { Component, HostListener, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { Validaciones } from '../../../../utility/validaciones';
-import { ProveedorService } from '../../../../services/proveedor.service';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Validaciones } from '../../../shared/utility/validaciones';
+import { ProveedorService } from '../../../core/services/proveedor.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IProveedor } from '../../../interfaces/proveedor';
+import { IProveedor } from '../../../core/interfaces/proveedor';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MaterialModule } from '../../../shared/ui/material-module';
 
 @Component({
   selector: 'app-editar-proveedor',
   standalone: true,
   imports: [
-    MatCardModule,
-    MatInput,
-    MatFormFieldModule,
-    MatButton,
-    MatCheckboxModule,
-    ReactiveFormsModule
+    MaterialModule
   ],
   templateUrl: './editar-proveedor.component.html',
   styleUrl: './editar-proveedor.component.scss'

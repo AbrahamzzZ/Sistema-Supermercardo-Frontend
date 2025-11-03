@@ -1,27 +1,18 @@
 import { Component, HostListener, inject, OnInit } from '@angular/core';
-import { SucursalService } from '../../../../services/sucursal.service';
+import { SucursalService } from '../../../core/services/sucursal.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ISucursal } from '../../../interfaces/sucursal';
-import { Metodos } from '../../../../utility/metodos';
-import { Validaciones } from '../../../../utility/validaciones';
-import { MatCardModule } from '@angular/material/card';
-import { MatInput } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButton } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { ISucursal } from '../../../core/interfaces/sucursal';
+import { Metodos } from '../../../shared/utility/metodos';
+import { Validaciones } from '../../../shared/utility/validaciones';
+import { MaterialModule } from '../../../shared/ui/material-module';
 
 @Component({
   selector: 'app-editar-sucursal',
   standalone: true,
   imports: [
-    MatCardModule,
-    MatInput,
-    MatFormFieldModule,
-    MatButton,
-    MatCheckboxModule,
-    ReactiveFormsModule
+    MaterialModule
   ],
   templateUrl: './editar-sucursal.component.html',
   styleUrl: './editar-sucursal.component.scss'

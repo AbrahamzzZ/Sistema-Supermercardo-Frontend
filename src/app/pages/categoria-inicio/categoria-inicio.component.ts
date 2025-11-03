@@ -1,31 +1,23 @@
 import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIcon } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router, RouterOutlet } from '@angular/router';
-import { CategoriaService } from '../../../services/categoria.service';
+import { CategoriaService } from '../../core/services/categoria.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ICategoria } from '../../interfaces/categoria';
+import { ICategoria } from '../../core/interfaces/categoria';
 import { MatDialog } from '@angular/material/dialog';
-import { Metodos } from '../../../utility/metodos';
+import { Metodos } from '../../shared/utility/metodos';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { NgClass } from '@angular/common';
+import { MaterialModule } from '../../shared/ui/material-module';
 
 @Component({
   selector: 'app-categoria-inicio',
   standalone: true,
   imports: [
-    MatTableModule,
-    MatButtonModule,
-    MatIcon,
-    MatFormFieldModule,
-    MatInputModule,
+    MaterialModule,
     RouterOutlet,
     NgClass,
-    MatPaginatorModule
   ],
   templateUrl: './categoria-inicio.component.html',
   styleUrl: './categoria-inicio.component.scss'

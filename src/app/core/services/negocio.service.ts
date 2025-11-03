@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/api/appsettings';
-import { INegocio } from '../app/interfaces/negocio';
+import { INegocio } from '../interfaces/negocio';
 import { IApi } from '../setting/api/api';
-import { ProductoMasVendido } from '../app/interfaces/Dto/producto-mas-vendido';
-import { ProductoMasComprado } from '../app/interfaces/Dto/producto-mas-comprado';
-import { TopClientes } from '../app/interfaces/Dto/top-clientes';
-import { ProveedorPreferido } from '../app/interfaces/Dto/proveedor-preferido';
-import { TransportistaViaje } from '../app/interfaces/Dto/transportista-viaje';
-import { EmpleadoProductivo } from '../app/interfaces/Dto/empleado-productivo';
+import { ProductoMasVendido } from '../interfaces/Dto/producto-mas-vendido';
+import { ProductoMasComprado } from '../interfaces/Dto/producto-mas-comprado';
+import { TopClientes } from '../interfaces/Dto/top-clientes';
+import { ProveedorPreferido } from '../interfaces/Dto/proveedor-preferido';
+import { TransportistaViaje } from '../interfaces/Dto/transportista-viaje';
+import { EmpleadoProductivo } from '../interfaces/Dto/empleado-productivo';
 
 @Injectable({
   providedIn: 'root'

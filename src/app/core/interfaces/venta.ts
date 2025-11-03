@@ -1,4 +1,4 @@
-import { IDetalleVenta } from './detalle-venta';
+import { IDetalleVenta } from '../../core/interfaces/detalle-venta';
 
 export interface IVenta {
   id: number;

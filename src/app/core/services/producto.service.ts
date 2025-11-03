@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/api/appsettings';
-import { IProducto } from '../app/interfaces/producto';
+import { IProducto } from '../interfaces/producto';
 import { IApi } from '../setting/api/api';
-import { IProductoCategoria } from '../app/interfaces/Dto/iproducto-categoria';
-import { IProductoRespuesta } from '../app/interfaces/Dto/iproducto-respuesta';
+import { IProductoCategoria } from '../interfaces/Dto/iproducto-categoria';
+import { IProductoRespuesta } from '../interfaces/Dto/iproducto-respuesta';
 
 @Injectable({
   providedIn: 'root'

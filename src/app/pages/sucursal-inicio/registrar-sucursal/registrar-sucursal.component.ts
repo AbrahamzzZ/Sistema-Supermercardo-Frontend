@@ -1,32 +1,23 @@
 import { Component, HostListener, inject, OnInit } from '@angular/core';
-import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guard';
+import { CanComponentDeactive } from '../../../core/guards/formulario-incompleto.guard';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { SucursalService } from '../../../../services/sucursal.service';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { SucursalService } from '../../../core/services/sucursal.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Metodos } from '../../../../utility/metodos';
-import { ISucursal } from '../../../interfaces/sucursal';
-import { MatCardModule } from '@angular/material/card';
-import { MatInput } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatButton } from '@angular/material/button';
+import { Metodos } from '../../../shared/utility/metodos';
+import { ISucursal } from '../../../core/interfaces/sucursal';
 import { Observable } from 'rxjs';
-import { Validaciones } from '../../../../utility/validaciones';
-import { INegocio } from '../../../interfaces/negocio';
-import { NegocioService } from '../../../../services/negocio.service';
+import { Validaciones } from '../../../shared/utility/validaciones';
+import { INegocio } from '../../../core/interfaces/negocio';
+import { NegocioService } from '../../../core/services/negocio.service';
+import { MaterialModule } from '../../../shared/ui/material-module';
 
 @Component({
   selector: 'app-registrar-sucursal',
   standalone: true,
   imports: [
-    MatCardModule,
-    MatInput,
-    MatFormFieldModule,
-    MatButton,
-    MatCheckboxModule,
-    ReactiveFormsModule
+    MaterialModule
   ],
   templateUrl: './registrar-sucursal.component.html',
   styleUrl: './registrar-sucursal.component.scss'

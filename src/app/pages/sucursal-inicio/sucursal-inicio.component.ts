@@ -1,32 +1,24 @@
 import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
-import { SucursalService } from '../../../services/sucursal.service';
+import { SucursalService } from '../../core/services/sucursal.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router, RouterOutlet } from '@angular/router';
 import { NgClass } from '@angular/common';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
-import { Metodos } from '../../../utility/metodos';
-import { ISucursalNegocio } from '../../interfaces/Dto/sucursal-negocio';
-import { ISucursal } from '../../interfaces/sucursal';
+import { Metodos } from '../../shared/utility/metodos';
+import { ISucursalNegocio } from '../../core/interfaces/Dto/sucursal-negocio';
+import { ISucursal } from '../../core/interfaces/sucursal';
+import { MaterialModule } from '../../shared/ui/material-module';
 
 @Component({
   selector: 'app-sucursal-inicio',
   standalone: true,
   imports: [
-    MatTableModule,
-    MatButtonModule,
-    MatIcon,
-    MatFormFieldModule,
-    MatInputModule,
+    MaterialModule,
     RouterOutlet,
     NgClass,
-    MatPaginatorModule
   ],
   templateUrl: './sucursal-inicio.component.html',
   styleUrl: './sucursal-inicio.component.scss'

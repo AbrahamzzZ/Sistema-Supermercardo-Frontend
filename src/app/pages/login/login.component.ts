@@ -1,25 +1,16 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIcon } from '@angular/material/icon';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LoginService } from '../../../services/login.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { LoginService } from '../../core/services/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ILogin } from '../../interfaces/Dto/login';
-import { MatInputModule } from '@angular/material/input';
+import { ILogin } from '../../core/interfaces/Dto/login';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MaterialModule } from '../../shared/ui/material-module';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
-    MatCardModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatIcon,
-    MatInputModule,
-    ReactiveFormsModule
+    MaterialModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'

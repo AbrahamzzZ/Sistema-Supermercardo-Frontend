@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { IOferta } from '../../../interfaces/oferta';
-import { OfertaService } from '../../../../services/oferta.service';
+import { IOferta } from '../../../core/interfaces/oferta';
+import { OfertaService } from '../../../core/services/oferta.service';
 import { MatIcon } from '@angular/material/icon';
 import { NgClass, NgIf } from '@angular/common';
-import { IOfertaProducto } from '../../../interfaces/Dto/ioferta-producto';
+import { IOfertaProducto } from '../../../core/interfaces/Dto/ioferta-producto';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';

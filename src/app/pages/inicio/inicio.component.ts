@@ -1,15 +1,13 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { OfertaService } from '../../../services/oferta.service';
+import { OfertaService } from '../../core/services/oferta.service';
 import { Subscription, interval } from 'rxjs';
-import { FormatoFechaPipe } from '../../pipes/formato-fecha.pipe';
+import { FormatoFechaPipe } from '../../shared/pipes/formato-fecha.pipe';
 import * as L from 'leaflet';
-import { SucursalService } from '../../../services/sucursal.service';
+import { SucursalService } from '../../core/services/sucursal.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { IOfertaProducto } from '../../interfaces/Dto/ioferta-producto';
-import { ISucursalNegocio } from '../../interfaces/Dto/sucursal-negocio';
+import { IOfertaProducto } from '../../core/interfaces/Dto/ioferta-producto';
+import { ISucursalNegocio } from '../../core/interfaces/Dto/sucursal-negocio';
+import { MaterialModule } from '../../shared/ui/material-module';
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 
@@ -21,7 +19,7 @@ L.Icon.Default.mergeOptions({
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, MatIconModule, FormatoFechaPipe],
+  imports: [MaterialModule, FormatoFechaPipe],
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.scss'
 })

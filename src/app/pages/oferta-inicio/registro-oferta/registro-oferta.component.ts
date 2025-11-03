@@ -1,38 +1,24 @@
 import { Component, HostListener, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OfertaService } from '../../../../services/oferta.service';
+import { OfertaService } from '../../../core/services/oferta.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Metodos } from '../../../../utility/metodos';
-import { Validaciones } from '../../../../utility/validaciones';
-import { IOferta } from '../../../interfaces/oferta';
+import { Metodos } from '../../../shared/utility/metodos';
+import { Validaciones } from '../../../shared/utility/validaciones';
+import { IOferta } from '../../../core/interfaces/oferta';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { ProductoService } from '../../../../services/producto.service';
-import { IProducto } from '../../../interfaces/producto';
-import { MatNativeDateModule } from '@angular/material/core';
-import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guard';
+import { MatSelectChange } from '@angular/material/select';
+import { ProductoService } from '../../../core/services/producto.service';
+import { IProducto } from '../../../core/interfaces/producto';
+import { CanComponentDeactive } from '../../../core/guards/formulario-incompleto.guard';
+import { MaterialModule } from '../../../shared/ui/material-module';
 
 @Component({
   selector: 'app-registro-oferta',
   standalone: true,
   imports: [
-    MatCardModule,
-    MatInput,
-    MatFormFieldModule,
-    MatButton,
-    MatCheckboxModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    ReactiveFormsModule,
-    MatNativeDateModule
+    MaterialModule
   ],
   templateUrl: './registro-oferta.component.html',
   styleUrl: './registro-oferta.component.scss'

@@ -1,31 +1,19 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIcon } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { CompraService } from '../../../../services/compra.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { CompraService } from '../../../core/services/compra.service';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { MaterialModule } from '../../../shared/ui/material-module';
 
 @Component({
   selector: 'app-detalle-compra',
   standalone: true,
   imports: [
-    MatButtonModule,
-    MatCardModule,
-    MatSelectModule,
-    ReactiveFormsModule,
+    MaterialModule,
     FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTableModule,
-    MatIcon,
     CurrencyPipe
   ],
   templateUrl: './detalle-compra.component.html',

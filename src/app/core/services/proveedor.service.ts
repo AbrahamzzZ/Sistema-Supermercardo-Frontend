@@ -1,37 +1,37 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/api/appsettings';
-import { ICategoria } from '../app/interfaces/categoria';
+import { IProveedor } from '../interfaces/proveedor';
 import { IApi } from '../setting/api/api';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriaService {
+export class ProveedorService {
   private http = inject(HttpClient);
-  private apiUrl: string = appsettings.apiUrl + 'Categoria';
+  private apiUrl: string = appsettings.apiUrl + 'Proveedor';
 
   lista() {
-    return this.http.get<ICategoria[]>(this.apiUrl);
+    return this.http.get<IProveedor[]>(this.apiUrl);
   }
 
   listaPaginada(pageNumber: number, pageSize: number) {
     return this.http.get<{
-      data: ICategoria[];
+      data: IProveedor[];
       totalCount: number;
     }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 
   obtener(id: number) {
-    return this.http.get<ICategoria>(`${this.apiUrl}/${id}`);
+    return this.http.get<IProveedor>(`${this.apiUrl}/${id}`);
   }
 
-  registrar(categoria: ICategoria) {
-    return this.http.post<IApi>(this.apiUrl, categoria);
+  registrar(proveedor: IProveedor) {
+    return this.http.post<IApi>(this.apiUrl, proveedor);
   }
 
-  editar(categoria: Partial<ICategoria>) {
-    return this.http.put<IApi>(`${this.apiUrl}/${categoria.id_Categoria}`, categoria);
+  editar(proveedor: Partial<IProveedor>) {
+    return this.http.put<IApi>(`${this.apiUrl}/${proveedor.id_Proveedor}`, proveedor);
   }
 
   eliminar(id: number) {

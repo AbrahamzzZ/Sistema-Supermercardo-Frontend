@@ -1,42 +1,31 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { MatIcon } from '@angular/material/icon';
-import { IProducto } from '../../interfaces/producto';
-import { LoginService } from '../../../services/login.service';
+import { IProducto } from '../../core/interfaces/producto';
+import { LoginService } from '../../core/services/login.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { VentaService } from '../../../services/venta.service';
+import { VentaService } from '../../core/services/venta.service';
 import { ModalClienteComponent } from '../../components/modal/modal-cliente/modal-cliente.component';
-import { ICliente } from '../../interfaces/cliente';
+import { ICliente } from '../../core/interfaces/cliente';
 import { ModalOfertaComponent } from '../../components/modal/modal-oferta/modal-oferta.component';
-import { IOferta } from '../../interfaces/oferta';
+import { IOferta } from '../../core/interfaces/oferta';
 import { ModalProductoComponent } from '../../components/modal/modal-producto/modal-producto.component';
 import { Router } from '@angular/router';
-import { IVenta } from '../../interfaces/venta';
-import { IDetalleVenta } from '../../interfaces/detalle-venta';
+import { IVenta } from '../../core/interfaces/venta';
+import { IDetalleVenta } from '../../core/interfaces/detalle-venta';
 import { CurrencyPipe } from '@angular/common';
 import { DialogoNumeroDocumentoComponent } from '../../components/dialog/dialogo-numero-documento/dialogo-numero-documento.component';
 import { ModalSucursalComponent } from '../../components/modal/modal-sucursal/modal-sucursal.component';
-import { ISucursal } from '../../interfaces/sucursal';
+import { ISucursal } from '../../core/interfaces/sucursal';
+import { MaterialModule } from '../../shared/ui/material-module';
 
 @Component({
   selector: 'app-venta-inicio',
   standalone: true,
   imports: [
-    MatButtonModule,
-    MatCardModule,
-    MatSelectModule,
+    MaterialModule,
     FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTableModule,
-    MatIcon,
     CurrencyPipe
   ],
   templateUrl: './venta-inicio.component.html',

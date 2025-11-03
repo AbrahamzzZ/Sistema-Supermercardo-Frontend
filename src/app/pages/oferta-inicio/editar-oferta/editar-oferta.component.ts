@@ -1,35 +1,21 @@
 import { Component, HostListener, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductoService } from '../../../../services/producto.service';
-import { OfertaService } from '../../../../services/oferta.service';
+import { ProductoService } from '../../../core/services/producto.service';
+import { OfertaService } from '../../../core/services/oferta.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { IProducto } from '../../../interfaces/producto';
-import { Metodos } from '../../../../utility/metodos';
-import { Validaciones } from '../../../../utility/validaciones';
-import { IOferta } from '../../../interfaces/oferta';
+import { IProducto } from '../../../core/interfaces/producto';
+import { Metodos } from '../../../shared/utility/metodos';
+import { Validaciones } from '../../../shared/utility/validaciones';
+import { IOferta } from '../../../core/interfaces/oferta';
+import { MaterialModule } from '../../../shared/ui/material-module';
 
 @Component({
   selector: 'app-editar-oferta',
   standalone: true,
   imports: [
-    MatCardModule,
-    MatInput,
-    MatButton,
-    MatFormFieldModule,
-    MatCheckboxModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    ReactiveFormsModule,
-    MatNativeDateModule
+    MaterialModule
   ],
   templateUrl: './editar-oferta.component.html',
   styleUrl: './editar-oferta.component.scss'

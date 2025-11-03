@@ -1,28 +1,17 @@
 import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CategoriaService } from '../../../../services/categoria.service';
+import { CategoriaService } from '../../../core/services/categoria.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Validaciones } from '../../../../utility/validaciones';
-import { ICategoria } from '../../../interfaces/categoria';
-import { MatCardModule } from '@angular/material/card';
-import { MatInput } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButton } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatSelectModule } from '@angular/material/select';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Validaciones } from '../../../shared/utility/validaciones';
+import { ICategoria } from '../../../core/interfaces/categoria';
+import { MaterialModule } from '../../../shared/ui/material-module';
 
 @Component({
   selector: 'app-editar-categoria',
   standalone: true,
   imports: [
-    MatCardModule,
-    MatInput,
-    MatFormFieldModule,
-    MatButton,
-    MatCheckboxModule,
-    MatSelectModule,
-    ReactiveFormsModule
+    MaterialModule
   ],
   templateUrl: './editar-categoria.component.html',
   styleUrl: './editar-categoria.component.scss'
