@@ -1,0 +1,43 @@
+<div class="container">
+  <mat-card>
+    <mat-card-title>Login</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <div>
+          <mat-form-field class="form__field">
+            <mat-label>Correo Electrónico:</mat-label>
+            <input matInput formControlName="correoElectronico" type="email" required />
+            @if (loginForm.get('correoElectronico')?.errors?.['required']) {
+              <mat-error> El correo electrónico es requerido </mat-error>
+            } @else if (loginForm.get('correoElectronico')?.errors?.['email']) {
+              <mat-error> Por favor ingresa un correo electrónico válido </mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field class="form__field">
+            <mat-label>Ingrese su clave</mat-label>
+            <input matInput formControlName="clave" [type]="hide ? 'password' : 'text'" required />
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="hide = !hide"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide"
+            >
+              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            @if (loginForm.get('clave')?.errors?.['required']) {
+              <mat-error> La clave es requerida </mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <button type="submit" class="form__button" mat-raised-button color="primary">
+          Iniciar Sesión
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,118 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  min-height: 100vh;
+  padding: 20px;
+  background: #e2eeb7;
+
+  .supermarket {
+    max-width: 650px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 16px;
+
+    &__header {
+      display: flex;
+      align-items: center;
+    }
+
+    &__header-avatar {
+      margin-right: 10px;
+    }
+
+    &__header-logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+
+    &__title {
+      font-size: 22px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    &__subtitle {
+      font-size: 16px;
+      color: #666;
+    }
+
+    &__content {
+      border-radius: 5px;
+      margin: 10px;
+    }
+
+    &__image {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    &__footer {
+      margin-top: 10px;
+    }
+
+    &__info {
+      font-size: 16px;
+      color: #444;
+      line-height: 1.5;
+      margin: 0 20px;
+    }
+  }
+
+  .oferta-container {
+    width: 100%;
+    max-width: 650px;
+    padding: 16px;
+    border-radius: 12px;
+
+    .oferta-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      padding: 20px;
+
+      mat-card-header {
+        background: #ff5722;
+        color: white;
+        text-align: center;
+        padding: 12px;
+        border-radius: 12px 12px 0 0;
+
+        mat-card-title {
+          font-size: 20px;
+          font-weight: bold;
+          color: #333;
+        }
+      }
+
+      mat-card-content {
+        padding: 16px;
+
+        p {
+          margin-bottom: 8px;
+
+          strong {
+            color: #333;
+          }
+        }
+      }
+    }
+  }
+
+  .map-container {
+    width: 650px;
+    height: 400px;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .map-title {
+    margin-top: 40px;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+}
