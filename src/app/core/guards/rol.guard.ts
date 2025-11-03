@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { CanMatch, Route, Router, UrlSegment } from '@angular/router';
-import { LoginService } from '../../services/login.service';
+import { LoginService } from '../services/login.service';
 import { Observable } from 'rxjs';
 
 @Injectable({

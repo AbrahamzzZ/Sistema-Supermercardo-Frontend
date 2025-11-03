@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, NgZone } from '@angular/core';
-import { ILogin } from '../app/interfaces/Dto/login';
+import { ILogin } from '../interfaces/Dto/login';
 import { Observable } from 'rxjs';
 import { appsettings } from '../setting/api/appsettings';
 import { ITokenData } from '../setting/token/itoken-data';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalInactividadComponent } from '../app/components/modal/modal-inactividad/modal-inactividad.component';
+import { ModalInactividadComponent } from '../../components/modal/modal-inactividad/modal-inactividad.component';
 
 @Injectable({
   providedIn: 'root'

@@ -1,17 +1,16 @@
 import { Component, inject } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
-import { NegocioService } from '../../../../services/negocio.service';
+import { NegocioService } from '../../../core/services/negocio.service';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration, ChartType } from 'chart.js';
-import { MatButtonModule } from '@angular/material/button';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MaterialModule } from '../../../shared/ui/material-module';
 
 @Component({
   selector: 'app-estadistica-negocio',
   standalone: true,
-  imports: [MatCardModule, NgChartsModule, MatButtonModule],
+  imports: [MaterialModule, NgChartsModule],
   templateUrl: './estadistica-negocio.component.html',
   styleUrl: './estadistica-negocio.component.scss'
 })

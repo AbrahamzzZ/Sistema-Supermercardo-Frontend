@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { LoginService } from '../../../../services/login.service';
+import { LoginService } from '../../../core/services/login.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';

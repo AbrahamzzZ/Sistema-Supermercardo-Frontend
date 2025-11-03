@@ -1,34 +1,24 @@
 import { Component, HostListener, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { Validaciones } from '../../../../utility/validaciones';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Validaciones } from '../../../shared/utility/validaciones';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { IProducto } from '../../../interfaces/producto';
-import { Metodos } from '../../../../utility/metodos';
-import { ProductoService } from '../../../../services/producto.service';
+import { IProducto } from '../../../core/interfaces/producto';
+import { Metodos } from '../../../shared/utility/metodos';
+import { ProductoService } from '../../../core/services/producto.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
-import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guard';
-import { CategoriaService } from '../../../../services/categoria.service';
-import { ICategoria } from '../../../interfaces/categoria';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { CanComponentDeactive } from '../../../core/guards/formulario-incompleto.guard';
+import { CategoriaService } from '../../../core/services/categoria.service';
+import { ICategoria } from '../../../core/interfaces/categoria';
+import { MatSelectChange } from '@angular/material/select';
+import { MaterialModule } from '../../../shared/ui/material-module';
 
 @Component({
   selector: 'app-producto',
   standalone: true,
   imports: [
-    MatCardModule,
-    MatInput,
-    MatFormFieldModule,
-    MatButton,
-    MatCheckboxModule,
-    ReactiveFormsModule,
-    MatSelectModule
+    MaterialModule
   ],
   templateUrl: './registro-producto.component.html',
   styleUrl: './registro-producto.component.scss'

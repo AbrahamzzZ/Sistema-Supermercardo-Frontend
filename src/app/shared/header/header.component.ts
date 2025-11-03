@@ -1,17 +1,15 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
-import { LoginService } from '../../../../services/login.service';
-import { MenuService } from '../../../../services/menu.service';
-import { IMenu } from '../../../interfaces/menu';
+import { LoginService } from '../../core/services/login.service';
+import { MenuService } from '../../core/services/menu.service';
+import { IMenu } from '../../core/interfaces/menu';
 import { NgClass } from '@angular/common';
+import { MaterialModule } from '../ui/material-module';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatMenuModule, MatButtonModule, MatIconModule, RouterLink, NgClass],
+  imports: [MaterialModule, RouterLink, NgClass],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })

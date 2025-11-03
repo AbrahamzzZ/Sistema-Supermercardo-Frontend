@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/api/appsettings';
-import { IRol } from '../app/interfaces/rol';
+import { IRol } from '../interfaces/rol';
 
 @Injectable({
   providedIn: 'root'

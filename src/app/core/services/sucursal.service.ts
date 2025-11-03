@@ -1,36 +1,38 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/api/appsettings';
-import { ITransportista } from '../app/interfaces/transportista';
+import { ISucursal } from '../interfaces/sucursal';
 import { IApi } from '../setting/api/api';
+import { ISucursalNegocio } from '../interfaces/Dto/sucursal-negocio';
+
 @Injectable({
   providedIn: 'root'
 })
-export class TransportistaService {
+export class SucursalService {
   private http = inject(HttpClient);
-  private apiUrl: string = appsettings.apiUrl + 'Transportista';
+  private apiUrl: string = appsettings.apiUrl + 'Sucursal';
 
   lista() {
-    return this.http.get<ITransportista[]>(this.apiUrl);
+    return this.http.get<ISucursalNegocio[]>(this.apiUrl);
   }
 
   listaPaginada(pageNumber: number, pageSize: number) {
     return this.http.get<{
-      data: ITransportista[];
+      data: ISucursal[];
       totalCount: number;
     }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 
   obtener(id: number) {
-    return this.http.get<ITransportista>(`${this.apiUrl}/${id}`);
+    return this.http.get<ISucursalNegocio>(`${this.apiUrl}/${id}`);
   }
 
-  registrar(transportista: ITransportista) {
-    return this.http.post<IApi>(this.apiUrl, transportista);
+  registrar(sucursal: ISucursal) {
+    return this.http.post<IApi>(this.apiUrl, sucursal);
   }
 
-  editar(transportista: Partial<ITransportista>) {
-    return this.http.put<IApi>(`${this.apiUrl}/${transportista.id_Transportista}`, transportista);
+  editar(sucursal: Partial<ISucursal>) {
+    return this.http.put<IApi>(`${this.apiUrl}/${sucursal.id_Sucursal}`, sucursal);
   }
 
   eliminar(id: number) {

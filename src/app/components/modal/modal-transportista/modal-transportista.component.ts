@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { ITransportista } from '../../../interfaces/transportista';
+import { ITransportista } from '../../../core/interfaces/transportista';
 import { MatDialogRef } from '@angular/material/dialog';
-import { TransportistaService } from '../../../../services/transportista.service';
+import { TransportistaService } from '../../../core/services/transportista.service';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';
 import { NgClass, NgIf } from '@angular/common';

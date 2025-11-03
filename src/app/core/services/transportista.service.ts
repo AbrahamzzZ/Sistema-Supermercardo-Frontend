@@ -1,37 +1,36 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/api/appsettings';
-import { IProveedor } from '../app/interfaces/proveedor';
+import { ITransportista } from '../interfaces/transportista';
 import { IApi } from '../setting/api/api';
-
 @Injectable({
   providedIn: 'root'
 })
-export class ProveedorService {
+export class TransportistaService {
   private http = inject(HttpClient);
-  private apiUrl: string = appsettings.apiUrl + 'Proveedor';
+  private apiUrl: string = appsettings.apiUrl + 'Transportista';
 
   lista() {
-    return this.http.get<IProveedor[]>(this.apiUrl);
+    return this.http.get<ITransportista[]>(this.apiUrl);
   }
 
   listaPaginada(pageNumber: number, pageSize: number) {
     return this.http.get<{
-      data: IProveedor[];
+      data: ITransportista[];
       totalCount: number;
     }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 
   obtener(id: number) {
-    return this.http.get<IProveedor>(`${this.apiUrl}/${id}`);
+    return this.http.get<ITransportista>(`${this.apiUrl}/${id}`);
   }
 
-  registrar(proveedor: IProveedor) {
-    return this.http.post<IApi>(this.apiUrl, proveedor);
+  registrar(transportista: ITransportista) {
+    return this.http.post<IApi>(this.apiUrl, transportista);
   }
 
-  editar(proveedor: Partial<IProveedor>) {
-    return this.http.put<IApi>(`${this.apiUrl}/${proveedor.id_Proveedor}`, proveedor);
+  editar(transportista: Partial<ITransportista>) {
+    return this.http.put<IApi>(`${this.apiUrl}/${transportista.id_Transportista}`, transportista);
   }
 
   eliminar(id: number) {

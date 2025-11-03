@@ -1,26 +1,17 @@
 import { Component, HostListener, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Validaciones } from '../../../../utility/validaciones';
-import { MatCardModule } from '@angular/material/card';
-import { MatInput } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButton } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { ClienteService } from '../../../../services/cliente.service';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Validaciones } from '../../../shared/utility/validaciones';
+import { ClienteService } from '../../../core/services/cliente.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ICliente } from '../../../interfaces/cliente';
+import { ICliente } from '../../../core/interfaces/cliente';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MaterialModule } from '../../../shared/ui/material-module';
 
 @Component({
   selector: 'app-editar-cliente',
   standalone: true,
   imports: [
-    MatCardModule,
-    MatInput,
-    MatFormFieldModule,
-    MatButton,
-    MatCheckboxModule,
-    ReactiveFormsModule
+    MaterialModule
   ],
   templateUrl: './editar-cliente.component.html',
   styleUrl: './editar-cliente.component.scss'

@@ -1,38 +1,38 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/api/appsettings';
-import { IUsuario } from '../app/interfaces/usuario';
+import { IOferta } from '../interfaces/oferta';
 import { IApi } from '../setting/api/api';
-import { IUsuarioRol } from '../app/interfaces/Dto/iusuario-rol';
+import { IOfertaProducto } from '../interfaces/Dto/ioferta-producto';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsuarioService {
+export class OfertaService {
   private http = inject(HttpClient);
-  private apiUrl: string = appsettings.apiUrl + 'Usuario';
+  private apiUrl: string = appsettings.apiUrl + 'Oferta';
 
   lista() {
-    return this.http.get<IUsuarioRol[]>(this.apiUrl);
+    return this.http.get<IOfertaProducto[]>(this.apiUrl);
   }
 
   listaPaginada(pageNumber: number, pageSize: number) {
     return this.http.get<{
-      data: IUsuario[];
+      data: IOferta[];
       totalCount: number;
     }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 
   obtener(id: number) {
-    return this.http.get<IUsuarioRol>(`${this.apiUrl}/${id}`);
+    return this.http.get<IOferta>(`${this.apiUrl}/${id}`);
   }
 
-  registrar(usuario: IUsuario) {
-    return this.http.post<IApi>(this.apiUrl, usuario);
+  registrar(oferta: IOferta) {
+    return this.http.post<IApi>(this.apiUrl, oferta);
   }
 
-  editar(usuario: Partial<IUsuario>) {
-    return this.http.put<IApi>(`${this.apiUrl}/${usuario.id_Usuario}`, usuario);
+  editar(oferta: Partial<IOferta>) {
+    return this.http.put<IApi>(`${this.apiUrl}/${oferta.id_Oferta}`, oferta);
   }
 
   eliminar(id: number) {

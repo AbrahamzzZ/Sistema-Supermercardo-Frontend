@@ -1,42 +1,30 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTableModule } from '@angular/material/table';
 import { ModalProveedorComponent } from '../../components/modal/modal-proveedor/modal-proveedor.component';
-import { IProveedor } from '../../interfaces/proveedor';
+import { IProveedor } from '../../core/interfaces/proveedor';
 import { MatDialog } from '@angular/material/dialog';
-import { ITransportista } from '../../interfaces/transportista';
+import { ITransportista } from '../../core/interfaces/transportista';
 import { ModalTransportistaComponent } from '../../components/modal/modal-transportista/modal-transportista.component';
-import { IProducto } from '../../interfaces/producto';
+import { IProducto } from '../../core/interfaces/producto';
 import { ModalProductoComponent } from '../../components/modal/modal-producto/modal-producto.component';
-import { MatIcon } from '@angular/material/icon';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { IDetalleCompra } from '../../interfaces/detalle-compra';
-import { ICompra } from '../../interfaces/compra';
-import { CompraService } from '../../../services/compra.service';
+import { IDetalleCompra } from '../../core/interfaces/detalle-compra';
+import { ICompra } from '../../core/interfaces/compra';
+import { CompraService } from '../../core/services/compra.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { LoginService } from '../../../services/login.service';
+import { LoginService } from '../../core/services/login.service';
 import { DialogoNumeroDocumentoComponent } from '../../components/dialog/dialogo-numero-documento/dialogo-numero-documento.component';
-import { ISucursal } from '../../interfaces/sucursal';
+import { ISucursal } from '../../core/interfaces/sucursal';
 import { ModalSucursalComponent } from '../../components/modal/modal-sucursal/modal-sucursal.component';
+import { MaterialModule } from '../../shared/ui/material-module';
 
 @Component({
   selector: 'app-compra-inicio',
   standalone: true,
   imports: [
-    MatButtonModule,
-    MatCardModule,
-    MatSelectModule,
+    MaterialModule,
     FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTableModule,
-    MatIcon
   ],
   templateUrl: './compra-inicio.component.html',
   styleUrl: './compra-inicio.component.scss'
