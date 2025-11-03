@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { InicioComponent } from './pages/inicio/inicio.component';
+import { InicioComponent } from './presentation/pages/inicio/inicio.component';
 import { UsuarioInicioComponent } from './pages/usuario-inicio/usuario-inicio.component';
 import { ClienteInicioComponent } from './pages/cliente-inicio/cliente-inicio.component';
-import { PaginaNoEncontradaComponent } from './pages/pagina-no-encontrada/pagina-no-encontrada.component';
+import { PaginaNoEncontradaComponent } from './presentation/pages/pagina-no-encontrada/pagina-no-encontrada.component';
 import { TransportistaInicioComponent } from './pages/transportista-inicio/transportista-inicio.component';
 import { ProveedorInicioComponent } from './pages/proveedor-inicio/proveedor-inicio.component';
 import { ProductoInicioComponent } from './pages/producto-inicio/producto-inicio.component';
@@ -20,9 +20,9 @@ import { FormularioIncompleto } from './core/guards/formulario-incompleto.guard'
 import { OfertaInicioComponent } from './pages/oferta-inicio/oferta-inicio.component';
 import { RegistroOfertaComponent } from './pages/oferta-inicio/registro-oferta/registro-oferta.component';
 import { EditarOfertaComponent } from './pages/oferta-inicio/editar-oferta/editar-oferta.component';
-import { LoginLayoutComponent } from './components/layouts/login-layout/login-layout.component';
-import { LoginComponent } from './pages/login/login.component';
-import { MainLayoutComponent } from './components/layouts/main-layout/main-layout.component';
+import { LoginLayoutComponent } from './presentation/components/layouts/login-layout/login-layout.component';
+import { LoginComponent } from './presentation/pages/login/login.component';
+import { MainLayoutComponent } from './presentation/components/layouts/main-layout/main-layout.component';
 import { Autenticacion } from './core/guards/autenticacion.guard';
 import { RolGuard } from './core/guards/rol.guard';
 import { CategoriaInicioComponent } from './pages/categoria-inicio/categoria-inicio.component';
