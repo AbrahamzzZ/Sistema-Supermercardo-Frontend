@@ -4,7 +4,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { ClienteService } from '../../core/services/cliente.service';
 import { ICliente } from '../../core/interfaces/cliente';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
+import { DialogoConfirmacionComponent } from '../../presentation/components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Metodos } from '../../shared/utility/metodos';
 import { MatPaginator} from '@angular/material/paginator';
