@@ -7,7 +7,7 @@ import { ITokenData } from '../setting/token/itoken-data';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalInactividadComponent } from '../../components/modal/modal-inactividad/modal-inactividad.component';
+import { ModalInactividadComponent } from '../../presentation/components/modal/modal-inactividad/modal-inactividad.component';
 
 @Injectable({
   providedIn: 'root'
