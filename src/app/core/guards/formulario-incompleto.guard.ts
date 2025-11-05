@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { CanDeactivateFn } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogoFormularioIncompletoComponent } from '../../components/dialog/dialogo-formulario-incompleto/dialogo-formulario-incompleto.component';
+import { DialogoFormularioIncompletoComponent } from '../../presentation/components/dialog/dialogo-formulario-incompleto/dialogo-formulario-incompleto.component';
 
 export interface CanComponentDeactive {
   canDeactive: () => Observable<boolean> | boolean;
