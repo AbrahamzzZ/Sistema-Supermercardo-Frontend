@@ -98,7 +98,6 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
       pais_Origen: this.formProducto.value.paisOrigen?.trim() ?? '',
       estado: this.formProducto.value.estado ?? false
     };
-    console.log(producto);
 
     this.formProducto.markAllAsTouched();
 

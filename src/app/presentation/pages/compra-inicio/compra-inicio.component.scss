@@ -14,17 +14,21 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+/* Contenedor principal centrado y adaptativo */
 .compra-formulario__contenedor {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+/* Tarjeta flexible */
 .compra-formulario__card {
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding: 30px;
+  width: 100%;
+  max-width: 1200px; /* Nuevo: evita desbordes */
   box-shadow: 1px 1px 1px 1px rgb(138, 137, 137);
   margin-bottom: 40px;
 }
@@ -40,12 +44,13 @@
   width: 100%;
 }
 
+/* Grupo principal sin ancho fijo */
 .compra-formulario__grupo-principal {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  max-width: 1300px;
   width: 100%;
+  max-width: 100%; /* Importante: NO 1300px */
   margin: 0 auto;
 }
 
@@ -60,25 +65,11 @@
   border: 2px solid rgb(137, 136, 136);
   padding: 12px;
   border-radius: 8px;
+  width: 100%; /* Asegura adaptabilidad */
 }
 
 .compra-formulario__bloque--fecha-comprobante {
-  width: 26%;
-}
-
-.compra-formulario__bloque--proveedor,
-.compra-formulario__bloque--transportista {
-  width: 100%;
-}
-
-.compra-formulario__bloque--fecha-comprobante,
-.compra-formulario__bloque--proveedor,
-.compra-formulario__bloque--transportista {
-  box-sizing: border-box;
-}
-
-.compra-formulario__bloque--producto {
-  grid-column: span 2;
+  max-width: 300px; /* En lugar de width fija del 26% */
 }
 
 .compra-formulario__fila {
@@ -89,10 +80,12 @@
   justify-content: center;
 }
 
+/* ANTES: width: 1300px → esto causaba el problema del footer */
 .compra-formulario__fila--acciones {
   display: flex;
   gap: 20px;
-  width: 1300px;
+  width: 100%;
+  max-width: 1200px; /* Nuevo valor responsivo */
   align-items: flex-start;
 }
 
@@ -141,21 +134,17 @@ table {
   text-align: center;
 }
 
+/* -----------------------------------------------------------
+   RESPONSIVE
+----------------------------------------------------------- */
+
 @media (max-width: 1024px) {
   .compra-formulario__grupo-principal {
     flex-direction: column;
   }
 
-  .compra-formulario__bloque--fecha-comprobante,
-  .compra-formulario__bloque--proveedor,
-  .compra-formulario__bloque--transportista {
-    width: 100%;
-  }
-
-  .compra-formulario__bloque--proveedor,
-  .compra-formulario__bloque--transportista,
-  .compra-formulario__fila--acciones {
-    width: 100%;
+  .compra-formulario__bloque--fecha-comprobante {
+    max-width: 100%;
   }
 
   .compra-formulario__btn,
@@ -167,15 +156,16 @@ table {
   .compra-formulario__detalle-boton {
     justify-content: center;
   }
+
+  .compra-formulario__fila--acciones {
+    width: 100%;
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 480px) {
   .compra-formulario {
     padding: 10px 16px;
-  }
-
-  .compra-formulario__contenedor {
-    padding: 0 8px;
   }
 
   .compra-formulario__titulo {
@@ -186,20 +176,15 @@ table {
     padding: clamp(15px, 4vw, 20px);
   }
 
+  .compra-formulario__fila {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
   .compra-formulario__btn,
   mat-form-field {
     width: 100%;
     margin-bottom: clamp(8px, 3vw, 12px);
-  }
-
-  .compra-formulario__detalle-boton {
-    justify-content: center;
-    text-align: center;
-  }
-
-  .compra-formulario__fila {
-    flex-direction: column;
-    align-items: stretch;
   }
 
   .compra-formulario__tabla {
