@@ -3,8 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/api/appsettings';
 import { ICompra } from '../interfaces/compra';
 import { IApi } from '../setting/api/api';
-import { ICompraRepuesta } from '../interfaces/Dto/icompra-repuesta';
-import { IDetallesCompra } from '../interfaces/Dto/idetalles-compra';
+import { ICompraRepuesta } from '../interfaces/Dto/compra/icompra-repuesta';
+import { IDetallesCompra } from '../interfaces/Dto/compra/idetalles-compra';
 
 @Injectable({
   providedIn: 'root'

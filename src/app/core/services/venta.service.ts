@@ -3,8 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/api/appsettings';
 import { IVenta } from '../interfaces/venta';
 import { IApi } from '../setting/api/api';
-import { IVentaRepuesta } from '../interfaces/Dto/iventa-repuesta';
-import { IDetallesVenta } from '../interfaces/Dto/idetalles-venta';
+import { IVentaRepuesta } from '../interfaces/Dto/venta/iventa-repuesta';
+import { IDetallesVenta } from '../interfaces/Dto/venta/idetalles-venta';
 
 @Injectable({
   providedIn: 'root'

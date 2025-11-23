@@ -3,12 +3,12 @@ import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/api/appsettings';
 import { INegocio } from '../interfaces/negocio';
 import { IApi } from '../setting/api/api';
-import { ProductoMasVendido } from '../interfaces/Dto/producto-mas-vendido';
-import { ProductoMasComprado } from '../interfaces/Dto/producto-mas-comprado';
-import { TopClientes } from '../interfaces/Dto/top-clientes';
-import { ProveedorPreferido } from '../interfaces/Dto/proveedor-preferido';
-import { TransportistaViaje } from '../interfaces/Dto/transportista-viaje';
-import { EmpleadoProductivo } from '../interfaces/Dto/empleado-productivo';
+import { ProductoMasVendido } from '../interfaces/Dto/negocio/producto-mas-vendido';
+import { ProductoMasComprado } from '../interfaces/Dto/negocio/producto-mas-comprado';
+import { TopClientes } from '../interfaces/Dto/negocio/top-clientes';
+import { ProveedorPreferido } from '../interfaces/Dto/negocio/proveedor-preferido';
+import { TransportistaViaje } from '../interfaces/Dto/negocio/transportista-viaje';
+import { EmpleadoProductivo } from '../interfaces/Dto/negocio/empleado-productivo';
 
 @Injectable({
   providedIn: 'root'
