@@ -1,4 +1,4 @@
-import { IDetalleCompra } from '../detalle-compra';
+import { IDetalleCompra } from '../../detalle-compra';
 
 export interface ICompraRepuesta {
   id_Compra: number;
