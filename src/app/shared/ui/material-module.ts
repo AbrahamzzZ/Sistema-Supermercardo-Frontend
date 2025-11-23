@@ -25,6 +25,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [],
@@ -54,7 +55,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatTabsModule,
     MatMenuModule,
     MatProgressBarModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatTooltipModule
   ],
   exports: [
     CommonModule,
@@ -82,7 +84,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatTabsModule,
     MatMenuModule,
     MatProgressBarModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatTooltipModule
   ]
 })
 export class MaterialModule { }
