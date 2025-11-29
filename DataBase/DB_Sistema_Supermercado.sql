@@ -188,7 +188,8 @@ VALUES
 ('Transportista', '/transportista', 'local_shipping'),
 ('Ofertas', '/oferta', 'more'),
 ('Sucursales', '/sucursal', 'location_city'),
-('Negocio', '/negocio/1', 'store');
+('Negocio', '/negocio/1', 'store'),
+('Log', '/log', 'insert_drive_file');
 
 --Creación de la tabla intermendia Permiso y sus inserciones
 CREATE TABLE PERMISO ( ID_PERMISO int primary key identity,
@@ -208,7 +209,8 @@ VALUES
 (1, 8), -- Administrador - Transportistas
 (1, 9), -- Administrador - Ofertas
 (1, 10), --Administrador - Sucursales
-(1, 11); --Administrador - Negocio
+(1, 11), --Administrador - Negocio
+(1, 12); --Administrador - Log
 
 INSERT INTO PERMISO (ID_ROL, ID_MENU)
 VALUES 
@@ -707,8 +709,8 @@ BEGIN
     DECLARE @TotalCount INT;
     SELECT @TotalCount = COUNT(*) FROM PRODUCTO P INNER JOIN CATEGORIA C on P.ID_CATEGORIA = C.ID_CATEGORIA;
 
-	  SELECT ID_PRODUCTO, P.CODIGO, DESCRIPCION, NOMBRE_PRODUCTO, C.ID_CATEGORIA, C.NOMBRE_CATEGORIA, PAIS_ORIGEN, STOCK, PRECIO_COMPRA, PRECIO_VENTA, P.ESTADO FROM PRODUCTO P
-	  INNER JOIN CATEGORIA C on P.ID_CATEGORIA = C.ID_CATEGORIA
+	SELECT ID_PRODUCTO, P.CODIGO, DESCRIPCION, NOMBRE_PRODUCTO, C.ID_CATEGORIA, C.NOMBRE_CATEGORIA, PAIS_ORIGEN, STOCK, PRECIO_COMPRA, PRECIO_VENTA, P.ESTADO FROM PRODUCTO P
+	INNER JOIN CATEGORIA C on P.ID_CATEGORIA = C.ID_CATEGORIA
     ORDER BY ID_PRODUCTO OFFSET (@PageNumber - 1) * @PageSize ROWS
     FETCH NEXT @PageSize ROWS ONLY;
 
@@ -1082,8 +1084,65 @@ BEGIN
 END;
 GO
 
---Procedimientos almacenados de reportes
+--Modulo Log Tabla-Procedimientos almacenados
+CREATE TABLE LOG (
+    ID_LOG INT PRIMARY KEY IDENTITY,
+    CODIGO_ERROR VARCHAR(20),          
+    MENSAJE_ERROR VARCHAR(500),         
+    DETALLE_ERROR VARCHAR(MAX),        
+    ID_USUARIO INT NULL,              
+    FECHA DATETIME DEFAULT GETDATE(),    
+    ENDPOINT VARCHAR(200) NULL,         
+    METODO VARCHAR(10) NULL,           
+    NIVEL VARCHAR(20) DEFAULT 'ERROR'    
+);
+GO
 
+CREATE PROCEDURE PA_LISTA_LOG_PAGINACION(
+    @PageNumber INT = 1,
+    @PageSize INT = 10   
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @TotalCount INT;
+    SELECT @TotalCount = COUNT(*) FROM LOG;
+
+	SELECT ID_LOG, CODIGO_ERROR, MENSAJE_ERROR, DETALLE_ERROR, ID_USUARIO, FECHA, ENDPOINT, METODO, NIVEL FROM LOG
+    ORDER BY ID_LOG OFFSET (@PageNumber - 1) * @PageSize ROWS
+    FETCH NEXT @PageSize ROWS ONLY;
+
+    SELECT @TotalCount AS TotalCount;
+END;
+GO
+
+CREATE PROCEDURE PA_OBTENER_LOG(
+	@Id_Log int
+)
+AS
+BEGIN
+	SELECT ID_LOG, CODIGO_ERROR, MENSAJE_ERROR, DETALLE_ERROR, ID_USUARIO, FECHA, ENDPOINT, METODO, NIVEL FROM LOG WHERE ID_LOG = @Id_Log;
+END;
+
+GO
+CREATE PROCEDURE PA_REGISTRAR_LOG(
+@Codigo_Error VARCHAR(20),
+@Mensaje_Error NVARCHAR(4000),
+@Detalle_Error NVARCHAR(MAX),
+@ID_Usuario INT,
+@EndPoint VARCHAR(200),
+@Metodo VARCHAR(10),
+@Nivel VARCHAR(20)
+)
+AS
+BEGIN
+    INSERT INTO LOG (Codigo_Error, Mensaje_Error, Detalle_Error, ID_Usuario, ENDPOINT, METODO, NIVEL)
+    VALUES (@Codigo_Error, @Mensaje_Error, @Detalle_Error, @ID_Usuario, @EndPoint, @Metodo, @Nivel);
+END;
+GO
+
+--Procedimientos almacenados de reportes
 CREATE PROCEDURE PA_PRODUCTOS_MAS_COMPRADOS
 AS 
 BEGIN
