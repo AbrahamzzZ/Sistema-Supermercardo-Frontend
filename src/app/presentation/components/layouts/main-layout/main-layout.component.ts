@@ -18,7 +18,7 @@ export class MainLayoutComponent {
   @ViewChild('sidenav') sidenav!: MatSidenav;
   private loginServicio = inject(LoginService);
   private menuServicio = inject(MenuService);
-  isCollapsed = false;
+  isCollapsed = true;
   nombreUsuario = "";
   tipoUsuario = "";
   menus: IMenu[] = [];

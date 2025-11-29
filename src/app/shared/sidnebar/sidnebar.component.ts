@@ -14,7 +14,7 @@ export class SidnebarComponent {
   @Input() menus: IMenu[] = [];
   @Input() nombreUsuario = '';
   @Input() tipoUsuario = '';
-  @Input() isCollapsed = false;
+  @Input() isCollapsed = true;
   @Output() toggle = new EventEmitter<void>();
   private router = inject(Router);
   
