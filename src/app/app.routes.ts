@@ -37,6 +37,7 @@ import { SucursalInicioComponent } from './presentation/pages/sucursal-inicio/su
 import { RegistrarSucursalComponent } from './presentation/pages/sucursal-inicio/registrar-sucursal/registrar-sucursal.component';
 import { EditarSucursalComponent } from './presentation/pages/sucursal-inicio/editar-sucursal/editar-sucursal.component';
 import { EstadisticaNegocioComponent } from './presentation/pages/negocio-inicio/estadistica-negocio/estadistica-negocio.component';
+import { LogInicioComponent } from './presentation/pages/log-inicio/log-inicio.component';
 
 export const routes: Routes = [
   {
@@ -268,6 +269,15 @@ export const routes: Routes = [
         canMatch: [RolGuard],
         canActivate: [Autenticacion],
         title: 'Estadisticas del negocio'
+      },
+
+      //Modulo Log
+      {
+        path: 'log',
+        component: LogInicioComponent,
+        canMatch: [RolGuard],
+        canActivate: [Autenticacion],
+        title: 'Log'
       }
     ]
   },
