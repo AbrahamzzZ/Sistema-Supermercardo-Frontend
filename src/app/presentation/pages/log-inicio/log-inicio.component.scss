@@ -1,0 +1,173 @@
+$table-padding: 12px;
+$message-bg-color: #fafafa;
+$table-border-color: #b3aeae;
+
+.container {
+  margin: 20px;
+  padding: 10px;
+
+  &__title {
+    font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
+    color: #000000;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  &__search {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px;
+
+    &__input {
+      flex-grow: 1;
+      min-width: 200px;
+      width: 100%;
+    }
+
+    &__button {
+      white-space: nowrap;
+      margin: 5px;
+      bottom: 10px;
+      flex-shrink: 0;
+      width: auto;
+    }
+
+    &__icon {
+      font-size: 18px;
+    }
+  }
+
+  &__excel {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    &__button {
+      white-space: nowrap;
+      margin: 5px;
+      bottom: 10px;
+      width: auto;
+    }
+
+    &__icon {
+      font-size: 18px;
+    }
+  }
+
+  &__table {
+    padding: 20px;
+    overflow-x: auto;
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+
+      &__header {
+        padding: $table-padding;
+        border-bottom: 1px solid $table-border-color;
+        text-align: center;
+      }
+
+      &__cell {
+        padding: $table-padding;
+        border-bottom: 1px solid $table-border-color;
+        text-align: center;
+      }
+
+      &__estado-activo {
+        color: green;
+        font-weight: bold;
+        padding: 5px;
+        text-align: center;
+      }
+
+      &__estado-no-activo {
+        color: red;
+        font-weight: bold;
+        padding: 5px;
+        text-align: center;
+      }
+    }
+  }
+
+  &__message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: $message-bg-color;
+    border-radius: 4px;
+
+    &__icon {
+      margin-right: 8px;
+      font-size: 24px;
+      opacity: 0.7;
+    }
+
+    &__text {
+      font-size: 16px;
+      color: rgba(0, 0, 0, 0.7);
+    }
+  }
+}
+
+// Media Query: Tablets y móviles
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+
+    &__title {
+      font-size: 1.5rem;
+    }
+
+    &__search {
+      flex-direction: column;
+      align-items: stretch;
+
+      &__input,
+      &__button {
+        width: 100%;
+      }
+    }
+
+    &__excel {
+      flex-direction: column;
+
+      &__button {
+        width: 100%;
+      }
+    }
+
+    &__table {
+      padding: 10px;
+
+      .table {
+        min-width: unset;
+
+        &__cell,
+        &__header {
+          font-size: 14px;
+          padding: 8px;
+        }
+      }
+    }
+
+    &__message {
+      flex-direction: column;
+      text-align: center;
+
+      &__icon {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

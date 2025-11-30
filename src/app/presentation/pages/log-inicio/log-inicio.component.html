@@ -1,0 +1,111 @@
+<div class="container">
+  <h1 class="container__title">Log</h1>
+  <div class="container__table">
+    <div class="container__search">
+      <mat-form-field class="container__search__input" appearance="outline">
+        <mat-label>Buscar Logs</mat-label>
+        <input
+          matInput
+          #searchInput
+          (keyup)="filtrarLogs(searchInput.value)"
+          placeholder="Buscar clientes por varios criterios."
+        />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+      <button
+        class="container__excel__button"
+        mat-raised-button
+        color="accent"
+        (click)="exportarExcel()"
+      >
+        <mat-icon class="container__excel__icon">file_download</mat-icon> Exportar a Excel
+      </button>
+    </div>
+
+    <table class="table" mat-table [dataSource]="listaLog">
+      <!-- No. -->
+      <ng-container matColumnDef="id">
+        <th class="table__header" mat-header-cell *matHeaderCellDef>No.</th>
+        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.id_Log }}</td>
+      </ng-container>
+
+      <!-- Código -->
+      <ng-container matColumnDef="codigo_Error">
+        <th class="table__header" mat-header-cell *matHeaderCellDef>Código</th>
+        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.codigo_Error }}</td>
+      </ng-container>
+
+      <!-- Mensaje -->
+      <ng-container matColumnDef="mensaje_Error">
+        <th class="table__header" mat-header-cell *matHeaderCellDef>Mensaje</th>
+        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.mensaje_error }}</td>
+      </ng-container>
+
+      <!-- Detalle -->
+      <ng-container matColumnDef="detalle_Error">
+        <th class="table__header" mat-header-cell *matHeaderCellDef>Detalle</th>
+        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.detalle_error }}</td>
+      </ng-container>
+
+      <!-- Fecha -->
+      <ng-container matColumnDef="fecha">
+        <th class="table__header" mat-header-cell *matHeaderCellDef>Fecha</th>
+        <td class="table__cell" mat-cell *matCellDef="let element">
+          {{ getFechaRegistro(element.fecha) }}
+        </td>
+      </ng-container>
+
+      <!-- Endpoint -->
+      <ng-container matColumnDef="endpoint">
+        <th class="table__header" mat-header-cell *matHeaderCellDef>Endpoint</th>
+        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.endpoint }}</td>
+      </ng-container>
+
+      <!-- Metodo -->
+      <ng-container matColumnDef="metodo">
+        <th class="table__header" mat-header-cell *matHeaderCellDef>Metodo</th>
+        <td class="table__cell" mat-cell *matCellDef="let element">
+          {{ element.metodo }}
+        </td>
+      </ng-container>
+
+      <!-- Nivel -->
+      <ng-container matColumnDef="nivel">
+        <th class="table__header" mat-header-cell *matHeaderCellDef>Nivel</th>
+        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.nivel }}</td>
+      </ng-container>
+
+      <!-- Acciones -->
+      <ng-container matColumnDef="accion">
+        <th class="table__header" mat-header-cell *matHeaderCellDef>Acción</th>
+        <td class="table__cell" mat-cell *matCellDef="let element">
+          <button mat-icon-button color="accent" (click)="ver(element)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      [length]="totalRegistros"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+    >
+    </mat-paginator>
+
+    <!-- Mensaje cuando no hay datos -->
+    @if (listaLog.filteredData.length === 0) {
+      <div class="container__message">
+        <mat-icon class="container__message__icon">info_outline</mat-icon>
+        <span class="container__message__text">No hay logs que mostrar.</span>
+      </div>
+    }
+  </div>
+</div>
+
+<router-outlet></router-outlet>
