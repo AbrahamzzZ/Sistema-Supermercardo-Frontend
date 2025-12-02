@@ -8,8 +8,8 @@ import { IApi } from '../setting/api/api';
   providedIn: 'root'
 })
 export class CategoriaService {
-  private http = inject(HttpClient);
-  private apiUrl: string = appsettings.apiUrl + 'Categoria';
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl: string = appsettings.apiUrl + 'Categoria';
 
   lista() {
     return this.http.get<ICategoria[]>(this.apiUrl);

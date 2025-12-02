@@ -7,8 +7,8 @@ import { IApi } from '../setting/api/api';
   providedIn: 'root'
 })
 export class TransportistaService {
-  private http = inject(HttpClient);
-  private apiUrl: string = appsettings.apiUrl + 'Transportista';
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl: string = appsettings.apiUrl + 'Transportista';
 
   lista() {
     return this.http.get<ITransportista[]>(this.apiUrl);

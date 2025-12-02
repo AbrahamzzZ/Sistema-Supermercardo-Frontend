@@ -8,8 +8,8 @@ import { IApi } from '../setting/api/api';
   providedIn: 'root'
 })
 export class ProveedorService {
-  private http = inject(HttpClient);
-  private apiUrl: string = appsettings.apiUrl + 'Proveedor';
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl: string = appsettings.apiUrl + 'Proveedor';
 
   lista() {
     return this.http.get<IProveedor[]>(this.apiUrl);

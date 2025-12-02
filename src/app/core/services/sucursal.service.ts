@@ -9,8 +9,8 @@ import { ISucursalNegocio } from '../interfaces/Dto/sucursal-negocio';
   providedIn: 'root'
 })
 export class SucursalService {
-  private http = inject(HttpClient);
-  private apiUrl: string = appsettings.apiUrl + 'Sucursal';
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl: string = appsettings.apiUrl + 'Sucursal';
 
   lista() {
     return this.http.get<ISucursalNegocio[]>(this.apiUrl);

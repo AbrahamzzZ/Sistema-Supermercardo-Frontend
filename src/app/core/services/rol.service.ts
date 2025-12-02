@@ -7,8 +7,8 @@ import { IRol } from '../interfaces/rol';
   providedIn: 'root'
 })
 export class RolService {
-  private http = inject(HttpClient);
-  private apiUrl: string = appsettings.apiUrl + 'Rol';
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl: string = appsettings.apiUrl + 'Rol';
 
   lista() {
     return this.http.get<IRol[]>(this.apiUrl);

@@ -7,8 +7,8 @@ import { ILog } from '../interfaces/log';
   providedIn: 'root'
 })
 export class LogService {
-  private http = inject(HttpClient);
-  private apiUrl: string = appsettings.apiUrl + 'Log';
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl: string = appsettings.apiUrl + 'Log';
 
   listaPaginada(pageNumber: number, pageSize: number) {
     return this.http.get<{

@@ -9,8 +9,8 @@ import { IUsuarioRol } from '../interfaces/Dto/iusuario-rol';
   providedIn: 'root'
 })
 export class UsuarioService {
-  private http = inject(HttpClient);
-  private apiUrl: string = appsettings.apiUrl + 'Usuario';
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl: string = appsettings.apiUrl + 'Usuario';
 
   lista() {
     return this.http.get<IUsuarioRol[]>(this.apiUrl);
