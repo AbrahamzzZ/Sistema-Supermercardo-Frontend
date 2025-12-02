@@ -96,8 +96,8 @@ export class Validaciones {
         return { coordenadaInvalida: true };
       }
 
-      const numero = parseFloat(valor);
-      if (isNaN(numero)) {
+      const numero = Number.parseFloat(valor);
+      if (Number.isNaN(numero)) {
         return { coordenadaInvalida: true };
       }
 

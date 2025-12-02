@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class RolGuard implements CanMatch {
 
-  private router = inject(Router);
-  private authService = inject(LoginService);
+  private readonly router = inject(Router);
+  private readonly authService = inject(LoginService);
 
   canMatch(route: Route, segments: UrlSegment[]): boolean | Observable<boolean> {
     const permisos = this.authService.obtenerPermisosDesdeToken();

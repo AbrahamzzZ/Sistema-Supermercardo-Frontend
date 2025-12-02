@@ -6,8 +6,8 @@ import { LoginService } from '../services/login.service';
   providedIn: 'root'
 })
 export class Autenticacion implements CanActivate {
-  private loginService = inject(LoginService);
-  private router = inject(Router);
+  private readonly loginService = inject(LoginService);
+  private readonly router = inject(Router);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   canActivate(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): boolean {

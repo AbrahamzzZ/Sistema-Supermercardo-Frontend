@@ -22,11 +22,11 @@ import { MaterialModule } from '../../../../shared/ui/material-module';
 })
 export class RegistroCategoriaComponent implements OnInit, CanComponentDeactive {
   private idCategoria!: number;
-  private route = inject(ActivatedRoute);
-  private categoriaServicio = inject(CategoriaService);
-  private snackBar = inject(MatSnackBar);
-  private formBuilder = inject(FormBuilder);
-  private router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly categoriaServicio = inject(CategoriaService);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly router = inject(Router);
 
   public formCategoria = this.formBuilder.nonNullable.group({
     codigo: [Metodos.generarCodigo()],
@@ -49,7 +49,7 @@ export class RegistroCategoriaComponent implements OnInit, CanComponentDeactive 
 
   ngOnInit(): void {
     if (this.route.snapshot.params['id']) {
-      this.idCategoria = parseInt(this.route.snapshot.params['id']);
+      this.idCategoria = Number.parseInt(this.route.snapshot.params['id']);
     }
   }
 

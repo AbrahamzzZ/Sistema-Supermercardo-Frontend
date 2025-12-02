@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SidnebarComponent } from '../../../../shared/sidnebar/sidnebar.component';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -14,10 +14,10 @@ import { MenuService } from '../../../../core/services/menu.service';
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss'
 })
-export class MainLayoutComponent {
+export class MainLayoutComponent implements OnInit{
   @ViewChild('sidenav') sidenav!: MatSidenav;
-  private loginServicio = inject(LoginService);
-  private menuServicio = inject(MenuService);
+  private readonly loginServicio = inject(LoginService);
+  private readonly menuServicio = inject(MenuService);
   isCollapsed = true;
   nombreUsuario = "";
   tipoUsuario = "";

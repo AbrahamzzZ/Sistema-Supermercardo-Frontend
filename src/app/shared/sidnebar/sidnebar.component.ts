@@ -16,7 +16,7 @@ export class SidnebarComponent {
   @Input() tipoUsuario = '';
   @Input() isCollapsed = true;
   @Output() toggle = new EventEmitter<void>();
-  private router = inject(Router);
+  private readonly router = inject(Router);
   
   toggleSidebar() {
     this.toggle.emit();
