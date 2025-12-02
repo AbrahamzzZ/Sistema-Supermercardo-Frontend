@@ -23,10 +23,10 @@ import { MaterialModule } from '../../../shared/ui/material-module';
   styleUrl: './categoria-inicio.component.scss'
 })
 export class CategoriaInicioComponent implements AfterViewInit {
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
-  private categoriaServicio = inject(CategoriaService);
-  private snackBar = inject(MatSnackBar);
+  private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
+  private readonly categoriaServicio = inject(CategoriaService);
+  private readonly snackBar = inject(MatSnackBar);
   public listaCategoria = new MatTableDataSource<ICategoria>();
   public tituloExcel = 'Categorías';
   public totalRegistros = 0;

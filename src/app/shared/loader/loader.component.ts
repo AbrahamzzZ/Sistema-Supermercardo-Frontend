@@ -11,6 +11,6 @@ import { LoaderService } from '../../core/services/loader.service';
   styleUrl: './loader.component.scss'
 })
 export class LoaderComponent {
-  private loaderService = inject(LoaderService);
+  private readonly loaderService = inject(LoaderService);
   loading$ = this.loaderService.loading$;
 }

@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './dialogo-numero-documento.component.scss'
 })
 export class DialogoNumeroDocumentoComponent {
-  private snackBar = inject(MatSnackBar);
+  private readonly snackBar = inject(MatSnackBar);
   public data = inject<{ numeroDocumento: string }>(MAT_DIALOG_DATA);
 
   copiar() {
