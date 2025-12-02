@@ -7,8 +7,8 @@ import { IMenu } from '../interfaces/menu';
   providedIn: 'root'
 })
 export class MenuService {
-  private http = inject(HttpClient);
-  private apiUrl: string = appsettings.apiUrl + 'Menu';
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl: string = appsettings.apiUrl + 'Menu';
 
   obtener(id: number) {
     return this.http.get<IMenu[]>(`${this.apiUrl}/${id}`);

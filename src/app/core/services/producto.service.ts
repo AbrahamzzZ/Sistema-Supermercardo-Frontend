@@ -10,8 +10,8 @@ import { IProductoRespuesta } from '../interfaces/Dto/iproducto-respuesta';
   providedIn: 'root'
 })
 export class ProductoService {
-  private http = inject(HttpClient);
-  private apiUrl: string = appsettings.apiUrl + 'Producto';
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl: string = appsettings.apiUrl + 'Producto';
 
   lista() {
     return this.http.get<IProductoCategoria[]>(this.apiUrl);

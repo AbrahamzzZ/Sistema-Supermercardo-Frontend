@@ -8,8 +8,8 @@ import { IApi } from '../setting/api/api';
   providedIn: 'root'
 })
 export class ClienteService {
-  private http = inject(HttpClient);
-  private apiUrl: string = appsettings.apiUrl + 'Cliente';
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl: string = appsettings.apiUrl + 'Cliente';
 
   lista() {
     return this.http.get<ICliente[]>(this.apiUrl);

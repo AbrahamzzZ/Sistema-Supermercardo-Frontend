@@ -9,8 +9,8 @@ import { IOfertaProducto } from '../interfaces/Dto/ioferta-producto';
   providedIn: 'root'
 })
 export class OfertaService {
-  private http = inject(HttpClient);
-  private apiUrl: string = appsettings.apiUrl + 'Oferta';
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl: string = appsettings.apiUrl + 'Oferta';
 
   lista() {
     return this.http.get<IOfertaProducto[]>(this.apiUrl);

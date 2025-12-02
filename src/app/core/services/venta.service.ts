@@ -10,8 +10,8 @@ import { IDetallesVenta } from '../interfaces/Dto/venta/idetalles-venta';
   providedIn: 'root'
 })
 export class VentaService {
-  private http = inject(HttpClient);
-  private apiUrl: string = appsettings.apiUrl + 'Venta';
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl: string = appsettings.apiUrl + 'Venta';
 
   obtenerNuevoNumeroDocumento() {
     return this.http.get<{ numeroDocumento: string }>(`${this.apiUrl}/numero-documento`);

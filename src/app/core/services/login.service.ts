@@ -13,13 +13,13 @@ import { ModalInactividadComponent } from '../../presentation/components/modal/m
   providedIn: 'root'
 })
 export class LoginService {
-  private http = inject(HttpClient);
-  private router = inject(Router);
-  private ngZone = inject(NgZone);
-  private dialog = inject(MatDialog);
-  private timeoutInMs: number = 10 * 60 * 1000; // 10 minutos
+  private readonly http = inject(HttpClient);
+  private readonly router = inject(Router);
+  private readonly ngZone = inject(NgZone);
+  private readonly dialog = inject(MatDialog);
+  private readonly timeoutInMs: number = 10 * 60 * 1000; // 10 minutos
   private timeoutId: any;
-  private apiUrl: string = appsettings.apiUrl + 'Usuario';
+  private  readonly apiUrl: string = appsettings.apiUrl + 'Usuario';
 
   login(credenciales: ILogin): Observable<unknown> {
     return this.http.post(`${this.apiUrl}/login`, credenciales);

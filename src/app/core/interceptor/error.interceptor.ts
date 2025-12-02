@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { catchError, Observable, throwError } from 'rxjs';
 
 export class ErrorInterceptor implements HttpInterceptor {
- private router = inject(Router);
+  private readonly router = inject(Router);
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
