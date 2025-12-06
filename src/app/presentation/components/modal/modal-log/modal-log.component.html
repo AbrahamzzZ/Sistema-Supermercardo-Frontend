@@ -1,0 +1,20 @@
+<mat-card class="modal-log">
+	<mat-card-content>
+		<mat-expansion-panel>
+		<mat-expansion-panel-header>
+			<div class="modal-log__acciones">
+				<mat-panel-title>Datos completos del Log</mat-panel-title>
+				<button mat-flat-button color="primary" (click)="copy()">
+					<mat-icon>content_copy</mat-icon> Copiar
+				</button>
+
+				<button mat-flat-button color="accent" (click)="download()">
+					<mat-icon>download</mat-icon> Descargar TXT
+				</button>
+			</div>
+		</mat-expansion-panel-header>
+
+		<pre class="modal-log__pre">{{ data | json }}</pre>
+		</mat-expansion-panel>
+	</mat-card-content>
+</mat-card>
