@@ -8,7 +8,7 @@
           matInput
           #searchInput
           (keyup)="filtrarLogs(searchInput.value)"
-          placeholder="Buscar clientes por varios criterios."
+          placeholder="Buscar logs por varios criterios."
         />
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
@@ -34,18 +34,6 @@
       <ng-container matColumnDef="codigo_Error">
         <th class="table__header" mat-header-cell *matHeaderCellDef>Código</th>
         <td class="table__cell" mat-cell *matCellDef="let element">{{ element.codigo_Error }}</td>
-      </ng-container>
-
-      <!-- Mensaje -->
-      <ng-container matColumnDef="mensaje_Error">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Mensaje</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.mensaje_error }}</td>
-      </ng-container>
-
-      <!-- Detalle -->
-      <ng-container matColumnDef="detalle_Error">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Detalle</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.detalle_error }}</td>
       </ng-container>
 
       <!-- Fecha -->
@@ -80,8 +68,8 @@
       <ng-container matColumnDef="accion">
         <th class="table__header" mat-header-cell *matHeaderCellDef>Acción</th>
         <td class="table__cell" mat-cell *matCellDef="let element">
-          <button mat-icon-button color="accent" (click)="ver(element)">
-            <mat-icon>edit</mat-icon>
+          <button mat-icon-button (click)="ver(element)">
+            <mat-icon>visibility</mat-icon>
           </button>
         </td>
       </ng-container>

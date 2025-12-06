@@ -5,10 +5,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router, RouterOutlet } from '@angular/router';
-import { ICliente } from '../../../core/interfaces/cliente';
 import { Metodos } from '../../../shared/utility/metodos';
 import { LogService } from '../../../core/services/log.service';
 import { ILog } from '../../../core/interfaces/log';
+import { ModalLogComponent } from '../../components/modal/modal-log/modal-log.component';
 
 @Component({
   selector: 'app-log-inicio',
@@ -18,10 +18,10 @@ import { ILog } from '../../../core/interfaces/log';
   styleUrl: './log-inicio.component.scss'
 })
 export class LogInicioComponent implements AfterViewInit{
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
-  private logServicio = inject(LogService);
-  private snackBar = inject(MatSnackBar);
+  private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
+  private readonly logServicio = inject(LogService);
+  private readonly snackBar = inject(MatSnackBar);
   public listaLog = new MatTableDataSource<ILog>();
   public tituloExcel = 'Logs';
   public totalRegistros = 0;
@@ -29,8 +29,6 @@ export class LogInicioComponent implements AfterViewInit{
   displayedColumns: string[] = [
     'id',
     'codigo_Error',
-    'mensaje_Error',
-    'detalle_Error',
     'fecha',
     'endpoint',
     'metodo',
@@ -63,10 +61,6 @@ export class LogInicioComponent implements AfterViewInit{
     });
   }
 
-  ver(cliente: ICliente) {
-    this.router.navigate(['cliente/cliente-editar', cliente.id_Cliente]);
-  }
-
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
 
@@ -87,11 +81,11 @@ export class LogInicioComponent implements AfterViewInit{
 
   exportarExcel() {
     const datos = this.listaLog.data.map((log) => ({
-      ID: log.id_log,
-      Código: log.codigo_error,
-      Mensaje: log.mensaje_error,
-      Detalle: log.detalle_error,
-      'ID Usuario': log.id_usuario,
+      ID: log.id_Log,
+      'Código Error': log.codigo_Error,
+      'Mensaje Error': log.mensaje_Error,
+      'Detalle Error': log.detalle_Error,
+      'ID Usuario': log.id_Usuario,
       Fecha: this.getFechaRegistro(log.fecha ?? ''),
       Endpoint: log.endpoint,
       Metodo: log.metodo,
@@ -105,9 +99,9 @@ export class LogInicioComponent implements AfterViewInit{
 
     Metodos.exportarExcel(this.tituloExcel, datos, [
       'ID',
-      'Código',
-      'Mensaje',
-      'Detalle',
+      'Código Error',
+      'Mensaje Error',
+      'Detalle Error',
       'ID Usuario',
       'Fecha',
       'EndPoint',
@@ -123,6 +117,14 @@ export class LogInicioComponent implements AfterViewInit{
       day: '2-digit',
       month: '2-digit',
       year: 'numeric'
+    });
+  }
+
+  ver(log: ILog) {
+    this.dialog.open(ModalLogComponent, {
+      width: '650px',
+      maxHeight: '80vh',
+      data: log
     });
   }
 }

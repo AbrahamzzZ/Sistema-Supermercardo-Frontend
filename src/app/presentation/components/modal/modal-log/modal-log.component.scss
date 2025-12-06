@@ -1,0 +1,32 @@
+.modal-log {
+
+  &__acciones {
+    display: flex;
+    gap: 45px;
+
+    button {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+
+      mat-icon {
+        font-size: 20px;
+      }
+    }
+  }
+
+  &__pre {
+    background: #f1f1f1;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    overflow-x: auto;
+    max-height: 350px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-log__acciones {
+    flex-direction: column;
+  }
+}
