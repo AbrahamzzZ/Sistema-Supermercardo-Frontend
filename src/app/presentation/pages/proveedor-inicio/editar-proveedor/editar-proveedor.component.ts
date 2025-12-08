@@ -17,11 +17,11 @@ import { MaterialModule } from '../../../../shared/ui/material-module';
   styleUrl: './editar-proveedor.component.scss'
 })
 export class EditarProveedorComponent implements OnInit {
-  private proveedorServicio = inject(ProveedorService);
-  private activatedRoute = inject(ActivatedRoute);
-  private snackBar = inject(MatSnackBar);
-  private formBuilder = inject(FormBuilder);
-  private router = inject(Router);
+  private readonly proveedorServicio = inject(ProveedorService);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly router = inject(Router);
   idProveedor!: number;
 
   public formProveedor = this.formBuilder.nonNullable.group({

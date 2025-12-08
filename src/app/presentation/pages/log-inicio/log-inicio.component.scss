@@ -4,7 +4,6 @@ $table-border-color: #b3aeae;
 
 .container {
   margin: 20px;
-  padding: 10px;
 
   &__title {
     font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
@@ -120,7 +119,6 @@ $table-border-color: #b3aeae;
   }
 }
 
-// Media Query: Tablets y móviles
 @media (max-width: 768px) {
   .container {
     padding: 10px;

@@ -24,10 +24,10 @@ import { MaterialModule } from '../../../shared/ui/material-module';
   styleUrl: './usuario-inicio.component.scss'
 })
 export class UsuarioInicioComponent implements AfterViewInit {
-  private usuarioServicio = inject(UsuarioService);
-  private snackBar = inject(MatSnackBar);
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
+  private readonly usuarioServicio = inject(UsuarioService);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
   public listaUsuario = new MatTableDataSource<IUsuarioRol>();
   public totalRegistros = 0;
   public pageSize = 5;

@@ -24,11 +24,11 @@ import { MaterialModule } from '../../../../shared/ui/material-module';
 })
 export class RegistroTransportistaComponent implements OnInit, CanComponentDeactive {
   private idTransportista!: number;
-  private route = inject(ActivatedRoute);
-  private transportistaServicio = inject(TransportistaService);
-  private snackBar = inject(MatSnackBar);
-  private formBuilder = inject(FormBuilder);
-  private router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly transportistaServicio = inject(TransportistaService);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly router = inject(Router);
   public imagenURL: string | ArrayBuffer | null = null;
 
   public formTransportista = this.formBuilder.nonNullable.group({
@@ -74,7 +74,7 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
 
   ngOnInit(): void {
     if (this.route.snapshot.params['id']) {
-      this.idTransportista = parseInt(this.route.snapshot.params['id']);
+      this.idTransportista = Number.parseInt(this.route.snapshot.params['id']);
     }
   }
 

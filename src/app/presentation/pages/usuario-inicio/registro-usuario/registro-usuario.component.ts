@@ -25,13 +25,13 @@ import { MaterialModule } from '../../../../shared/ui/material-module';
 })
 export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive {
   private idUsuario!: number;
-  private route = inject(ActivatedRoute);
-  private usuarioServicio = inject(UsuarioService);
-  private rolServicio = inject(RolService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly usuarioServicio = inject(UsuarioService);
+  private readonly rolServicio = inject(RolService);
   public roles: IRol[] = [];
-  private snackBar = inject(MatSnackBar);
-  private formBuilder = inject(FormBuilder);
-  private router = inject(Router);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly router = inject(Router);
 
   public formUsuario = this.formBuilder.nonNullable.group({
     codigo: [Metodos.generarCodigo()],
@@ -60,7 +60,7 @@ export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive {
 
   ngOnInit(): void {
     if (this.route.snapshot.params['id']) {
-      this.idUsuario = parseInt(this.route.snapshot.params['id']);
+      this.idUsuario = Number.parseInt(this.route.snapshot.params['id']);
     }
 
     this.rolServicio.lista().subscribe({

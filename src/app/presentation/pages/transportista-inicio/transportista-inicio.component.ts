@@ -23,10 +23,10 @@ import { MaterialModule } from '../../../shared/ui/material-module';
   styleUrl: './transportista-inicio.component.scss'
 })
 export class TransportistaInicioComponent implements AfterViewInit {
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
-  private transportistaServicio = inject(TransportistaService);
-  private snackBar = inject(MatSnackBar);
+  private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
+  private readonly transportistaServicio = inject(TransportistaService);
+  private readonly snackBar = inject(MatSnackBar);
   public listaTransportista = new MatTableDataSource<ITransportista>();
   public tituloExcel = 'Transportistas';
   public totalRegistros = 0;
