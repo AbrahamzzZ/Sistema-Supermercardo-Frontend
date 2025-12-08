@@ -24,10 +24,10 @@ import { MaterialModule } from '../../../shared/ui/material-module';
   styleUrl: './sucursal-inicio.component.scss'
 })
 export class SucursalInicioComponent implements AfterViewInit {
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
-  private sucursalServicio = inject(SucursalService);
-  private snackBar = inject(MatSnackBar);
+  private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
+  private readonly sucursalServicio = inject(SucursalService);
+  private readonly snackBar = inject(MatSnackBar);
   public listaSucursal = new MatTableDataSource<ISucursalNegocio>();
   public tituloExcel = 'Sucursales';
   public totalRegistros = 0;

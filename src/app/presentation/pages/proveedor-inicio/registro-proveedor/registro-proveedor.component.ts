@@ -22,11 +22,11 @@ import { MaterialModule } from '../../../../shared/ui/material-module';
 })
 export class RegistroProveedorComponent implements OnInit, CanComponentDeactive {
   private idProveedor!: number;
-  private route = inject(ActivatedRoute);
-  private proveedorServicio = inject(ProveedorService);
-  private snackBar = inject(MatSnackBar);
-  private formBuilder = inject(FormBuilder);
-  private router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly proveedorServicio = inject(ProveedorService);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly router = inject(Router);
 
   public formProveedor = this.formBuilder.nonNullable.group({
     codigo: [Metodos.generarCodigo()],
@@ -69,7 +69,7 @@ export class RegistroProveedorComponent implements OnInit, CanComponentDeactive 
 
   ngOnInit(): void {
     if (this.route.snapshot.params['id']) {
-      this.idProveedor = parseInt(this.route.snapshot.params['id']);
+      this.idProveedor = Number.parseInt(this.route.snapshot.params['id']);
     }
   }
 

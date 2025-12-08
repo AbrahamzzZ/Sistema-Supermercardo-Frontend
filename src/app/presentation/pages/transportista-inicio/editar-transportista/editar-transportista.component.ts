@@ -18,11 +18,11 @@ import { MaterialModule } from '../../../../shared/ui/material-module';
   styleUrl: './editar-transportista.component.scss'
 })
 export class EditarTransportistaComponent implements OnInit {
-  private activatedRoute = inject(ActivatedRoute);
-  private transportistaServicio = inject(TransportistaService);
-  private snackBar = inject(MatSnackBar);
-  private formBuilder = inject(FormBuilder);
-  private router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly transportistaServicio = inject(TransportistaService);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly router = inject(Router);
   private idTransportista!: number;
   public imagenURL: string | null = null;
 

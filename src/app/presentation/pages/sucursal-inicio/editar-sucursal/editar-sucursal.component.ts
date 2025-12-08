@@ -18,11 +18,11 @@ import { MaterialModule } from '../../../../shared/ui/material-module';
   styleUrl: './editar-sucursal.component.scss'
 })
 export class EditarSucursalComponent implements OnInit {
-  private sucursalServicio = inject(SucursalService);
-  private activatedRoute = inject(ActivatedRoute);
-  private snackBar = inject(MatSnackBar);
-  private formBuilder = inject(FormBuilder);
-  private router = inject(Router);
+  private readonly sucursalServicio = inject(SucursalService);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly router = inject(Router);
   public idSucursal!: number;
 
   public formSucursal = this.formBuilder.nonNullable.group({
@@ -83,8 +83,8 @@ export class EditarSucursalComponent implements OnInit {
       id_Sucursal: this.idSucursal,
       nombre_Sucursal: this.formSucursal.value.nombre!,
       direccion_Sucursal: this.formSucursal.value.direccion!,
-      latitud: parseFloat(this.formSucursal.value.latitud ?? '0'),
-      longitud: parseFloat(this.formSucursal.value.longitud ?? '0'),
+      latitud: Number.parseFloat(this.formSucursal.value.latitud ?? '0'),
+      longitud: Number.parseFloat(this.formSucursal.value.longitud ?? '0'),
       ciudad_Sucursal: this.formSucursal.value.ciudad!,
       estado: this.formSucursal.value.estado
     };

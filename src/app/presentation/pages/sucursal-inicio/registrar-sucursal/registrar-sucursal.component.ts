@@ -24,12 +24,12 @@ import { MaterialModule } from '../../../../shared/ui/material-module';
 })
 export class RegistrarSucursalComponent implements OnInit, CanComponentDeactive {
   private idSucursal!: number;
-  private route = inject(ActivatedRoute);
-  private sucursalServicio = inject(SucursalService);
-  private negocioServicio = inject(NegocioService);
-  private snackBar = inject(MatSnackBar);
-  private formBuilder = inject(FormBuilder);
-  private router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly sucursalServicio = inject(SucursalService);
+  private readonly negocioServicio = inject(NegocioService);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly router = inject(Router);
   public negocio!: INegocio;
 
   public formSucursal = this.formBuilder.nonNullable.group({
@@ -57,7 +57,7 @@ export class RegistrarSucursalComponent implements OnInit, CanComponentDeactive 
 
   ngOnInit(): void {
     if (this.route.snapshot.params['id']) {
-      this.idSucursal = parseInt(this.route.snapshot.params['id']);
+      this.idSucursal = Number.parseInt(this.route.snapshot.params['id']);
     }
 
     this.negocioServicio.obtener(1).subscribe({
@@ -77,8 +77,8 @@ export class RegistrarSucursalComponent implements OnInit, CanComponentDeactive 
       codigo: Metodos.generarCodigo(),
       nombre_Sucursal: this.formSucursal.value.nombre?.trim() ?? '',
       direccion_Sucursal: this.formSucursal.value.direccion?.trim() ?? '',
-      latitud: parseFloat(this.formSucursal.value.latitud ?? '0'),
-      longitud: parseFloat(this.formSucursal.value.longitud ?? '0'),
+      latitud: Number.parseFloat(this.formSucursal.value.latitud ?? '0'),
+      longitud: Number.parseFloat(this.formSucursal.value.longitud ?? '0'),
       ciudad_Sucursal: this.formSucursal.value.ciudad?.trim() ?? '',
       estado: this.formSucursal.value.estado ?? false
     };

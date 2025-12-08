@@ -20,13 +20,13 @@ import { MaterialModule } from '../../../../shared/ui/material-module';
   styleUrl: './editar-usuario.component.scss'
 })
 export class EditarUsuarioComponent implements OnInit {
-  private usuarioServicio = inject(UsuarioService);
-  private rolServicio = inject(RolService);
+  private readonly usuarioServicio = inject(UsuarioService);
+  private readonly rolServicio = inject(RolService);
   public roles: IRol[] = [];
-  private activatedRoute = inject(ActivatedRoute);
-  private snackBar = inject(MatSnackBar);
-  private formBuilder = inject(FormBuilder);
-  private router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly router = inject(Router);
   idUsuario!: number;
 
   formUsuario = this.formBuilder.nonNullable.group({
