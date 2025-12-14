@@ -17,11 +17,11 @@ import { MaterialModule } from '../../../shared/ui/material-module';
 })
 export class LoginComponent implements OnInit {
   public hide = true;
-  private loginServicio = inject(LoginService);
+  private readonly loginServicio = inject(LoginService);
   public loginForm!: FormGroup;
-  private snackBar = inject(MatSnackBar);
-  private router = inject(Router)
-  private route = inject(ActivatedRoute)
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly router = inject(Router)
+  private readonly route = inject(ActivatedRoute)
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -76,8 +76,9 @@ export class LoginComponent implements OnInit {
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+    const accion = tipo === 'success' ? 'Bienvenido al Sistema' : 'Error';
 
-    this.snackBar.open(mensaje, 'Bienvenido al Sistema', {
+    this.snackBar.open(mensaje, accion, {
       duration: 3000,
       horizontalPosition: 'end',
       verticalPosition: 'bottom',
