@@ -9,13 +9,14 @@ import { TopClientes } from '../interfaces/Dto/negocio/top-clientes';
 import { ProveedorPreferido } from '../interfaces/Dto/negocio/proveedor-preferido';
 import { TransportistaViaje } from '../interfaces/Dto/negocio/transportista-viaje';
 import { EmpleadoProductivo } from '../interfaces/Dto/negocio/empleado-productivo';
+import { AnalisisIARequest } from '../interfaces/Dto/negocio/IA/analisisIARequest';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NegocioService {
-  private http = inject(HttpClient);
-  private apiUrl: string = appsettings.apiUrl + 'Negocio';
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl: string = appsettings.apiUrl + 'Negocio';
 
   obtener(id: number) {
     return this.http.get<INegocio>(`${this.apiUrl}/${id}`);
@@ -47,5 +48,10 @@ export class NegocioService {
 
   obtenerVentaEmpleados() {
     return this.http.get<EmpleadoProductivo[]>(`${this.apiUrl}/empleados-productivos`);
+  }
+
+  consultarIA(prompt: string) {
+    const body: AnalisisIARequest = { prompt };
+    return this.http.post<any>(`${this.apiUrl}/analisis-ia`, body);
   }
 }
