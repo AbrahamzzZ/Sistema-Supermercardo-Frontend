@@ -4,7 +4,7 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 16px;
   background-color: #fafafa;
-  padding: 1rem;
+  padding: 0.2rem;
 
   &__header {
     background-color: #3f51b5;
@@ -28,6 +28,11 @@
     width: 100%;
     height: 400px;
     position: relative;
+  }
+
+  &__btn-acciones{
+    display: flex;
+    justify-content: space-between;
   }
 
   &__canvas {
