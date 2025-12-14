@@ -25,6 +25,8 @@ export class SidnebarComponent {
   logout() {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login'], {
+      queryParams: { motivo: 'sesion' }
+    });
   }
 }
