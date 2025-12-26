@@ -25,9 +25,10 @@
   &__busqueda {
     display: flex;
     align-items: center;
-    gap: 14px;
-    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 16px;
     width: 100%;
+    flex-wrap: wrap;
 
     &-input {
       width: 100%;
@@ -39,7 +40,7 @@
       align-items: center;
       gap: 5px;
       background-color: #fce4e4;
-      color: #d32f2f;
+      color: #ee4a4a;
       border: 1px solid #d32f2f;
       padding: 4px 8px;
       border-radius: 6px;
@@ -47,6 +48,19 @@
       font-weight: 500;
       white-space: nowrap;
     }
+  }
+
+  &__busqueda-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  &__busqueda-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
 
   &__mensaje-error {
