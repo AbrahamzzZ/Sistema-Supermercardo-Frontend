@@ -22,6 +22,16 @@
             <span class="venta__mensaje-error">{{ mensajeBusqueda }}</span>
           </div>
         }
+
+        <div class="venta__busqueda-actions">
+          <button mat-raised-button color="warn" (click)="limpiar()">
+            <mat-icon>cleaning_services</mat-icon> Limpiar
+          </button>
+
+          <button mat-raised-button color="accent" (click)="descargarPDF()">
+            <mat-icon>add_circle</mat-icon> Descargar PDF
+          </button>
+        </div>
       </div>
 
       <!-- Sección: Datos + Cliente + Totales -->
@@ -44,9 +54,6 @@
             <mat-label>Usuario</mat-label>
             <input matInput formControlName="nombreUsuario" readonly />
           </mat-form-field>
-          <button mat-raised-button color="warn" (click)="limpiar()">
-            <mat-icon>cleaning_services</mat-icon> Limpiar
-          </button>
         </div>
 
         <!-- Grupo: Sucursal -->
@@ -101,9 +108,6 @@
             <mat-label>Cambio</mat-label>
             <input matInput formControlName="cambio" readonly />
           </mat-form-field>
-          <button mat-raised-button color="accent" (click)="descargarPDF()">
-            <mat-icon>add_circle</mat-icon> Descargar PDF
-          </button>
         </div>
       </div>
 
