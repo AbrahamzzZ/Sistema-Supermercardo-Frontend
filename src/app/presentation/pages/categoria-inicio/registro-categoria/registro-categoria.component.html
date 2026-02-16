@@ -6,12 +6,12 @@
 
     <mat-card-content>
       <form class="form" [formGroup]="formCategoria">
-        <mat-form-field class="form__field">
+        <mat-form-field appearance="outline" class="form__field" >
           <mat-label>Codigo: </mat-label>
           <input matInput type="text" formControlName="codigo" readonly />
         </mat-form-field>
 
-        <mat-form-field class="form__field">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>Nombre: </mat-label>
           <input matInput type="text" formControlName="nombre" maxlength="60" minlength="5" />
           @if (nombreField.hasError('required')) {
@@ -24,25 +24,26 @@
         </mat-form-field>
 
         <mat-checkbox formControlName="estado">Activo</mat-checkbox>
+        
+        <div class="form__action">
+          <button
+            class="form__button form__button--primary"
+            mat-raised-button
+            type="button"
+            (click)="registrarCategoria()"
+          >
+            Registrar
+          </button>
 
-        <button
-          class="form__button"
-          mat-raised-button
-          color="primary"
-          type="button"
-          (click)="registrarCategoria()"
-        >
-          Registrar
-        </button>
-        <button
-          class="form__button"
-          mat-raised-button
-          color="primary"
-          type="button"
-          (click)="regresar()"
-        >
-          Regresar
-        </button>
+          <button
+            class="form__button form__button--secondary"
+            mat-stroked-button
+            type="button"
+            (click)="regresar()"
+          >
+            Regresar
+          </button>
+        </div>
       </form>
     </mat-card-content>
   </mat-card>
