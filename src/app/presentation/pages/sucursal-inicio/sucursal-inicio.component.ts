@@ -71,7 +71,7 @@ export class SucursalInicioComponent implements AfterViewInit {
 
   eliminar(sucursal: ISucursalNegocio) {
     const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
-      width: '350px',
+      width: '500px',
       data: {
         mensaje: `¿Está seguro de eliminar la sucursal ${sucursal.nombre_Sucursal}?`
       }

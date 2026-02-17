@@ -78,7 +78,7 @@ export class TransportistaInicioComponent implements AfterViewInit {
 
   eliminar(transportista: ITransportista) {
     const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
-      width: '350px',
+      width: '500px',
       data: {
         mensaje: `¿Está seguro de eliminar al transportista ${transportista.nombres} ${transportista.apellidos}?`
       }

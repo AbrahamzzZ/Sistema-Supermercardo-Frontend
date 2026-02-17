@@ -73,7 +73,7 @@ export class ProductoInicioComponent implements AfterViewInit {
 
   eliminar(producto: IProducto) {
     const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
-      width: '350px',
+      width: '500px',
       data: { mensaje: `¿Está seguro de eliminar este producto ${producto.nombre_Producto}?` }
     });
 
