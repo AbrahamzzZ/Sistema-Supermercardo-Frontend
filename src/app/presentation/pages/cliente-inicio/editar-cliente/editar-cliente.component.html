@@ -6,7 +6,7 @@
 
     <mat-card-content>
       <form class="form" [formGroup]="formCliente">
-        <mat-form-field class="form__field">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>Nombres: </mat-label>
           <input matInput type="text" formControlName="nombres" maxlength="30" minlength="5" />
           @if (nombresField.hasError('required')) {
@@ -18,7 +18,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field class="form__field">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>Apellidos: </mat-label>
           <input matInput type="text" formControlName="apellidos" maxlength="30" minlength="5" />
           @if (apellidosField.hasError('required')) {
@@ -30,7 +30,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field class="form__field">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>Cédula: </mat-label>
           <input matInput type="text" formControlName="cedula" />
           @if (cedulaField.hasError('required')) {
@@ -40,7 +40,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field class="form__field">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>Telefono: </mat-label>
           <input matInput type="text" formControlName="telefono" />
           @if (telefonoField.hasError('required')) {
@@ -52,7 +52,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field class="form__field">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>Correo Electrónico: </mat-label>
           <input matInput type="text" formControlName="correoElectronico" />
           @if (correoElectronicoField.hasError('required')) {
@@ -62,24 +62,24 @@
           }
         </mat-form-field>
 
-        <button
-          class="form__button"
-          mat-raised-button
-          color="primary"
-          type="button"
-          (click)="editarCliente()"
-        >
-          Editar
-        </button>
-        <button
-          class="form__button"
-          mat-raised-button
-          color="primary"
-          type="button"
-          (click)="regresar()"
-        >
-          Regresar
-        </button>
+        <div class="form__action">
+          <button
+            class="form__button form__button--primary"
+            mat-raised-button
+            type="button"
+            (click)="editarCliente()"
+          >
+            Editar
+          </button>
+          <button
+            class="form__button form__button--secondary"
+            mat-stroked-button
+            type="button"
+            (click)="regresar()"
+          >
+            Regresar
+          </button>
+        </div>
       </form>
     </mat-card-content>
   </mat-card>

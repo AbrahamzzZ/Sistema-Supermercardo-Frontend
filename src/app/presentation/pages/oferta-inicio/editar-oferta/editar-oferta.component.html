@@ -1,109 +1,109 @@
 <div class="container">
   <mat-card class="container__card">
     <mat-card-header class="container__header">
-      <mat-card-title class="container__title">Editar información de la oferta</mat-card-title>
+      	<mat-card-title class="container__title">Editar información de la oferta</mat-card-title>
     </mat-card-header>
 
     <mat-card-content>
-      <form class="form" [formGroup]="formOferta">
-        <mat-form-field class="form__field">
-          <mat-label>Nombre: </mat-label>
-          <input matInput type="text" formControlName="nombre" maxlength="30" minlength="5" />
-          @if (nombreField.hasError('required')) {
-            <mat-error class="form__error">Ingrese un nombre.</mat-error>
-          } @else if (nombreField.hasError('minlength')) {
-            <mat-error class="form__error">Nombre demasiado corto.</mat-error>
-          } @else if (nombreField.hasError('soloLetras')) {
-            <mat-error class="form__error">El nombre solo debe contener letras.</mat-error>
-          }
-        </mat-form-field>
+		<form class="form" [formGroup]="formOferta">
+			<div class="container__form">
+				<div class="form__left">
+					<mat-form-field appearance="outline" class="form__field">
+						<mat-label>Nombre: </mat-label>
+						<input matInput type="text" formControlName="nombre" maxlength="30" minlength="5" />
+						@if (nombreField.hasError('required')) {
+							<mat-error class="form__error">Ingrese un nombre.</mat-error>
+						} @else if (nombreField.hasError('minlength')) {
+							<mat-error class="form__error">Nombre demasiado corto.</mat-error>
+						} @else if (nombreField.hasError('soloLetras')) {
+							<mat-error class="form__error">El nombre solo debe contener letras.</mat-error>
+						}
+						</mat-form-field>
 
-        <mat-form-field class="form__field">
-          <mat-label>Descripción: </mat-label>
-          <textarea matInput formControlName="descripcion" maxlength="250" minlength="4"></textarea>
-          @if (descripcionField.hasError('required')) {
-            <mat-error class="form__error">Ingrese una descripción.</mat-error>
-          } @else if (descripcionField.hasError('minlength')) {
-            <mat-error class="form__error">Descripción demasiada corta.</mat-error>
-          }
-        </mat-form-field>
+						<mat-form-field appearance="outline" class="form__textarea">
+						<mat-label>Descripción: </mat-label>
+						<textarea matInput formControlName="descripcion" maxlength="250" minlength="4"></textarea>
+						@if (descripcionField.hasError('required')) {
+							<mat-error class="form__error">Ingrese una descripción.</mat-error>
+						} @else if (descripcionField.hasError('minlength')) {
+							<mat-error class="form__error">Descripción demasiada corta.</mat-error>
+						}
+						</mat-form-field>
 
-        <mat-form-field class="form__field">
-          <mat-label>Seleccione un producto</mat-label>
-          <mat-select
-            disableRipple
-            formControlName="producto"
-            (selectionChange)="productoSeleccionado($event)"
-          >
-            @for (producto of productos; track $index) {
-              <mat-option [value]="producto.id_Producto">{{ producto.nombre_Producto }}</mat-option>
-            }
-          </mat-select>
-          @if (
-            productoSeleccionadoField.hasError('required') ||
-            productoSeleccionadoField.hasError('productoInvalido')
-          ) {
-            <mat-error class="form__error">Debe seleccionar un producto.</mat-error>
-          }
-        </mat-form-field>
+						<mat-form-field appearance="outline" class="form__field">
+						<mat-label>Seleccione un producto</mat-label>
+						<mat-select
+							disableRipple
+							formControlName="producto"
+							(selectionChange)="productoSeleccionado($event)"
+						>
+						@for (producto of productos; track $index) {
+							<mat-option [value]="producto.id_Producto">{{ producto.nombre_Producto }}</mat-option>
+						}
+						</mat-select>
+						@if (productoSeleccionadoField.hasError('required') || productoSeleccionadoField.hasError('productoInvalido')) {
+							<mat-error class="form__error">Debe seleccionar un producto.</mat-error>
+						}
+						</mat-form-field>
+				</div>
+				<div class="form__right">
+					<mat-form-field appearance="outline" class="form__field">
+						<mat-label>Fecha Inicio:</mat-label>
+						<input matInput [matDatepicker]="pickerInicio" formControlName="fechaInicio" />
+						<mat-datepicker-toggle matIconSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+						<mat-datepicker #pickerInicio></mat-datepicker>
+						@if (fechaInicioField.errors?.['required']) {
+							<mat-error class="form__error">Ingrese una fecha inicio para la oferta.</mat-error>
+						}
+					</mat-form-field>
 
-        <mat-form-field class="form__field">
-          <mat-label>Fecha Inicio:</mat-label>
-          <input matInput [matDatepicker]="pickerInicio" formControlName="fechaInicio" />
-          <mat-datepicker-toggle matIconSuffix [for]="pickerInicio"></mat-datepicker-toggle>
-          <mat-datepicker #pickerInicio></mat-datepicker>
-          @if (fechaInicioField.errors?.['required']) {
-            <mat-error class="form__error">Ingrese una fecha inicio para la oferta.</mat-error>
-          }
-        </mat-form-field>
+					<mat-form-field appearance="outline" class="form__field">
+						<mat-label>Fecha Fin:</mat-label>
+						<input matInput [matDatepicker]="pickerFin" formControlName="fechaFin" />
+						<mat-datepicker-toggle matIconSuffix [for]="pickerFin"></mat-datepicker-toggle>
+						<mat-datepicker #pickerFin></mat-datepicker>
+						@if (fechaFinField.errors?.['required']) {
+							<mat-error class="form__error">Ingrese una fecha fin para la oferta.</mat-error>
+						} @else if (fechaFinField.errors?.['fechaFinInvalida']) {
+							<mat-error class="form__error">La fecha fin no puede ser anterior a la fecha actual.</mat-error>
+						}
+					</mat-form-field>
 
-        <mat-form-field class="form__field">
-          <mat-label>Fecha Fin:</mat-label>
-          <input matInput [matDatepicker]="pickerFin" formControlName="fechaFin" />
-          <mat-datepicker-toggle matIconSuffix [for]="pickerFin"></mat-datepicker-toggle>
-          <mat-datepicker #pickerFin></mat-datepicker>
-          @if (fechaFinField.errors?.['required']) {
-            <mat-error class="form__error">Ingrese una fecha fin para la oferta.</mat-error>
-          } @else if (fechaFinField.errors?.['fechaFinInvalida']) {
-            <mat-error class="form__error"
-              >La fecha fin no puede ser anterior a la fecha actual.</mat-error
-            >
-          }
-        </mat-form-field>
+					<mat-form-field appearance="outline" class="form__field">
+						<mat-label>Descuento: </mat-label>
+						<input matInput type="number" formControlName="descuento" />
+						@if (descuentoField.hasError('required')) {
+							<mat-error class="form__error">Ingrese un descuento.</mat-error>
+						} @else if (descuentoField.hasError('min')) {
+							<mat-error class="form__error">El descuento tiene que ser mayor que 0.</mat-error>
+						} @else if (descuentoField.hasError('max')) {
+							<mat-error class="form__error">El descuento no valido.</mat-error>
+						}
+					</mat-form-field>
 
-        <mat-form-field class="form__field">
-          <mat-label>Descuento: </mat-label>
-          <input matInput type="number" formControlName="descuento" />
-          @if (descuentoField.hasError('required')) {
-            <mat-error class="form__error">Ingrese un descuento.</mat-error>
-          } @else if (descuentoField.hasError('min')) {
-            <mat-error class="form__error">El descuento tiene que ser mayor que 0.</mat-error>
-          } @else if (descuentoField.hasError('max')) {
-            <mat-error class="form__error">El descuento no valido.</mat-error>
-          }
-        </mat-form-field>
+					<mat-checkbox formControlName="estado">Activo</mat-checkbox>
+				</div>
+			</div>
 
-        <mat-checkbox class="form__checkbox" formControlName="estado">Activo</mat-checkbox>
-
-        <button
-          class="form__button"
-          mat-raised-button
-          color="primary"
-          type="button"
-          (click)="editarOferta()"
-        >
-          Editar
-        </button>
-        <button
-          class="form__button"
-          mat-raised-button
-          color="primary"
-          type="button"
-          (click)="regresar()"
-        >
-          Regresar
-        </button>
-      </form>
+			<div class="form__action">
+				<button
+					class="form__button form__button--primary"
+					mat-raised-button
+					type="button"
+					(click)="editarOferta()"
+				>
+					Editar
+				</button>
+				<button
+					class="form__button form__button--secondary"
+					mat-stroked-button
+					type="button"
+					(click)="regresar()"
+				>
+					Regresar
+				</button>
+			</div>
+		</form>
     </mat-card-content>
   </mat-card>
 </div>
