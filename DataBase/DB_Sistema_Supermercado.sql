@@ -16,7 +16,7 @@ LOGO varbinary(max)NUll
 );
 GO
 INSERT INTO NEGOCIO (NOMBRE, TELEFONO, RUC, DIRECCION, CORREO_ELECTRONICO) 
-VALUES('Supermercado Paradisia','0969810812','0102030405785','Mucho Lote 3 etapa','SupermercadoParadisia@gmail.com');
+VALUES('MarketEase','0969810812','0102030405785','Mucho Lote 3 etapa','SupermercadoParadisia@gmail.com');
 GO
 
 CREATE PROCEDURE PA_OBTENER_NEGOCIO(
