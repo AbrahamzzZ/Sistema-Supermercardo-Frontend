@@ -6,12 +6,7 @@
 
     <mat-card-content>
       <form class="form" [formGroup]="formSucursal">
-        <mat-form-field class="form__field">
-          <mat-label>Codigo: </mat-label>
-          <input matInput type="text" formControlName="codigo" readonly />
-        </mat-form-field>
-
-        <mat-form-field class="form__field">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>Nombre: </mat-label>
           <input matInput type="text" formControlName="nombre" maxlength="30" minlength="5" />
           @if (nombreField.hasError('required')) {
@@ -21,7 +16,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field class="form__field">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>Dirección: </mat-label>
           <input matInput type="text" formControlName="direccion" maxlength="90" minlength="3" />
           @if (direccionField.hasError('required')) {
@@ -31,7 +26,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field class="form__field">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>Latitud: </mat-label>
           <input matInput formControlName="latitud" />
           @if (latitudField.hasError('required')) {
@@ -41,7 +36,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field class="form__field">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>Longitud: </mat-label>
           <input matInput formControlName="longitud" />
           @if (longitudField.hasError('required')) {
@@ -51,7 +46,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field class="form__field">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>Ciudad: </mat-label>
           <input matInput type="text" formControlName="ciudad" maxlength="90" minlength="3" />
           @if (ciudadField.hasError('required')) {
@@ -61,26 +56,26 @@
           }
         </mat-form-field>
 
-        <mat-checkbox class="form__checkbox" formControlName="estado">Activo</mat-checkbox>
+        <mat-checkbox formControlName="estado">Activo</mat-checkbox>
 
-        <button
-          class="form__button"
-          mat-raised-button
-          color="primary"
-          type="button"
-          (click)="editarSucursal()"
-        >
-          Editar
-        </button>
-        <button
-          class="form__button"
-          mat-raised-button
-          color="primary"
-          type="button"
-          (click)="regresar()"
-        >
-          Regresar
-        </button>
+        <div class="form__action">
+          <button
+            class="form__button form__button--primary"
+            mat-raised-button
+            type="button"
+            (click)="editarSucursal()"
+          >
+            Editar
+          </button>
+          <button
+            class="form__button form__button--secondary"
+            mat-stroked-button
+            type="button"
+            (click)="regresar()"
+          >
+            Regresar
+          </button>
+        </div>
       </form>
     </mat-card-content>
   </mat-card>

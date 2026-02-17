@@ -1,4 +1,4 @@
-$table-padding: 12px;
+$table-padding: 6px;
 $message-bg-color: #fafafa;
 $table-border-color: #b3aeae;
 
@@ -172,4 +172,39 @@ $table-border-color: #b3aeae;
       }
     }
   }
+}
+
+::ng-deep .mat-mdc-form-field .mdc-floating-label {
+  transform: translateY(-100%) translateX(calc(1 * (52px + var(--mat-mdc-form-field-label-offset-x, 0px)))) !important;
+}
+
+::ng-deep .container__search__input .mat-mdc-form-field-subscript-wrapper{
+  background: #ffffff;
+}
+
+::ng-deep .container__search__input .mat-mdc-text-field-wrapper {
+  height: 35px !important;
+}
+
+::ng-deep .mat-mdc-form-field-flex{
+  margin-top: -11px;
+}
+
+::ng-deep .container__search__input .mdc-floating-label {
+  top: 50% !important;
+  margin-left: 0px;
+  transform: translateY(-50%) translateX(0) !important;
+  font-size: 14px !important;
+}
+
+::ng-deep .container__search__input .mdc-floating-label.mdc-floating-label--float-above {
+  top: 0 !important;
+  margin-left: 2px !important;
+  transform: translateY(-50%) scale(0.75) !important;
+  font-size: 12px;
+}
+
+::ng-deep .mat-mdc-paginator .mat-mdc-select {
+  line-height: 1.5;
+  margin-top: 10px;
 }

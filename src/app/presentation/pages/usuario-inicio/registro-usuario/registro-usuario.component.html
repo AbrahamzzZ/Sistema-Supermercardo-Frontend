@@ -6,12 +6,12 @@
 
     <mat-card-content>
       <form class="form" [formGroup]="formUsuario">
-        <mat-form-field class="form__field">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>Codigo: </mat-label>
           <input matInput type="text" formControlName="codigo" readonly />
         </mat-form-field>
 
-        <mat-form-field class="form__field">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>Nombre completo: </mat-label>
           <input
             matInput
@@ -29,7 +29,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field class="form__field">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>Clave: </mat-label>
           <input matInput type="text" formControlName="clave" />
           @if (claveField.hasError('required')) {
@@ -44,7 +44,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field class="form__field">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>Correo Electrónico: </mat-label>
           <input matInput type="text" formControlName="correoElectronico" />
           @if (correoElectronicoField.hasError('required')) {
@@ -54,7 +54,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field class="form__field">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>Seleccione un rol</mat-label>
           <mat-select
             disableRipple
@@ -75,24 +75,24 @@
 
         <mat-checkbox formControlName="estado">Activo</mat-checkbox>
 
-        <button
-          class="form__button"
-          mat-raised-button
-          color="primary"
-          type="button"
-          (click)="registrarUsuario()"
-        >
-          Registrar
-        </button>
-        <button
-          class="form__button"
-          mat-raised-button
-          color="primary"
-          type="button"
-          (click)="regresar()"
-        >
-          Regresar
-        </button>
+        <div class="form__action">
+          <button
+            class="form__button form__button--primary"
+            mat-raised-button
+            type="button"
+            (click)="registrarUsuario()"
+          >
+            Registrar
+          </button>
+          <button
+            class="form__button form__button--secondary"
+            mat-stroked-button
+            type="button"
+            (click)="regresar()"
+          >
+            Regresar
+          </button>
+        </div>
       </form>
     </mat-card-content>
   </mat-card>

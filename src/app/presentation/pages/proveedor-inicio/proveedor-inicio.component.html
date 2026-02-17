@@ -1,5 +1,5 @@
 <div class="container">
-  <h1 class="container__title">Proveedores del supermercado Paradisia</h1>
+  <h1 class="container__title">Proveedores del MarketEase</h1>
   <div class="container__table">
     <div class="container__search">
       <mat-form-field class="container__search__input" appearance="outline">
@@ -100,10 +100,10 @@
       <ng-container matColumnDef="accion">
         <th class="table__header" mat-header-cell *matHeaderCellDef>Acción</th>
         <td class="table__cell" mat-cell *matCellDef="let element">
-          <button mat-icon-button color="accent" (click)="editar(element)">
+          <button mat-icon-button (click)="editar(element)">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="eliminar(element)">
+          <button mat-icon-button (click)="eliminar(element)">
             <mat-icon>delete</mat-icon>
           </button>
         </td>
