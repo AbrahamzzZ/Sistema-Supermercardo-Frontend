@@ -4,7 +4,6 @@
   align-items: center;
   min-height: 100vh;
   background: #e2eeb7;
-  padding: 20px;
 
   &__card {
     width: 100%;
@@ -42,27 +41,59 @@
       color: red;
     }
 
-    &__checkbox {
-      display: flex;
-      align-items: center;
-      margin-top: 10px;
+    &__action{
+      display: grid;
+      grid-template-columns: repeat(2, 2fr);
+      gap: 10px;
     }
 
     &__button {
-      width: 100%;
-      padding: 12px;
-      font-size: 1rem;
-      font-weight: bold;
-      border-radius: 8px;
-      color: white;
-      transition: 0.3s ease-in-out;
-      border: none;
-      cursor: pointer;
-
-      &:hover {
-        transform: scale(1.05);
-        background: #5a90c7;
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 8px;
+        cursor: pointer;
       }
-    }
+
+      &__button--primary {
+        background-color: #79ACDE;
+        color: #ffffff;
+      }
+
+      &__button--secondary {
+        color: #5a5a5a;
+        background-color: transparent;
+      }
   }
+}
+
+::ng-deep .mat-mdc-form-field .mdc-floating-label {
+  transform: translateY(-100%) translateX(calc(1 * (52px + var(--mat-mdc-form-field-label-offset-x, 0px)))) !important;
+}
+
+::ng-deep .form__field .mat-mdc-form-field-subscript-wrapper{
+  background: #ffffff;
+}
+
+::ng-deep .form__field .mat-mdc-text-field-wrapper {
+  height: 35px !important;
+}
+
+::ng-deep .mat-mdc-form-field-flex{
+  margin-top: -11px;
+}
+
+::ng-deep .form__field .mdc-floating-label {
+  top: 50% !important;
+  margin-left: 0px;
+  transform: translateY(-50%) translateX(0) !important;
+  font-size: 14px !important;
+}
+
+::ng-deep .form__field .mdc-floating-label.mdc-floating-label--float-above {
+  top: 0 !important;
+  margin-left: 2px !important;
+  transform: translateY(-50%) scale(0.75) !important;
+  font-size: 12px;
 }
