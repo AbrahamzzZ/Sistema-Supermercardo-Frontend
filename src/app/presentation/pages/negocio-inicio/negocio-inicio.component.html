@@ -8,12 +8,12 @@
       <form class="form" [formGroup]="formNegocio">
         <div class="form-grid">
           <div class="form-left">
-            <mat-form-field class="form__field">
+            <mat-form-field appearance="outline" class="form__field">
               <mat-label>ID: </mat-label>
               <input matInput type="text" formControlName="id" readonly />
             </mat-form-field>
 
-            <mat-form-field class="form__field">
+            <mat-form-field appearance="outline" class="form__field">
               <mat-label>Nombre: </mat-label>
               <input matInput type="text" formControlName="nombre" maxlength="60" minlength="3" />
               @if (nombreField.hasError('required')) {
@@ -23,7 +23,7 @@
               }
             </mat-form-field>
 
-            <mat-form-field class="form__field">
+            <mat-form-field appearance="outline" class="form__field">
               <mat-label>Telefono: </mat-label>
               <input matInput type="text" formControlName="telefono" />
               @if (telefonoField.hasError('required')) {
@@ -35,7 +35,7 @@
               }
             </mat-form-field>
 
-            <mat-form-field class="form__field">
+            <mat-form-field appearance="outline" class="form__field">
               <mat-label>RUC: </mat-label>
               <input matInput type="text" formControlName="ruc" />
               @if (rucField.hasError('required')) {
@@ -45,7 +45,7 @@
               }
             </mat-form-field>
 
-            <mat-form-field class="form__field">
+            <mat-form-field appearance="outline" class="form__field">
               <mat-label>Dirección: </mat-label>
               <input matInput formControlName="direccion" />
               @if (direccionField.hasError('required')) {
@@ -53,7 +53,7 @@
               }
             </mat-form-field>
 
-            <mat-form-field class="form__field">
+            <mat-form-field appearance="outline" class="form__field">
               <mat-label>Correo Electrónico: </mat-label>
               <input matInput type="email" formControlName="correoElectronico" />
               @if (correoElectronicoField.hasError('required')) {
