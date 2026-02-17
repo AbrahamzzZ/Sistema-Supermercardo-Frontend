@@ -80,7 +80,7 @@ export class OfertaInicioComponent implements AfterViewInit {
 
   eliminar(oferta: IOferta) {
     const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
-      width: '350px',
+      width: '500px',
       data: {
         mensaje: `¿Está seguro de eliminar la oferta ${oferta.nombre_Oferta}?`
       }

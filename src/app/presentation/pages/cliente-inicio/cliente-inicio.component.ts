@@ -68,7 +68,7 @@ export class ClienteInicioComponent implements AfterViewInit {
 
   eliminar(cliente: ICliente) {
     const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
-      width: '350px',
+      width: '500px',
       data: {
         mensaje: `¿Está seguro de eliminar al cliente ${cliente.nombres} ${cliente.apellidos}?`
       }

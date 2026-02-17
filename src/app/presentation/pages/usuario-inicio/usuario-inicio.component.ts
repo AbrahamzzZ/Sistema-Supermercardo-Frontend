@@ -70,7 +70,7 @@ export class UsuarioInicioComponent implements AfterViewInit {
 
   eliminar(usuario: IUsuario) {
     const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
-      width: '350px',
+      width: '500px',
       data: { mensaje: `¿Está seguro de eliminar al usuario ${usuario.nombre_Completo}?` }
     });
 

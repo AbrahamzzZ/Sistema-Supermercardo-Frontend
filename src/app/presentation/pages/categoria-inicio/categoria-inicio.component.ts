@@ -67,7 +67,7 @@ export class CategoriaInicioComponent implements AfterViewInit {
 
   eliminar(categoria: ICategoria) {
     const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
-      width: '350px',
+      width: '500px',
       data: {
         mensaje: `¿Está seguro de eliminar la categoría ${categoria.nombre_Categoria}?`
       }
