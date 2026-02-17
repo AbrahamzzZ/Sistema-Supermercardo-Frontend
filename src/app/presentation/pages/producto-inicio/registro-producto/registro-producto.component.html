@@ -6,12 +6,12 @@
 
     <mat-card-content>
       <form class="form" [formGroup]="formProducto">
-        <mat-form-field class="form__field">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>Codigo: </mat-label>
           <input matInput type="text" formControlName="codigo" readonly />
         </mat-form-field>
 
-        <mat-form-field class="form__field">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>Nombre: </mat-label>
           <input matInput type="text" formControlName="nombre" maxlength="30" minlength="4" />
           @if (nombreField.hasError('required')) {
@@ -25,7 +25,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field class="form__field">
+        <mat-form-field appearance="outline" class="form__textarea">
           <mat-label>Descripción: </mat-label>
           <textarea matInput formControlName="descripcion" maxlength="50" minlength="4"></textarea>
           @if (descripcionField.hasError('required')) {
@@ -35,7 +35,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field class="form__field">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>Seleccione una categoría</mat-label>
           <mat-select
             disableRipple
@@ -56,7 +56,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field class="form__field">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>País de origen: </mat-label>
           <input matInput type="text" formControlName="paisOrigen" maxlength="30" minlength="3" />
           @if (paisOrigenField.hasError('required')) {
@@ -68,26 +68,26 @@
           }
         </mat-form-field>
 
-        <mat-checkbox class="form__checkbox" formControlName="estado">Agotado</mat-checkbox>
+        <mat-checkbox formControlName="estado">Agotado</mat-checkbox>
 
-        <button
-          class="form__button"
-          mat-raised-button
-          color="primary"
-          type="button"
-          (click)="registrarProducto()"
-        >
-          Registrar
-        </button>
-        <button
-          class="form__button"
-          mat-raised-button
-          color="primary"
-          type="button"
-          (click)="regresar()"
-        >
-          Regresar
-        </button>
+        <div class="form__action">
+          <button
+            class="form__button form__button--primary"
+            mat-raised-button
+            type="button"
+            (click)="registrarProducto()"
+          >
+            Registrar
+          </button>
+          <button
+            class="form__button form__button--secondary"
+            mat-stroked-button
+            type="button"
+            (click)="regresar()"
+          >
+            Regresar
+          </button>
+        </div>
       </form>
     </mat-card-content>
   </mat-card>
