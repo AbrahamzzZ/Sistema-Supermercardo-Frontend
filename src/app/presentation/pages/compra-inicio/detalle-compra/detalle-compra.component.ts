@@ -82,16 +82,12 @@ export class DetalleCompraComponent implements OnInit{
           tipoDocumento: compra.tipo_Documento,
           codigoUsuario: compra.codigo_Usuario,
           nombreUsuario: compra.nombre_Completo,
-
           nombreSucursal: compra.nombre_Sucursal,
           direccionSucursal: compra.direccion_Sucursal,
-
           proveedor: `${compra.nombres_Proveedor} ${compra.apellidos_Proveedor}`,
           cedulaProveedor: compra.cedula_Proveedor,
-
           transportista: `${compra.nombres_Transportista} ${compra.apellidos_Transportista}`,
           cedulaTransportista: compra.cedula_Transportista,
-
           totalPagar: compra.monto_Total
         });
 
