@@ -22,9 +22,9 @@ import { MaterialModule } from '../../../../shared/ui/material-module';
 export class DetalleVentaComponent implements OnInit {
   public mensajeBusqueda = '';
   public venta!: FormGroup;
-  private snackBar = inject(MatSnackBar);
-  private servicio = inject(VentaService);
-  private fb = inject(FormBuilder);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly servicio = inject(VentaService);
+  private readonly fb = inject(FormBuilder);
   public dataSource = new MatTableDataSource<any>();
   public columnasTabla: string[] = [
     'id',
@@ -41,11 +41,9 @@ export class DetalleVentaComponent implements OnInit {
       tipoDocumento: [''],
       codigoUsuario: [''],
       nombreUsuario: [''],
-      codigoSucursal: [''],
       nombreSucursal: [''],
       direccionSucursal: [''],
-      nombresCliente: [''],
-      apellidosCliente: [''],
+      cliente: [''],
       cedulaCliente: [''],
       totalPagar: [''],
       pagaCon: [''],
@@ -66,17 +64,17 @@ export class DetalleVentaComponent implements OnInit {
 
     this.servicio.obtener(numeroDocumento).subscribe({
       next: (resp: any) => {
+
         const venta = resp.data;
+
         this.venta.patchValue({
           fecha: venta.fecha_Venta,
           tipoDocumento: venta.tipo_Documento,
           codigoUsuario: venta.codigo_Usuario,
           nombreUsuario: venta.nombre_Completo,
-          codigoSucursal: venta.codigo,
           nombreSucursal: venta.nombre_Sucursal,
           direccionSucursal: venta.direccion_Sucursal,
-          nombresCliente: venta.nombres_Cliente,
-          apellidosCliente: venta.apellidos_Cliente,
+          cliente: `${venta.nombres_Cliente} ${venta.apellidos_Cliente}`,
           cedulaCliente: venta.cedula_Cliente,
           totalPagar: venta.monto_Total,
           pagaCon: venta.monto_Pago,
@@ -89,15 +87,18 @@ export class DetalleVentaComponent implements OnInit {
             const detalle = resp.data;
             this.dataSource.data = Array.isArray(detalle) ? detalle : [detalle];
           },
-          error: (err) => {
-            console.error(err.message);
-            this.mostrarMensaje('Error al obtener el detalle de venta.', 'error');
+          error: () => {
+            this.mostrarMensaje(
+              'Error al obtener el detalle de la venta.',
+              'error'
+            );
           }
         });
       },
-      error: (err) => {
-        console.error(err.message);
-        this.mostrarMensaje('Error al obtener venta:', 'error');
+      error: () => {
+        this.limpiar();
+        this.mensajeBusqueda =
+          'No existe ningún detalle de venta con ese número de documento.';
       }
     });
   }
@@ -140,7 +141,7 @@ export class DetalleVentaComponent implements OnInit {
       doc.text(`Código: ${this.venta.value.codigoUsuario}`, 110, 78);
 
       doc.text(
-        `Cliente: ${this.venta.value.nombresCliente} ${this.venta.value.apellidosCliente}`,
+        `Cliente: ${this.venta.value.cliente}`,
         10,
         84
       );
@@ -184,12 +185,12 @@ export class DetalleVentaComponent implements OnInit {
       doc.setFontSize(11);
       doc.setFont('helvetica', 'bold');
       doc.text(
-        `Total a pagar: $${parseFloat(this.venta.value.totalPagar).toFixed(2)}`,
+        `Total a pagar: $${Number.parseFloat(this.venta.value.totalPagar).toFixed(2)}`,
         12,
         finalY + 12
       );
-      doc.text(`Pagó con: $${parseFloat(this.venta.value.pagaCon).toFixed(2)}`, 12, finalY + 18);
-      doc.text(`Cambio: $${parseFloat(this.venta.value.cambio).toFixed(2)}`, 100, finalY + 12);
+      doc.text(`Pagó con: $${Number.parseFloat(this.venta.value.pagaCon).toFixed(2)}`, 12, finalY + 18);
+      doc.text(`Cambio: $${Number.parseFloat(this.venta.value.cambio).toFixed(2)}`, 100, finalY + 12);
 
       // Mensaje final
       doc.setFontSize(9);
