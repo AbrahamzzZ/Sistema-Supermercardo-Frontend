@@ -1,38 +1,28 @@
 .compra {
-  margin: 20px;
-  padding: 10px;
-
   &__titulo {
-    font-size: 2rem;
-    color: #222;
     text-align: center;
-    margin-bottom: 20px;
+    font-size: 2rem;
     font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 15px;
+    margin-bottom: 20px;
   }
 
   &__formulario {
-    padding: 1.5rem;
+    padding-left: 2.3rem;
+    padding-right: 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    box-shadow: 1px 1px 1px 1px rgb(138, 137, 137);
   }
 
   &__busqueda {
     display: flex;
-    align-items: center;
     justify-content: space-between;
     gap: 16px;
-    width: 100%;
     flex-wrap: wrap;
+
 
     &-input {
       width: 100%;
-      max-width: 330px;
     }
 
     &-mensaje {
@@ -50,16 +40,14 @@
     }
   }
 
-  &__busqueda-left {
+  &__busqueda-wrapper {
     display: flex;
     align-items: center;
     gap: 12px;
-    flex-wrap: wrap;
   }
 
   &__busqueda-actions {
     display: flex;
-    align-items: center;
     gap: 12px;
   }
 
@@ -70,11 +58,11 @@
 
   &__seccion {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
 
     @media (max-width: 1024px) {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, 1fr);
     }
 
     @media (max-width: 768px) {
@@ -85,41 +73,40 @@
   &__grupo {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    align-items: center;
-    max-width: 330px;
+    gap: 10px;
     padding: 1rem;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    background: #f9f9f9;
+  }
 
-    button {
-      align-self: center;
+  &__grupo--totales {
+    background: #eef7ee;
+  }
 
-      @media (max-width: 768px) {
-        width: 100%;
+  .campo-horizontal {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    align-items: baseline;
+
+    label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #444;
+      text-align: right;
+    }
+
+    mat-form-field {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .campo-horizontal {
+      grid-template-columns: 1fr;
+
+      label {
+        text-align: left;
       }
-    }
-
-    &--datos {
-      background-color: #f0f8ff;
-    }
-
-    &--sucursal {
-      background-color: #fffff0;
-    }
-
-    &--proveedor {
-      background-color: #fff5f0;
-    }
-
-    &--transportista {
-      background-color: #fcebff;
-    }
-
-    &--totales {
-      background-color: #f4f9f4;
     }
   }
 
@@ -130,4 +117,48 @@
       width: 100%;
     }
   }
+}
+
+::ng-deep .campo-horizontal .mat-mdc-text-field-wrapper {
+  height: 34px !important;
+}
+
+::ng-deep .campo-horizontal input.mat-mdc-input-element {
+  padding-bottom: 6px;
+}
+
+::ng-deep .mat-mdc-form-field .mdc-floating-label {
+  transform: translateY(-100%) translateX(calc(1 * (52px + var(--mat-mdc-form-field-label-offset-x, 0px)))) !important;
+}
+
+::ng-deep .form__field .mat-mdc-form-field-subscript-wrapper{
+  background: #ffffff;
+}
+
+::ng-deep .form__field .mat-mdc-text-field-wrapper {
+  height: 35px !important;
+  width: 350px;
+}
+
+::ng-deep .mat-mdc-form-field-flex{
+  margin-top: -11px;
+}
+
+::ng-deep .form__field .mdc-floating-label {
+  top: 50% !important;
+  margin-left: 0px;
+  transform: translateY(-50%) translateX(0) !important;
+  font-size: 14px !important;
+}
+
+::ng-deep .form__field .mdc-floating-label.mdc-floating-label--float-above {
+  top: 0 !important;
+  margin-left: 2px !important;
+  transform: translateY(-50%) scale(0.75) !important;
+  font-size: 12px;
+}
+
+::ng-deep .mat-mdc-form-field-error {
+  font-size: 0.85rem;
+  font-weight: 500;
 }
