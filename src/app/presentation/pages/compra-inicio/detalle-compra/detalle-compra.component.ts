@@ -22,9 +22,9 @@ import { MaterialModule } from '../../../../shared/ui/material-module';
 export class DetalleCompraComponent implements OnInit{
   public mensajeBusqueda = '';
   public compra!: FormGroup;
-  private fb = inject(FormBuilder);
-  private snackBar = inject(MatSnackBar);
-  private servicio = inject(CompraService);
+  private readonly fb = inject(FormBuilder);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly servicio = inject(CompraService);
   public dataSource = new MatTableDataSource<any>();
   public columnasTabla: string[] = [
     'id',
@@ -41,14 +41,11 @@ export class DetalleCompraComponent implements OnInit{
       tipoDocumento: [''],
       codigoUsuario: [''],
       nombreUsuario: [''],
-      codigoSucursal: [''],
       nombreSucursal: [''],
       direccionSucursal: [''],
-      nombresProveedor: [''],
-      apellidosProveedor: [''],
+      proveedor: [''],
       cedulaProveedor: [''],
-      nombresTransportista: [''],
-      apellidosTransportista: [''],
+      transportista: [''],
       cedulaTransportista: [''],
       totalPagar: ['']
     });
@@ -56,30 +53,40 @@ export class DetalleCompraComponent implements OnInit{
 
   filtrarCompra(numeroDocumento: string) {
     this.mensajeBusqueda = '';
-    if (!numeroDocumento.trim()) return;
 
-    if (numeroDocumento.length != 5) {
+    if (!numeroDocumento.trim()) {
       this.limpiar();
-      this.mensajeBusqueda = 'No existe ningún detalle de compra con ese número de documento.';
+      return;
+    }
+
+    if (numeroDocumento.length !== 5) {
+      this.limpiar();
+      this.mensajeBusqueda =
+        'El número de documento debe tener 5 dígitos.';
       return;
     }
 
     this.servicio.obtener(numeroDocumento).subscribe({
       next: (resp: any) => {
+        if (!resp?.data) {
+          this.limpiar();
+          this.mensajeBusqueda =
+            'No existe ningún detalle de compra con ese número de documento.';
+          return;
+        }
+
         const compra = resp.data;
+
         this.compra.patchValue({
           fecha: compra.fecha_Compra,
           tipoDocumento: compra.tipo_Documento,
           codigoUsuario: compra.codigo_Usuario,
           nombreUsuario: compra.nombre_Completo,
-          codigoSucursal: compra.codigo,
           nombreSucursal: compra.nombre_Sucursal,
           direccionSucursal: compra.direccion_Sucursal,
-          nombresProveedor: compra.nombres_Proveedor,
-          apellidosProveedor: compra.apellidos_Proveedor,
+          proveedor: `${compra.nombres_Proveedor} ${compra.apellidos_Proveedor}`,
           cedulaProveedor: compra.cedula_Proveedor,
-          nombresTransportista: compra.nombres_Transportista,
-          apellidosTransportista: compra.apellidos_Transportista,
+          transportista: `${compra.nombres_Transportista} ${compra.apellidos_Transportista}`,
           cedulaTransportista: compra.cedula_Transportista,
           totalPagar: compra.monto_Total
         });
@@ -89,15 +96,18 @@ export class DetalleCompraComponent implements OnInit{
             const detalle = resp.data;
             this.dataSource.data = Array.isArray(detalle) ? detalle : [detalle];
           },
-          error: (err) => {
-            console.error(err.message);
-            this.mostrarMensaje('Error al obtener el detalle de compra.', 'error');
+          error: () => {
+            this.mostrarMensaje(
+              'Error al obtener el detalle de la compra.',
+              'error'
+            );
           }
         });
       },
-      error: (err) => {
-        console.error(err.message);
-        this.mostrarMensaje('Error al obtener compra.', 'error');
+      error: () => {
+        this.limpiar();
+        this.mensajeBusqueda =
+          'No existe ningún detalle de compra con ese número de documento.';
       }
     });
   }
@@ -140,14 +150,14 @@ export class DetalleCompraComponent implements OnInit{
       doc.text(`Código: ${this.compra.value.codigoUsuario}`, 110, 78);
 
       doc.text(
-        `Proveedor: ${this.compra.value.nombresProveedor} ${this.compra.value.apellidosProveedor}`,
+        `Proveedor: ${this.compra.value.proveedor}`,
         10,
         84
       );
       doc.text(`Cédula: ${this.compra.value.cedulaProveedor}`, 110, 84);
 
       doc.text(
-        `Transportista: ${this.compra.value.nombresTransportista} ${this.compra.value.apellidosTransportista}`,
+        `Transportista: ${this.compra.value.transportista}`,
         10,
         90
       );
@@ -191,7 +201,7 @@ export class DetalleCompraComponent implements OnInit{
       doc.setFontSize(11);
       doc.setFont('helvetica', 'bold');
       doc.text(
-        `Total a pagar: $${parseFloat(this.compra.value.totalPagar).toFixed(2)}`,
+        `Total a pagar: $${Number.parseFloat(this.compra.value.totalPagar).toFixed(2)}`,
         12,
         finalY + 12
       );
