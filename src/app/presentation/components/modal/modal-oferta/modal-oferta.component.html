@@ -1,6 +1,6 @@
 <h2>Seleccione una oferta</h2>
 
-<mat-form-field appearance="outline" class="buscador">
+<mat-form-field appearance="outline" class="form__field__oferta">
   <mat-label>Buscar Oferta</mat-label>
   <input
     matInput
@@ -8,9 +8,11 @@
     (keyup)="aplicarFiltro($event)"
     placeholder="Ingrese nombre o código"
   />
-  <button mat-icon-button matSuffix *ngIf="filtro" (click)="limpiarFiltro(inputBuscador)">
-    <mat-icon>close</mat-icon>
-  </button>
+  @if(filtro){
+    <button mat-icon-button matSuffix (click)="limpiarFiltro(inputBuscador)">
+      <mat-icon>close</mat-icon>
+    </button>
+  }
 </mat-form-field>
 
 <div class="ofertas-scroll">

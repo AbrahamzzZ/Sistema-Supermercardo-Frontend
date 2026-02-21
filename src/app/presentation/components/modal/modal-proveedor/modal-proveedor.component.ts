@@ -2,31 +2,23 @@ import { Component, inject } from '@angular/core';
 import { IProveedor } from '../../../../core/interfaces/proveedor';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ProveedorService } from '../../../../core/services/proveedor.service';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatIcon } from '@angular/material/icon';
-import { NgClass, NgIf } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { MatTableDataSource } from '@angular/material/table';
+import { NgClass } from '@angular/common';
+import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
   selector: 'app-modal-proveedor',
   standalone: true,
   imports: [
-    MatTableModule,
-    MatIcon,
     NgClass,
-    MatFormFieldModule,
-    NgIf,
-    MatButtonModule,
-    MatInputModule
+    MaterialModule
   ],
   templateUrl: './modal-proveedor.component.html',
   styleUrl: './modal-proveedor.component.scss'
 })
 export class ModalProveedorComponent {
-  private proveedorService = inject(ProveedorService);
-  private dialogRef = inject(MatDialogRef<ModalProveedorComponent>);
+  private readonly proveedorService = inject(ProveedorService);
+  private readonly dialogRef = inject(MatDialogRef<ModalProveedorComponent>);
   dataSource = new MatTableDataSource<IProveedor>([]);
   columnas: string[] = ['id', 'nombres', 'apellidos', 'cedula', 'estado', 'accion'];
   filtro = '';

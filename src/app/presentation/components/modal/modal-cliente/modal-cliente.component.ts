@@ -2,32 +2,21 @@ import { Component, inject } from '@angular/core';
 import { ICliente } from '../../../../core/interfaces/cliente';
 import { ClienteService } from '../../../../core/services/cliente.service';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MatTableModule } from '@angular/material/table';
-import { MatIcon } from '@angular/material/icon';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
-import { NgIf } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
+import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
   selector: 'app-modal-cliente',
   standalone: true,
   imports: [
-    MatTableModule,
-    MatIcon,
-    MatLabel,
-    MatFormFieldModule,
-    NgIf,
-    MatButtonModule,
-    MatInputModule
+    MaterialModule
   ],
   templateUrl: './modal-cliente.component.html',
   styleUrl: './modal-cliente.component.scss'
 })
 export class ModalClienteComponent {
-  private clienteService = inject(ClienteService);
-  private dialogRef = inject(MatDialogRef<ModalClienteComponent>);
+  private readonly clienteService = inject(ClienteService);
+  private readonly dialogRef = inject(MatDialogRef<ModalClienteComponent>);
   dataSource = new MatTableDataSource<ICliente>([]);
   columnas: string[] = ['id', 'nombres', 'apellidos', 'cedula', 'accion'];
   filtro = '';
