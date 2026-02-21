@@ -1,34 +1,25 @@
 import { Component, inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTableDataSource} from '@angular/material/table';
 import { IOferta } from '../../../../core/interfaces/oferta';
 import { OfertaService } from '../../../../core/services/oferta.service';
-import { MatIcon } from '@angular/material/icon';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { IOfertaProducto } from '../../../../core/interfaces/Dto/ioferta-producto';
-import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
+import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
   selector: 'app-modal-oferta',
   standalone: true,
   imports: [
-    MatTableModule,
-    MatIcon,
-    MatLabel,
-    MatFormFieldModule,
-    NgIf,
-    MatButtonModule,
-    MatInputModule,
-    NgClass
+    NgClass,
+    MaterialModule
   ],
   templateUrl: './modal-oferta.component.html',
   styleUrl: './modal-oferta.component.scss'
 })
 export class ModalOfertaComponent {
-  private ofertaService = inject(OfertaService);
-  private dialogRef = inject(MatDialogRef<ModalOfertaComponent>);
+  private readonly ofertaService = inject(OfertaService);
+  private readonly dialogRef = inject(MatDialogRef<ModalOfertaComponent>);
   dataSource = new MatTableDataSource<IOfertaProducto>([]);
   columnas: string[] = ['id', 'codigo', 'nombre', 'producto', 'estado', 'accion'];
   filtro = '';

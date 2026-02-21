@@ -20,11 +20,6 @@ h2 {
   font-weight: 600;
 }
 
-.buscador {
-  width: 100%;
-  margin-bottom: 1rem;
-}
-
 table {
   width: 100%;
   margin-bottom: 16px;
@@ -120,4 +115,27 @@ tr:nth-child(even) {
 
 tr:nth-child(odd) {
   background-color: #ffffff;
+}
+
+::ng-deep .form__field__sucursal .mat-mdc-form-field-subscript-wrapper{
+  background: #ffffff;
+}
+
+::ng-deep .form__field__sucursal .mat-mdc-text-field-wrapper {
+  height: 35px !important;
+  width: 750px !important;
+}
+
+::ng-deep .form__field__sucursal .mdc-floating-label {
+  top: 50% !important;
+  margin-left: 0px;
+  transform: translateY(-50%) translateX(0) !important;
+  font-size: 14px !important;
+}
+
+::ng-deep .form__field__sucursal .mdc-floating-label.mdc-floating-label--float-above {
+  top: 0 !important;
+  margin-left: 2px !important;
+  transform: translateY(-50%) scale(0.75) !important;
+  font-size: 12px;
 }

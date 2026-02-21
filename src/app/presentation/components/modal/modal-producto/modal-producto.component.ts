@@ -2,32 +2,23 @@ import { Component, inject } from '@angular/core';
 import { IProducto } from '../../../../core/interfaces/producto';
 import { ProductoService } from '../../../../core/services/producto.service';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatIcon } from '@angular/material/icon';
-import { NgClass, NgIf } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatLabel, MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { MatTableDataSource } from '@angular/material/table';
+import { NgClass } from '@angular/common';
+import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
   selector: 'app-modal-producto',
   standalone: true,
   imports: [
-    MatTableModule,
-    MatIcon,
     NgClass,
-    MatLabel,
-    MatFormFieldModule,
-    NgIf,
-    MatButtonModule,
-    MatInputModule
+    MaterialModule
   ],
   templateUrl: './modal-producto.component.html',
   styleUrl: './modal-producto.component.scss'
 })
 export class ModalProductoComponent {
-  private productoService = inject(ProductoService);
-  private dialogRef = inject(MatDialogRef<ModalProductoComponent>);
+  private readonly productoService = inject(ProductoService);
+  private readonly dialogRef = inject(MatDialogRef<ModalProductoComponent>);
   dataSource = new MatTableDataSource<IProducto>([]);
   columnas: string[] = ['id', 'codigo', 'nombre', 'stock', 'estado', 'accion'];
   filtro = '';

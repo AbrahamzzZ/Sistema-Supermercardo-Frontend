@@ -2,31 +2,23 @@ import { Component, inject } from '@angular/core';
 import { ITransportista } from '../../../../core/interfaces/transportista';
 import { MatDialogRef } from '@angular/material/dialog';
 import { TransportistaService } from '../../../../core/services/transportista.service';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatIcon } from '@angular/material/icon';
-import { NgClass, NgIf } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { MatTableDataSource } from '@angular/material/table';
+import { NgClass } from '@angular/common';
+import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
   selector: 'app-modal-transportista',
   standalone: true,
   imports: [
-    MatTableModule,
-    MatIcon,
     NgClass,
-    MatFormFieldModule,
-    NgIf,
-    MatButtonModule,
-    MatInputModule
+    MaterialModule
   ],
   templateUrl: './modal-transportista.component.html',
   styleUrl: './modal-transportista.component.scss'
 })
 export class ModalTransportistaComponent {
-  private transportistaService = inject(TransportistaService);
-  private dialogRef = inject(MatDialogRef<ModalTransportistaComponent>);
+  private readonly transportistaService = inject(TransportistaService);
+  private readonly dialogRef = inject(MatDialogRef<ModalTransportistaComponent>);
   dataSource = new MatTableDataSource<ITransportista>([]);
   columnas: string[] = ['id', 'nombres', 'apellidos', 'cedula', 'estado', 'accion'];
   filtro = '';

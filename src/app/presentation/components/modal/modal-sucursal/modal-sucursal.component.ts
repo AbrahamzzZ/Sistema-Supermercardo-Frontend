@@ -1,32 +1,24 @@
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIcon } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { ISucursal } from '../../../../core/interfaces/sucursal';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SucursalService } from '../../../../core/services/sucursal.service';
+import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
   selector: 'app-modal-sucursal',
   standalone: true,
   imports: [
-    MatTableModule,
-    MatIcon,
     NgClass,
-    MatFormFieldModule,
-    NgIf,
-    MatButtonModule,
-    MatInputModule
+    MaterialModule
   ],
   templateUrl: './modal-sucursal.component.html',
   styleUrl: './modal-sucursal.component.scss'
 })
 export class ModalSucursalComponent {
-  private sucursalService = inject(SucursalService);
-  private dialogRef = inject(MatDialogRef<ModalSucursalComponent>);
+  private readonly sucursalService = inject(SucursalService);
+  private readonly dialogRef = inject(MatDialogRef<ModalSucursalComponent>);
   dataSource = new MatTableDataSource<ISucursal>([]);
   columnas: string[] = ['id', 'codigo', 'nombre', 'direccion', 'estado', 'accion'];
   filtro = '';
