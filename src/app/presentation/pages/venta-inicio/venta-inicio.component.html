@@ -1,265 +1,226 @@
 <div class="venta-formulario">
   <h1 class="venta-formulario__titulo">Formulario de venta</h1>
-</div>
 
-<div class="venta-formulario__contenedor">
-  <mat-card class="venta-formulario__card">
+  <div class="venta-formulario__contenedor">
+
+    <!-- Botón detalle -->
     <div class="venta-formulario__detalle-boton">
       <button mat-raised-button color="primary" (click)="verDetalleVenta()">
         <mat-icon>visibility</mat-icon>
         Ver detalle venta
       </button>
     </div>
-    <div class="venta-formulario__grupo-principal">
-      <!-- 1. Fecha y Tipo de Comprobante -->
-      <div class="venta-formulario__bloque venta-formulario__bloque--fecha-comprobante">
-        <div class="venta-formulario__fila">
-          <mat-form-field appearance="outline">
-            <mat-label>Fecha</mat-label>
-            <input matInput [value]="hoy" readonly />
-          </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Tipo Documento</mat-label>
-            <mat-select [(value)]="tipoComprobante">
-              <mat-option value="Boleta">Boleta</mat-option>
-              <mat-option value="Factura">Factura</mat-option>
-            </mat-select>
-          </mat-form-field>
+    <div class="venta-formulario__bloque venta-formulario__bloque--cabecera">
+      <h3 class="venta-formulario__subtitulo">Datos de la venta</h3>
 
-          <button class="venta-formulario__btn" mat-raised-button color="warn" (click)="limpiar()">
-            <mat-icon>cleaning_services</mat-icon>
-            Limpiar
-          </button>
-        </div>
-      </div>
-
-      <div class="venta-formulario__grupo venta-formulario__grupo--cliente-oferta">
-        <!-- 2. Datos de la Sucursal -->
-        <div class="venta-formulario__bloque venta-formulario__bloque--sucursal">
-          <div class="venta-formulario__fila">
-            <mat-form-field>
-              <input matInput placeholder="Código" [value]="sucursalSelecionada?.codigo" readonly />
-            </mat-form-field>
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Nombre"
-                [value]="sucursalSelecionada?.nombre_Sucursal"
-                readonly
-              />
-            </mat-form-field>
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Dirección"
-                [value]="sucursalSelecionada?.direccion_Sucursal"
-                readonly
-              />
-            </mat-form-field>
-            <button mat-raised-button color="primary" (click)="abrirModalSucursal()">
-              <mat-icon>search</mat-icon>
-              Buscar
-            </button>
-          </div>
-        </div>
-
-        <!-- 2. Datos del Cliente -->
-        <div class="venta-formulario__bloque venta-formulario__bloque--cliente">
-          <div class="venta-formulario__fila">
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Nombres"
-                [value]="clienteSeleccionado?.nombres"
-                readonly
-              />
-            </mat-form-field>
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Apellidos"
-                [value]="clienteSeleccionado?.apellidos"
-                readonly
-              />
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput placeholder="Cédula" [value]="clienteSeleccionado?.cedula" readonly />
-            </mat-form-field>
-            <button mat-raised-button color="primary" (click)="abrirModalClientes()">
-              <mat-icon>search</mat-icon>
-              Buscar
-            </button>
-          </div>
-        </div>
-
-        <!-- 3. Datos de la Oferta -->
-        <div class="venta-formulario__bloque venta-formulario__bloque--oferta">
-          <div class="venta-formulario__fila">
-            <mat-form-field>
-              <input matInput placeholder="Código" [value]="ofertaSeleccionado?.codigo" readonly />
-            </mat-form-field>
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Nombre"
-                [value]="ofertaSeleccionado?.nombre_Oferta"
-                readonly
-              />
-            </mat-form-field>
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Descuento"
-                [value]="ofertaSeleccionado?.descuento"
-                readonly
-              />
-            </mat-form-field>
-            <button mat-raised-button color="primary" (click)="abrirModalOfertas()">
-              <mat-icon>search</mat-icon>
-              Buscar
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 4. Datos del Producto -->
-    <div class="venta-formulario__bloque venta-formulario__bloque--producto">
+      <!-- Fecha / Tipo / Limpiar -->
       <div class="venta-formulario__fila">
-        <mat-form-field>
-          <input matInput placeholder="Código" [value]="productoSeleccionado?.codigo" readonly />
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Fecha</mat-label>
+          <input matInput [value]="hoy" readonly />
         </mat-form-field>
 
-        <mat-form-field>
-          <input
-            matInput
-            placeholder="Nombre"
-            [value]="productoSeleccionado?.nombre_Producto"
-            readonly
-          />
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Tipo Documento</mat-label>
+          <mat-select [(value)]="tipoComprobante">
+            <mat-option value="Boleta">Boleta</mat-option>
+            <mat-option value="Factura">Factura</mat-option>
+          </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
-          <input
-            matInput
-            placeholder="Precio Venta"
-            [value]="productoSeleccionado?.precio_Venta | currency: 'USD' : 'symbol'"
-            readonly
-          />
+        <button mat-raised-button color="warn" (click)="limpiar()">
+          <mat-icon>cleaning_services</mat-icon>
+          Limpiar
+        </button>
+      </div>
+
+      <!-- Sucursal -->
+      <div class="venta-formulario__fila">
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Sucursal</mat-label>
+          <input matInput [value]="sucursalSelecionada?.nombre_Sucursal" readonly />
         </mat-form-field>
 
-        <mat-form-field>
-          <input matInput placeholder="Stock" [value]="productoSeleccionado?.stock" readonly />
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Dirección</mat-label>
+          <input matInput [value]="sucursalSelecionada?.direccion_Sucursal" readonly />
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Cantidad</mat-label>
-          <input type="number" step="1" matInput [(ngModel)]="producto.cantidad" />
-        </mat-form-field>
-
-        <button mat-raised-button color="primary" (click)="abrirModalProductos()">
+        <button mat-raised-button color="primary" (click)="abrirModalSucursal()">
           <mat-icon>search</mat-icon>
           Buscar
         </button>
       </div>
-    </div>
 
-    <div class="venta-formulario__fila venta-formulario__fila--acciones">
-      <!-- 5. Agregar Producto / Registrar Venta -->
-      <div class="venta-formulario__acciones">
-        <div class="venta-formulario__contenedor-boton">
-          <mat-form-field appearance="outline">
-            <mat-label>Total a Pagar</mat-label>
-            <input matInput [value]="mostrarTotal() | currency: 'USD' : 'symbol'" readonly />
+      <!-- Cliente -->
+      <div class="venta-formulario__fila">
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Cliente</mat-label>
+          <input matInput
+            [value]="clienteSeleccionado ? clienteSeleccionado.nombres + ' ' + clienteSeleccionado.apellidos : ''"
+            readonly />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Cédula</mat-label>
+          <input matInput [value]="clienteSeleccionado?.cedula" readonly />
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="abrirModalClientes()">
+          <mat-icon>search</mat-icon>
+          Buscar
+        </button>
+      </div>
+
+      <!-- Oferta -->
+      <div class="venta-formulario__fila">
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Oferta</mat-label>
+          <input matInput placeholder="Nombre" [value]="ofertaSeleccionado?.nombre_Oferta" readonly />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Descuento</mat-label>
+          <input matInput placeholder="Descuento" [value]="ofertaSeleccionado?.descuento" readonly />
+          <span matSuffix>% &nbsp;</span>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="abrirModalOfertas()">
+          <mat-icon>search</mat-icon>
+          Buscar
+        </button>
+      </div>
+
+      <!-- PRODUCTO -->
+      <div class="venta-formulario__bloque">
+        <h3 class="venta-formulario__subtitulo">Producto</h3>
+
+        <div class="venta-formulario__fila">
+          <mat-form-field appearance="outline" class="form__field">
+            <mat-label>Código</mat-label>
+            <input matInput [value]="productoSeleccionado?.codigo" readonly />
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Con descuento</mat-label>
-            <input matInput [value]="totalConDescuento | currency: 'USD' : 'symbol'" readonly />
+          <mat-form-field appearance="outline" class="form__field">
+            <mat-label>Nombre</mat-label>
+            <input matInput [value]="productoSeleccionado?.nombre_Producto" readonly />
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Paga con</mat-label>
-            <input matInput [(ngModel)]="pagaCon" (ngModelChange)="calcularCambio()" />
+          <mat-form-field appearance="outline" class="form__field">
+            <mat-label>Precio Venta</mat-label>
+            <input matInput type="number" [(ngModel)]="producto.precioVenta" />
+            <span matTextPrefix>$&nbsp;</span>
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Cambio</mat-label>
-            <input matInput [value]="cambio | currency: 'USD' : 'symbol'" readonly />
+          <mat-form-field appearance="outline" class="form__field">
+            <mat-label>Cantidad</mat-label>
+            <input matInput type="number" [(ngModel)]="producto.cantidad" />
           </mat-form-field>
 
-          <button
-            class="venta-formulario__btn"
-            mat-raised-button
-            color="accent"
-            (click)="agregarProducto()"
-          >
-            <mat-icon>add_circle</mat-icon>
-            Agregar Producto
-          </button>
-
-          <button
-            class="venta-formulario__btn"
-            mat-raised-button
-            color="primary"
-            (click)="registrarVenta()"
-          >
-            Registrar Venta
+          <button mat-raised-button color="primary" (click)="abrirModalProductos()">
+            <mat-icon>search</mat-icon>
+            Buscar
           </button>
         </div>
       </div>
+    
+      <!-- ACCIONES + TABLA -->
+      <div class="venta-formulario__acciones-grid">
 
-      <!-- 6. Tabla de Productos Agregados -->
-      <div class="venta-formulario__tabla">
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-          <ng-container matColumnDef="ID">
-            <th mat-header-cell *matHeaderCellDef>ID</th>
-            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-          </ng-container>
+        <!-- ACCIONES -->
+        <div class="venta-formulario__acciones">
+          <div class="venta-formulario__totales-card">
+            <div class="venta-formulario__totales-grid">
+              <mat-form-field appearance="outline" class="form__field">
+                <mat-label>Total</mat-label>
+                <span matTextPrefix>$&nbsp;</span>
+                <input matInput [value]="mostrarTotal()" readonly />
+              </mat-form-field>
 
-          <ng-container matColumnDef="nombre">
-            <th mat-header-cell *matHeaderCellDef>Nombre</th>
-            <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
-          </ng-container>
+              <mat-form-field appearance="outline" class="form__field">
+                <mat-label>Con descuento</mat-label>
+                <span matTextPrefix>$&nbsp;</span>
+                <input matInput [value]="totalConDescuento" readonly />
+              </mat-form-field>
 
-          <ng-container matColumnDef="precioVenta">
-            <th mat-header-cell *matHeaderCellDef>Precio Venta</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.precioVenta | currency: 'USD' : 'symbol' }}
-            </td>
-          </ng-container>
+              <mat-form-field appearance="outline" class="form__field">
+                <mat-label>Paga con</mat-label>
+                <span matTextPrefix>$&nbsp;</span>
+                <input matInput [(ngModel)]="pagaCon" (ngModelChange)="calcularCambio()" />
+              </mat-form-field>
 
-          <ng-container matColumnDef="cantidad">
-            <th mat-header-cell *matHeaderCellDef>Cantidad</th>
-            <td mat-cell *matCellDef="let element">{{ element.cantidad }}</td>
-          </ng-container>
+              <mat-form-field appearance="outline" class="form__field">
+                <mat-label>Cambio</mat-label>
+                <span matTextPrefix>$&nbsp;</span>
+                <input matInput [value]="cambio" readonly />
+              </mat-form-field>
+            </div>
+          </div>
 
-          <ng-container matColumnDef="subtotal">
-            <th mat-header-cell *matHeaderCellDef>Subtotal</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.subtotal | currency: 'USD' : 'symbol' }}
-            </td>
-          </ng-container>
+          <button mat-raised-button color="accent" (click)="agregarProducto()">
+            <mat-icon>add_circle</mat-icon>
+            Agregar producto
+          </button>
 
-          <ng-container matColumnDef="descuento">
-            <th mat-header-cell *matHeaderCellDef>Descuento</th>
-            <td mat-cell *matCellDef="let element">{{ element.descuento + '%' }}</td>
-          </ng-container>
+          <button mat-raised-button color="primary" (click)="registrarVenta()">
+            Registrar venta
+          </button>
+        </div>
 
-          <ng-container matColumnDef="accion">
-            <th mat-header-cell *matHeaderCellDef>Accion</th>
-            <td mat-cell *matCellDef="let element; let i = index">
-              <button mat-icon-button color="warn" (click)="eliminarProducto(i)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
+        <!-- TABLA -->
+        <div class="venta-formulario__tabla">    
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            
+            <ng-container matColumnDef="ID">
+              <th mat-header-cell *matHeaderCellDef>ID</th>
+              <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+            </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="columnasTabla"></tr>
-          <tr mat-row *matRowDef="let row; columns: columnasTabla"></tr>
-        </table>
+            <ng-container matColumnDef="nombre">
+              <th mat-header-cell *matHeaderCellDef>Nombre</th>
+              <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="precioVenta">
+              <th mat-header-cell *matHeaderCellDef>Precio Venta</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.precioVenta | currency: 'USD' : 'symbol' }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="cantidad">
+              <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+              <td mat-cell *matCellDef="let element">{{ element.cantidad }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="subtotal">
+              <th mat-header-cell *matHeaderCellDef>Subtotal</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.subtotal | currency: 'USD' : 'symbol' }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="descuento">
+              <th mat-header-cell *matHeaderCellDef>Descuento</th>
+              <td mat-cell *matCellDef="let element">{{ element.descuento + '%' }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="accion">
+              <th mat-header-cell *matHeaderCellDef>Accion</th>
+              <td mat-cell *matCellDef="let element; let i = index">
+                <button mat-icon-button (click)="eliminarProducto(i)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columnasTabla"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnasTabla"></tr>
+          </table>
+
+          <mat-paginator [pageSize]="2" [pageSizeOptions]="[2]" showFirstLastButtons></mat-paginator>
+        </div>
       </div>
-    </div>
-  </mat-card>
+  </div>
 </div>

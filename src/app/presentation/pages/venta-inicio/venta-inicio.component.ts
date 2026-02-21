@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -19,6 +19,7 @@ import { DialogoNumeroDocumentoComponent } from '../../components/dialog/dialogo
 import { ModalSucursalComponent } from '../../components/modal/modal-sucursal/modal-sucursal.component';
 import { ISucursal } from '../../../core/interfaces/sucursal';
 import { MaterialModule } from '../../../shared/ui/material-module';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-venta-inicio',
@@ -31,7 +32,7 @@ import { MaterialModule } from '../../../shared/ui/material-module';
   templateUrl: './venta-inicio.component.html',
   styleUrl: './venta-inicio.component.scss'
 })
-export class VentaInicioComponent implements OnInit{
+export class VentaInicioComponent implements OnInit, AfterViewInit{
   private router = inject(Router);
   private dialog = inject(MatDialog);
   public hoy = new Date().toISOString().substring(0, 10);
@@ -61,9 +62,14 @@ export class VentaInicioComponent implements OnInit{
   public cambio = 0;
   public totalConDescuento = 0;
   public montoDescuento = 0;
-
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  
   ngOnInit(): void {
     this.obtenerNumeroDocumento();
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
   }
 
   abrirModalSucursal() {
@@ -110,6 +116,8 @@ export class VentaInicioComponent implements OnInit{
     dialogRef.afterClosed().subscribe((result: IProducto) => {
       if (result) {
         this.productoSeleccionado = result;
+
+        this.producto.precioVenta = Number(result.precio_Venta);
       }
     });
   }

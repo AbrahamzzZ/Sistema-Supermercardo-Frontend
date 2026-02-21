@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ModalProveedorComponent } from '../../components/modal/modal-proveedor/modal-proveedor.component';
 import { IProveedor } from '../../../core/interfaces/proveedor';
@@ -18,6 +18,7 @@ import { DialogoNumeroDocumentoComponent } from '../../components/dialog/dialogo
 import { ISucursal } from '../../../core/interfaces/sucursal';
 import { ModalSucursalComponent } from '../../components/modal/modal-sucursal/modal-sucursal.component';
 import { MaterialModule } from '../../../shared/ui/material-module';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-compra-inicio',
@@ -29,12 +30,12 @@ import { MaterialModule } from '../../../shared/ui/material-module';
   templateUrl: './compra-inicio.component.html',
   styleUrl: './compra-inicio.component.scss'
 })
-export class CompraInicioComponent implements OnInit {
-  private servicioCompra = inject(CompraService);
-  private snackBar = inject(MatSnackBar);
-  private loginServicio = inject(LoginService);
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
+export class CompraInicioComponent implements OnInit, AfterViewInit {
+  private readonly servicioCompra = inject(CompraService);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly loginServicio = inject(LoginService);
+  private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
   public hoy = new Date().toISOString().substring(0, 10);
   public tipoComprobante = 'Boleta';
   public proveedorSeleccionado: IProveedor | null = null;
@@ -54,9 +55,14 @@ export class CompraInicioComponent implements OnInit {
     'accion'
   ];
   public numeroDocumento = '';
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngOnInit(): void {
     this.obtenerNumeroDocumento();
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
   }
 
   abrirModalSucursales() {
