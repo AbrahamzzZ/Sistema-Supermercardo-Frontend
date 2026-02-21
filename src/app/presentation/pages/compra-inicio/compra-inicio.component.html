@@ -1,168 +1,130 @@
 <div class="compra-formulario">
   <h1 class="compra-formulario__titulo">Formulario de compra</h1>
-</div>
 
-<div class="compra-formulario__contenedor">
-  <mat-card class="compra-formulario__card">
+  <div class="compra-formulario__contenedor">
+
+    <!-- Botón ver detalle -->
     <div class="compra-formulario__detalle-boton">
       <button mat-raised-button color="primary" (click)="verDetalleCompra()">
         <mat-icon>visibility</mat-icon>
         Ver detalle compra
       </button>
     </div>
-    <div class="compra-formulario__grupo-principal">
-      <!-- 1. Fecha y Tipo de Comprobante -->
-      <div class="compra-formulario__bloque compra-formulario__bloque--fecha-comprobante">
-        <div class="compra-formulario__fila">
-          <mat-form-field appearance="outline">
-            <mat-label>Fecha</mat-label>
-            <input matInput [value]="hoy" readonly />
-          </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Tipo Documento</mat-label>
-            <mat-select [(value)]="tipoComprobante">
-              <mat-option value="Boleta">Boleta</mat-option>
-              <mat-option value="Factura">Factura</mat-option>
-            </mat-select>
-          </mat-form-field>
+    <!-- CABECERA DE COMPRA -->
+    <div class="compra-formulario__bloque compra-formulario__bloque--cabecera">
+      <h3 class="compra-formulario__subtitulo">Datos de la compra</h3>
 
-          <button class="compra-formulario__btn" mat-raised-button color="warn" (click)="limpiar()">
-            <mat-icon>cleaning_services</mat-icon>
-            Limpiar
-          </button>
-        </div>
+      <!-- Fecha / Tipo / Limpiar -->
+      <div class="compra-formulario__fila">
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Fecha</mat-label>
+          <input matInput [value]="hoy" readonly />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Tipo Documento</mat-label>
+          <mat-select [(value)]="tipoComprobante">
+            <mat-option value="Boleta">Boleta</mat-option>
+            <mat-option value="Factura">Factura</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button color="warn" (click)="limpiar()">
+          <mat-icon>cleaning_services</mat-icon>
+          Limpiar
+        </button>
       </div>
 
-      <div class="compra-formulario__grupo compra-formulario__grupo--proveedor-transportista">
-        <!-- 2. Datos de la Sucursal -->
-        <div class="compra-formulario__bloque compra-formulario__bloque--sucursal">
-          <div class="compra-formulario__fila">
-            <mat-form-field>
-              <input matInput placeholder="Código" [value]="sucursalSelecionada?.codigo" readonly />
-            </mat-form-field>
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Nombre"
-                [value]="sucursalSelecionada?.nombre_Sucursal"
-                readonly
-              />
-            </mat-form-field>
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Dirección"
-                [value]="sucursalSelecionada?.direccion_Sucursal"
-                readonly
-              />
-            </mat-form-field>
-            <button mat-raised-button color="primary" (click)="abrirModalSucursales()">
-              <mat-icon>search</mat-icon>
-              Buscar
-            </button>
-          </div>
-        </div>
+      <!-- Sucursal -->
+      <div class="compra-formulario__fila">
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Sucursal</mat-label>
+          <input matInput [value]="sucursalSelecionada?.nombre_Sucursal" readonly />
+        </mat-form-field>
 
-        <!-- 3. Datos del Proveedor -->
-        <div class="compra-formulario__bloque compra-formulario__bloque--proveedor">
-          <div class="compra-formulario__fila">
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Nombres"
-                [value]="proveedorSeleccionado?.nombres"
-                readonly
-              />
-            </mat-form-field>
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Apellidos"
-                [value]="proveedorSeleccionado?.apellidos"
-                readonly
-              />
-            </mat-form-field>
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Cédula"
-                [value]="proveedorSeleccionado?.cedula"
-                readonly
-              />
-            </mat-form-field>
-            <button mat-raised-button color="primary" (click)="abrirModalProveedores()">
-              <mat-icon>search</mat-icon>
-              Buscar
-            </button>
-          </div>
-        </div>
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Dirección</mat-label>
+          <input matInput [value]="sucursalSelecionada?.direccion_Sucursal" readonly />
+        </mat-form-field>
 
-        <!-- 4. Datos del Transportista -->
-        <div class="compra-formulario__bloque compra-formulario__bloque--transportista">
-          <div class="compra-formulario__fila">
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Nombres"
-                [value]="transportistaSeleccionado?.nombres"
-                readonly
-              />
-            </mat-form-field>
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Apellidos"
-                [value]="transportistaSeleccionado?.apellidos"
-                readonly
-              />
-            </mat-form-field>
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Cédula"
-                [value]="transportistaSeleccionado?.cedula"
-                readonly
-              />
-            </mat-form-field>
-            <button mat-raised-button color="primary" (click)="abrirModalTransportistas()">
-              <mat-icon>search</mat-icon>
-              Buscar
-            </button>
-          </div>
-        </div>
+        <button mat-raised-button color="primary" (click)="abrirModalSucursales()">
+          <mat-icon>search</mat-icon>
+          Buscar
+        </button>
+      </div>
+
+      <!-- Proveedor -->
+      <div class="compra-formulario__fila">
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Proveedor</mat-label>
+          <input matInput
+            [value]="proveedorSeleccionado ? proveedorSeleccionado.nombres + ' ' + proveedorSeleccionado.apellidos : ''"
+            readonly />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Cédula</mat-label>
+          <input matInput [value]="proveedorSeleccionado?.cedula" readonly />
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="abrirModalProveedores()">
+          <mat-icon>search</mat-icon>
+          Buscar
+        </button>
+      </div>
+
+      <!-- Transportista -->
+      <div class="compra-formulario__fila">
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Transportista</mat-label>
+          <input matInput
+            [value]="transportistaSeleccionado ? transportistaSeleccionado.nombres + ' ' + transportistaSeleccionado.apellidos : ''"
+            readonly />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Cédula</mat-label>
+          <input matInput [value]="transportistaSeleccionado?.cedula" readonly />
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="abrirModalTransportistas()">
+          <mat-icon>search</mat-icon>
+          Buscar
+        </button>
       </div>
     </div>
 
-    <!-- 5. Datos del Producto -->
-    <div class="compra-formulario__bloque compra-formulario__bloque--producto">
+    <!-- PRODUCTO -->
+    <div class="compra-formulario__bloque">
+      <h3 class="compra-formulario__subtitulo">Producto</h3>
+
       <div class="compra-formulario__fila">
-        <mat-form-field>
-          <input matInput placeholder="Código" [value]="productoSeleccionado?.codigo" readonly />
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Código</mat-label>
+          <input matInput [value]="productoSeleccionado?.codigo" readonly />
         </mat-form-field>
 
-        <mat-form-field>
-          <input
-            matInput
-            placeholder="Nombre"
-            [value]="productoSeleccionado?.nombre_Producto"
-            readonly
-          />
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Nombre</mat-label>
+          <input matInput [value]="productoSeleccionado?.nombre_Producto" readonly />
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>Precio Compra</mat-label>
-          <input matInput step="0.01" min="0" type="number" [(ngModel)]="producto.precioCompra" />
+          <input matInput type="number" [(ngModel)]="producto.precioCompra" />
+          <span matTextPrefix>$&nbsp;</span> 
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>Precio Venta</mat-label>
-          <input matInput type="number" step="0.01" min="0" [(ngModel)]="producto.precioVenta" />
+          <input matInput type="number" [(ngModel)]="producto.precioVenta" />
+          <span matTextPrefix>$&nbsp;</span>       
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>Cantidad</mat-label>
-          <input type="number" matInput [(ngModel)]="producto.cantidad" />
+          <input matInput type="number" [(ngModel)]="producto.cantidad" />
         </mat-form-field>
 
         <button mat-raised-button color="primary" (click)="abrirModalProductos()">
@@ -172,75 +134,65 @@
       </div>
     </div>
 
-    <div class="compra-formulario__fila compra-formulario__fila--acciones">
-      <!-- 6. Agregar Producto / Registrar Compra -->
+    <!-- ACCIONES + TABLA -->
+    <div class="compra-formulario__acciones-grid">
+
+      <!-- ACCIONES -->
       <div class="compra-formulario__acciones">
-        <div class="compra-formulario__contenedor-boton">
-          <mat-form-field appearance="outline">
-            <mat-label>Total a Pagar</mat-label>
-            <input matInput [value]="calcularTotal()" readonly />
-          </mat-form-field>
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Total a pagar</mat-label>
+          <input matInput [value]="calcularTotal()" readonly />
+          <span matTextPrefix>$&nbsp;</span>
+        </mat-form-field>
 
-          <button
-            class="compra-formulario__btn"
-            mat-raised-button
-            color="accent"
-            (click)="agregarProducto()"
-          >
-            <mat-icon>add_circle</mat-icon>
-            Agregar Producto
-          </button>
+        <button mat-raised-button color="accent" (click)="agregarProducto()">
+          <mat-icon>add_circle</mat-icon>
+          Agregar producto
+        </button>
 
-          <button
-            class="compra-formulario__btn"
-            mat-raised-button
-            color="primary"
-            (click)="registrarCompra()"
-          >
-            Registrar Compra
-          </button>
-        </div>
+        <button mat-raised-button color="primary" (click)="registrarCompra()">
+          Registrar compra
+        </button>
       </div>
 
-      <!-- 7. Tabla de Productos Agregados -->
+      <!-- TABLA -->
       <div class="compra-formulario__tabla">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
           <ng-container matColumnDef="ID">
             <th mat-header-cell *matHeaderCellDef>ID</th>
-            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+            <td mat-cell *matCellDef="let e">{{ e.id }}</td>
           </ng-container>
 
           <ng-container matColumnDef="nombre">
             <th mat-header-cell *matHeaderCellDef>Nombre</th>
-            <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+            <td mat-cell *matCellDef="let e">{{ e.nombre }}</td>
           </ng-container>
 
           <ng-container matColumnDef="precioCompra">
-            <th mat-header-cell *matHeaderCellDef>Precio Compra</th>
-            <td mat-cell *matCellDef="let element">{{ element.precioCompra }}</td>
+            <th mat-header-cell *matHeaderCellDef>Compra</th>
+            <td mat-cell *matCellDef="let e">{{ e.precioCompra }}</td>
           </ng-container>
 
           <ng-container matColumnDef="precioVenta">
-            <th mat-header-cell *matHeaderCellDef>Precio Venta</th>
-            <td mat-cell *matCellDef="let element">{{ element.precioVenta }}</td>
+            <th mat-header-cell *matHeaderCellDef>Venta</th>
+            <td mat-cell *matCellDef="let e">{{ e.precioVenta }}</td>
           </ng-container>
 
           <ng-container matColumnDef="cantidad">
             <th mat-header-cell *matHeaderCellDef>Cantidad</th>
-            <td mat-cell *matCellDef="let element">{{ element.cantidad }}</td>
+            <td mat-cell *matCellDef="let e">{{ e.cantidad }}</td>
           </ng-container>
 
           <ng-container matColumnDef="subtotal">
             <th mat-header-cell *matHeaderCellDef>Subtotal</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.precioCompra * element.cantidad }}
-            </td>
+            <td mat-cell *matCellDef="let e">{{ e.precioCompra * e.cantidad }}</td>
           </ng-container>
 
           <ng-container matColumnDef="accion">
-            <th mat-header-cell *matHeaderCellDef>Accion</th>
-            <td mat-cell *matCellDef="let element; let i = index">
-              <button mat-icon-button color="warn" (click)="eliminarProducto(i)">
+            <th mat-header-cell *matHeaderCellDef>Acción</th>
+            <td mat-cell *matCellDef="let e; let i = index">
+              <button mat-icon-button (click)="eliminarProducto(i)">
                 <mat-icon>delete</mat-icon>
               </button>
             </td>
@@ -249,7 +201,9 @@
           <tr mat-header-row *matHeaderRowDef="columnasTabla"></tr>
           <tr mat-row *matRowDef="let row; columns: columnasTabla"></tr>
         </table>
+
+        <mat-paginator [pageSize]="2" [pageSizeOptions]="[2]" showFirstLastButtons></mat-paginator>
       </div>
     </div>
-  </mat-card>
+  </div>
 </div>
