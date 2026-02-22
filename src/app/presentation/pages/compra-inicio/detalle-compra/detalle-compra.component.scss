@@ -1,4 +1,6 @@
 .compra {
+  padding: 20px;
+
   &__titulo {
     text-align: center;
     font-size: 2rem;
@@ -11,7 +13,7 @@
     padding-right: 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 10px;
   }
 
   &__busqueda {
@@ -19,7 +21,6 @@
     justify-content: space-between;
     gap: 16px;
     flex-wrap: wrap;
-
 
     &-input {
       width: 100%;
@@ -59,7 +60,7 @@
   &__seccion {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: 10px;
 
     @media (max-width: 1024px) {
       grid-template-columns: repeat(2, 1fr);
@@ -70,44 +71,49 @@
     }
   }
 
+  .compra__datos {
+    grid-column: 1;
+  }
+
+  .compra__sucursal {
+    grid-column: 2;
+  }
+
+  .compra__proveedor {
+    grid-column: 3;
+  }
+
+  .compra__transportista {
+    grid-column: 1;
+  }
+
+  .compra__tabla--main {
+    grid-column: 2 / span 2;
+    align-self: start;
+  }
+
+  .compra__totales {
+    grid-column: 1;
+    align-self: end;
+    margin-bottom: -10px;
+  }
+
   &__grupo {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 1rem;
     border-radius: 10px;
-    background: #f9f9f9;
-  }
-
-  &__grupo--totales {
-    background: #eef7ee;
   }
 
   .campo-horizontal {
     display: grid;
-    grid-template-columns: 100px 1fr;
     align-items: baseline;
-
-    label {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #444;
-      text-align: right;
-    }
-
-    mat-form-field {
-      width: 100%;
-    }
   }
 
-  @media (max-width: 768px) {
-    .campo-horizontal {
-      grid-template-columns: 1fr;
-
-      label {
-        text-align: left;
-      }
-    }
+  p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: -2px;
   }
 
   &__tabla {
@@ -116,19 +122,113 @@
     table {
       width: 100%;
     }
+
+    tr {
+      height: 43px;
+    }
   }
 }
 
-::ng-deep .campo-horizontal .mat-mdc-text-field-wrapper {
-  height: 34px !important;
+@media (max-width: 1024px) {
+
+  .compra__seccion {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .compra__tabla--main {
+    grid-column: 1 / span 2;
+  }
+
+  .compra__totales {
+    grid-column: 1;
+  }
 }
 
-::ng-deep .campo-horizontal input.mat-mdc-input-element {
-  padding-bottom: 6px;
+@media (max-width: 768px) {
+
+  .compra {
+    padding: 12px;
+  }
+
+  .compra__formulario {
+    padding: 0;
+  }
+
+  .compra__busqueda {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .compra__busqueda-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .compra__busqueda-actions {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .compra__seccion {
+    grid-template-columns: 1fr;
+    row-gap: 16px;
+  }
+
+  .compra__datos,
+  .compra__sucursal,
+  .compra__proveedor,
+  .compra__transportista,
+  .compra__tabla--main,
+  .compra__totales {
+    grid-column: 1;
+  }
+
+  ::ng-deep .form__field .mat-mdc-text-field-wrapper,
+  ::ng-deep .form__field__search .mat-mdc-text-field-wrapper {
+    width: 100% !important;
+  }
+
+  .compra__tabla {
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 600px;
+  }
+
+  .compra__grupo--totales {
+    padding: 12px;
+    border-radius: 8px;
+  }
+
+  .campo-horizontal {
+    row-gap: 6px;
+  }
 }
 
-::ng-deep .mat-mdc-form-field .mdc-floating-label {
-  transform: translateY(-100%) translateX(calc(1 * (52px + var(--mat-mdc-form-field-label-offset-x, 0px)))) !important;
+@media (max-width: 480px) {
+
+  .compra__titulo {
+    font-size: 1.4rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  .compra__busqueda-actions button {
+    width: 100%;
+  }
+
+  .compra__busqueda-actions {
+    flex-direction: column;
+  }
+
+  table {
+    min-width: 520px;
+  }
 }
 
 ::ng-deep .form__field .mat-mdc-form-field-subscript-wrapper{
@@ -137,7 +237,6 @@
 
 ::ng-deep .form__field .mat-mdc-text-field-wrapper {
   height: 35px !important;
-  width: 350px;
 }
 
 ::ng-deep .mat-mdc-form-field-flex{
@@ -161,4 +260,23 @@
 ::ng-deep .mat-mdc-form-field-error {
   font-size: 0.85rem;
   font-weight: 500;
+}
+
+::ng-deep .form__field__search .mat-mdc-text-field-wrapper{
+  height: 35px !important;
+  width: 350px !important;
+}
+
+::ng-deep .form__field__search .mdc-floating-label {
+  top: 50% !important;
+  margin-left: 0px;
+  transform: translateY(-50%) translateX(0) !important;
+  font-size: 14px !important;
+}
+
+::ng-deep .form__field__search .mdc-floating-label.mdc-floating-label--float-above {
+  top: 0 !important;
+  margin-left: 2px !important;
+  transform: translateY(-50%) scale(0.75) !important;
+  font-size: 12px;
 }

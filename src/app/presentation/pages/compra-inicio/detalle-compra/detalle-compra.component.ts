@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
@@ -7,6 +7,7 @@ import { CompraService } from '../../../../core/services/compra.service';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { MaterialModule } from '../../../../shared/ui/material-module';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-detalle-compra',
@@ -19,7 +20,7 @@ import { MaterialModule } from '../../../../shared/ui/material-module';
   templateUrl: './detalle-compra.component.html',
   styleUrl: './detalle-compra.component.scss'
 })
-export class DetalleCompraComponent implements OnInit{
+export class DetalleCompraComponent implements OnInit, AfterViewInit{
   public mensajeBusqueda = '';
   public compra!: FormGroup;
   private readonly fb = inject(FormBuilder);
@@ -34,6 +35,7 @@ export class DetalleCompraComponent implements OnInit{
     'cantidad',
     'subTotal'
   ];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngOnInit(): void {
     this.compra = this.fb.group({
@@ -43,12 +45,18 @@ export class DetalleCompraComponent implements OnInit{
       nombreUsuario: [''],
       nombreSucursal: [''],
       direccionSucursal: [''],
+      codigoProveedor: [''],
       proveedor: [''],
       cedulaProveedor: [''],
+      codigoTransportista: [''],
       transportista: [''],
       cedulaTransportista: [''],
       totalPagar: ['']
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
   }
 
   filtrarCompra(numeroDocumento: string) {
@@ -84,8 +92,10 @@ export class DetalleCompraComponent implements OnInit{
           nombreUsuario: compra.nombre_Completo,
           nombreSucursal: compra.nombre_Sucursal,
           direccionSucursal: compra.direccion_Sucursal,
+          codigoProveedor: compra.codigo_Proveedor,
           proveedor: `${compra.nombres_Proveedor} ${compra.apellidos_Proveedor}`,
           cedulaProveedor: compra.cedula_Proveedor,
+          codigoTransportista: compra.codigo_Transportista,
           transportista: `${compra.nombres_Transportista} ${compra.apellidos_Transportista}`,
           cedulaTransportista: compra.cedula_Transportista,
           totalPagar: compra.monto_Total

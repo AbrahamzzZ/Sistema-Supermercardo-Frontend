@@ -1,6 +1,5 @@
 .compra-formulario {
   padding: 20px;
-  max-width: 1400px;
   margin: auto;
 }
 
@@ -72,6 +71,10 @@ table {
 th,
 td {
   text-align: center;
+}
+
+tr {
+  height: 40px;
 }
 
 @media (max-width: 1024px) {
