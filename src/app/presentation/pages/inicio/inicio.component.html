@@ -1,40 +1,76 @@
 <div class="container">
-  <mat-card class="supermarket">
-    <mat-card-header class="supermarket__header">
-      <mat-card-title class="supermarket__title">Minimarket Mi Tienda</mat-card-title>
-      <mat-card-subtitle class="supermarket__subtitle"
-        >Siempre productos frescos y al mejor precio</mat-card-subtitle
-      >
-    </mat-card-header>
 
-    <mat-card-content class="supermarket__content">
-      <img
-        src="../../../assets/images/supermercadoGranAki.png"
-        alt="Supermercado"
-        class="supermarket__image"
-      />
-    </mat-card-content>
-
-    <mat-card-footer class="supermarket__footer">
-      <p class="supermarket__info">
-        <strong>📍 Dirección:</strong> Av. Principal 123, Ciudad-Guayaquil <br />
-        <strong>🕒 Horario:</strong> Lunes a Domingo, 7:00 AM - 10:00 PM <br />
-        <strong>🏷️ Promociones:</strong> Descuentos especiales todos los viernes
-      </p>
-    </mat-card-footer>
-  </mat-card>
-  @if (ofertaActual) {
-    <div class="oferta-container">
-      <mat-card class="oferta-card">
-        <mat-card-header>
-          <mat-card-title>{{ ofertaActual.nombre_Oferta }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>📝 {{ ofertaActual.descripcion }}</p>
-          <p><strong>💰 Descuento:</strong> {{ ofertaActual.descuento }}%</p>
-          <p><strong>📅 Válido hasta:</strong> {{ ofertaActual.fecha_Fin | formatoFecha }}</p>
-        </mat-card-content>
-      </mat-card>
+  <header class="page-header">
+    <div>
+      <h1>Panel administrativo</h1>
+      <p class="subtitle">Acceso rápido a registros y reportes</p>
     </div>
+  </header>
+
+  @if(ofertas.length > 0){
+    <section class="oferta-container">
+      <div class="ofertas-viewport">
+
+        <div
+          class="ofertas-track"
+          [style.animationDuration]="animationDuration"
+          [class.no-animation]="ofertas.length === 1"
+        >
+          @for(oferta of ofertas; track $index){
+            <div class="oferta-item">
+              <mat-card class="oferta-card">
+                <mat-card-header>
+                  <mat-card-title>{{ oferta.nombre_Oferta }}</mat-card-title>
+                  <mat-card-subtitle>
+                    💰 {{ oferta.descuento }}% — Hasta {{ oferta.fecha_Fin | formatoFecha }}
+                  </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                  <p class="descripcion">{{ oferta.descripcion }}</p>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          }
+
+          @for(oferta of ofertas; track $index){
+            <div class="oferta-item">
+              <mat-card class="oferta-card">
+                <mat-card-header>
+                  <mat-card-title>{{ oferta.nombre_Oferta }}</mat-card-title>
+                  <mat-card-subtitle>
+                    💰 {{ oferta.descuento }}% — Hasta {{ oferta.fecha_Fin | formatoFecha }}
+                  </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                  <p class="descripcion">{{ oferta.descripcion }}</p>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
   }
+
+  <section class="quick-actions">
+    <mat-card class="action-card" (click)="irAVentas()">
+      <mat-icon>point_of_sale</mat-icon>
+      <span>Registrar venta</span>
+    </mat-card>
+
+    <mat-card class="action-card" (click)="irAProductos()">
+      <mat-icon>inventory_2</mat-icon>
+      <span>Registrar productos</span>
+    </mat-card>
+
+    <mat-card class="action-card" (click)="irAOfertas()">
+      <mat-icon>local_offer</mat-icon>
+      <span>Registrar ofertas</span>
+    </mat-card>
+
+    <mat-card class="action-card" (click)="irAReportes()">
+      <mat-icon>bar_chart</mat-icon>
+      <span>Reportes</span>
+    </mat-card>
+  </section>
 </div>
