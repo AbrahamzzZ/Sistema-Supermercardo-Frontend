@@ -20,3 +20,25 @@
   flex-grow: 1;
   overflow-y: auto;
 }
+
+@media (max-width: 768px) {
+
+  .app-container {
+    display: block;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .content {
+    margin-left: 0 !important;
+    width: 100%;
+  }
+
+  .content-expanded {
+    margin-left: 0 !important;
+  }
+
+  .content-inner {
+    padding: 8px;
+  }
+}

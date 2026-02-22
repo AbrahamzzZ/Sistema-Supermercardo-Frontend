@@ -94,3 +94,29 @@
 .text{
   font-size: 14px;
 }
+
+@media (max-width: 768px) {
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 260px;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.sidebar-collapsed {
+    transform: translateX(0);
+    width: 260px;
+  }
+
+  .sidebar-toggle-btn-inside {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1100;
+  }
+}
