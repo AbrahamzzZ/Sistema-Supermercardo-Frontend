@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { VentaService } from '../../../../core/services/venta.service';
@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { MaterialModule } from '../../../../shared/ui/material-module';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-detalle-venta',
@@ -19,7 +20,7 @@ import { MaterialModule } from '../../../../shared/ui/material-module';
   templateUrl: './detalle-venta.component.html',
   styleUrl: './detalle-venta.component.scss'
 })
-export class DetalleVentaComponent implements OnInit {
+export class DetalleVentaComponent implements OnInit, AfterViewInit {
   public mensajeBusqueda = '';
   public venta!: FormGroup;
   private readonly snackBar = inject(MatSnackBar);
@@ -34,6 +35,7 @@ export class DetalleVentaComponent implements OnInit {
     'subTotal',
     'descuento'
   ];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngOnInit(): void {
     this.venta = this.fb.group({
@@ -43,6 +45,7 @@ export class DetalleVentaComponent implements OnInit {
       nombreUsuario: [''],
       nombreSucursal: [''],
       direccionSucursal: [''],
+      codigoCliente: [''],
       cliente: [''],
       cedulaCliente: [''],
       totalPagar: [''],
@@ -50,6 +53,10 @@ export class DetalleVentaComponent implements OnInit {
       cambio: [''],
       conDescuento: ['']
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
   }
 
   filtrarVenta(numeroDocumento: string) {
@@ -74,6 +81,7 @@ export class DetalleVentaComponent implements OnInit {
           nombreUsuario: venta.nombre_Completo,
           nombreSucursal: venta.nombre_Sucursal,
           direccionSucursal: venta.direccion_Sucursal,
+          codigoCliente: venta.codigo_Cliente,
           cliente: `${venta.nombres_Cliente} ${venta.apellidos_Cliente}`,
           cedulaCliente: venta.cedula_Cliente,
           totalPagar: venta.monto_Total,

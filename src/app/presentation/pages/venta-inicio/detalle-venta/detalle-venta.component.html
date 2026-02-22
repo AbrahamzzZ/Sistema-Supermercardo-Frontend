@@ -1,12 +1,13 @@
 <div class="venta">
   <h1 class="venta__titulo">Detalle de la Venta</h1>
+
   <div class="venta__contenedor">
     <form class="venta__formulario" [formGroup]="venta">
 
       <!-- BUSCADOR -->
       <div class="venta__busqueda">
         <div class="venta__busqueda-wapper">
-          <mat-form-field appearance="outline" class="form__field">
+          <mat-form-field appearance="outline" class="form__field__search">
             <mat-label>Buscar venta</mat-label>
             <input
               matInput
@@ -37,100 +38,92 @@
         </div>
        </div>
 
+      <p>Detalles</p>
+
       <!-- SECCIÓN PRINCIPAL -->
       <div class="venta__seccion">
-
         <!-- DATOS -->
         <div class="venta__grupo">
-          <div class="campo-horizontal">
+          <mat-form-field appearance="outline" class="form__field">
             <mat-label>Fecha: </mat-label>
-            <mat-form-field appearance="outline">
-              <input matInput formControlName="fecha" readonly />
-            </mat-form-field>
-          </div>
+            <input matInput formControlName="fecha" readonly />
+          </mat-form-field>
 
-          <div class="campo-horizontal">
+          <mat-form-field appearance="outline" class="form__field">
             <mat-label>Tipo Documento: </mat-label>
-            <mat-form-field appearance="outline">
-              <input matInput formControlName="tipoDocumento" readonly />
-            </mat-form-field>
-          </div>
+            <input matInput formControlName="tipoDocumento" readonly />
+          </mat-form-field>
 
-          <div class="campo-horizontal">
+          <mat-form-field appearance="outline" class="form__field">
             <mat-label>Usuario: </mat-label>
-            <mat-form-field appearance="outline">
-              <input matInput formControlName="nombreUsuario" readonly />
-            </mat-form-field>
-          </div>
+            <input matInput formControlName="nombreUsuario" readonly />
+          </mat-form-field>     
         </div>
 
         <!-- SUCURSAL -->
         <div class="venta__grupo">
-          <div class="campo-horizontal">
+          <mat-form-field appearance="outline" class="form__field">
             <mat-label>Nombre: </mat-label>
-            <mat-form-field appearance="outline">
-              <input matInput formControlName="nombreSucursal" readonly />
-            </mat-form-field>
-          </div>
+            <input matInput formControlName="nombreSucursal" readonly />
+          </mat-form-field>
 
-          <div class="campo-horizontal">
+          <mat-form-field appearance="outline" class="form__field">
             <mat-label>Dirección: </mat-label>
-            <mat-form-field appearance="outline">
-              <input matInput formControlName="direccionSucursal" readonly />
-            </mat-form-field>
-          </div>
+            <input matInput formControlName="direccionSucursal" readonly />
+          </mat-form-field>
         </div>
 
         <!-- CLIENTE -->
         <div class="venta__grupo">
-          <div class="campo-horizontal">
+          <mat-form-field appearance="outline" class="form__field">
+            <mat-label>Código: </mat-label>
+            <input matInput formControlName="codigoCliente" readonly />
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" class="form__field">
             <mat-label>Cliente: </mat-label>
-            <mat-form-field appearance="outline">
-              <input matInput formControlName="cliente" readonly />
-            </mat-form-field>
-          </div>
+            <input matInput formControlName="cliente" readonly />
+          </mat-form-field>
 
-          <div class="campo-horizontal">
+          <mat-form-field appearance="outline" class="form__field">
             <mat-label>Cédula: </mat-label>
-            <mat-form-field appearance="outline">
-              <input matInput formControlName="cedulaCliente" readonly />
-            </mat-form-field>
-          </div>
+            <input matInput formControlName="cedulaCliente" readonly />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- TOTALES -->
+      <div class="venta__grupo venta__grupo--totales">
+        <div class="campo-horizontal">
+          <mat-label>Total a Pagar: </mat-label>
+          <mat-form-field appearance="outline" class="form__field">
+            <input matInput formControlName="totalPagar" readonly />
+            <span matTextPrefix>$&nbsp;</span>
+          </mat-form-field>
         </div>
 
-        <!-- TOTALES -->
-        <div class="venta__grupo venta__grupo--totales">
-          <div class="campo-horizontal">
-            <mat-label>Total a Pagar: </mat-label>
-            <mat-form-field appearance="outline">
-              <input matInput formControlName="totalPagar" readonly />
-              <span matTextPrefix>$&nbsp;</span>
-            </mat-form-field>
-          </div>
+        <div class="campo-horizontal">
+          <mat-label>Con descuento: </mat-label>
+          <mat-form-field appearance="outline" class="form__field">
+            <input matInput formControlName="conDescuento" readonly />
+            <span matTextPrefix>$&nbsp;</span>
+          </mat-form-field>
+        </div>
 
-          <div class="campo-horizontal">
-            <mat-label>Con descuento: </mat-label>
-            <mat-form-field appearance="outline">
-              <input matInput formControlName="conDescuento" readonly />
-              <span matTextPrefix>$&nbsp;</span>
-            </mat-form-field>
-          </div>
+        <div class="campo-horizontal">
+          <mat-label>Paga con: </mat-label>
+          <mat-form-field appearance="outline" class="form__field">
+            <input matInput formControlName="pagaCon" readonly />
+            <span matTextPrefix>$&nbsp;</span>
+          </mat-form-field>
+        </div>
 
-          <div class="campo-horizontal">
-            <mat-label>Paga con: </mat-label>
-            <mat-form-field appearance="outline">
-              <input matInput formControlName="pagaCon" readonly />
-              <span matTextPrefix>$&nbsp;</span>
-            </mat-form-field>
-          </div>
-
-          <div class="campo-horizontal">
-            <mat-label>Cambio: </mat-label>
-            <mat-form-field appearance="outline">
-              <input matInput formControlName="cambio" readonly />
-              <span matTextPrefix>$&nbsp;</span>
-            </mat-form-field>
-          </div>
+        <div class="campo-horizontal">
+          <mat-label>Cambio: </mat-label>
+          <mat-form-field appearance="outline" class="form__field">
+            <input matInput formControlName="cambio" readonly />
+            <span matTextPrefix>$&nbsp;</span>
+          </mat-form-field>
         </div>
       </div>
 
@@ -174,6 +167,8 @@
           <tr mat-header-row *matHeaderRowDef="columnasTabla"></tr>
           <tr mat-row *matRowDef="let row; columns: columnasTabla"></tr>
         </table>
+
+        <mat-paginator [pageSize]="3" [pageSizeOptions]="[3]" showFirstLastButtons></mat-paginator>
       </div>
     </form>
   </div>

@@ -1,4 +1,6 @@
 .venta {
+  padding: 20px;
+
   &__titulo {
     text-align: center;
     font-size: 2rem;
@@ -11,7 +13,7 @@
     padding-right: 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 10px;
   }
 
   &__busqueda {
@@ -58,7 +60,7 @@
   &__seccion {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: 10px;
 
     @media (max-width: 1024px) {
       grid-template-columns: repeat(2, 1fr);
@@ -73,30 +75,23 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 1rem;
     border-radius: 10px;
-    background: #f9f9f9;
   }
 
   &__grupo--totales {
-    background: #eef7ee;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
   }
 
   .campo-horizontal {
     display: grid;
-    grid-template-columns: 100px 1fr;
     align-items: baseline;
+  }
 
-    label {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #444;
-      text-align: right;
-    }
-
-    mat-form-field {
-      width: 100%;
-    }
+  p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: -2px;
   }
 
   @media (max-width: 768px) {
@@ -114,20 +109,13 @@
 
     table {
       width: 100%;
+      margin-bottom: -12px;
+    }
+
+    tr {
+      height: 43px;
     }
   }
-}
-
-::ng-deep .campo-horizontal .mat-mdc-text-field-wrapper {
-  height: 34px !important;
-}
-
-::ng-deep .campo-horizontal input.mat-mdc-input-element {
-  padding-bottom: 6px;
-}
-
-::ng-deep .mat-mdc-form-field .mdc-floating-label {
-  transform: translateY(-100%) translateX(calc(1 * (52px + var(--mat-mdc-form-field-label-offset-x, 0px)))) !important;
 }
 
 ::ng-deep .form__field .mat-mdc-form-field-subscript-wrapper{
@@ -136,7 +124,6 @@
 
 ::ng-deep .form__field .mat-mdc-text-field-wrapper {
   height: 35px !important;
-  width: 350px;
 }
 
 ::ng-deep .mat-mdc-form-field-flex{
@@ -160,4 +147,23 @@
 ::ng-deep .mat-mdc-form-field-error {
   font-size: 0.85rem;
   font-weight: 500;
+}
+
+::ng-deep .form__field__search .mat-mdc-text-field-wrapper{
+  height: 35px !important;
+  width: 350px !important;
+}
+
+::ng-deep .form__field__search .mdc-floating-label {
+  top: 50% !important;
+  margin-left: 0px;
+  transform: translateY(-50%) translateX(0) !important;
+  font-size: 14px !important;
+}
+
+::ng-deep .form__field__search .mdc-floating-label.mdc-floating-label--float-above {
+  top: 0 !important;
+  margin-left: 2px !important;
+  transform: translateY(-50%) scale(0.75) !important;
+  font-size: 12px;
 }
