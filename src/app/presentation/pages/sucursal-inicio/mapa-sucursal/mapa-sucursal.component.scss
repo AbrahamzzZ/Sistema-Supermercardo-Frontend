@@ -1,0 +1,118 @@
+.container {
+  margin: 20px;
+
+  &__title {
+    font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
+    color: #000000;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.map-container {
+  height: 500px;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  margin-bottom: 20px;
+}
+
+#leaflet-map {
+  background-color: #f0f0f0;
+}
+
+.map-info {
+  text-align: center;
+  padding: 12px;
+  background-color: #e3f2fd;
+  border: 1px solid #90caf9;
+  border-radius: 6px;
+  margin-top: 10px;
+
+  &__text {
+    margin: 0;
+    color: #1565c0;
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
+
+.info-window {
+  padding: 12px;
+  max-width: 300px;
+
+  &__title {
+    margin: 0 0 12px 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    border-bottom: 2px solid #2196F3;
+    padding-bottom: 8px;
+  }
+
+  &__item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    
+    strong {
+      color: #555;
+      font-weight: 600;
+    }
+
+    span {
+      color: #777;
+      word-break: break-word;
+    }
+  }
+
+  &__activo {
+    color: #4caf50;
+    font-weight: 600;
+  }
+
+  &__inactivo {
+    color: #f44336;
+    font-weight: 600;
+  }
+}
+
+/* Estilos para popup de Leaflet */
+::ng-deep .popup-content {
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+
+  h3 {
+    margin: 0 0 10px 0;
+    font-size: 15px;
+    color: #333;
+    border-bottom: 2px solid #2196F3;
+    padding-bottom: 6px;
+  }
+
+  p {
+    margin: 6px 0;
+    color: #555;
+
+    strong {
+      color: #333;
+    }
+  }
+
+  .estado-activo {
+    color: #4caf50;
+    font-weight: 600;
+  }
+
+  .estado-inactivo {
+    color: #f44336;
+    font-weight: 600;
+  }
+}
