@@ -5,21 +5,28 @@ import { IOfertaProducto } from '../../../core/interfaces/Dto/ioferta-producto';
 import { OfertaService } from '../../../core/services/oferta.service';
 import { FormatoFechaPipe } from '../../../shared/pipes/formato-fecha.pipe';
 import { MaterialModule } from '../../../shared/ui/material-module';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inicio',
   standalone: true,
   imports: [MaterialModule, FormatoFechaPipe],
   templateUrl: './inicio.component.html',
-  styleUrl: './inicio.component.scss'
+  styleUrls: ['./inicio.component.scss']
 })
 export class InicioComponent implements OnInit, OnDestroy {
-  private snackBar = inject(MatSnackBar);
-  private ofertaServicio = inject(OfertaService);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly ofertaServicio = inject(OfertaService);
+  private router = inject(Router);
   public ofertas: IOfertaProducto[] = [];
   public ofertaActual: IOfertaProducto | null = null;
   private subscripcion!: Subscription;
   private indiceOferta = 0;
+
+  get animationDuration(): string {
+    const segundosPorTarjeta = 2.5;
+    return `${this.ofertas.length * segundosPorTarjeta}s`;
+  }
 
   ngOnInit(): void {
     this.obtenerOfertas();
@@ -68,5 +75,21 @@ export class InicioComponent implements OnInit, OnDestroy {
       verticalPosition: 'bottom',
       panelClass: [className]
     });
+  }
+
+  irAVentas() {
+    this.router.navigate(['/venta']);
+  }
+
+  irAProductos() {
+    this.router.navigate(['/producto/producto-registro/0']);
+  }
+
+  irAOfertas() {
+    this.router.navigate(['/oferta/oferta-registro/0']);
+  }
+
+  irAReportes() {
+    this.router.navigate(['/negocio/1/estadistica']);
   }
 }
