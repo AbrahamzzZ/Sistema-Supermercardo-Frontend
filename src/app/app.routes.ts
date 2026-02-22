@@ -38,6 +38,7 @@ import { RegistrarSucursalComponent } from './presentation/pages/sucursal-inicio
 import { EditarSucursalComponent } from './presentation/pages/sucursal-inicio/editar-sucursal/editar-sucursal.component';
 import { EstadisticaNegocioComponent } from './presentation/pages/negocio-inicio/estadistica-negocio/estadistica-negocio.component';
 import { LogInicioComponent } from './presentation/pages/log-inicio/log-inicio.component';
+import { MapaSucursalComponent } from './presentation/pages/sucursal-inicio/mapa-sucursal/mapa-sucursal.component';
 
 export const routes: Routes = [
   {
@@ -253,6 +254,12 @@ export const routes: Routes = [
         component: EditarSucursalComponent,
         canActivate: [Autenticacion],
         title: 'Editar Sucursal'
+      },
+      {
+        path: 'sucursal/mapa',
+        component: MapaSucursalComponent,
+        canActivate: [Autenticacion],
+        title: 'Mapa de sucursales'
       },
 
       //Modulo Negocio

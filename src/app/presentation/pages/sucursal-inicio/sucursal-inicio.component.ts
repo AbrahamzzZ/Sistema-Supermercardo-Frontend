@@ -103,6 +103,10 @@ export class SucursalInicioComponent implements AfterViewInit {
     this.router.navigate(['sucursal/sucursal-editar', sucursal.id_Sucursal]);
   }
 
+  verMapa(){
+    this.router.navigate(['sucursal/mapa']);
+  }
+
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
 
