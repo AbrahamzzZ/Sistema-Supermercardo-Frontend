@@ -11,14 +11,19 @@ import { environment as ENV } from '../../environments/environment';
 
 function loadGoogleMaps() {
   return async () => {
+    if (!ENV.API_GOOGLE_MAPS) {
+      console.warn('Google Maps API Key no definida. Usando Leaflet.');
+      return;
+    }
+
     try {
       setOptions({
         key: ENV.API_GOOGLE_MAPS
       });
+
       await importLibrary('maps');
-    } catch (error: unknown) {
-      console.error('Error cargando Google Maps', error);
-      throw error;
+    } catch (error) {
+      console.warn('Google Maps no disponible. Fallback a Leaflet.', error);
     }
   };
 }

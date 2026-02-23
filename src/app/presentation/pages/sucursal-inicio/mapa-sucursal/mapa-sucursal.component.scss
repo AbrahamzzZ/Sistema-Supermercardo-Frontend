@@ -1,5 +1,5 @@
 .container {
-  margin: 20px;
+  margin: 0 50px;
 
   &__title {
     font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
@@ -10,6 +10,7 @@
     text-transform: uppercase;
     letter-spacing: 1.5px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 20px;
   }
 }
 
@@ -84,7 +85,6 @@
   }
 }
 
-/* Estilos para popup de Leaflet */
 ::ng-deep .popup-content {
   font-family: Arial, sans-serif;
   font-size: 13px;

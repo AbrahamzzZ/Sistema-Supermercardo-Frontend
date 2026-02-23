@@ -50,7 +50,7 @@ export class MapaSucursalComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     if (!this.useGoogleMaps) {
-      this.inicializarLeaflet();
+      setTimeout(() => this.inicializarLeaflet());
     }
   }
 
