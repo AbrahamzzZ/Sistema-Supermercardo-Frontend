@@ -2,59 +2,56 @@
   <h1 class="container__title">Mapa de Sucursales</h1>
 
   <!-- Google Maps -->
-  <div class="map-container" *ngIf="useGoogleMaps">
-    <google-map
-      height="100%"
-      width="100%"
-      [center]="center"
-      [zoom]="zoom"
-    >
-      <map-marker
-        *ngFor="let marker of markers"
-        #markerRef="mapMarker"
-        [position]="marker.position"
-        [title]="marker.title"
-        (mapClick)="abrirInfoWindow(marker, markerRef)"
+  @if(useGoogleMaps){
+    <div class="map-container">
+      <google-map
+        height="100%"
+        width="100%"
+        [center]="center"
+        [zoom]="zoom"
       >
-      </map-marker>
+        <map-marker
+          *ngFor="let marker of markers"
+          #markerRef="mapMarker"
+          [position]="marker.position"
+          [title]="marker.title"
+          (mapClick)="abrirInfoWindow(marker, markerRef)"
+        >
+        </map-marker>
 
-      <map-info-window #infoWindow>
-        <div class="info-window" *ngIf="infoWindowData">
-          <h3 class="info-window__title">
-            {{ infoWindowData['nombre_Sucursal'] }}
-          </h3>
+        <map-info-window #infoWindow>
+          <div class="info-window" *ngIf="infoWindowData">
+            <h3 class="info-window__title">
+              {{ infoWindowData['nombre_Sucursal'] }}
+            </h3>
 
-          <div class="info-window__item">
-            <strong>Código:</strong>
-            <span>{{ infoWindowData['codigo'] }}</span>
+            <div class="info-window__item">
+              <strong>Dirección:</strong>
+              <span>{{ infoWindowData['direccion_Sucursal'] }}</span>
+            </div>
+
+            <div class="info-window__item">
+              <strong>Ciudad:</strong>
+              <span>{{ infoWindowData['ciudad_Sucursal'] }}</span>
+            </div>
+
+            <div class="info-window__item">
+              <strong>Estado:</strong>
+              <span
+                [ngClass]="
+                  infoWindowData['estado']
+                    ? 'info-window__activo'
+                    : 'info-window__inactivo'
+                "
+              >
+                {{ infoWindowData['estado'] ? 'Activo' : 'Inactivo' }}
+              </span>
+            </div>
           </div>
-
-          <div class="info-window__item">
-            <strong>Dirección:</strong>
-            <span>{{ infoWindowData['direccion_Sucursal'] }}</span>
-          </div>
-
-          <div class="info-window__item">
-            <strong>Ciudad:</strong>
-            <span>{{ infoWindowData['ciudad_Sucursal'] }}</span>
-          </div>
-
-          <div class="info-window__item">
-            <strong>Estado:</strong>
-            <span
-              [ngClass]="
-                infoWindowData['estado']
-                  ? 'info-window__activo'
-                  : 'info-window__inactivo'
-              "
-            >
-              {{ infoWindowData['estado'] ? 'Activo' : 'Inactivo' }}
-            </span>
-          </div>
-        </div>
-      </map-info-window>
-    </google-map>
-  </div>
+        </map-info-window>
+      </google-map>
+    </div>
+  }
 
   <!-- Leaflet Map -->
   @if(!useGoogleMaps){
