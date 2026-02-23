@@ -13,13 +13,17 @@
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
 
-      <button class="container__search__button" mat-raised-button color="primary" (click)="nuevo()">
-        <mat-icon>person_add</mat-icon> Registrar sucursal
-      </button>
+      <div class="container__search__actions">
+        <button class="container__search__button" mat-raised-button color="primary"(click)="nuevo()">
+          <mat-icon>person_add</mat-icon>
+          Registrar sucursal
+        </button>
 
-      <button class="container__search__button" mat-raised-button color="primary" (click)="verMapa()">
-        <mat-icon>person_add</mat-icon> Ver mapa
-      </button>
+        <button class="container__search__button" mat-raised-button color="primary" (click)="verMapa()">
+          <mat-icon>location_on</mat-icon>
+          Ver mapa
+        </button>
+      </div>
 
       <button
         class="container__excel__button"
