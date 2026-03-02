@@ -213,7 +213,7 @@ export class CompraInicioComponent implements OnInit, AfterViewInit {
       if (response.isSuccess) {
         this.mostrarMensaje('¡Compra registrada exitosamente!', 'success');
         this.dialog.open(DialogoNumeroDocumentoComponent, {
-          width: '400px',
+          width: '450px',
           data: { numeroDocumento: this.numeroDocumento }
         });
         this.limpiar();
