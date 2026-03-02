@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -10,10 +10,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrl: './modal-log.component.scss'
 })
 export class ModalLogComponent {
-
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  public data = inject<{ mensaje: string, id_Log: number }>(MAT_DIALOG_DATA);
 
   copy() {
     navigator.clipboard.writeText(JSON.stringify(this.data, null, 2));

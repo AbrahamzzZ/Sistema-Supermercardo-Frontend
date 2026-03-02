@@ -8,6 +8,7 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 import { MatPaginator } from '@angular/material/paginator';
+import { NegocioService } from '../../../../core/services/negocio.service';
 
 @Component({
   selector: 'app-detalle-venta',
@@ -23,9 +24,12 @@ import { MatPaginator } from '@angular/material/paginator';
 export class DetalleVentaComponent implements OnInit, AfterViewInit {
   public mensajeBusqueda = '';
   public venta!: FormGroup;
+  public nombreNegocio = '';
+  public numeroDocumento = '';
   private readonly snackBar = inject(MatSnackBar);
   private readonly servicio = inject(VentaService);
   private readonly fb = inject(FormBuilder);
+  private readonly negocioServicio = inject(NegocioService);
   public dataSource = new MatTableDataSource<any>();
   public columnasTabla: string[] = [
     'id',
@@ -41,6 +45,7 @@ export class DetalleVentaComponent implements OnInit, AfterViewInit {
     this.venta = this.fb.group({
       fecha: [''],
       tipoDocumento: [''],
+      numeroDocumento: [''],
       codigoUsuario: [''],
       nombreUsuario: [''],
       nombreSucursal: [''],
@@ -53,6 +58,12 @@ export class DetalleVentaComponent implements OnInit, AfterViewInit {
       cambio: [''],
       conDescuento: ['']
     });
+
+    this.negocioServicio.obtener(1).subscribe({
+      next: (resp: any) => {
+        this.nombreNegocio= resp.data.nombre;
+      }
+    })
   }
 
   ngAfterViewInit(): void {
@@ -77,6 +88,7 @@ export class DetalleVentaComponent implements OnInit, AfterViewInit {
         this.venta.patchValue({
           fecha: venta.fecha_Venta,
           tipoDocumento: venta.tipo_Documento,
+          numeroDocumento: venta.numero_Documento,
           codigoUsuario: venta.codigo_Usuario,
           nombreUsuario: venta.nombre_Completo,
           nombreSucursal: venta.nombre_Sucursal,
@@ -125,7 +137,7 @@ export class DetalleVentaComponent implements OnInit, AfterViewInit {
       // Nombre de la empresa
       doc.setFontSize(16);
       doc.setFont('helvetica', 'bold');
-      doc.text('Minimarket Paradisia', pageWidth / 2, 45, { align: 'center' });
+      doc.text(this.nombreNegocio, pageWidth / 2, 45, { align: 'center' });
 
       // Subtítulo
       doc.setFontSize(12);
@@ -208,7 +220,7 @@ export class DetalleVentaComponent implements OnInit, AfterViewInit {
       });
 
       // Guardar PDF
-      doc.save('detalle_venta.pdf');
+      doc.save(`detalle_venta_${this.venta.value.numeroDocumento}.pdf`);
     };
   }
 

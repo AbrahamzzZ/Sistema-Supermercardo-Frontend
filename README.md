@@ -1,132 +1,112 @@
-# Sistema de Ventas - Angular 17 + .NET + SQL Server
+# Sistema de Ventas - Frontend (Angular 17)
 
-Este proyecto es un **Sistema de Ventas** desarrollado con **Angular 17** para el frontend, **.NET** para el backend y **SQL Server** como base de datos.  
-Está diseñado para la gestión integral de operaciones de un negocio, con control de usuarios, ventas, compras, inventario, reportes y más.
+Aplicación web desarrollada en **Angular 17** que consume una API REST en .NET 8 para la gestión integral de un negocio.
 
-## 🚀 Características principales
+Incluye administración de usuarios, ventas, compras, inventario, reportes y estadísticas con gráficos interactivos.
 
-- **Gestión de usuarios con roles y permisos**
-  - Roles: Administrador y Empleado
-  - Control de acceso a menús y rutas según permisos
-  - Autenticación segura con **JWT**
+---
 
-- **Módulos funcionales**
-  - **Usuarios**: administración de roles y permisos
-  - **Compras**: registro de compras a proveedores y detalle de compras
-  - **Ventas**: registro de ventas a clientes y detalle de ventas
-  - **Proveedores**: gestión de datos y estado
-  - **Clientes**: administración de clientes y datos de contacto
-  - **Transportistas**: control de transportistas y asignaciones
-  - **Sucursales**: registro con ubicación geográfica (latitud y longitud)
-  - **Negocio**: configuración general
-  - **Productos**: control de inventario, categorías y precios
-  - **Categorías**: organización de productos
+## Características principales
 
-- **Reportes y estadísticas**
-  - Estadísticas del negocio con gráficas interactivas
-  - Exportación de reportes en **PDF** y **Excel**
-  - Filtros por fechas, categorías, clientes, proveedores, etc.
+### Gestión de usuarios
+- Roles: Administrador y Empleado
+- Control de acceso a rutas mediante Guards
+- Autenticación basada en JWT
+- Interceptor HTTP para envío automático de token
 
-## 🛠 Tecnologías utilizadas
+---
 
-- **Frontend:** Angular 17, Angular Material, SCSS, ESLint, Prettier
-- **Backend:** .NET 7, API REST, C#, MSTest, Moq
-- **Base de datos:** SQL Server
-- **Seguridad:** JWT, cifrado SHA-256
-- **Reportes:** PDF, Excel
+### Módulos funcionales
 
-## 📂 Arquitectura del sistema
+- Usuarios
+- Compras
+- Ventas
+- Proveedores
+- Clientes
+- Transportistas
+- Sucursales (con geolocalización)
+- Negocio
+- Productos
+- Categorías
 
-El sistema sigue un modelo **Cliente-Servidor**:
+---
 
-- **Cliente:** Angular 17 consume los servicios REST.
-- **Servidor (API REST):** .NET 7 con Entity Framework (Database First).
-- **Base de datos:** SQL Server.
+### Reportes y estadísticas
 
-La API está organizada en capas para garantizar escalabilidad y mantenibilidad:
+- Gráficos dinámicos con Chart.js
+- Exportación a PDF
+- Filtros por fechas, categorías y clientes
+- Resumen inteligente con IA
 
-**Controllers**
+---
 
-  - Reciben solicitudes HTTP, validan parámetros y delegan la lógica de negocio a los servicios.
+## Asistente Inteligente del Negocio
 
-**Services**
+El sistema incluye un **Asistente Inteligente** integrado con IA local mediante Ollama.
 
-  - Contienen la lógica de negocio por módulo.
-  
-  - Implementan interfaces para inyección de dependencias.
+Permite realizar consultas en lenguaje natural relacionadas con el negocio, por ejemplo:
 
-**Repository**
+- ¿Cuáles son los productos más vendidos este mes?
+- ¿Qué empleado generó más ventas?
+- ¿Qué proveedor tiene mayor volumen de compras?
+- ¿Cómo están las ventas comparadas con el mes anterior?
+- ¿Qué clientes compran con mayor frecuencia?
 
-  - Acceso a datos usando Entity Framework.
-  
-  - Clases y interfaces por módulo.
+La IA analiza la información del sistema y genera un resumen interpretativo para apoyar la toma de decisiones.
 
-**Models**
+---
 
-  - Clases generadas por EF (Database First).
-  
-  - DTOs para transferencia de datos.
+## Tecnologías utilizadas
 
-**Helpers**
+- Angular 17
+- Angular Material
+- SCSS
+- Chart.js
+- Google Maps
+- Leaflet
+- JWT
 
-  - Funciones auxiliares (e.g., Token.cs para generar/validar JWT).
+---
 
-**Utilities / Shared**
+## Arquitectura del proyecto
 
-  - ApiResponse.cs → Respuestas estándar.
-  
-  - Mensajes.cs → Mensajes comunes.
-  
-  - Paginacion.cs → Paginación en consultas.
+El proyecto está organizado en 3 carpetas principales:
 
-**Utilities / Security**
+### Core
+Contiene elementos globales del sistema:
 
-  - Encriptacion.cs → Cifrado de contraseña
+- Guards
+- Interceptors
+- Services
+- Interfaces
+- Configuración de API
 
-## ✅ Buenas practicas
-Pruebas unitarias con MSTest y Moq:
+---
 
-  - Tests para Controllers validando respuestas HTTP y estados.
-  
-  - Tests para Services asegurando la lógica de negocio.
-  
-  - Uso de Moq para simular dependencias (repositorios, servicios externos).
+### Shared
+Componentes reutilizables y utilidades:
 
-ESLint configurado para mantener un código consistente.
+- Pipes
+- Validators
+- UI Components
+- Helpers
 
-  - Prettier integrado para formato automático y estilo uniforme.
-  
-  - Configuración para:
-  
-    - Estándares de Angular y TypeScript.
-    
-    - Reglas personalizadas para evitar malas prácticas.
-    
-    - Integración con VS Code (guardado automático formatea el código).
+---
 
-## ⚙ Instalación y ejecución
+### Presentación
+Contiene la estructura visual de la aplicación:
 
-### 1️⃣ Backend (.NET)
+- Pages
+- Layout
+- Modals
+- Dialogs
+
+---
+
+## Instalación y ejecución
 
 **Clonar repositorio**
-git clone <https://github.com/AbrahamzzZ/Sistema-Supermercado-Backend.git>
 
-**Abrir solución**
-
-Abrir backend.sln en Visual Studio.
-
-**Restaurar dependencias**
-
-En Visual Studio: Herramientas → Administrador de paquetes NuGet → Restaurar paquetes.
-
-**Ejecutar**
-
-Presionar F5 o seleccionar IIS Express / Proyecto y ejecutar la API REST desde Visual Studio.
-
-
-### 2️⃣ Frontend (Angular 17)
-
-**Clonar repositorio**
 git clone <https://github.com/AbrahamzzZ/Sistema-Supermercardo-Frontend.git>
 
 **Entrar a la carpeta del frontend**
@@ -136,6 +116,20 @@ cd Frontend
 **Instalar dependencias**
 
 npm install
+
+**Configurar variables de entorno**
+
+cd Frontend/environments
+
+export const environment = {
+  production: false,
+  apiUrl: 'URL_API_AQUI',
+  API_GOOGLE_MAPS: 'TU_API_KEY_AQUI'
+};
+
+Importante
+
+Si no se va a usar Google Maps, dejar googleMapsApiKey vacío. El proyecto está configurado para soportar tanto Google Maps como Leaflet.
 
 **Ejecutar en modo desarrollo**
 
