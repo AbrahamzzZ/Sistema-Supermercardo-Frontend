@@ -1,5 +1,5 @@
 <div class="sidebar" [ngClass]="{ 'sidebar-collapsed': isCollapsed }">
-    <button mat-icon-button class="sidebar-toggle-btn-inside" (click)="toggleSidebar()">
+    <button class="sidebar-toggle-btn-inside" (click)="toggleSidebar()">
         <mat-icon>menu</mat-icon>
     </button>
     <div class="user-info" >
@@ -9,8 +9,8 @@
         }
     </div>
     <nav class="sidebar-menu">
-        <button mat-icon-button routerLink="/home" class="menu-item" [matTooltip]="isCollapsed ? 'Inicio' : ''">
-            <mat-icon>home</mat-icon>
+        <button mat-button routerLink="/home" class="menu-item" [matTooltip]="isCollapsed ? 'Inicio' : ''">
+            <mat-icon>home</mat-icon><span class="text">Home</span>
         </button>
         @for (menu of menus; track $index) {
             <button mat-button [routerLink]="menu.urlMenu" class="menu-item" [matTooltip]="isCollapsed ? menu.nombreMenu : ''">
@@ -21,7 +21,7 @@
             </button>
         }
     </nav>
-    <button class="menu-item salir" (click)="logout()" [matTooltip]="isCollapsed ? 'Salir' : ''">
+    <button mat-button class="menu-item salir" (click)="logout()" [matTooltip]="isCollapsed ? 'Salir' : ''">
         <mat-icon>exit_to_app</mat-icon>
         @if(!isCollapsed){
             <span class="text">Salir</span>

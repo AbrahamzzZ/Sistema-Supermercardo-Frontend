@@ -4,8 +4,6 @@
   color: white;
   height: 100vh;
   position: fixed;
-  left: 0;
-  top: 0;
   display: flex;
   flex-direction: column;
   padding: 10px;
@@ -25,8 +23,12 @@
 
 .menu-item {
   display: flex;
-  gap: 10px;
-  color: white;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 6px;
+  transition: background 0.25s ease;
+  width: 100%;
+  margin-bottom: 5px;
 }
 
 .sidebar-menu {
@@ -42,13 +44,20 @@
   border: none;
   display: flex;
   align-items: center;
-  justify-content: center; 
-  padding: 10px 0;
-  margin-bottom: 20px
+  justify-content: center;
+  padding: 10px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  width: 100%;
 }
 
 .sidebar-collapsed .menu-item.salir {
-  justify-content: center; 
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.sidebar-collapsed .menu-item:not(.salir) {
+  justify-content: center;
 }
 
 .menu-item mat-icon {
@@ -58,14 +67,18 @@
   color: black;
 }
 
+.sidebar-toggle-btn-inside mat-icon {
+  color: white;
+}
+
 .user-info {
   display: flex;
   flex-direction: column;
-  align-items: center; 
-  justify-content: center; 
-  text-align: center;    
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   padding: 10px 0;
-  width: 100%;        
+  width: 100%;
 }
 
 .user-name,
@@ -73,30 +86,44 @@
   color: #fff;
   font-size: 14px;
   text-transform: uppercase;
-  white-space: nowrap;       
+  white-space: nowrap;
 }
 
 .sidebar-toggle-btn-inside {
   background: transparent;
-  border: none;
   cursor: pointer;
-  color: white;
   font-size: 24px;
   display: flex;
-  align-items: center;
+  width: 100%;
+  border-radius: 6px;
+  transition: background 0.25s ease;
+  border: none;
+  justify-content: flex-start;
+  padding-left: 10px;
+
+  mat-icon {
+    margin-left: 0 !important;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
 }
 
-.sidebar-toggle-btn-inside:hover {
-  opacity: 0.8;
-  transform: scale(1.1);
-}
-
-.text{
+.text {
   font-size: 14px;
 }
 
-@media (max-width: 768px) {
+.menu-item:not(.salir):hover {
+  background: white;
+}
 
+.sidebar-collapsed .sidebar-toggle-btn-inside {
+  justify-content: center;
+  padding-left: 0;
+}
+
+@media (max-width: 768px) {
   .sidebar {
     position: fixed;
     top: 0;
