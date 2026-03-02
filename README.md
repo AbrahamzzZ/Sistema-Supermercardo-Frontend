@@ -1,110 +1,136 @@
-# Sistema de Ventas - Angular 17 + .NET + SQL Server
+# Sistema de Ventas - Frontend (Angular 17)
 
-Este proyecto es un **Sistema de Ventas** desarrollado con **Angular 17** para el frontend, **.NET** para el backend y **SQL Server** como base de datos.  
-Está diseñado para la gestión integral de operaciones de un negocio, con control de usuarios, ventas, compras, inventario, reportes y más.
+Aplicación web desarrollada en **Angular 17** que consume una API REST en .NET 8 para la gestión integral de un negocio.
 
-## 🚀 Características principales
+Incluye administración de usuarios, ventas, compras, inventario, reportes y estadísticas con gráficos interactivos.
 
-- **Gestión de usuarios con roles y permisos**
-  - Roles: Administrador y Empleado
-  - Control de acceso a menús y rutas según permisos
-  - Autenticación segura con **JWT**
+---
 
-- **Módulos funcionales**
-  - **Usuarios**: administración de roles y permisos
-  - **Compras**: registro de compras a proveedores y detalle de compras
-  - **Ventas**: registro de ventas a clientes y detalle de ventas
-  - **Proveedores**: gestión de datos y estado
-  - **Clientes**: administración de clientes y datos de contacto
-  - **Transportistas**: control de transportistas y asignaciones
-  - **Sucursales**: registro con ubicación geográfica (latitud y longitud)
-  - **Negocio**: configuración general
-  - **Productos**: control de inventario, categorías y precios
-  - **Categorías**: organización de productos
+## Características principales
 
-- **Reportes y estadísticas**
-  - Estadísticas del negocio con gráficas interactivas
-  - Exportación de reportes en **PDF** y **Excel**
-  - Filtros por fechas, categorías, clientes, proveedores, etc.
+### Gestión de usuarios
+- Roles: Administrador y Empleado
+- Control de acceso a rutas mediante Guards
+- Autenticación basada en JWT
+- Interceptor HTTP para envío automático de token
 
-## 🛠 Tecnologías utilizadas
+---
 
-- **Frontend:** Angular 17, Angular Material, SCSS
-- **Backend:** .NET 7, API REST, C#
-- **Base de datos:** SQL Server
-- **Seguridad:** JWT, cifrado SHA-256
-- **Reportes:** PDF, Excel
+### Módulos funcionales
 
-## 📂 Arquitectura del sistema
+- Usuarios
+- Compras
+- Ventas
+- Proveedores
+- Clientes
+- Transportistas
+- Sucursales (con geolocalización)
+- Negocio
+- Productos
+- Categorías
 
-El sistema sigue un modelo **Cliente-Servidor**:
+---
 
-- **Cliente:** Angular 17 consume los servicios REST.
-- **Servidor (API REST):** .NET 7 con Entity Framework (Database First).
-- **Base de datos:** SQL Server.
+### Reportes y estadísticas
 
-La API está organizada en capas para garantizar escalabilidad y mantenibilidad:
+- Gráficos dinámicos con Chart.js
+- Exportación a PDF
+- Filtros por fechas, categorías y clientes
+- Resumen inteligente con IA
 
-**Controllers**
+---
 
-Reciben solicitudes HTTP, validan parámetros y delegan la lógica de negocio a los servicios.
+## Asistente Inteligente del Negocio
 
-**Services**
+El sistema incluye un **Asistente Inteligente** integrado con IA local mediante Ollama.
 
-Contienen la lógica de negocio por módulo.
+Permite realizar consultas en lenguaje natural relacionadas con el negocio, por ejemplo:
 
-Implementan interfaces para inyección de dependencias.
+- ¿Cuáles son los productos más vendidos este mes?
+- ¿Qué empleado generó más ventas?
+- ¿Qué proveedor tiene mayor volumen de compras?
+- ¿Cómo están las ventas comparadas con el mes anterior?
+- ¿Qué clientes compran con mayor frecuencia?
 
-**Repository**
+La IA analiza la información del sistema y genera un resumen interpretativo para apoyar la toma de decisiones.
 
-Acceso a datos usando Entity Framework.
+---
 
-Clases y interfaces por módulo.
+## Tecnologías utilizadas
 
-**Models**
+- Angular 17
+- Angular Material
+- SCSS
+- Chart.js
+- Google Maps
+- Leaflet
+- JWT
 
-Clases generadas por EF (Database First).
+---
 
-DTOs para transferencia de datos.
+## Arquitectura del proyecto
 
-**Helpers**
+El proyecto está organizado en 3 carpetas principales:
 
-Funciones auxiliares (e.g., Token.cs para generar/validar JWT).
+### Core
+Contiene elementos globales del sistema:
 
-**Utilities / Shared**
+- Guards
+- Interceptors
+- Services
+- Interfaces
+- Configuración de API
 
-ApiResponse.cs → Respuestas estándar.
+---
 
-Mensajes.cs → Mensajes comunes.
+### Shared
+Componentes reutilizables y utilidades:
 
-Paginacion.cs → Paginación en consultas.
+- Pipes
+- Validators
+- UI Components
+- Helpers
 
-Encriptacion.cs → Cifrado de contraseña
+---
 
+### Presentación
+Contiene la estructura visual de la aplicación:
 
-## ⚙ Instalación y ejecución
+- Pages
+- Layout
+- Modals
+- Dialogs
 
-### 1️⃣ Backend (.NET)
+---
+
+## Instalación y ejecución
 
 **Clonar repositorio**
-git clone <https://github.com/AbrahamzzZ/Aplicacion-Angular.git>
 
-**Entrar a la carpeta del backend**
-cd backend
-
-**Restaurar dependencias**
-dotnet restore
-
-**Ejecutar**
-dotnet run
-
-# 2️⃣ Frontend (Angular 17)
+git clone <https://github.com/AbrahamzzZ/Sistema-Supermercardo-Frontend.git>
 
 **Entrar a la carpeta del frontend**
+
 cd Frontend
 
 **Instalar dependencias**
+
 npm install
 
+**Configurar variables de entorno**
+
+cd Frontend/environments
+
+export const environment = {
+  production: false,
+  apiUrl: 'URL_API_AQUI',
+  API_GOOGLE_MAPS: 'TU_API_KEY_AQUI'
+};
+
+Importante
+
+Si no se va a usar Google Maps, dejar googleMapsApiKey vacío. El proyecto está configurado para soportar tanto Google Maps como Leaflet.
+
 **Ejecutar en modo desarrollo**
+
 ng serve
