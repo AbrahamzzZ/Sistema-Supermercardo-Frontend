@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { Metodos } from '../../../shared/utility/metodos';
 import { LogService } from '../../../core/services/log.service';
 import { ILog } from '../../../core/interfaces/log';
@@ -18,7 +18,6 @@ import { ModalLogComponent } from '../../components/modal/modal-log/modal-log.co
   styleUrl: './log-inicio.component.scss'
 })
 export class LogInicioComponent implements AfterViewInit{
-  private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
   private readonly logServicio = inject(LogService);
   private readonly snackBar = inject(MatSnackBar);
