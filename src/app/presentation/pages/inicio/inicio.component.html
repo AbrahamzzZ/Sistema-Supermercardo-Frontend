@@ -53,22 +53,22 @@
   }
 
   <section class="quick-actions">
-    <mat-card class="action-card" (click)="irAVentas()">
+    <mat-card class="action-card" (click)="irAVentas()" (keydown.enter)="irAReportes()" tabindex="0">
       <mat-icon>point_of_sale</mat-icon>
       <span>Registrar venta</span>
     </mat-card>
 
-    <mat-card class="action-card" (click)="irAProductos()">
+    <mat-card class="action-card" (click)="irAProductos()" (keydown.enter)="irAReportes()" tabindex="0">
       <mat-icon>inventory_2</mat-icon>
       <span>Registrar productos</span>
     </mat-card>
 
-    <mat-card class="action-card" (click)="irAOfertas()">
+    <mat-card class="action-card" (click)="irAOfertas()" (keydown.enter)="irAReportes()" tabindex="0">
       <mat-icon>local_offer</mat-icon>
       <span>Registrar ofertas</span>
     </mat-card>
 
-    <mat-card class="action-card" (click)="irAReportes()">
+    <mat-card class="action-card" (click)="irAReportes()" (keydown.enter)="irAReportes()" tabindex="0">
       <mat-icon>bar_chart</mat-icon>
       <span>Reportes</span>
     </mat-card>
