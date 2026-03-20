@@ -25,6 +25,7 @@ export class DetalleVentaComponent implements OnInit, AfterViewInit {
   public mensajeBusqueda = '';
   public venta!: FormGroup;
   public nombreNegocio = '';
+  public logoBase64: string | null = null;
   public numeroDocumento = '';
   private readonly snackBar = inject(MatSnackBar);
   private readonly servicio = inject(VentaService);
@@ -61,9 +62,26 @@ export class DetalleVentaComponent implements OnInit, AfterViewInit {
 
     this.negocioServicio.obtener(1).subscribe({
       next: (resp: any) => {
-        this.nombreNegocio= resp.data.nombre;
+        this.nombreNegocio = resp.data.nombre;
+        this.logoBase64 = resp.data.logo || resp.data.imagenBase64 || null;
+      },
+      error: () => {
+        this.logoBase64 = null;
       }
-    })
+    });
+  }
+
+  private getLogoSrc(): string {
+    if (!this.logoBase64) {
+      return 'assets/images/logo.png';
+    }
+
+    const trimmed = this.logoBase64.toString().trim();
+    if (trimmed.startsWith('data:image/')) {
+      return trimmed;
+    }
+
+    return `data:image/png;base64,${trimmed}`;
   }
 
   ngAfterViewInit(): void {
@@ -126,9 +144,17 @@ export class DetalleVentaComponent implements OnInit, AfterViewInit {
   descargarPDF() {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
-    const logoUrl = 'assets/images/logo.png';
     const img = new Image();
-    img.src = logoUrl;
+    const logoSrc = this.getLogoSrc();
+    img.crossOrigin = 'anonymous';
+    img.src = logoSrc;
+
+    img.onerror = () => {
+      if (logoSrc !== 'assets/images/logo.png') {
+        img.src = 'assets/images/logo.png';
+        return;
+      }
+    };
 
     img.onload = () => {
       // Logo centrado
