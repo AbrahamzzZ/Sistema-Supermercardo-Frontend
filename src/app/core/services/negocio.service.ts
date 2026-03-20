@@ -52,6 +52,6 @@ export class NegocioService {
 
   consultarIA(prompt: string) {
     const body: AnalisisIARequest = { prompt };
-    return this.http.post<any>(`${this.apiUrl}/analisis-ia`, body);
+    return this.http.post<string>(`${this.apiUrl}/analisis-ia`, body);
   }
 }
