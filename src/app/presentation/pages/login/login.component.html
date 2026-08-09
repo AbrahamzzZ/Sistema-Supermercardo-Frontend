@@ -1,43 +1,67 @@
-<div class="container">
-  <mat-card>
-    <mat-card-title>Login</mat-card-title>
-    <mat-card-content>
-      <form [formGroup]="loginForm" (ngSubmit)="login()">
-        <div>
-          <mat-form-field appearance="outline" class="form__field">
-            <mat-label>Correo Electrónico:</mat-label>
+<div class="login-container">
+  <div class="login-left">
+    <div class="illustration">
+      <div class="security-icon">
+        <mat-icon class="lock-icon">shopping_cart</mat-icon>
+      </div>
+      <div class="floating-elements">
+        <div class="element element-1">
+          <mat-icon>local_offer</mat-icon>
+        </div>
+        <div class="element element-2">
+          <mat-icon>monetization_on</mat-icon>
+        </div>
+        <div class="element element-3">
+          <mat-icon>store</mat-icon>
+        </div>
+      </div>
+      <div class="illustration-text">
+        <h3>Bienvenido</h3>
+        <p>Sistema de Gestión de Supermercado</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="login-right">
+    <div class="login-card">
+      <div class="logo-container">
+        <img src="assets/images/logo.png" alt="Sistema de Gestión" class="logo">
+      </div>
+
+      <h2 class="login-title">Inicio de Sesión</h2>
+
+      <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-icon matPrefix class="email-icon">mail</mat-icon>
+            <mat-label>Correo Electrónico</mat-label>
             <input matInput formControlName="correoElectronico" type="email" required />
             @if (loginForm.get('correoElectronico')?.errors?.['required']) {
-              <mat-error> El correo electrónico es requerido </mat-error>
+              <mat-error>El correo electrónico es requerido</mat-error>
             } @else if (loginForm.get('correoElectronico')?.errors?.['email']) {
-              <mat-error> Por favor ingresa un correo electrónico válido </mat-error>
+              <mat-error>Correo electrónico inválido</mat-error>
             }
           </mat-form-field>
         </div>
 
-        <div>
-          <mat-form-field appearance="outline" class="form__field">
-            <mat-label>Ingrese su clave</mat-label>
-            <input matInput formControlName="clave" [type]="hide ? 'password' : 'text'" required />
-            <button
-              mat-icon-button
-              matSuffix
-              (click)="hide = !hide"
-              [attr.aria-label]="'Hide password'"
-              [attr.aria-pressed]="hide"
-            >
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-icon matPrefix class="lock-icon-prefix">lock</mat-icon>
+            <mat-label>Contraseña</mat-label>
+            <input matInput  formControlName="clave"  [type]="hide ? 'password' : 'text'"  required />
+            <button mat-icon-button matSuffix (click)="hide = !hide" type="button" class="visibility-btn">
               <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
             @if (loginForm.get('clave')?.errors?.['required']) {
-              <mat-error> La clave es requerida </mat-error>
+              <mat-error>La contraseña es requerida</mat-error>
             }
           </mat-form-field>
         </div>
 
-        <button type="submit" class="form__button" mat-raised-button color="primary">
+        <button type="submit" class="login-button">
           Iniciar Sesión
         </button>
       </form>
-    </mat-card-content>
-  </mat-card>
+    </div>
+  </div>
 </div>
