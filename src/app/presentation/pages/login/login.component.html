@@ -34,8 +34,8 @@
         <div class="form-group">
           <mat-form-field appearance="outline" class="form-field">
             <mat-icon matPrefix class="email-icon">mail</mat-icon>
-            <mat-label>Correo Electrónico</mat-label>
-            <input matInput formControlName="correoElectronico" type="email" required />
+            <mat-label for="correoInput">Correo Electrónico</mat-label>
+            <input matInput formControlName="correoElectronico" type="email" required id="correoInput"/>
             @if (loginForm.get('correoElectronico')?.errors?.['required']) {
               <mat-error>El correo electrónico es requerido</mat-error>
             } @else if (loginForm.get('correoElectronico')?.errors?.['email']) {
@@ -47,8 +47,8 @@
         <div class="form-group">
           <mat-form-field appearance="outline" class="form-field">
             <mat-icon matPrefix class="lock-icon-prefix">lock</mat-icon>
-            <mat-label>Contraseña</mat-label>
-            <input matInput  formControlName="clave"  [type]="hide ? 'password' : 'text'"  required />
+            <mat-label for="claveInput">Contraseña</mat-label>
+            <input matInput formControlName="clave" [type]="hide ? 'password' : 'text'" required arial-label="claveInput"/>
             <button mat-icon-button matSuffix (click)="hide = !hide" type="button" class="visibility-btn">
               <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
