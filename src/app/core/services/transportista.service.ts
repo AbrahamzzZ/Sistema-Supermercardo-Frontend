@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/api/appsettings';
 import { ITransportista } from '../interfaces/transportista';
-import { IApi } from '../setting/api/api';
+import { ApiResponse } from '../setting/api/apiResponse';
 @Injectable({
   providedIn: 'root'
 })
@@ -26,14 +26,14 @@ export class TransportistaService {
   }
 
   registrar(transportista: ITransportista) {
-    return this.http.post<IApi>(this.apiUrl, transportista);
+    return this.http.post<ApiResponse<ITransportista>>(this.apiUrl, transportista);
   }
 
   editar(transportista: Partial<ITransportista>) {
-    return this.http.put<IApi>(`${this.apiUrl}/${transportista.id_Transportista}`, transportista);
+    return this.http.put<ApiResponse<ITransportista>>(`${this.apiUrl}/${transportista.id_Transportista}`, transportista);
   }
 
   eliminar(id: number) {
-    return this.http.delete<IApi>(`${this.apiUrl}/${id}`);
+    return this.http.delete<ApiResponse<ITransportista>>(`${this.apiUrl}/${id}`);
   }
 }

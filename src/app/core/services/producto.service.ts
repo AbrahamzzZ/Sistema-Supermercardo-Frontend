@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/api/appsettings';
 import { IProducto } from '../interfaces/producto';
-import { IApi } from '../setting/api/api';
+import { ApiResponse } from '../setting/api/apiResponse';
 import { IProductoCategoria } from '../interfaces/Dto/iproducto-categoria';
 import { IProductoRespuesta } from '../interfaces/Dto/iproducto-respuesta';
 
@@ -25,18 +25,18 @@ export class ProductoService {
   }
 
   obtener(id: number) {
-    return this.http.get<IProductoRespuesta>(`${this.apiUrl}/${id}`);
+    return this.http.get<ApiResponse<IProductoRespuesta>>(`${this.apiUrl}/${id}`);
   }
 
   registrar(producto: IProducto) {
-    return this.http.post<IApi>(this.apiUrl, producto);
+    return this.http.post<ApiResponse<IProducto>>(this.apiUrl, producto);
   }
 
   editar(producto: Partial<IProducto>) {
-    return this.http.put<IApi>(`${this.apiUrl}/${producto.id_Producto}`, producto);
+    return this.http.put<ApiResponse<IProducto>>(`${this.apiUrl}/${producto.id_Producto}`, producto);
   }
 
   eliminar(id: number) {
-    return this.http.delete<IApi>(`${this.apiUrl}/${id}`);
+    return this.http.delete<ApiResponse<IProducto>>(`${this.apiUrl}/${id}`);
   }
 }

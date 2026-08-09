@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/api/appsettings';
 import { INegocio } from '../interfaces/negocio';
-import { IApi } from '../setting/api/api';
+import { ApiResponse } from '../setting/api/apiResponse';
 import { ProductoMasVendido } from '../interfaces/Dto/negocio/producto-mas-vendido';
 import { ProductoMasComprado } from '../interfaces/Dto/negocio/producto-mas-comprado';
 import { TopClientes } from '../interfaces/Dto/negocio/top-clientes';
@@ -19,39 +19,39 @@ export class NegocioService {
   private readonly apiUrl: string = appsettings.apiUrl + 'Negocio';
 
   obtener(id: number) {
-    return this.http.get<INegocio>(`${this.apiUrl}/${id}`);
+    return this.http.get<ApiResponse<INegocio>>(`${this.apiUrl}/${id}`);
   }
 
   editar(negocio: Partial<INegocio>) {
-    return this.http.put<IApi>(`${this.apiUrl}/${negocio.id_Negocio}`, negocio);
+    return this.http.put<ApiResponse<INegocio>>(`${this.apiUrl}/${negocio.id_Negocio}`, negocio);
   }
 
   obtenerProductosComprados() {
-    return this.http.get<ProductoMasComprado[]>(`${this.apiUrl}/producto-mas-comprado`);
+    return this.http.get<ApiResponse<ProductoMasComprado[]>>(`${this.apiUrl}/producto-mas-comprado`);
   }
 
   obtenerProductosVendidos() {
-    return this.http.get<ProductoMasVendido[]>(`${this.apiUrl}/producto-mas-vendido`);
+    return this.http.get<ApiResponse<ProductoMasVendido[]>>(`${this.apiUrl}/producto-mas-vendido`);
   }
 
   obtenerTopClientes() {
-    return this.http.get<TopClientes[]>(`${this.apiUrl}/top-clientes`);
+    return this.http.get<ApiResponse<TopClientes[]>>(`${this.apiUrl}/top-clientes`);
   }
 
   obtenerTopProveedores() {
-    return this.http.get<ProveedorPreferido[]>(`${this.apiUrl}/top-proveedores`);
+    return this.http.get<ApiResponse<ProveedorPreferido[]>>(`${this.apiUrl}/top-proveedores`);
   }
 
   obtenerViajesTransportista() {
-    return this.http.get<TransportistaViaje[]>(`${this.apiUrl}/viajes-transportista`);
+    return this.http.get<ApiResponse<TransportistaViaje[]>>(`${this.apiUrl}/viajes-transportista`);
   }
 
   obtenerVentaEmpleados() {
-    return this.http.get<EmpleadoProductivo[]>(`${this.apiUrl}/empleados-productivos`);
+    return this.http.get<ApiResponse<EmpleadoProductivo[]>>(`${this.apiUrl}/empleados-productivos`);
   }
 
   consultarIA(prompt: string) {
     const body: AnalisisIARequest = { prompt };
-    return this.http.post<string>(`${this.apiUrl}/analisis-ia`, body);
+    return this.http.post<ApiResponse<string>>(`${this.apiUrl}/analisis-ia`, body);
   }
 }
