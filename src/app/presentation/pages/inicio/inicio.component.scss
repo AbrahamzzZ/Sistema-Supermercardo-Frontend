@@ -95,14 +95,14 @@
 }
 
 .no-animation {
-  animation: none;
+  animation: none !important;
 }
 
 @keyframes scroll-left {
-  from {
+  0% {
     transform: translateX(0);
   }
-  to {
-    transform: translateX(-46%);
+  100% {
+    transform: translateX(calc(-320px * 4 - 12px * 4)); 
   }
 }

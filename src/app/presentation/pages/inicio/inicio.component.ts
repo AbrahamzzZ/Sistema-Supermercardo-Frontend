@@ -24,7 +24,7 @@ export class InicioComponent implements OnInit, OnDestroy {
   private indiceOferta = 0;
 
   get animationDuration(): string {
-    const segundosPorTarjeta = 2.5;
+    const segundosPorTarjeta = 3; 
     return `${this.ofertas.length * segundosPorTarjeta}s`;
   }
 

@@ -1,5 +1,4 @@
 <div class="container">
-
   <header class="page-header">
     <div>
       <h1>Panel administrativo</h1>
@@ -10,42 +9,24 @@
   @if(ofertas.length > 0){
     <section class="oferta-container">
       <div class="ofertas-viewport">
+        <div class="ofertas-track" [style.animationDuration]="animationDuration" [class.no-animation]="ofertas.length === 1">
 
-        <div
-          class="ofertas-track"
-          [style.animationDuration]="animationDuration"
-          [class.no-animation]="ofertas.length === 1"
-        >
-          @for(oferta of ofertas; track $index){
-            <div class="oferta-item">
-              <mat-card class="oferta-card">
-                <mat-card-header>
-                  <mat-card-title>{{ oferta.nombre_Oferta }}</mat-card-title>
-                  <mat-card-subtitle>
-                    💰 {{ oferta.descuento }}% — Hasta {{ oferta.fecha_Fin | formatoFecha }}
-                  </mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content>
-                  <p class="descripcion">{{ oferta.descripcion }}</p>
-                </mat-card-content>
-              </mat-card>
-            </div>
-          }
-
-          @for(oferta of ofertas; track $index){
-            <div class="oferta-item">
-              <mat-card class="oferta-card">
-                <mat-card-header>
-                  <mat-card-title>{{ oferta.nombre_Oferta }}</mat-card-title>
-                  <mat-card-subtitle>
-                    💰 {{ oferta.descuento }}% — Hasta {{ oferta.fecha_Fin | formatoFecha }}
-                  </mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content>
-                  <p class="descripcion">{{ oferta.descripcion }}</p>
-                </mat-card-content>
-              </mat-card>
-            </div>
+          @for(i of [0,1,2,3]; track i){
+            @for(oferta of ofertas; track oferta.id_Oferta){
+              <div class="oferta-item">
+                <mat-card class="oferta-card">
+                  <mat-card-header>
+                    <mat-card-title>{{ oferta.nombre_Oferta }}</mat-card-title>
+                    <mat-card-subtitle>
+                      💰 {{ oferta.descuento }}% — Hasta {{ oferta.fecha_Fin | formatoFecha }}
+                    </mat-card-subtitle>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <p class="descripcion">{{ oferta.descripcion }}</p>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            }
           }
         </div>
       </div>
