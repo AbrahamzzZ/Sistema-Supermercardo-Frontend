@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/api/appsettings';
 import { IProveedor } from '../interfaces/proveedor';
-import { IApi } from '../setting/api/api';
+import { ApiResponse } from '../setting/api/apiResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -23,18 +23,18 @@ export class ProveedorService {
   }
 
   obtener(id: number) {
-    return this.http.get<IProveedor>(`${this.apiUrl}/${id}`);
+    return this.http.get<ApiResponse<IProveedor>>(`${this.apiUrl}/${id}`);
   }
 
   registrar(proveedor: IProveedor) {
-    return this.http.post<IApi>(this.apiUrl, proveedor);
+    return this.http.post<ApiResponse<IProveedor>>(this.apiUrl, proveedor);
   }
 
   editar(proveedor: Partial<IProveedor>) {
-    return this.http.put<IApi>(`${this.apiUrl}/${proveedor.id_Proveedor}`, proveedor);
+    return this.http.put<ApiResponse<IProveedor>>(`${this.apiUrl}/${proveedor.id_Proveedor}`, proveedor);
   }
 
   eliminar(id: number) {
-    return this.http.delete<IApi>(`${this.apiUrl}/${id}`);
+    return this.http.delete<ApiResponse<IProveedor>>(`${this.apiUrl}/${id}`);
   }
 }

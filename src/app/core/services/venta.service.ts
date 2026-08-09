@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/api/appsettings';
 import { IVenta } from '../interfaces/venta';
-import { IApi } from '../setting/api/api';
+import { ApiResponse } from '../setting/api/apiResponse';
 import { IVentaRepuesta } from '../interfaces/Dto/venta/iventa-repuesta';
 import { IDetallesVenta } from '../interfaces/Dto/venta/idetalles-venta';
 
@@ -18,14 +18,14 @@ export class VentaService {
   }
 
   obtener(documento: string) {
-    return this.http.get<IVentaRepuesta>(`${this.apiUrl}/${documento}`);
+    return this.http.get<ApiResponse<IVentaRepuesta>>(`${this.apiUrl}/${documento}`);
   }
 
   obtenerDetalleVenta(id: number) {
-    return this.http.get<IDetallesVenta>(`${this.apiUrl}/detalles/${id}`);
+    return this.http.get<ApiResponse<IDetallesVenta>>(`${this.apiUrl}/detalles/${id}`);
   }
 
   registrar(venta: IVenta) {
-    return this.http.post<IApi>(this.apiUrl, venta);
+    return this.http.post<ApiResponse<IVenta>>(this.apiUrl, venta);
   }
 }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/api/appsettings';
 import { ICliente } from '../interfaces/cliente';
-import { IApi } from '../setting/api/api';
+import { ApiResponse } from '../setting/api/apiResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -23,18 +23,18 @@ export class ClienteService {
   }
 
   obtener(id: number) {
-    return this.http.get<ICliente>(`${this.apiUrl}/${id}`);
+    return this.http.get<ApiResponse<ICliente>>(`${this.apiUrl}/${id}`);
   }
 
   registrar(cliente: ICliente) {
-    return this.http.post<IApi>(this.apiUrl, cliente);
+    return this.http.post<ApiResponse<ICliente>>(this.apiUrl, cliente);
   }
 
   editar(cliente: Partial<ICliente>) {
-    return this.http.put<IApi>(`${this.apiUrl}/${cliente.id_Cliente}`, cliente);
+    return this.http.put<ApiResponse<ICliente>>(`${this.apiUrl}/${cliente.id_Cliente}`, cliente);
   }
 
   eliminar(id: number) {
-    return this.http.delete<IApi>(`${this.apiUrl}/${id}`);
+    return this.http.delete<ApiResponse<ICliente>>(`${this.apiUrl}/${id}`);
   }
 }

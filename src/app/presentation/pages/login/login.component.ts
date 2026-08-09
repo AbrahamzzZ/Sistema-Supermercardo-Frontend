@@ -29,15 +29,24 @@ export class LoginComponent implements OnInit {
       clave: new FormControl('', [Validators.required])
     });
 
-    this.route.queryParams.subscribe((params) => {
-      if (params['motivo'] === 'inactividad') {
-        this.mostrarMensaje('La sesión fue cerrada por inactividad', 'error');
-      }
-    });
+    const tieneToken = localStorage.getItem('token');
+    const yaShownMessage = sessionStorage.getItem('logout-message-shown');
 
     this.route.queryParams.subscribe((params) => {
-      if (params['motivo'] === 'sesion') {
-        this.mostrarMensaje('La sesión fue cerrada exitosamente', 'success');
+      if (params['motivo'] && !tieneToken && !yaShownMessage) {
+        if (params['motivo'] === 'inactividad') {
+          this.mostrarMensaje('La sesión fue cerrada por inactividad', 'inactivity');
+        } else if (params['motivo'] === 'sesion') {
+          this.mostrarMensaje('La sesión fue cerrada exitosamente', 'logout');
+        }
+
+        
+        sessionStorage.setItem('logout-message-shown', 'true');
+        this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: {},
+          queryParamsHandling: 'merge'
+        });
       }
     });
   }
@@ -53,6 +62,7 @@ export class LoginComponent implements OnInit {
           this.loginServicio.guardarToken(response.data.token);
 
           if (response) {
+            sessionStorage.removeItem('logout-message-shown');
             this.loginServicio.iniciarMonitoreo();
             this.mostrarMensaje('Inicio de sesión exitoso', 'success');
             this.router.navigate(['/home']);
@@ -74,11 +84,31 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
-    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    const accion = tipo === 'success' ? 'Bienvenido al Sistema' : 'Error';
+  mostrarMensaje(mensaje: string,  tipo: 'success' | 'error' | 'logout' | 'inactivity' = 'success') {
+    let className: string;
+    let textoAccion: string;
 
-    this.snackBar.open(mensaje, accion, {
+    switch (tipo) {
+      case 'success':
+        className = 'success-snackbar';
+        textoAccion = 'Bienvenido al Sistema';
+        break;
+      case 'logout':
+        className = 'logout-snackbar';
+        textoAccion = 'Sesión Cerrada';
+        break;
+      case 'inactivity':
+        className = 'inactivity-snackbar';
+        textoAccion = 'Sesión Cerrada';
+        break;
+      case 'error':
+      default:
+        className = 'inactivity-snackbar';
+        textoAccion = 'Error';
+        break;
+    }
+
+    this.snackBar.open(mensaje, textoAccion, {
       duration: 3000,
       horizontalPosition: 'end',
       verticalPosition: 'bottom',

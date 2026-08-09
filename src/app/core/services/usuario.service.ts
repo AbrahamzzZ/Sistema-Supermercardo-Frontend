@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/api/appsettings';
 import { IUsuario } from '../interfaces/usuario';
-import { IApi } from '../setting/api/api';
+import { ApiResponse } from '../setting/api/apiResponse';
 import { IUsuarioRol } from '../interfaces/Dto/iusuario-rol';
 
 @Injectable({
@@ -24,18 +24,18 @@ export class UsuarioService {
   }
 
   obtener(id: number) {
-    return this.http.get<IUsuarioRol>(`${this.apiUrl}/${id}`);
+    return this.http.get<ApiResponse<IUsuarioRol>>(`${this.apiUrl}/${id}`);
   }
 
   registrar(usuario: IUsuario) {
-    return this.http.post<IApi>(this.apiUrl, usuario);
+    return this.http.post<ApiResponse<IUsuario>>(this.apiUrl, usuario);
   }
 
   editar(usuario: Partial<IUsuario>) {
-    return this.http.put<IApi>(`${this.apiUrl}/${usuario.id_Usuario}`, usuario);
+    return this.http.put<ApiResponse<IUsuario>>(`${this.apiUrl}/${usuario.id_Usuario}`, usuario);
   }
 
   eliminar(id: number) {
-    return this.http.delete<IApi>(`${this.apiUrl}/${id}`);
+    return this.http.delete<ApiResponse<IUsuario>>(`${this.apiUrl}/${id}`);
   }
 }

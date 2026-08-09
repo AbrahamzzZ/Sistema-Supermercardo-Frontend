@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/api/appsettings';
 import { ICompra } from '../interfaces/compra';
-import { IApi } from '../setting/api/api';
+import { ApiResponse } from '../setting/api/apiResponse';
 import { ICompraRepuesta } from '../interfaces/Dto/compra/icompra-repuesta';
 import { IDetallesCompra } from '../interfaces/Dto/compra/idetalles-compra';
 
@@ -18,14 +18,14 @@ export class CompraService {
   }
 
   obtener(documento: string) {
-    return this.http.get<ICompraRepuesta>(`${this.apiUrl}/${documento}`);
+    return this.http.get<ApiResponse<ICompraRepuesta>>(`${this.apiUrl}/${documento}`);
   }
 
   obtenerDetalleCompra(id: number) {
-    return this.http.get<IDetallesCompra>(`${this.apiUrl}/detalles/${id}`);
+    return this.http.get<ApiResponse<IDetallesCompra>>(`${this.apiUrl}/detalles/${id}`);
   }
 
   registrar(compra: ICompra) {
-    return this.http.post<IApi>(this.apiUrl, compra);
+    return this.http.post<ApiResponse<ICompra>>(this.apiUrl, compra);
   }
 }

@@ -33,7 +33,7 @@ export class MainLayoutComponent implements OnInit{
 
       this.menuServicio.obtener(idUsuario).subscribe({
         next: (data) => {
-          this.menus = data;
+          this.menus = data.data;
         },
         error: (err) => {
           console.error('Error al cargar los menús:', err);
