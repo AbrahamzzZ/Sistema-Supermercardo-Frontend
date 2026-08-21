@@ -3,6 +3,8 @@ import { Subscription, interval } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IOfertaProducto } from '../../../core/interfaces/Dto/ioferta-producto';
 import { OfertaService } from '../../../core/services/oferta.service';
+import { IProductoCategoria } from '../../../core/interfaces/Dto/iproducto-categoria';
+import { ProductoService } from '../../../core/services/producto.service';
 import { FormatoFechaPipe } from '../../../shared/pipes/formato-fecha.pipe';
 import { MaterialModule } from '../../../shared/ui/material-module';
 import { Router } from '@angular/router';
@@ -17,9 +19,12 @@ import { Router } from '@angular/router';
 export class InicioComponent implements OnInit, OnDestroy {
   private readonly snackBar = inject(MatSnackBar);
   private readonly ofertaServicio = inject(OfertaService);
+  private readonly productoServicio = inject(ProductoService);
   private router = inject(Router);
   public ofertas: IOfertaProducto[] = [];
   public ofertaActual: IOfertaProducto | null = null;
+  public productosStockBajo: IProductoCategoria[] = [];
+  public readonly stockMinimo = 10;
   private subscripcion!: Subscription;
   private indiceOferta = 0;
 
@@ -30,6 +35,7 @@ export class InicioComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.obtenerOfertas();
+    this.obtenerProductosStockBajo();
   }
 
   obtenerOfertas() {
@@ -58,6 +64,20 @@ export class InicioComponent implements OnInit, OnDestroy {
     if (this.ofertas.length === 0) return;
     this.ofertaActual = this.ofertas[this.indiceOferta];
     this.indiceOferta = (this.indiceOferta + 1) % this.ofertas.length;
+  }
+
+  obtenerProductosStockBajo() {
+    this.productoServicio.lista().subscribe({
+      next: (resp: any) => {
+        const productos: IProductoCategoria[] = resp.data ?? [];
+        this.productosStockBajo = productos.filter(
+          (producto) => producto.estado && producto.stock < this.stockMinimo
+        );
+      },
+      error: (err) => {
+        console.error('Error al obtener el stock de productos:', err);
+      }
+    });
   }
 
   ngOnDestroy(): void {
