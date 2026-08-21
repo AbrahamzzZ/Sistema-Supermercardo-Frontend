@@ -4,11 +4,11 @@
 			<mat-expansion-panel-header>
 				<div class="modal-log__acciones">
 					<mat-panel-title>Datos completos del Log</mat-panel-title>
-					<button mat-flat-button color="primary" (click)="copy()">
+					<button mat-flat-button color="primary" (click)="$event.stopPropagation(); copy()">
 						<mat-icon>content_copy</mat-icon> Copiar
 					</button>
 
-					<button mat-flat-button color="accent" (click)="download()">
+					<button mat-flat-button color="accent" (click)="$event.stopPropagation(); download()">
 						<mat-icon>download</mat-icon> Descargar TXT
 					</button>
 				</div>
