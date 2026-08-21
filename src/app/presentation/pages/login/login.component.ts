@@ -103,7 +103,7 @@ export class LoginComponent implements OnInit {
         break;
       case 'error':
       default:
-        className = 'inactivity-snackbar';
+        className = 'error-snackbar';
         textoAccion = 'Error';
         break;
     }
