@@ -14,7 +14,8 @@ export const timeoutInterceptor: HttpInterceptorFn = (req, next) => {
         snackBar.open('La solicitud tardó demasiado y fue cancelada.', 'Cerrar', {
           duration: 4000,
           horizontalPosition: 'right',
-          verticalPosition: 'top'
+          verticalPosition: 'top',
+          panelClass: ['error-snackbar']
         });
       }
       return throwError(() => err);
