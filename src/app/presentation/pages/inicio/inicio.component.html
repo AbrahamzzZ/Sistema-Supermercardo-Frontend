@@ -6,6 +6,23 @@
     </div>
   </header>
 
+  @if(productosStockBajo.length > 0){
+    <section class="stock-bajo-container">
+      <div class="stock-bajo-header">
+        <mat-icon>warning</mat-icon>
+        <span>Productos con stock bajo (menos de {{ stockMinimo }} unidades)</span>
+      </div>
+      <div class="stock-bajo-lista">
+        @for(producto of productosStockBajo; track producto.id_Producto){
+          <div class="stock-bajo-item">
+            <span class="nombre">{{ producto.nombre_Producto }}</span>
+            <span class="cantidad">{{ producto.stock }} und.</span>
+          </div>
+        }
+      </div>
+    </section>
+  }
+
   @if(ofertas.length > 0){
     <section class="oferta-container">
       <div class="ofertas-viewport">

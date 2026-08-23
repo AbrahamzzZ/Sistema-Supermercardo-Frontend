@@ -11,6 +11,8 @@ import { ICliente } from '../../../core/interfaces/cliente';
 import { ModalOfertaComponent } from '../../components/modal/modal-oferta/modal-oferta.component';
 import { IOferta } from '../../../core/interfaces/oferta';
 import { ModalProductoComponent } from '../../components/modal/modal-producto/modal-producto.component';
+import { OfertaService } from '../../../core/services/oferta.service';
+import { IOfertaProducto } from '../../../core/interfaces/Dto/ioferta-producto';
 import { Router } from '@angular/router';
 import { IVenta } from '../../../core/interfaces/venta';
 import { IDetalleVenta } from '../../../core/interfaces/detalle-venta';
@@ -54,6 +56,7 @@ export class VentaInicioComponent implements OnInit, AfterViewInit{
     'accion'
   ];
   private servicioVenta = inject(VentaService);
+  private ofertaServicio = inject(OfertaService);
   private snackBar = inject(MatSnackBar);
   private loginServicio = inject(LoginService);
   public numeroDocumento= '';
@@ -118,7 +121,30 @@ export class VentaInicioComponent implements OnInit, AfterViewInit{
         this.productoSeleccionado = result;
 
         this.producto.precioVenta = Number(result.precio_Venta);
+        this.verificarOfertaProducto(result);
       }
+    });
+  }
+
+  verificarOfertaProducto(producto: IProducto) {
+    this.ofertaServicio.lista().subscribe({
+      next: (resp: any) => {
+        const ofertas: IOfertaProducto[] = resp.data ?? [];
+        const hoy = new Date();
+
+        const tieneOferta = ofertas.some(
+          (oferta) =>
+            oferta.id_Producto === producto.id_Producto &&
+            oferta.estado &&
+            new Date(oferta.fecha_Inicio) <= hoy &&
+            hoy <= new Date(oferta.fecha_Fin)
+        );
+
+        if (tieneOferta) {
+          this.mostrarMensaje(`¡Hay una oferta para "${producto.nombre_Producto}"!`, 'oferta');
+        }
+      },
+      error: (err) => console.error('Error al verificar ofertas del producto:', err)
     });
   }
 
@@ -272,8 +298,9 @@ export class VentaInicioComponent implements OnInit, AfterViewInit{
     });
   }
 
-  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
-    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' | 'oferta' = 'success') {
+    const className =
+      tipo === 'success' ? 'success-snackbar' : tipo === 'oferta' ? 'oferta-snackbar' : 'error-snackbar';
 
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,

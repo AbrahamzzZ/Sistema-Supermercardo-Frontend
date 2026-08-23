@@ -22,6 +22,7 @@ app-footer {
 
 //Estilos personalizados para el snackbar
 .success-snackbar,
+.error-snackbar,
 .logout-snackbar,
 .inactivity-snackbar {
   .mdc-snackbar__surface {
@@ -44,6 +45,20 @@ app-footer {
 .success-snackbar {
   .mdc-snackbar__surface {
     background-color: #16a34a !important;
+  }
+
+  .mdc-snackbar__label {
+    color: white !important;
+  }
+
+  .mdc-button__label {
+    color: white !important;
+  }
+}
+
+.error-snackbar {
+  .mdc-snackbar__surface {
+    background-color: #dc2626 !important;
   }
 
   .mdc-snackbar__label {
@@ -80,6 +95,34 @@ app-footer {
 
   .mdc-button__label {
     color: #000000 !important;
+  }
+}
+
+.oferta-snackbar {
+  .mdc-snackbar__surface {
+    background-color: #7c3aed !important;
+    animation: oferta-pulse 1s ease-in-out infinite;
+  }
+
+  .mdc-snackbar__label {
+    color: white !important;
+    font-weight: 600;
+  }
+
+  .mdc-button__label {
+    color: white !important;
+  }
+}
+
+@keyframes oferta-pulse {
+  0%,
+  100% {
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(124, 58, 237, 0.85);
+    transform: scale(1.03);
   }
 }
 
