@@ -138,7 +138,7 @@ export class TransportistaInicioComponent implements AfterViewInit {
       Telefono: transportista.telefono,
       'Correo Electronico': transportista.correo_Electronico,
       Estado: this.getEstado(transportista.estado),
-      'Fecha Registro': this.getFechaRegistro(transportista.fecha_Registro ?? '')
+      'Fecha Registro': this.getFechaRegistro(transportista.fecha_Creacion ?? '')
     }));
 
     if (!datos || datos.length === 0) {

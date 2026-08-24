@@ -131,7 +131,7 @@ export class ProveedorInicioComponent implements AfterViewInit {
       Telefono: proveedor.telefono,
       'Correo Electronico': proveedor.correo_Electronico,
       Estado: this.getEstado(proveedor.estado),
-      'Fecha Registro': this.getFechaRegistro(proveedor.fecha_Registro ?? '')
+      'Fecha Registro': this.getFechaRegistro(proveedor.fecha_Creacion ?? '')
     }));
 
     if (!datos || datos.length === 0) {

@@ -90,7 +90,7 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
       imagen: this.formTransportista.value.imagen ?? '',
       imagenBase64: this.formTransportista.value.imageBase64 ?? '',
       estado: this.formTransportista.value.estado ?? false,
-      fecha_Registro: Metodos.getFechaCreacion()
+      fecha_Creacion: Metodos.getFechaCreacion()
     };
 
     this.formTransportista.markAllAsTouched();

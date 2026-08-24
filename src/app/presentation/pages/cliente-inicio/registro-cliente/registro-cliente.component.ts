@@ -81,7 +81,7 @@ export class RegistroClienteComponent implements OnInit, CanComponentDeactive {
       cedula: this.formCliente.value.cedula?.trim() ?? '',
       telefono: this.formCliente.value.telefono?.trim() ?? '',
       correo_Electronico: this.formCliente.value.correoElectronico?.trim() ?? '',
-      fecha_Registro: Metodos.getFechaCreacion()
+      fecha_Creacion: Metodos.getFechaCreacion()
     };
 
     this.formCliente.markAllAsTouched();

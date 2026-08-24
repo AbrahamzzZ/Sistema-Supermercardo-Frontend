@@ -127,7 +127,7 @@ export class ClienteInicioComponent implements AfterViewInit {
       Cedula: cliente.cedula,
       Telefono: cliente.telefono,
       'Correo Electronico': cliente.correo_Electronico,
-      'Fecha Registro': this.getFechaRegistro(cliente.fecha_Registro ?? '')
+      'Fecha Registro': this.getFechaRegistro(cliente.fecha_Creacion ?? '')
     }));
 
     if (!datos || datos.length === 0) {
