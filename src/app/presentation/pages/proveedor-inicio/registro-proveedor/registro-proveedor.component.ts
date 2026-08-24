@@ -83,7 +83,7 @@ export class RegistroProveedorComponent implements OnInit, CanComponentDeactive 
       telefono: this.formProveedor.value.telefono?.trim() ?? '',
       correo_Electronico: this.formProveedor.value.correoElectronico?.trim() ?? '',
       estado: this.formProveedor.value.estado ?? false,
-      fecha_Registro: Metodos.getFechaCreacion()
+      fecha_Creacion: Metodos.getFechaCreacion()
     };
 
     this.formProveedor.markAllAsTouched();
