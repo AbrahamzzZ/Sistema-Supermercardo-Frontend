@@ -37,7 +37,7 @@ export class ClienteInicioComponent implements AfterViewInit {
     'cedula',
     'telefono',
     'correo_Electronico',
-    'fecha_Registro',
+    'fecha_Creacion',
     'accion'
   ];
 
@@ -127,7 +127,7 @@ export class ClienteInicioComponent implements AfterViewInit {
       Cedula: cliente.cedula,
       Telefono: cliente.telefono,
       'Correo Electronico': cliente.correo_Electronico,
-      'Fecha Registro': this.getFechaRegistro(cliente.fecha_Creacion ?? '')
+      'Fecha Creacion': this.getFechaRegistro(cliente.fecha_Creacion ?? '')
     }));
 
     if (!datos || datos.length === 0) {
@@ -143,7 +143,7 @@ export class ClienteInicioComponent implements AfterViewInit {
       'Cedula',
       'Telefono',
       'Correo Electronico',
-      'Fecha Registro'
+      'Fecha Creacion'
     ]);
     this.mostrarMensaje('Excel generado exitosamente.', 'success');
   }

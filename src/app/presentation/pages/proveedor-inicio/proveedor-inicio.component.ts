@@ -40,7 +40,7 @@ export class ProveedorInicioComponent implements AfterViewInit {
     'telefono',
     'correo_Electronico',
     'estado',
-    'fecha_Registro',
+    'fecha_Creacion',
     'accion'
   ];
 
@@ -131,7 +131,7 @@ export class ProveedorInicioComponent implements AfterViewInit {
       Telefono: proveedor.telefono,
       'Correo Electronico': proveedor.correo_Electronico,
       Estado: this.getEstado(proveedor.estado),
-      'Fecha Registro': this.getFechaRegistro(proveedor.fecha_Creacion ?? '')
+      'Fecha Creacion': this.getFechaRegistro(proveedor.fecha_Creacion ?? '')
     }));
 
     if (!datos || datos.length === 0) {
@@ -148,7 +148,7 @@ export class ProveedorInicioComponent implements AfterViewInit {
       'Telefono',
       'Correo Electronico',
       'Estado',
-      'Fecha Registro'
+      'Fecha Creacion'
     ]);
     this.mostrarMensaje('Excel generado exitosamente.', 'success');
   }

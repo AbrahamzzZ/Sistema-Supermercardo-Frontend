@@ -39,9 +39,9 @@ export class TransportistaInicioComponent implements AfterViewInit {
     'cedula',
     'telefono',
     'correo_Electronico',
-    'imagen',
+    'foto',
     'estado',
-    'fecha_Registro',
+    'fecha_Creacion',
     'accion'
   ];
 
@@ -64,10 +64,10 @@ export class TransportistaInicioComponent implements AfterViewInit {
         this.totalRegistros = resp.data.totalCount;
 
         this.listaTransportista.data = arr.map((t: ITransportista) => {
-          if (t.imagen && typeof t.imagen === 'string') {
-            t.imagen = `data:image/*;base64,${t.imagen}`;
+          if (t.foto && typeof t.foto === 'string') {
+            t.foto = `data:image/*;base64,${t.foto}`;
           } else {
-            t.imagen = 'assets/images/default-avatar.jpg';
+            t.foto = 'assets/images/default-avatar.jpg';
           }
           return t;
         });
@@ -138,7 +138,7 @@ export class TransportistaInicioComponent implements AfterViewInit {
       Telefono: transportista.telefono,
       'Correo Electronico': transportista.correo_Electronico,
       Estado: this.getEstado(transportista.estado),
-      'Fecha Registro': this.getFechaRegistro(transportista.fecha_Creacion ?? '')
+      'Fecha Creacion': this.getFechaRegistro(transportista.fecha_Creacion ?? '')
     }));
 
     if (!datos || datos.length === 0) {
@@ -155,7 +155,7 @@ export class TransportistaInicioComponent implements AfterViewInit {
       'Telefono',
       'Correo Electronico',
       'Estado',
-      'Fecha Registro'
+      'Fecha Creacion'
     ]);
     this.mostrarMensaje('Excel generado exitosamente.', 'success');
   }

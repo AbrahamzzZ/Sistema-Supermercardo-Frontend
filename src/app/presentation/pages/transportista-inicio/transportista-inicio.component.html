@@ -75,10 +75,10 @@
       </ng-container>
 
       <!-- Imagen -->
-      <ng-container matColumnDef="imagen">
+      <ng-container matColumnDef="foto">
         <th class="table__header" mat-header-cell *matHeaderCellDef>Foto</th>
         <td class="table__cell" mat-cell *matCellDef="let element">
-          <img class="table__img" [src]="element.imagen" alt="Foto de Transportista" />
+          <img class="table__img" [src]="element.foto" alt="Foto de Transportista" />
         </td>
       </ng-container>
 
@@ -99,10 +99,10 @@
       </ng-container>
 
       <!-- Fecha de Registro -->
-      <ng-container matColumnDef="fecha_Registro">
+      <ng-container matColumnDef="fecha_Creacion">
         <th class="table__header" mat-header-cell *matHeaderCellDef>Fecha de Registro</th>
         <td class="table__cell" mat-cell *matCellDef="let element">
-          {{ getFechaRegistro(element.fecha_Registro) }}
+          {{ getFechaRegistro(element.fecha_Creacion) }}
         </td>
       </ng-container>
 
