@@ -1,7 +1,6 @@
-import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../shared/ui/material-module';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { RouterOutlet } from '@angular/router';
@@ -9,15 +8,18 @@ import { Metodos } from '../../../shared/utility/metodos';
 import { LogService } from '../../../core/services/log.service';
 import { ILog } from '../../../core/interfaces/log';
 import { ModalLogComponent } from '../../components/modal/modal-log/modal-log.component';
+import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
+import { PageEvent } from '@angular/material/paginator';
+import { TableColumn } from '../../../shared/utility/components/tableColumn';
 
 @Component({
   selector: 'app-log-inicio',
   standalone: true,
-  imports: [MaterialModule, RouterOutlet],
+  imports: [MaterialModule, RouterOutlet, DataTableComponent],
   templateUrl: './log-inicio.component.html',
   styleUrl: './log-inicio.component.scss'
 })
-export class LogInicioComponent implements AfterViewInit{
+export class LogInicioComponent implements OnInit {
   private readonly dialog = inject(MatDialog);
   private readonly logServicio = inject(LogService);
   private readonly snackBar = inject(MatSnackBar);
@@ -25,26 +27,26 @@ export class LogInicioComponent implements AfterViewInit{
   public tituloExcel = 'Logs';
   public totalRegistros = 0;
   public pageSize = 5;
-  displayedColumns: string[] = [
-    'id',
-    'codigo_Error',
-    'fecha',
-    'endpoint',
-    'metodo',
-    'nivel',
-    'accion'
+  
+  columns: TableColumn[] = [
+    {key: 'id_Log', label: 'No.', type: 'text'},
+    {key: 'codigo_Error', label: 'Código de Error', type: 'text'},
+    {key: 'fecha', label: 'Fecha', type: 'date'},
+    {key: 'endpoint', label: 'Endpoint', type: 'text'},
+    {key: 'metodo', label: 'Método', type: 'text'},
+    {key: 'nivel', label: 'Nivel', type: 'text'},
+    {key: 'accion', label: 'Acción', type: 'view'}
   ];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  ngAfterViewInit() {
-    this.paginator.page.subscribe(() => {
-      this.obtenerLogs(this.paginator.pageIndex + 1, this.paginator.pageSize);
-      if (this.listaLog.data.length === 0 && this.paginator.hasPreviousPage()) {
-        this.paginator.previousPage();
-      }
-    });
+  ngOnInit() {
     this.obtenerLogs(1, this.pageSize);
+  }
+
+  cambiarPagina(event: PageEvent) {
+    this.obtenerLogs(
+      event.pageIndex + 1,
+      event.pageSize
+    );
   }
 
   obtenerLogs(pageNumber: number, pageSize: number) {

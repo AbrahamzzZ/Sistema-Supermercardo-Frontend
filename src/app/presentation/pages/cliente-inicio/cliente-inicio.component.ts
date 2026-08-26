@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router, RouterOutlet } from '@angular/router';
 import { ClienteService } from '../../../core/services/cliente.service';
@@ -7,8 +7,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Metodos } from '../../../shared/utility/metodos';
-import { MatPaginator} from '@angular/material/paginator';
+import { PageEvent} from '@angular/material/paginator';
 import { MaterialModule } from '../../../shared/ui/material-module';
+import { TableColumn } from '../../../shared/utility/components/tableColumn';
+import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
 
 @Component({
   selector: 'app-cliente-inicio',
@@ -16,11 +18,12 @@ import { MaterialModule } from '../../../shared/ui/material-module';
   imports: [
     MaterialModule,
     RouterOutlet,
-  ],
+    DataTableComponent
+],
   templateUrl: './cliente-inicio.component.html',
   styleUrl: './cliente-inicio.component.scss'
 })
-export class ClienteInicioComponent implements AfterViewInit {
+export class ClienteInicioComponent implements OnInit{
   private router = inject(Router);
   private dialog = inject(MatDialog);
   private clienteServicio = inject(ClienteService);
@@ -29,28 +32,27 @@ export class ClienteInicioComponent implements AfterViewInit {
   public tituloExcel = 'Clientes';
   public totalRegistros = 0;
   public pageSize = 5;
-  displayedColumns: string[] = [
-    'id',
-    'codigo',
-    'nombres',
-    'apellidos',
-    'cedula',
-    'telefono',
-    'correo_Electronico',
-    'fecha_Creacion',
-    'accion'
+  columns: TableColumn[] = [
+    {key: 'id_Cliente', label: 'No.', type: 'text'},
+    {key: 'codigo', label: 'Código', type: 'text'},
+    {key: 'nombres', label: 'Nombres', type: 'text'},
+    {key: 'apellidos', label: 'Apellidos', type: 'text'},
+    {key: 'cedula', label: 'Cédula', type: 'text'},
+    {key: 'telefono', label: 'Teléfono', type: 'text'},
+    {key: 'correo_Electronico', label: 'Correo Electrónico', type: 'text'},
+    {key: 'fecha_Creacion', label: 'Fecha de Registro', type: 'date'},
+    {key: 'accion', label: 'Acción', type: 'actions'}
   ];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  ngAfterViewInit() {
-    this.paginator.page.subscribe(() => {
-      this.obtenerClientes(this.paginator.pageIndex + 1, this.paginator.pageSize);
-      if (this.listaCliente.data.length === 0 && this.paginator.hasPreviousPage()) {
-        this.paginator.previousPage();
-      }
-    });
+  ngOnInit() {
     this.obtenerClientes(1, this.pageSize);
+  }
+
+  cambiarPagina(event: PageEvent) {
+    this.obtenerClientes(
+      event.pageIndex + 1,
+      event.pageSize
+    );
   }
 
   obtenerClientes(pageNumber: number, pageSize: number) {
@@ -79,7 +81,7 @@ export class ClienteInicioComponent implements AfterViewInit {
         this.clienteServicio.eliminar(cliente.id_Cliente).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerClientes(this.paginator.pageIndex + 1, this.paginator.pageSize);
+              this.obtenerClientes(1, this.pageSize);
               this.mostrarMensaje('Cliente eliminado correctamente.', 'success');
             }
           },

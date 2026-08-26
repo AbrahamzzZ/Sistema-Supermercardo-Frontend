@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router, RouterOutlet } from '@angular/router';
 import { ProductoService } from '../../../core/services/producto.service';
@@ -6,11 +6,12 @@ import { IProducto } from '../../../core/interfaces/producto';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NgClass } from '@angular/common';
 import { Metodos } from '../../../shared/utility/metodos';
-import { MatPaginator } from '@angular/material/paginator';
 import { IProductoCategoria } from '../../../core/interfaces/Dto/iproducto-categoria';
 import { MaterialModule } from '../../../shared/ui/material-module';
+import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
+import { TableColumn } from '../../../shared/utility/components/tableColumn';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-producto-inicio',
@@ -18,12 +19,12 @@ import { MaterialModule } from '../../../shared/ui/material-module';
   imports: [
     MaterialModule,
     RouterOutlet,
-    NgClass,
-  ],
+    DataTableComponent
+],
   templateUrl: './producto-inicio.component.html',
   styleUrl: './producto-inicio.component.scss'
 })
-export class ProductoInicioComponent implements AfterViewInit {
+export class ProductoInicioComponent implements OnInit {
   private router = inject(Router);
   private dialog = inject(MatDialog);
   private productoServicio = inject(ProductoService);
@@ -32,30 +33,30 @@ export class ProductoInicioComponent implements AfterViewInit {
   public tituloExcel = 'Productos';
   public totalRegistros = 0;
   public pageSize = 5;
-  public displayedColumns: string[] = [
-    'id',
-    'codigo',
-    'nombre',
-    'descripcion',
-    'categoria',
-    'pais_Origen',
-    'stock',
-    'precio_Compra',
-    'precio_Venta',
-    'estado',
-    'accion'
+
+  columns: TableColumn[] = [
+    {key: 'id_Producto', label: 'No.', type: 'text'},
+    {key: 'codigo', label: 'Código', type: 'text'},
+    {key: 'nombre_Producto', label: 'Nombre', type: 'text'},
+    {key: 'descripcion', label: 'Descripción', type: 'text'},
+    {key: 'nombre_Categoria', label: 'Categoría', type: 'text'},
+    {key: 'pais_Origen', label: 'País de Origen', type: 'text'},
+    {key: 'stock', label: 'Stock', type: 'text'},
+    {key: 'precio_Compra', label: 'Precio de Compra', type: 'text'},
+    {key: 'precio_Venta', label: 'Precio de Venta', type: 'text'},
+    {key: 'estado', label: 'Estado', type: 'status'},
+    {key: 'accion', label: 'Acción', type: 'actions'}
   ];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  ngAfterViewInit() {
-    this.paginator.page.subscribe(() => {
-      this.obtenerProductos(this.paginator.pageIndex + 1, this.paginator.pageSize);
-      if (this.listaProducto.data.length === 0 && this.paginator.hasPreviousPage()) {
-        this.paginator.previousPage();
-      }
-    });
+  ngOnInit() {
     this.obtenerProductos(1, this.pageSize);
+  }
+
+  cambiarPagina(event: PageEvent) {
+    this.obtenerProductos(
+      event.pageIndex + 1,
+      event.pageSize
+    );
   }
 
   obtenerProductos(pageNumber: number, pageSize: number) {
@@ -82,7 +83,7 @@ export class ProductoInicioComponent implements AfterViewInit {
         this.productoServicio.eliminar(producto.id_Producto).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerProductos(this.paginator.pageIndex + 1, this.paginator.pageSize);
+              this.obtenerProductos(1, this.pageSize);
               this.mostrarMensaje('Producto eliminado correctamente.', 'success');
             }
           },

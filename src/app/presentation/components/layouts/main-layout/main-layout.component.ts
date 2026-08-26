@@ -1,11 +1,11 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SidnebarComponent } from '../../../../shared/sidnebar/sidnebar.component';
 import { MatSidenav } from '@angular/material/sidenav';
 import { IMenu } from '../../../../core/interfaces/menu';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 import { LoginService } from '../../../../core/services/login.service';
 import { MenuService } from '../../../../core/services/menu.service';
+import { SidnebarComponent } from '../../../../shared/utility/components/sidnebar/sidnebar.component';
 
 @Component({
   selector: 'app-main-layout',

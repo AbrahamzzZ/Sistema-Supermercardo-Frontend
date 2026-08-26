@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router, RouterOutlet } from '@angular/router';
 import { CategoriaService } from '../../../core/services/categoria.service';
@@ -7,9 +7,10 @@ import { ICategoria } from '../../../core/interfaces/categoria';
 import { MatDialog } from '@angular/material/dialog';
 import { Metodos } from '../../../shared/utility/metodos';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
-import { MatPaginator } from '@angular/material/paginator';
-import { NgClass } from '@angular/common';
 import { MaterialModule } from '../../../shared/ui/material-module';
+import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
+import { TableColumn } from '../../../shared/utility/components/tableColumn';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-categoria-inicio',
@@ -17,12 +18,12 @@ import { MaterialModule } from '../../../shared/ui/material-module';
   imports: [
     MaterialModule,
     RouterOutlet,
-    NgClass,
-  ],
+    DataTableComponent
+],
   templateUrl: './categoria-inicio.component.html',
   styleUrl: './categoria-inicio.component.scss'
 })
-export class CategoriaInicioComponent implements AfterViewInit {
+export class CategoriaInicioComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
   private readonly categoriaServicio = inject(CategoriaService);
@@ -31,25 +32,24 @@ export class CategoriaInicioComponent implements AfterViewInit {
   public tituloExcel = 'Categorías';
   public totalRegistros = 0;
   public pageSize = 5;
-  displayedColumns: string[] = [
-    'idCategoria',
-    'codigo',
-    'nombreCategoria',
-    'estado',
-    'fechaCreacion',
-    'accion'
+  columns: TableColumn[] = [
+    {key: 'id_Categoria', label: 'No.', type: 'text'},
+    {key: 'codigo', label: 'Código', type: 'text'},
+    {key: 'nombre_Categoria', label: 'Nombre', type: 'text'},
+    {key: 'estado', label: 'Estado', type: 'status'},
+    {key: 'fecha_Creacion', label: 'Fecha de Registro', type: 'date'},
+    {key: 'accion', label: 'Acción', type: 'actions'}
   ];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  ngAfterViewInit() {
-    this.paginator.page.subscribe(() => {
-      this.obtenerCategorias(this.paginator.pageIndex + 1, this.paginator.pageSize);
-      if (this.listaCategoria.data.length === 0 && this.paginator.hasPreviousPage()) {
-        this.paginator.previousPage();
-      }
-    });
+  ngOnInit() {
     this.obtenerCategorias(1, this.pageSize);
+  }
+
+  cambiarPagina(event: PageEvent) {
+    this.obtenerCategorias(
+      event.pageIndex + 1,
+      event.pageSize
+    );
   }
 
   obtenerCategorias(pageNumber: number, pageSize: number) {
@@ -78,7 +78,7 @@ export class CategoriaInicioComponent implements AfterViewInit {
         this.categoriaServicio.eliminar(categoria.id_Categoria).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerCategorias(this.paginator.pageIndex + 1, this.paginator.pageSize);
+              this.obtenerCategorias(1, this.pageSize);
               this.mostrarMensaje('Categoría eliminado correctamente.', 'success');
             }
           },

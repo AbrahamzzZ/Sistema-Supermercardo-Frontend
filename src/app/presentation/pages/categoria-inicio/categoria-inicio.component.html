@@ -27,83 +27,17 @@
       </button>
     </div>
 
-    <table class="table" mat-table [dataSource]="listaCategoria">
-      <!-- No. -->
-      <ng-container matColumnDef="idCategoria">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>No.</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.id_Categoria }}</td>
-      </ng-container>
-
-      <!-- Código -->
-      <ng-container matColumnDef="codigo">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Código</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.codigo }}</td>
-      </ng-container>
-
-      <!-- Nombre -->
-      <ng-container matColumnDef="nombreCategoria">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Nombre</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">
-          {{ element.nombre_Categoria }}
-        </td>
-      </ng-container>
-
-      <!-- Estado -->
-      <ng-container matColumnDef="estado">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Estado</th>
-        <td
-          class="table__cell"
-          mat-cell
-          *matCellDef="let element"
-          [ngClass]="{
-            'table__estado-activo': element.estado,
-            'table__estado-no-activo': !element.estado
-          }"
-        >
-          {{ getEstado(element.estado) }}
-        </td>
-      </ng-container>
-
-      <!-- Fecha de Registro -->
-      <ng-container matColumnDef="fechaCreacion">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Fecha de Creación</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">
-          {{ getFechaRegistro(element.fecha_Creacion) }}
-        </td>
-      </ng-container>
-
-      <!-- Acciones -->
-      <ng-container matColumnDef="accion">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Acción</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">
-          <button mat-icon-button (click)="editar(element)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button (click)="eliminar(element)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
-
-    <mat-paginator
-      [length]="totalRegistros"
+    <app-data-table
+      [dataSource]="listaCategoria"
+      [columns]="columns"
+      [totalRegistros]="totalRegistros"
       [pageSize]="pageSize"
       [pageSizeOptions]="[5, 10, 20]"
-      showFirstLastButtons
-    >
-    </mat-paginator>
-
-    <!-- Mensaje cuando no hay datos -->
-    @if (listaCategoria.filteredData.length === 0) {
-      <div class="container__message">
-        <mat-icon class="container__message__icon">info_outline</mat-icon>
-        <span class="container__message__text">No hay categorias que mostrar.</span>
-      </div>
-    }
+      mensajeSinDatos="No hay categorias que mostrar."
+      (editar)="editar($event)"
+      (eliminar)="eliminar($event)"
+      (cambioPagina)="cambiarPagina($event)"
+    ></app-data-table>
   </div>
 </div>
 

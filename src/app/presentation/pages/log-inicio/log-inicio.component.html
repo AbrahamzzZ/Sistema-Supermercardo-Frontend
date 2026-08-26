@@ -23,76 +23,16 @@
       </button>
     </div>
 
-    <table class="table" mat-table [dataSource]="listaLog">
-      <!-- No. -->
-      <ng-container matColumnDef="id">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>No.</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.id_Log }}</td>
-      </ng-container>
-
-      <!-- Código -->
-      <ng-container matColumnDef="codigo_Error">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Código</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.codigo_Error }}</td>
-      </ng-container>
-
-      <!-- Fecha -->
-      <ng-container matColumnDef="fecha">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Fecha</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">
-          {{ getFechaRegistro(element.fecha) }}
-        </td>
-      </ng-container>
-
-      <!-- Endpoint -->
-      <ng-container matColumnDef="endpoint">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Endpoint</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.endpoint }}</td>
-      </ng-container>
-
-      <!-- Metodo -->
-      <ng-container matColumnDef="metodo">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Metodo</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">
-          {{ element.metodo }}
-        </td>
-      </ng-container>
-
-      <!-- Nivel -->
-      <ng-container matColumnDef="nivel">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Nivel</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.nivel }}</td>
-      </ng-container>
-
-      <!-- Acciones -->
-      <ng-container matColumnDef="accion">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Acción</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">
-          <button mat-icon-button (click)="ver(element)">
-            <mat-icon>visibility</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
-
-    <mat-paginator
-      [length]="totalRegistros"
+    <app-data-table
+      [dataSource]="listaLog"
+      [columns]="columns"
+      [totalRegistros]="totalRegistros"
       [pageSize]="pageSize"
       [pageSizeOptions]="[5, 10, 20]"
-      showFirstLastButtons
-    >
-    </mat-paginator>
-
-    <!-- Mensaje cuando no hay datos -->
-    @if (listaLog.filteredData.length === 0) {
-      <div class="container__message">
-        <mat-icon class="container__message__icon">info_outline</mat-icon>
-        <span class="container__message__text">No hay logs que mostrar.</span>
-      </div>
-    }
+      mensajeSinDatos="No hay logs que mostrar."
+      (ver)="ver($event)"
+      (cambioPagina)="cambiarPagina($event)"
+    ></app-data-table>
   </div>
 </div>
 

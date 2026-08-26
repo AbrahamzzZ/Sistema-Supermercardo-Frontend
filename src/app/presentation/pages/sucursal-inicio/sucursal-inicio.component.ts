@@ -1,16 +1,17 @@
-import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { SucursalService } from '../../../core/services/sucursal.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router, RouterOutlet } from '@angular/router';
-import { NgClass } from '@angular/common';
-import { MatPaginator } from '@angular/material/paginator';
+import {  PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { Metodos } from '../../../shared/utility/metodos';
 import { ISucursalNegocio } from '../../../core/interfaces/Dto/sucursal-negocio';
 import { ISucursal } from '../../../core/interfaces/sucursal';
 import { MaterialModule } from '../../../shared/ui/material-module';
+import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
+import { TableColumn } from '../../../shared/utility/components/tableColumn';
 
 @Component({
   selector: 'app-sucursal-inicio',
@@ -18,12 +19,12 @@ import { MaterialModule } from '../../../shared/ui/material-module';
   imports: [
     MaterialModule,
     RouterOutlet,
-    NgClass,
-  ],
+    DataTableComponent
+],
   templateUrl: './sucursal-inicio.component.html',
   styleUrl: './sucursal-inicio.component.scss'
 })
-export class SucursalInicioComponent implements AfterViewInit {
+export class SucursalInicioComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
   private readonly sucursalServicio = inject(SucursalService);
@@ -32,28 +33,28 @@ export class SucursalInicioComponent implements AfterViewInit {
   public tituloExcel = 'Sucursales';
   public totalRegistros = 0;
   public pageSize = 5;
-  public displayedColumns: string[] = [
-    'id',
-    'codigo',
-    'nombre',
-    'direccion',
-    'latitud',
-    'longitud',
-    'ciudad',
-    'estado',
-    'accion'
+
+  columns: TableColumn[] = [
+    {key: 'id_Sucursal', label: 'No.', type: 'text'},
+    {key: 'codigo', label: 'Código', type: 'text'},
+    {key: 'nombre_Sucursal', label: 'Nombre', type: 'text'},
+    {key: 'direccion_Sucursal', label: 'Dirección', type: 'text'},
+    {key: 'latitud', label: 'Latitud', type: 'text'},
+    {key: 'longitud', label: 'Longitud', type: 'text'},
+    {key: 'ciudad_Sucursal', label: 'Ciudad', type: 'text'},
+    {key: 'estado', label: 'Estado', type: 'status'},
+    {key: 'accion', label: 'Acción', type: 'actions'}
   ];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  ngAfterViewInit() {
-    this.paginator.page.subscribe(() => {
-      this.obtenerSucursales(this.paginator.pageIndex + 1, this.paginator.pageSize);
-      if (this.listaSucursal.data.length === 0 && this.paginator.hasPreviousPage()) {
-        this.paginator.previousPage();
-      }
-    });
+  ngOnInit() {
     this.obtenerSucursales(1, this.pageSize);
+  }
+
+  cambiarPagina(event: PageEvent) {
+    this.obtenerSucursales(
+      event.pageIndex + 1,
+      event.pageSize
+    );
   }
 
   obtenerSucursales(pageNumber: number, pageSize: number) {
@@ -82,7 +83,7 @@ export class SucursalInicioComponent implements AfterViewInit {
         this.sucursalServicio.eliminar(sucursal.id_Sucursal).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerSucursales(this.paginator.pageIndex + 1, this.paginator.pageSize);
+              this.obtenerSucursales(1, this.pageSize);
               this.mostrarMensaje('Sucursal eliminada correctamente.', 'success');
             }
           },
