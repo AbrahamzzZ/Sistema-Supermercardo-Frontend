@@ -33,16 +33,6 @@ export class UsuarioInicioComponent implements OnInit {
   public tituloExcel = 'Usuarios';
   public totalRegistros = 0;
   public pageSize = 5;
-  public displayedColumns: string[] = [
-    'id',
-    'codigo',
-    'nombre_Completo',
-    'correo_Electronico',
-    'rol',
-    'estado',
-    'fecha_Creacion',
-    'accion'
-  ];
 
   columns: TableColumn[] = [
     {key: 'id_Usuario', label: 'No.', type: 'text'},

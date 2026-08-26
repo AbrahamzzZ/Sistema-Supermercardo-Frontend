@@ -24,14 +24,15 @@ import { DataTableComponent } from "../../../shared/utility/components/data-tabl
   styleUrl: './cliente-inicio.component.scss'
 })
 export class ClienteInicioComponent implements OnInit{
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
-  private clienteServicio = inject(ClienteService);
-  private snackBar = inject(MatSnackBar);
+  private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
+  private readonly clienteServicio = inject(ClienteService);
+  private readonly snackBar = inject(MatSnackBar);
   public listaCliente = new MatTableDataSource<ICliente>();
   public tituloExcel = 'Clientes';
   public totalRegistros = 0;
   public pageSize = 5;
+  
   columns: TableColumn[] = [
     {key: 'id_Cliente', label: 'No.', type: 'text'},
     {key: 'codigo', label: 'Código', type: 'text'},

@@ -25,10 +25,10 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrl: './producto-inicio.component.scss'
 })
 export class ProductoInicioComponent implements OnInit {
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
-  private productoServicio = inject(ProductoService);
-  private snackBar = inject(MatSnackBar);
+  private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
+  private readonly productoServicio = inject(ProductoService);
+  private readonly snackBar = inject(MatSnackBar);
   public listaProducto = new MatTableDataSource<IProductoCategoria>();
   public tituloExcel = 'Productos';
   public totalRegistros = 0;

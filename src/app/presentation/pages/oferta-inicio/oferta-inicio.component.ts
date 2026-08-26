@@ -33,26 +33,14 @@ import { TableColumn } from '../../../shared/utility/components/tableColumn';
   styleUrl: './oferta-inicio.component.scss'
 })
 export class OfertaInicioComponent implements OnInit {
-  private ofertaServicio = inject(OfertaService);
-  private snackBar = inject(MatSnackBar);
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
+  private readonly ofertaServicio = inject(OfertaService);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
   public listaOferta = new MatTableDataSource<IOfertaProducto>();
   public tituloExcel = 'Ofertas';
   public totalRegistros = 0;
   public pageSize = 5;
-  public displayedColumns: string[] = [
-    'id',
-    'codigo',
-    'nombre',
-    'nombre_Producto',
-    'descripcion',
-    'fecha_Inicio',
-    'fecha_Fin',
-    'descuento',
-    'estado',
-    'accion'
-  ];
 
   columns: TableColumn[] = [
     {key: 'id_Oferta', label: 'No.', type: 'text'},
