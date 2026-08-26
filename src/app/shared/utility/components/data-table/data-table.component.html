@@ -1,0 +1,67 @@
+<table class="table" mat-table [dataSource]="dataSource">
+  @for (column of columns; track column.key) {
+
+    <ng-container [matColumnDef]="column.key">
+      <th class="table__header" mat-header-cell *matHeaderCellDef>{{ column.label }}</th>
+      <td class="table__cell" mat-cell *matCellDef="let element">
+
+        @switch (column.type) {
+
+            @case ('date') {
+                {{ getFechaRegistro(element[column.key]) }}
+            }
+
+            @case ('status') {
+                <span [ngClass]="{'table__estado-activo': element[column.key], 'table__estado-no-activo': !element[column.key]}">
+                {{ getEstado(element[column.key]) }}
+                </span>
+            }
+
+            @case ('image') {
+              <img class="table__img" [src]="element[column.key]" alt="Imagen"/>
+            }
+
+            @case ('view') {
+              <button mat-icon-button (click)="onVer(element)" aria-label="Ver detalle">
+                <mat-icon>visibility</mat-icon>
+              </button>
+            }
+
+            @case ('actions') {
+                <button mat-icon-button (click)="onEditar(element)">
+                <mat-icon>edit</mat-icon>
+                </button>
+
+                <button mat-icon-button (click)="onEliminar(element)">
+                <mat-icon>delete</mat-icon>
+                </button>
+            }
+
+            @default {
+                {{ element[column.key] }}
+            }
+        }
+      </td>
+    </ng-container>
+  }
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<mat-paginator
+  [length]="totalRegistros"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  showFirstLastButtons
+  (page)="onPageChange($event)"
+>
+</mat-paginator>
+
+@if (dataSource.filteredData.length === 0) {
+
+  <div class="container__message">
+    <mat-icon class="container__message__icon">info_outline</mat-icon>
+    <span class="container__message__text">{{ mensajeSinDatos }}</span>
+  </div>
+}
