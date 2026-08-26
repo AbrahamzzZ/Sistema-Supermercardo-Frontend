@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { MaterialModule } from '../ui/material-module';
 import { NgIf } from '@angular/common';
-import { LoaderService } from '../../core/services/loader.service';
+import { LoaderService } from '../../../../core/services/loader.service';
+import { MaterialModule } from '../../../ui/material-module';
+
 
 @Component({
   selector: 'app-loader',

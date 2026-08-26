@@ -27,113 +27,17 @@
       </button>
     </div>
 
-    <table class="table" mat-table [dataSource]="listaProducto">
-      <!-- No. -->
-      <ng-container matColumnDef="id">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>No.</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.id_Producto }}</td>
-      </ng-container>
-
-      <!-- Código -->
-      <ng-container matColumnDef="codigo">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Código</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.codigo }}</td>
-      </ng-container>
-
-      <!-- Nombre -->
-      <ng-container matColumnDef="nombre">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Nombres</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">
-          {{ element.nombre_Producto }}
-        </td>
-      </ng-container>
-
-      <!-- Descripción -->
-      <ng-container matColumnDef="descripcion">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Descripción</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.descripcion }}</td>
-      </ng-container>
-
-      <!-- Categoría -->
-      <ng-container matColumnDef="categoria">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Categoría</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">
-          {{ element.nombre_Categoria }}
-        </td>
-      </ng-container>
-
-      <!-- País Origen -->
-      <ng-container matColumnDef="pais_Origen">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>País Origen</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.pais_Origen }}</td>
-      </ng-container>
-
-      <!-- Stock -->
-      <ng-container matColumnDef="stock">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Stock</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.stock }}</td>
-      </ng-container>
-
-      <!-- Precio Compra -->
-      <ng-container matColumnDef="precio_Compra">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Precio Compra</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">${{ element.precio_Compra }}</td>
-      </ng-container>
-
-      <!-- Precio Venta -->
-      <ng-container matColumnDef="precio_Venta">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Precio Venta</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">${{ element.precio_Venta }}</td>
-      </ng-container>
-
-      <!-- Estado -->
-      <ng-container matColumnDef="estado">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Estado</th>
-        <td
-          class="table__cell"
-          mat-cell
-          *matCellDef="let element"
-          [ngClass]="{
-            'table__estado-agotado': element.estado,
-            'table__estado-no-agotado': !element.estado
-          }"
-        >
-          {{ getEstado(element.estado) }}
-        </td>
-      </ng-container>
-
-      <!-- Acciones -->
-      <ng-container matColumnDef="accion">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Acción</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">
-          <button mat-icon-button (click)="editar(element)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button (click)="eliminar(element)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
-
-    <mat-paginator
-      [length]="totalRegistros"
+    <app-data-table
+      [dataSource]="listaProducto"
+      [columns]="columns"
+      [totalRegistros]="totalRegistros"
       [pageSize]="pageSize"
       [pageSizeOptions]="[5, 10, 20]"
-      showFirstLastButtons
-    >
-    </mat-paginator>
-
-    <!-- Mensaje cuando no hay datos -->
-    @if (listaProducto.filteredData.length === 0) {
-      <div class="container__message">
-        <mat-icon class="container__message__icon">info_outline</mat-icon>
-        <span class="container__message__text">No hay productos que mostrar.</span>
-      </div>
-    }
+      mensajeSinDatos="No hay productos que mostrar."
+      (editar)="editar($event)"
+      (eliminar)="eliminar($event)"
+      (cambioPagina)="cambiarPagina($event)"
+    ></app-data-table>
   </div>
 </div>
 

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
@@ -11,9 +11,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogoConfirmacionComponent } from '../../../presentation/components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { Metodos } from '../../../shared/utility/metodos';
-import { NgClass } from '@angular/common';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { IOfertaProducto } from '../../../core/interfaces/Dto/ioferta-producto';
+import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
+import { TableColumn } from '../../../shared/utility/components/tableColumn';
 
 @Component({
   selector: 'app-oferta-inicio',
@@ -22,47 +23,46 @@ import { IOfertaProducto } from '../../../core/interfaces/Dto/ioferta-producto';
     MatTableModule,
     MatButtonModule,
     MatIcon,
-    NgClass,
     MatFormFieldModule,
     MatInputModule,
     RouterOutlet,
-    MatPaginatorModule
-  ],
+    MatPaginatorModule,
+    DataTableComponent
+],
   templateUrl: './oferta-inicio.component.html',
   styleUrl: './oferta-inicio.component.scss'
 })
-export class OfertaInicioComponent implements AfterViewInit {
-  private ofertaServicio = inject(OfertaService);
-  private snackBar = inject(MatSnackBar);
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
+export class OfertaInicioComponent implements OnInit {
+  private readonly ofertaServicio = inject(OfertaService);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
   public listaOferta = new MatTableDataSource<IOfertaProducto>();
   public tituloExcel = 'Ofertas';
   public totalRegistros = 0;
   public pageSize = 5;
-  public displayedColumns: string[] = [
-    'id',
-    'codigo',
-    'nombre',
-    'nombre_Producto',
-    'descripcion',
-    'fecha_Inicio',
-    'fecha_Fin',
-    'descuento',
-    'estado',
-    'accion'
+
+  columns: TableColumn[] = [
+    {key: 'id_Oferta', label: 'No.', type: 'text'},
+    {key: 'codigo', label: 'Código', type: 'text'},
+    {key: 'nombre', label: 'Nombre', type: 'text'},
+    {key: 'nombre_Producto', label: 'Producto', type: 'text'},
+    {key: 'fecha_Inicio', label: 'Fecha de Inicio', type: 'date'},
+    {key: 'fecha_Fin', label: 'Fecha de Fin', type: 'date'},
+    {key: 'descuento', label: 'Descuento', type: 'number'},
+    {key: 'estado', label: 'Estado', type: 'status'},
+    {key: 'accion', label: 'Acción', type: 'actions'}
   ];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  ngAfterViewInit() {
-    this.paginator.page.subscribe(() => {
-      this.obtenerOfertas(this.paginator.pageIndex + 1, this.paginator.pageSize);
-      if (this.listaOferta.data.length === 0 && this.paginator.hasPreviousPage()) {
-        this.paginator.previousPage();
-      }
-    });
+  ngOnInit() {
     this.obtenerOfertas(1, this.pageSize);
+  }
+
+  cambiarPagina(event: PageEvent) {
+    this.obtenerOfertas(
+      event.pageIndex + 1,
+      event.pageSize
+    );
   }
 
   obtenerOfertas(pageNumber: number, pageSize: number) {
@@ -91,7 +91,7 @@ export class OfertaInicioComponent implements AfterViewInit {
         this.ofertaServicio.eliminar(oferta.id_Oferta).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerOfertas(this.paginator.pageIndex + 1, this.paginator.pageSize);
+              this.obtenerOfertas(1, this.pageSize);
               this.mostrarMensaje('Oferta eliminado correctamente.', 'success');
             }
           },
@@ -140,8 +140,8 @@ export class OfertaInicioComponent implements AfterViewInit {
       'Fecha Inicio': oferta.fecha_Inicio,
       'Fecha Fin': oferta.fecha_Fin,
       Descuento: oferta.descuento,
-      Estado: oferta.estado,
-      'Fecha Creacion': oferta.fecha_Creacion
+      Estado: this.getEstado(oferta.estado),
+      'Fecha Creacion': this.getFechaRegistro(oferta.fecha_Creacion ?? '')
     }));
 
     if (!datos || datos.length === 0) {
@@ -169,6 +169,15 @@ export class OfertaInicioComponent implements AfterViewInit {
   }
 
   getFechaInicioFin(fecha: string): string {
+    const fechaObj = new Date(fecha);
+    return fechaObj.toLocaleDateString('es-ES', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+  }
+
+  getFechaRegistro(fecha: string): string {
     const fechaObj = new Date(fecha);
     return fechaObj.toLocaleDateString('es-ES', {
       day: '2-digit',

@@ -49,7 +49,7 @@ export class EditarTransportistaComponent implements OnInit {
     telefono: ['', [Validators.required, Validaciones.soloNumeros()]],
     correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
     imageBase64: ['', [Validators.required]],
-    imagen: [''],
+    foto: [''],
     estado: [false]
   });
 
@@ -116,7 +116,7 @@ export class EditarTransportistaComponent implements OnInit {
       cedula: this.formTransportista.value.cedula ?? '',
       telefono: this.formTransportista.value.telefono ?? '',
       correo_Electronico: this.formTransportista.value.correoElectronico?.trim() ?? '',
-      imagen: this.formTransportista.value.imagen ?? '',
+      foto: this.formTransportista.value.foto ?? '',
       imagenBase64: imagenFinal,
       estado: this.formTransportista.value.estado ?? false
     };

@@ -87,7 +87,7 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
       cedula: this.formTransportista.value.cedula ?? '',
       telefono: this.formTransportista.value.telefono ?? '',
       correo_Electronico: this.formTransportista.value.correoElectronico?.trim() ?? '',
-      imagen: this.formTransportista.value.imagen ?? '',
+      foto: this.formTransportista.value.imagen ?? '',
       imagenBase64: this.formTransportista.value.imageBase64 ?? '',
       estado: this.formTransportista.value.estado ?? false,
       fecha_Creacion: Metodos.getFechaCreacion()

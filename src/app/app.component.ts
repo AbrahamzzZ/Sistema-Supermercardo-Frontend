@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LoaderComponent } from './shared/loader/loader.component';
+import { LoaderComponent } from './shared/utility/components/loader/loader.component';
 
 @Component({
   selector: 'app-root',

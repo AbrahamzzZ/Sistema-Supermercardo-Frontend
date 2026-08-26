@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router, RouterOutlet } from '@angular/router';
 import { TransportistaService } from '../../../core/services/transportista.service';
@@ -6,10 +6,11 @@ import { ITransportista } from '../../../core/interfaces/transportista';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NgClass } from '@angular/common';
 import { Metodos } from '../../../shared/utility/metodos';
-import { MatPaginator } from '@angular/material/paginator';
 import { MaterialModule } from '../../../shared/ui/material-module';
+import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
+import { PageEvent } from '@angular/material/paginator';
+import { TableColumn } from '../../../shared/utility/components/tableColumn';
 
 @Component({
   selector: 'app-transportista-inicio',
@@ -17,12 +18,12 @@ import { MaterialModule } from '../../../shared/ui/material-module';
   imports: [
     MaterialModule,
     RouterOutlet,
-    NgClass,
-  ],
+    DataTableComponent
+],
   templateUrl: './transportista-inicio.component.html',
   styleUrl: './transportista-inicio.component.scss'
 })
-export class TransportistaInicioComponent implements AfterViewInit {
+export class TransportistaInicioComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
   private readonly transportistaServicio = inject(TransportistaService);
@@ -39,22 +40,35 @@ export class TransportistaInicioComponent implements AfterViewInit {
     'cedula',
     'telefono',
     'correo_Electronico',
-    'imagen',
+    'foto',
     'estado',
-    'fecha_Registro',
+    'fecha_Creacion',
     'accion'
   ];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  columns: TableColumn[] = [
+    {key: 'id_Transportista', label: 'No.', type: 'text'},
+    {key: 'codigo', label: 'Código', type: 'text'},
+    {key: 'nombres', label: 'Nombres', type: 'text'},
+    {key: 'apellidos', label: 'Apellidos', type: 'text'},
+    {key: 'cedula', label: 'Cédula', type: 'text'},
+    {key: 'telefono', label: 'Teléfono', type: 'text'},
+    {key: 'correo_Electronico', label: 'Correo Electrónico', type: 'text'},
+    {key: 'foto', label: 'Foto', type: 'image'},
+    {key: 'estado', label: 'Estado', type: 'status'},
+    {key: 'fecha_Creacion', label: 'Fecha de Creación', type: 'date'},
+    {key: 'accion', label: 'Acción', type: 'actions'}
+  ];
 
-  ngAfterViewInit() {
-    this.paginator.page.subscribe(() => {
-      this.obtenerTransportistas(this.paginator.pageIndex + 1, this.paginator.pageSize);
-      if (this.listaTransportista.data.length === 0 && this.paginator.hasPreviousPage()) {
-        this.paginator.previousPage();
-      }
-    });
+  ngOnInit() {
     this.obtenerTransportistas(1, this.pageSize);
+  }
+
+  cambiarPagina(event: PageEvent) {
+    this.obtenerTransportistas(
+      event.pageIndex + 1,
+      event.pageSize
+    );
   }
 
   obtenerTransportistas(pageNumber: number, pageSize: number) {
@@ -64,10 +78,10 @@ export class TransportistaInicioComponent implements AfterViewInit {
         this.totalRegistros = resp.data.totalCount;
 
         this.listaTransportista.data = arr.map((t: ITransportista) => {
-          if (t.imagen && typeof t.imagen === 'string') {
-            t.imagen = `data:image/*;base64,${t.imagen}`;
+          if (t.foto && typeof t.foto === 'string') {
+            t.foto = `data:image/*;base64,${t.foto}`;
           } else {
-            t.imagen = 'assets/images/default-avatar.jpg';
+            t.foto = 'assets/images/default-avatar.jpg';
           }
           return t;
         });
@@ -89,7 +103,7 @@ export class TransportistaInicioComponent implements AfterViewInit {
         this.transportistaServicio.eliminar(transportista.id_Transportista).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerTransportistas(this.paginator.pageIndex + 1, this.paginator.pageSize);
+              this.obtenerTransportistas(1, this.pageSize);
               this.mostrarMensaje('Transportista eliminado correctamente.', 'success');
             }
           },
@@ -138,7 +152,7 @@ export class TransportistaInicioComponent implements AfterViewInit {
       Telefono: transportista.telefono,
       'Correo Electronico': transportista.correo_Electronico,
       Estado: this.getEstado(transportista.estado),
-      'Fecha Registro': this.getFechaRegistro(transportista.fecha_Creacion ?? '')
+      'Fecha Creacion': this.getFechaRegistro(transportista.fecha_Creacion ?? '')
     }));
 
     if (!datos || datos.length === 0) {
@@ -155,7 +169,7 @@ export class TransportistaInicioComponent implements AfterViewInit {
       'Telefono',
       'Correo Electronico',
       'Estado',
-      'Fecha Registro'
+      'Fecha Creacion'
     ]);
     this.mostrarMensaje('Excel generado exitosamente.', 'success');
   }

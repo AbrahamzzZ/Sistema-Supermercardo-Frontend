@@ -1,7 +1,7 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { IMenu } from '../../core/interfaces/menu';
-import { MaterialModule } from '../ui/material-module';
 import { Router, RouterLink } from '@angular/router';
+import { IMenu } from '../../../../core/interfaces/menu';
+import { MaterialModule } from '../../../ui/material-module';
 
 @Component({
   selector: 'app-sidnebar',

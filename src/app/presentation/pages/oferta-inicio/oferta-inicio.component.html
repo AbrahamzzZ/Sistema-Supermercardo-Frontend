@@ -27,109 +27,17 @@
       </button>
     </div>
 
-    <table class="table" mat-table [dataSource]="listaOferta">
-      <!-- No. -->
-      <ng-container matColumnDef="id">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>No.</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.id_Oferta }}</td>
-      </ng-container>
-
-      <!-- Código -->
-      <ng-container matColumnDef="codigo">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Código</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.codigo }}</td>
-      </ng-container>
-
-      <!-- Nombre -->
-      <ng-container matColumnDef="nombre">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Nombre</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.nombre_Oferta }}</td>
-      </ng-container>
-
-      <!-- Producto -->
-      <ng-container matColumnDef="nombre_Producto">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Producto</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">
-          {{ element.nombre_Producto }}
-        </td>
-      </ng-container>
-
-      <!-- Descripción -->
-      <ng-container matColumnDef="descripcion">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Descripción</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.descripcion }}</td>
-      </ng-container>
-
-      <!-- Fecha Inicio -->
-      <ng-container matColumnDef="fecha_Inicio">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Fecha Inicio</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">
-          {{ getFechaInicioFin(element.fecha_Inicio) }}
-        </td>
-      </ng-container>
-
-      <!-- Fecha Fin -->
-      <ng-container matColumnDef="fecha_Fin">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Fecha Fin</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">
-          {{ getFechaInicioFin(element.fecha_Fin) }}
-        </td>
-      </ng-container>
-
-      <!-- Descuento -->
-      <ng-container matColumnDef="descuento">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Descuento</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.descuento }}%</td>
-      </ng-container>
-
-      <!-- Estado -->
-      <ng-container matColumnDef="estado">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Estado</th>
-        <td
-          class="table__cell"
-          mat-cell
-          *matCellDef="let element"
-          [ngClass]="{
-            'table__estado-activo': element.estado,
-            'table__estado-no-activo': !element.estado
-          }"
-        >
-          {{ getEstado(element.estado) }}
-        </td>
-      </ng-container>
-
-      <!-- Acciones -->
-      <ng-container matColumnDef="accion">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Acción</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">
-          <button mat-icon-button (click)="editar(element)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button (click)="eliminar(element)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
-
-    <mat-paginator
-      [length]="totalRegistros"
+    <app-data-table
+      [dataSource]="listaOferta"
+      [columns]="columns"
+      [totalRegistros]="totalRegistros"
       [pageSize]="pageSize"
       [pageSizeOptions]="[5, 10, 20]"
-      showFirstLastButtons
-    >
-    </mat-paginator>
-
-    <!-- Mensaje cuando no hay datos -->
-    @if (listaOferta.filteredData.length === 0) {
-      <div class="container__message">
-        <mat-icon class="container__message__icon">info_outline</mat-icon>
-        <span class="container__message__text">No hay ofertas que mostrar.</span>
-      </div>
-    }
+      mensajeSinDatos="No hay ofertas que mostrar."
+      (editar)="editar($event)"
+      (eliminar)="eliminar($event)"
+      (cambioPagina)="cambiarPagina($event)"
+    ></app-data-table>
   </div>
 
   <router-outlet></router-outlet>

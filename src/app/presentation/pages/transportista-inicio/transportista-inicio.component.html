@@ -27,117 +27,17 @@
       </button>
     </div>
 
-    <table class="table" mat-table [dataSource]="listaTransportista">
-      <!-- No. -->
-      <ng-container matColumnDef="id">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>No.</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">
-          {{ element.id_Transportista }}
-        </td>
-      </ng-container>
-
-      <!-- Código -->
-      <ng-container matColumnDef="codigo">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Código</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.codigo }}</td>
-      </ng-container>
-
-      <!-- Nombres -->
-      <ng-container matColumnDef="nombres">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Nombres</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.nombres }}</td>
-      </ng-container>
-
-      <!-- Apellidos -->
-      <ng-container matColumnDef="apellidos">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Apellidos</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.apellidos }}</td>
-      </ng-container>
-
-      <!-- Cédula -->
-      <ng-container matColumnDef="cedula">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Cédula</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.cedula }}</td>
-      </ng-container>
-
-      <!-- Teléfono -->
-      <ng-container matColumnDef="telefono">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Teléfono</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.telefono }}</td>
-      </ng-container>
-
-      <!-- Correo Electrónico -->
-      <ng-container matColumnDef="correo_Electronico">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Correo Electrónico</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">
-          {{ element.correo_Electronico }}
-        </td>
-      </ng-container>
-
-      <!-- Imagen -->
-      <ng-container matColumnDef="imagen">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Foto</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">
-          <img class="table__img" [src]="element.imagen" alt="Foto de Transportista" />
-        </td>
-      </ng-container>
-
-      <!-- Estado -->
-      <ng-container matColumnDef="estado">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Estado</th>
-        <td
-          class="table__cell"
-          mat-cell
-          *matCellDef="let element"
-          [ngClass]="{
-            'table__estado-activo': element.estado,
-            'table__estado-no-activo': !element.estado
-          }"
-        >
-          {{ getEstado(element.estado) }}
-        </td>
-      </ng-container>
-
-      <!-- Fecha de Registro -->
-      <ng-container matColumnDef="fecha_Registro">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Fecha de Registro</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">
-          {{ getFechaRegistro(element.fecha_Registro) }}
-        </td>
-      </ng-container>
-
-      <!-- Acciones -->
-      <ng-container matColumnDef="accion">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Acción</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">
-          <button mat-icon-button (click)="editar(element)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button (click)="eliminar(element)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
-
-    <mat-paginator
-      [length]="totalRegistros"
+    <app-data-table
+      [dataSource]="listaTransportista"
+      [columns]="columns"
+      [totalRegistros]="totalRegistros"
       [pageSize]="pageSize"
       [pageSizeOptions]="[5, 10, 20]"
-      showFirstLastButtons
-    >
-    </mat-paginator>
-
-    <!-- Mensaje cuando no hay datos -->
-    @if (listaTransportista.filteredData.length === 0) {
-      <div class="container__message">
-        <mat-icon class="container__message__icon">info_outline</mat-icon>
-        <span class="container__message__text">No hay transportistas que mostrar.</span>
-      </div>
-    }
+      mensajeSinDatos="No hay transportistas que mostrar."
+      (editar)="editar($event)"
+      (eliminar)="eliminar($event)"
+      (cambioPagina)="cambiarPagina($event)"
+    ></app-data-table>
   </div>
 </div>
 
