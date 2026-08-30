@@ -217,6 +217,7 @@ export class CompraInicioComponent implements OnInit, AfterViewInit {
           data: { numeroDocumento: this.numeroDocumento }
         });
         this.limpiar();
+        this.obtenerNumeroDocumento();
         this.router.navigate(['/compra']);
       } else {
         this.mostrarMensaje('Error al registrar la compra', 'error');
