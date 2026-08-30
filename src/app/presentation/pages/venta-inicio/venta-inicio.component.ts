@@ -35,8 +35,12 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrl: './venta-inicio.component.scss'
 })
 export class VentaInicioComponent implements OnInit, AfterViewInit{
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
+  private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
+  private readonly servicioVenta = inject(VentaService);
+  private readonly ofertaServicio = inject(OfertaService);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly loginServicio = inject(LoginService);
   public hoy = new Date().toISOString().substring(0, 10);
   public tipoComprobante = 'Boleta';
   public clienteSeleccionado: ICliente | null = null;
@@ -55,10 +59,6 @@ export class VentaInicioComponent implements OnInit, AfterViewInit{
     'descuento',
     'accion'
   ];
-  private servicioVenta = inject(VentaService);
-  private ofertaServicio = inject(OfertaService);
-  private snackBar = inject(MatSnackBar);
-  private loginServicio = inject(LoginService);
   public numeroDocumento= '';
   public totalSinDescuento = 0;
   public pagaCon = 0;
@@ -291,6 +291,7 @@ export class VentaInicioComponent implements OnInit, AfterViewInit{
           data: { numeroDocumento: this.numeroDocumento }
         });
         this.limpiar();
+        this.obtenerNumeroDocumento();
         this.router.navigate(['/venta']);
       } else {
         this.mostrarMensaje('Error al registrar la venta', 'error');

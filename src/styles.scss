@@ -24,7 +24,9 @@ app-footer {
 .success-snackbar,
 .error-snackbar,
 .logout-snackbar,
-.inactivity-snackbar {
+.inactivity-snackbar,
+.oferta-snackbar,
+.warning-snackbar {
   .mdc-snackbar__surface {
     border-radius: 8px !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -100,8 +102,8 @@ app-footer {
 
 .oferta-snackbar {
   .mdc-snackbar__surface {
-    background-color: #7c3aed !important;
-    animation: oferta-pulse 1s ease-in-out infinite;
+    background: linear-gradient(135deg, #ce0bf5 0%, #5e16f9 100%) !important;
+    animation: ofertaPulse 0.5s ease-in-out;
   }
 
   .mdc-snackbar__label {
@@ -111,6 +113,48 @@ app-footer {
 
   .mdc-button__label {
     color: white !important;
+  }
+}
+
+@keyframes ofertaPulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.warning-snackbar {
+  .mdc-snackbar__surface {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
+    animation: warningShake 0.5s ease-in-out;
+  }
+
+  .mdc-snackbar__label {
+    color: #78350f !important;
+    font-weight: 600;
+  }
+
+  .mdc-button__label {
+    color: #78350f !important;
+  }
+}
+
+@keyframes warningShake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
   }
 }
 

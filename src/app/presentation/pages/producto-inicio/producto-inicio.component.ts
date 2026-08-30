@@ -41,10 +41,10 @@ export class ProductoInicioComponent implements OnInit {
     {key: 'descripcion', label: 'Descripción', type: 'text'},
     {key: 'nombre_Categoria', label: 'Categoría', type: 'text'},
     {key: 'pais_Origen', label: 'País de Origen', type: 'text'},
-    {key: 'stock', label: 'Stock', type: 'text'},
-    {key: 'precio_Compra', label: 'Precio de Compra', type: 'text'},
-    {key: 'precio_Venta', label: 'Precio de Venta', type: 'text'},
-    {key: 'estado', label: 'Estado', type: 'status'},
+    {key: 'stock', label: 'Stock Disponible', type: 'text'},
+    {key: 'precio_Compra', label: 'Precio de Compra', type: 'currency'},
+    {key: 'precio_Venta', label: 'Precio de Venta', type: 'currency'},
+    {key: 'estado', label: 'Estado', type: 'stock'},
     {key: 'accion', label: 'Acción', type: 'actions'}
   ];
 
@@ -67,9 +67,23 @@ export class ProductoInicioComponent implements OnInit {
         this.listaProducto.data = arr.map((c: IProducto) => {
           return c;
         });
+        this.verificarStockBajo(arr);
       },
       error: (err) => console.error(err.message)
     });
+  }
+
+  verificarStockBajo(productos: IProducto[]) {
+    const productosStockBajo = productos.filter(p => p.stock !== undefined && p.stock < 10 && p.stock > 0);
+    const productosAgotados = productos.filter( p => p.stock === 0);
+
+    if (productosAgotados.length > 0) {
+      this.mostrarMensaje(`${productosAgotados.length} producto(s) sin stock disponible.`, 'error');
+    }
+
+    if (productosStockBajo.length > 0) {
+      this.mostrarMensaje(`${productosStockBajo.length} producto(s) con stock bajo.`, 'warning');
+    }
   }
 
   eliminar(producto: IProducto) {
@@ -104,11 +118,11 @@ export class ProductoInicioComponent implements OnInit {
     this.router.navigate(['producto/producto-editar', producto.id_Producto]);
   }
 
-  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
-    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' | 'warning' = 'success') {
+    const className = tipo === 'success' ? 'success-snackbar' : tipo === 'warning' ? 'warning-snackbar' : 'error-snackbar';
 
     this.snackBar.open(mensaje, 'Cerrar', {
-      duration: 3000,
+      duration: 5000,
       horizontalPosition: 'end',
       verticalPosition: 'bottom',
       panelClass: [className]

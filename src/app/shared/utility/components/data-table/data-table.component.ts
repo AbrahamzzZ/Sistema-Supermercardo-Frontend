@@ -50,6 +50,22 @@ export class DataTableComponent {
     return estado ? 'Activo' : 'Inactivo';
   }
 
+  getEstadoStock(stock: number): string {
+    return stock > 0 ? 'Agotado' : 'No Agotado';
+  }
+
+  getRowClass(element: any): string {
+    // Si tiene propiedad stock, verificar si es menor a 10
+    if (element.stock !== undefined) {
+      if (element.stock === 0) {
+        return 'row-agotado';
+      } else if (element.stock < 10) {
+        return 'row-stock-bajo';
+      }
+    }
+    return '';
+  }
+
   onEditar(element: any): void {
     this.editar.emit(element);
   }
