@@ -41,6 +41,42 @@ $message-bg-color: #fafafa;
   }
 }
 
+.row-stock-bajo {
+  background-color: #fef3c7 !important;
+  animation: stockBajoAnimation 2s infinite;
+
+  td {
+    border-bottom: 2px solid #fbbf24 !important;
+  }
+}
+
+.row-agotado {
+  background-color: #fee2e2 !important;
+  animation: agotadoAnimation 2s infinite;
+
+  td {
+    border-bottom: 2px solid #ef4444 !important;
+  }
+}
+
+@keyframes stockBajoAnimation {
+  0%, 100% {
+    background-color: #fef3c7;
+  }
+  50% {
+    background-color: #fde68a;
+  }
+}
+
+@keyframes agotadoAnimation {
+  0%, 100% {
+    background-color: #fee2e2;
+  }
+  50% {
+    background-color: #fecaca;
+  }
+}
+
 .container__message {
   display: flex;
   align-items: center;
