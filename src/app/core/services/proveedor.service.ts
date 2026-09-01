@@ -15,11 +15,11 @@ export class ProveedorService {
     return this.http.get<IProveedor[]>(this.apiUrl);
   }
 
-  listaPaginada(pageNumber: number, pageSize: number) {
+  listaPaginada(pageNumber: number, pageSize: number, filtro: string) {
     return this.http.get<{
       data: IProveedor[];
       totalCount: number;
-    }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+    }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}&filtro=${encodeURIComponent(filtro)}`);
   }
 
   obtener(id: number) {
