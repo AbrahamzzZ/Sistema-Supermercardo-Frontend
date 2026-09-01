@@ -11,6 +11,7 @@ import { MaterialModule } from '../../../shared/ui/material-module';
 import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
 import { PageEvent } from '@angular/material/paginator';
 import { TableColumn } from '../../../shared/utility/components/tableColumn';
+import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-transportista-inicio',
@@ -32,19 +33,10 @@ export class TransportistaInicioComponent implements OnInit {
   public tituloExcel = 'Transportistas';
   public totalRegistros = 0;
   public pageSize = 5;
-  public displayedColumns: string[] = [
-    'id',
-    'codigo',
-    'nombres',
-    'apellidos',
-    'cedula',
-    'telefono',
-    'correo_Electronico',
-    'foto',
-    'estado',
-    'fecha_Creacion',
-    'accion'
-  ];
+  public filtroActual = '';
+  private readonly filtroSubject = new Subject<string>(); 
+  private readonly filtrosCache = new Map<string, any>();
+  private abortController = new AbortController(); 
 
   columns: TableColumn[] = [
     {key: 'id_Transportista', label: 'No.', type: 'text'},
@@ -61,18 +53,40 @@ export class TransportistaInicioComponent implements OnInit {
   ];
 
   ngOnInit() {
-    this.obtenerTransportistas(1, this.pageSize);
+    this.filtroSubject.pipe(
+      debounceTime(400),
+      distinctUntilChanged(),
+      switchMap((filtro) => {
+        return new Promise<string>((resolve) => {
+          resolve(filtro);
+        });
+      })
+    ).subscribe((filtro) => {
+      this.obtenerTransportistas(1, this.pageSize, filtro);
+    });
+
+    this.obtenerTransportistas(1, this.pageSize, '');
   }
 
   cambiarPagina(event: PageEvent) {
     this.obtenerTransportistas(
       event.pageIndex + 1,
-      event.pageSize
+      event.pageSize,
+      this.filtroActual
     );
   }
 
-  obtenerTransportistas(pageNumber: number, pageSize: number) {
-    this.transportistaServicio.listaPaginada(pageNumber, pageSize).subscribe({
+  obtenerTransportistas(pageNumber: number, pageSize: number, filtro: string) {
+    const cacheKey = `${pageNumber}-${pageSize}-${filtro}`;
+
+    if (this.filtrosCache.has(cacheKey)) {
+      const cached = this.filtrosCache.get(cacheKey);
+      this.listaTransportista.data = cached.items;
+      this.totalRegistros = cached.totalCount;
+      return;
+    }
+
+    this.transportistaServicio.listaPaginada(pageNumber, pageSize, filtro).subscribe({
       next: (resp: any) => {
         const arr = resp.data.items ?? [];
         this.totalRegistros = resp.data.totalCount;
@@ -85,9 +99,21 @@ export class TransportistaInicioComponent implements OnInit {
           }
           return t;
         });
+
+        this.filtrosCache.set(cacheKey, {
+          items: arr,
+          totalCount: this.totalRegistros
+        });
       },
       error: (err) => console.error(err.message)
     });
+  }
+
+  filtrarTransportistas(termino: string) {
+    this.filtroActual = termino.trim();
+    this.abortController.abort();
+    this.abortController = new AbortController();
+    this.filtroSubject.next(this.filtroActual);
   }
 
   eliminar(transportista: ITransportista) {
@@ -103,7 +129,8 @@ export class TransportistaInicioComponent implements OnInit {
         this.transportistaServicio.eliminar(transportista.id_Transportista).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerTransportistas(1, this.pageSize);
+              this.filtrosCache.clear();
+              this.obtenerTransportistas(1, this.pageSize, this.filtroActual);
               this.mostrarMensaje('Transportista eliminado correctamente.', 'success');
             }
           },
@@ -133,13 +160,6 @@ export class TransportistaInicioComponent implements OnInit {
       verticalPosition: 'bottom',
       panelClass: [className]
     });
-  }
-
-  filtrarTransportistas(termino: string) {
-    this.listaTransportista.filter = termino.trim().toLowerCase();
-    if (this.listaTransportista.paginator) {
-      this.listaTransportista.paginator.firstPage();
-    }
   }
 
   exportarExcel() {

@@ -11,6 +11,7 @@ import { MaterialModule } from '../../../shared/ui/material-module';
 import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
 import { TableColumn } from '../../../shared/utility/components/tableColumn';
 import { PageEvent } from '@angular/material/paginator';
+import { debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-categoria-inicio',
@@ -32,6 +33,11 @@ export class CategoriaInicioComponent implements OnInit {
   public tituloExcel = 'Categorías';
   public totalRegistros = 0;
   public pageSize = 5;
+  public filtroActual = '';
+  private readonly filtroSubject = new Subject<string>();
+  private readonly filtrosCache = new Map<string, any>();
+  private abortController = new AbortController();
+
   columns: TableColumn[] = [
     {key: 'id_Categoria', label: 'No.', type: 'text'},
     {key: 'codigo', label: 'Código', type: 'text'},
@@ -42,27 +48,58 @@ export class CategoriaInicioComponent implements OnInit {
   ];
 
   ngOnInit() {
-    this.obtenerCategorias(1, this.pageSize);
+    this.filtroSubject.pipe(
+      debounceTime(400),
+      distinctUntilChanged(),
+      switchMap((filtro) => {
+        return new Promise<string>((resolve) => {
+          resolve(filtro);
+        });
+      })
+    ).subscribe((filtro) => {
+      this.obtenerCategorias(1, this.pageSize, filtro);
+    });
+
+    this.obtenerCategorias(1, this.pageSize, '');
   }
 
   cambiarPagina(event: PageEvent) {
     this.obtenerCategorias(
       event.pageIndex + 1,
-      event.pageSize
+      event.pageSize,
+      this.filtroActual
     );
   }
 
-  obtenerCategorias(pageNumber: number, pageSize: number) {
-    this.categoriaServicio.listaPaginada(pageNumber, pageSize).subscribe({
+  obtenerCategorias(pageNumber: number, pageSize: number, filtro: string) {
+    const cacheKey = `${pageNumber}-${pageSize}-${filtro}`;
+    
+    if (this.filtrosCache.has(cacheKey)) {
+      const cached = this.filtrosCache.get(cacheKey);
+      this.listaCategoria.data = cached.items;
+      this.totalRegistros = cached.totalCount;
+      return;
+    }
+
+    this.categoriaServicio.listaPaginada(pageNumber, pageSize, filtro).subscribe({
       next: (resp: any) => {
         const arr = resp.data.items ?? [];
         this.totalRegistros = resp.data.totalCount;
-        this.listaCategoria.data = arr.map((c: ICategoria) => {
-          return c;
+        this.listaCategoria.data = arr;
+        this.filtrosCache.set(cacheKey, {
+          items: arr,
+          totalCount: this.totalRegistros
         });
       },
       error: (err) => console.error(err.message)
     });
+  }
+
+  filtrarCategorias(termino: string) {
+    this.filtroActual = termino.trim();
+    this.abortController.abort();
+    this.abortController = new AbortController();
+    this.filtroSubject.next(this.filtroActual);
   }
 
   eliminar(categoria: ICategoria) {
@@ -78,7 +115,8 @@ export class CategoriaInicioComponent implements OnInit {
         this.categoriaServicio.eliminar(categoria.id_Categoria).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerCategorias(1, this.pageSize);
+              this.filtrosCache.clear(); 
+              this.obtenerCategorias(1, this.pageSize, this.filtroActual);
               this.mostrarMensaje('Categoría eliminado correctamente.', 'success');
             }
           },
@@ -101,20 +139,12 @@ export class CategoriaInicioComponent implements OnInit {
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
       verticalPosition: 'bottom',
       panelClass: [className]
     });
-  }
-
-  filtrarCategorias(termino: string) {
-    this.listaCategoria.filter = termino.trim().toLowerCase();
-    if (this.listaCategoria.paginator) {
-      this.listaCategoria.paginator.firstPage();
-    }
   }
 
   exportarExcel() {

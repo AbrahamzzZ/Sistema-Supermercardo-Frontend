@@ -12,6 +12,7 @@ import { MaterialModule } from '../../../shared/ui/material-module';
 import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
 import { TableColumn } from '../../../shared/utility/components/tableColumn';
 import { PageEvent } from '@angular/material/paginator';
+import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-producto-inicio',
@@ -33,6 +34,10 @@ export class ProductoInicioComponent implements OnInit {
   public tituloExcel = 'Productos';
   public totalRegistros = 0;
   public pageSize = 5;
+  public filtroActual = '';
+  private readonly filtroSubject = new Subject<string>(); 
+  private readonly filtrosCache = new Map<string, any>(); 
+  private abortController = new AbortController(); 
 
   columns: TableColumn[] = [
     {key: 'id_Producto', label: 'No.', type: 'text'},
@@ -49,18 +54,41 @@ export class ProductoInicioComponent implements OnInit {
   ];
 
   ngOnInit() {
-    this.obtenerProductos(1, this.pageSize);
+    this.filtroSubject.pipe(
+      debounceTime(400),
+      distinctUntilChanged(),
+      switchMap((filtro) => {
+        return new Promise<string>((resolve) => {
+          resolve(filtro);
+        });
+      })
+    ).subscribe((filtro) => {
+      this.obtenerProductos(1, this.pageSize, filtro);
+    });
+
+    this.obtenerProductos(1, this.pageSize, '');
   }
 
   cambiarPagina(event: PageEvent) {
     this.obtenerProductos(
       event.pageIndex + 1,
-      event.pageSize
+      event.pageSize,
+      this.filtroActual
     );
   }
 
-  obtenerProductos(pageNumber: number, pageSize: number) {
-    this.productoServicio.listaPaginada(pageNumber, pageSize).subscribe({
+  obtenerProductos(pageNumber: number, pageSize: number, filtro: string) {
+    const cacheKey = `${pageNumber}-${pageSize}-${filtro}`;
+
+    if (this.filtrosCache.has(cacheKey)) {
+      const cached = this.filtrosCache.get(cacheKey);
+      this.listaProducto.data = cached.items;
+      this.totalRegistros = cached.totalCount;
+      this.verificarStockBajo(cached.items);
+      return;
+    }
+
+    this.productoServicio.listaPaginada(pageNumber, pageSize, filtro).subscribe({
       next: (resp: any) => {
         const arr = resp.data.items ?? [];
         this.totalRegistros = resp.data.totalCount;
@@ -68,6 +96,11 @@ export class ProductoInicioComponent implements OnInit {
           return c;
         });
         this.verificarStockBajo(arr);
+
+        this.filtrosCache.set(cacheKey, {
+          items: arr,
+          totalCount: this.totalRegistros
+        });
       },
       error: (err) => console.error(err.message)
     });
@@ -75,7 +108,7 @@ export class ProductoInicioComponent implements OnInit {
 
   verificarStockBajo(productos: IProducto[]) {
     const productosStockBajo = productos.filter(p => p.stock !== undefined && p.stock < 10 && p.stock > 0);
-    const productosAgotados = productos.filter( p => p.stock === 0);
+    const productosAgotados = productos.filter(p => p.stock === 0);
 
     if (productosAgotados.length > 0) {
       this.mostrarMensaje(`${productosAgotados.length} producto(s) sin stock disponible.`, 'error');
@@ -84,6 +117,13 @@ export class ProductoInicioComponent implements OnInit {
     if (productosStockBajo.length > 0) {
       this.mostrarMensaje(`${productosStockBajo.length} producto(s) con stock bajo.`, 'warning');
     }
+  }
+
+  filtrarProductos(termino: string) {
+    this.filtroActual = termino.trim();
+    this.abortController.abort();
+    this.abortController = new AbortController();
+    this.filtroSubject.next(this.filtroActual);
   }
 
   eliminar(producto: IProducto) {
@@ -97,7 +137,8 @@ export class ProductoInicioComponent implements OnInit {
         this.productoServicio.eliminar(producto.id_Producto).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerProductos(1, this.pageSize);
+              this.filtrosCache.clear(); 
+              this.obtenerProductos(1, this.pageSize, this.filtroActual);
               this.mostrarMensaje('Producto eliminado correctamente.', 'success');
             }
           },
@@ -127,13 +168,6 @@ export class ProductoInicioComponent implements OnInit {
       verticalPosition: 'bottom',
       panelClass: [className]
     });
-  }
-
-  filtrarProductos(termino: string) {
-    this.listaProducto.filter = termino.trim().toLowerCase();
-    if (this.listaProducto.paginator) {
-      this.listaProducto.paginator.firstPage();
-    }
   }
 
   exportarExcel() {

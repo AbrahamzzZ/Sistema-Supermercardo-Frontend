@@ -11,6 +11,7 @@ import { MaterialModule } from '../../../shared/ui/material-module';
 import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
 import { PageEvent } from '@angular/material/paginator';
 import { TableColumn } from '../../../shared/utility/components/tableColumn';
+import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-proveedor-inicio',
@@ -32,6 +33,10 @@ export class ProveedorInicioComponent implements OnInit {
   public tituloExcel = 'Proveedores';
   public totalRegistros = 0;
   public pageSize = 5;
+  public filtroActual = '';
+  private readonly filtroSubject = new Subject<string>();
+  private readonly filtrosCache = new Map<string, any>(); 
+  private abortController = new AbortController(); 
 
   columns: TableColumn[] = [
     {key: 'id_Proveedor', label: 'No.', type: 'text'},
@@ -47,27 +52,61 @@ export class ProveedorInicioComponent implements OnInit {
   ];
 
   ngOnInit() {
-    this.obtenerProveedores(1, this.pageSize);
+    this.filtroSubject.pipe(
+      debounceTime(400),
+      distinctUntilChanged(),
+      switchMap((filtro) => {
+        return new Promise<string>((resolve) => {
+          resolve(filtro);
+        });
+      })
+    ).subscribe((filtro) => {
+      this.obtenerProveedores(1, this.pageSize, filtro);
+    });
+
+    this.obtenerProveedores(1, this.pageSize, '');
   }
 
   cambiarPagina(event: PageEvent) {
     this.obtenerProveedores(
       event.pageIndex + 1,
-      event.pageSize
+      event.pageSize,
+      this.filtroActual
     );
   }
 
-  obtenerProveedores(pageNumber: number, pageSize: number) {
-    this.proveedorServicio.listaPaginada(pageNumber, pageSize).subscribe({
+  obtenerProveedores(pageNumber: number, pageSize: number, filtro: string) {
+    const cacheKey = `${pageNumber}-${pageSize}-${filtro}`;
+
+    if (this.filtrosCache.has(cacheKey)) {
+      const cached = this.filtrosCache.get(cacheKey);
+      this.listaProveedor.data = cached.items;
+      this.totalRegistros = cached.totalCount;
+      return;
+    }
+
+    this.proveedorServicio.listaPaginada(pageNumber, pageSize, filtro).subscribe({
       next: (resp: any) => {
         const arr = resp.data.items ?? [];
         this.totalRegistros = resp.data.totalCount;
         this.listaProveedor.data = arr.map((c: IProveedor) => {
           return c;
         });
+
+        this.filtrosCache.set(cacheKey, {
+          items: arr,
+          totalCount: this.totalRegistros
+        });
       },
       error: (err) => console.error(err.message)
     });
+  }
+
+  filtrarProveedores(termino: string) {
+    this.filtroActual = termino.trim();
+    this.abortController.abort();
+    this.abortController = new AbortController();
+    this.filtroSubject.next(this.filtroActual);
   }
 
   eliminar(proveedor: IProveedor) {
@@ -83,7 +122,8 @@ export class ProveedorInicioComponent implements OnInit {
         this.proveedorServicio.eliminar(proveedor.id_Proveedor).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerProveedores(1, this.pageSize);
+              this.filtrosCache.clear(); 
+              this.obtenerProveedores(1, this.pageSize, this.filtroActual);
               this.mostrarMensaje('Proveedor eliminado correctamente.', 'success');
             }
           },
@@ -113,13 +153,6 @@ export class ProveedorInicioComponent implements OnInit {
       verticalPosition: 'bottom',
       panelClass: [className]
     });
-  }
-
-  filtrarProveedores(termino: string) {
-    this.listaProveedor.filter = termino.trim().toLowerCase();
-    if (this.listaProveedor.paginator) {
-      this.listaProveedor.paginator.firstPage();
-    }
   }
 
   exportarExcel() {

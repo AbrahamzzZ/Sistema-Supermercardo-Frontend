@@ -12,6 +12,7 @@ import { ISucursal } from '../../../core/interfaces/sucursal';
 import { MaterialModule } from '../../../shared/ui/material-module';
 import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
 import { TableColumn } from '../../../shared/utility/components/tableColumn';
+import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-sucursal-inicio',
@@ -33,6 +34,10 @@ export class SucursalInicioComponent implements OnInit {
   public tituloExcel = 'Sucursales';
   public totalRegistros = 0;
   public pageSize = 5;
+  public filtroActual = '';
+  private readonly filtroSubject = new Subject<string>(); 
+  private readonly filtrosCache = new Map<string, any>(); 
+  private abortController = new AbortController(); 
 
   columns: TableColumn[] = [
     {key: 'id_Sucursal', label: 'No.', type: 'text'},
@@ -47,27 +52,61 @@ export class SucursalInicioComponent implements OnInit {
   ];
 
   ngOnInit() {
-    this.obtenerSucursales(1, this.pageSize);
+    this.filtroSubject.pipe(
+      debounceTime(400),
+      distinctUntilChanged(),
+      switchMap((filtro) => {
+        return new Promise<string>((resolve) => {
+          resolve(filtro);
+        });
+      })
+    ).subscribe((filtro) => {
+      this.obtenerSucursales(1, this.pageSize, filtro);
+    });
+
+    this.obtenerSucursales(1, this.pageSize, '');
   }
 
   cambiarPagina(event: PageEvent) {
     this.obtenerSucursales(
       event.pageIndex + 1,
-      event.pageSize
+      event.pageSize,
+      this.filtroActual 
     );
   }
 
-  obtenerSucursales(pageNumber: number, pageSize: number) {
-    this.sucursalServicio.listaPaginada(pageNumber, pageSize).subscribe({
+  obtenerSucursales(pageNumber: number, pageSize: number, filtro: string) {
+    const cacheKey = `${pageNumber}-${pageSize}-${filtro}`;
+
+    if (this.filtrosCache.has(cacheKey)) {
+      const cached = this.filtrosCache.get(cacheKey);
+      this.listaSucursal.data = cached.items;
+      this.totalRegistros = cached.totalCount;
+      return;
+    }
+
+    this.sucursalServicio.listaPaginada(pageNumber, pageSize, filtro).subscribe({
       next: (resp: any) => {
         const arr = resp.data.items ?? [];
         this.totalRegistros = resp.data.totalCount;
         this.listaSucursal.data = arr.map((c: ISucursal) => {
           return c;
         });
+
+        this.filtrosCache.set(cacheKey, {
+          items: arr,
+          totalCount: this.totalRegistros
+        });
       },
       error: (err) => console.error(err.message)
     });
+  }
+
+  filtrarSucursales(termino: string) {
+    this.filtroActual = termino.trim();
+    this.abortController.abort();
+    this.abortController = new AbortController();
+    this.filtroSubject.next(this.filtroActual);
   }
 
   eliminar(sucursal: ISucursalNegocio) {
@@ -83,7 +122,8 @@ export class SucursalInicioComponent implements OnInit {
         this.sucursalServicio.eliminar(sucursal.id_Sucursal).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerSucursales(1, this.pageSize);
+              this.filtrosCache.clear();
+              this.obtenerSucursales(1, this.pageSize, this.filtroActual);
               this.mostrarMensaje('Sucursal eliminada correctamente.', 'success');
             }
           },
@@ -104,7 +144,7 @@ export class SucursalInicioComponent implements OnInit {
     this.router.navigate(['sucursal/sucursal-editar', sucursal.id_Sucursal]);
   }
 
-  verMapa(){
+  verMapa() {
     this.router.navigate(['sucursal/mapa']);
   }
 
@@ -117,13 +157,6 @@ export class SucursalInicioComponent implements OnInit {
       verticalPosition: 'bottom',
       panelClass: [className]
     });
-  }
-
-  filtrarSucursales(termino: string) {
-    this.listaSucursal.filter = termino.trim().toLowerCase();
-    if (this.listaSucursal.paginator) {
-      this.listaSucursal.paginator.firstPage();
-    }
   }
 
   exportarExcel() {

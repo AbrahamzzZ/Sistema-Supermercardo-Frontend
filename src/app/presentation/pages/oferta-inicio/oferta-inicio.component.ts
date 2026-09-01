@@ -15,6 +15,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { IOfertaProducto } from '../../../core/interfaces/Dto/ioferta-producto';
 import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
 import { TableColumn } from '../../../shared/utility/components/tableColumn';
+import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-oferta-inicio',
@@ -41,6 +42,11 @@ export class OfertaInicioComponent implements OnInit {
   public tituloExcel = 'Ofertas';
   public totalRegistros = 0;
   public pageSize = 5;
+  public filtroActual = '';
+  
+  private readonly filtroSubject = new Subject<string>();
+  private readonly filtrosCache = new Map<string, any>(); 
+  private abortController = new AbortController();
 
   columns: TableColumn[] = [
     {key: 'id_Oferta', label: 'No.', type: 'text'},
@@ -55,27 +61,61 @@ export class OfertaInicioComponent implements OnInit {
   ];
 
   ngOnInit() {
-    this.obtenerOfertas(1, this.pageSize);
+    this.filtroSubject.pipe(
+      debounceTime(400),
+      distinctUntilChanged(),
+      switchMap((filtro) => {
+        return new Promise<string>((resolve) => {
+          resolve(filtro);
+        });
+      })
+    ).subscribe((filtro) => {
+      this.obtenerOfertas(1, this.pageSize, filtro);
+    });
+
+    this.obtenerOfertas(1, this.pageSize, '');
   }
 
   cambiarPagina(event: PageEvent) {
     this.obtenerOfertas(
       event.pageIndex + 1,
-      event.pageSize
+      event.pageSize,
+      this.filtroActual
     );
   }
 
-  obtenerOfertas(pageNumber: number, pageSize: number) {
-    this.ofertaServicio.listaPaginada(pageNumber, pageSize).subscribe({
+  obtenerOfertas(pageNumber: number, pageSize: number, filtro: string = '') {
+    const cacheKey = `${pageNumber}-${pageSize}-${filtro}`;
+
+    if (this.filtrosCache.has(cacheKey)) {
+      const cached = this.filtrosCache.get(cacheKey);
+      this.listaOferta.data = cached.items;
+      this.totalRegistros = cached.totalCount;
+      return;
+    }
+
+    this.ofertaServicio.listaPaginada(pageNumber, pageSize, filtro).subscribe({
       next: (resp: any) => {
         const arr = resp.data.items ?? [];
         this.totalRegistros = resp.data.totalCount;
         this.listaOferta.data = arr.map((c: IOferta) => {
           return c;
         });
+
+        this.filtrosCache.set(cacheKey, {
+          items: arr,
+          totalCount: this.totalRegistros
+        });
       },
       error: (err) => console.error(err.message)
     });
+  }
+
+  filtrarOfertas(termino: string) {
+    this.filtroActual = termino.trim();
+    this.abortController.abort();
+    this.abortController = new AbortController();
+    this.filtroSubject.next(this.filtroActual);
   }
 
   eliminar(oferta: IOferta) {
@@ -91,7 +131,8 @@ export class OfertaInicioComponent implements OnInit {
         this.ofertaServicio.eliminar(oferta.id_Oferta).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerOfertas(1, this.pageSize);
+              this.filtrosCache.clear(); // ← LIMPIAR CACHE
+              this.obtenerOfertas(1, this.pageSize, this.filtroActual);
               this.mostrarMensaje('Oferta eliminado correctamente.', 'success');
             }
           },
@@ -121,13 +162,6 @@ export class OfertaInicioComponent implements OnInit {
       verticalPosition: 'bottom',
       panelClass: [className]
     });
-  }
-
-  filtrarOfertas(termino: string) {
-    this.listaOferta.filter = termino.trim().toLowerCase();
-    if (this.listaOferta.paginator) {
-      this.listaOferta.paginator.firstPage();
-    }
   }
 
   exportarExcel() {
