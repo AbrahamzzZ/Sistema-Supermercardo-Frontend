@@ -15,11 +15,11 @@ export class CategoriaService {
     return this.http.get<ICategoria[]>(this.apiUrl);
   }
 
-  listaPaginada(pageNumber: number, pageSize: number) {
+  listaPaginada(pageNumber: number, pageSize: number, filtro: string) {
     return this.http.get<{
       data: ICategoria[];
       totalCount: number;
-    }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+    }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}&filtro=${encodeURIComponent(filtro)}`);
   }
 
   obtener(id: number) {

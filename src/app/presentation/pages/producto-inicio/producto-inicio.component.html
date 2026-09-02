@@ -7,14 +7,14 @@
         <input
           matInput
           #searchInput
-          (keyup)="filtrarProductos(searchInput.value)"
+          (keyup)="filtrar(searchInput.value)"
           placeholder="Buscar productos por varios criterios."
         />
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
 
       <button class="container__search__button" mat-raised-button color="primary" (click)="nuevo()">
-        <mat-icon class="container__search__icon">add_circle</mat-icon>Registrar producto
+        <mat-icon class="container__search__icon">add_circle</mat-icon> Registrar producto
       </button>
 
       <button
@@ -28,7 +28,7 @@
     </div>
 
     <app-data-table
-      [dataSource]="listaProducto"
+      [dataSource]="listaData"
       [columns]="columns"
       [totalRegistros]="totalRegistros"
       [pageSize]="pageSize"

@@ -1,5 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { UsuarioService } from '../../../core/services/usuario.service';
 import { IUsuario } from '../../../core/interfaces/usuario';
@@ -10,8 +9,8 @@ import { Metodos } from '../../../shared/utility/metodos';
 import { IUsuarioRol } from '../../../core/interfaces/Dto/iusuario-rol';
 import { MaterialModule } from '../../../shared/ui/material-module';
 import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
-import { PageEvent } from '@angular/material/paginator';
 import { TableColumn } from '../../../shared/utility/components/tableColumn';
+import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 
 @Component({
   selector: 'app-usuario-inicio',
@@ -24,52 +23,52 @@ import { TableColumn } from '../../../shared/utility/components/tableColumn';
   templateUrl: './usuario-inicio.component.html',
   styleUrl: './usuario-inicio.component.scss'
 })
-export class UsuarioInicioComponent implements OnInit {
+export class UsuarioInicioComponent extends BaseListComponent<IUsuarioRol> {
   private readonly usuarioServicio = inject(UsuarioService);
   private readonly snackBar = inject(MatSnackBar);
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
-  public listaUsuario = new MatTableDataSource<IUsuarioRol>();
-  public tituloExcel = 'Usuarios';
-  public totalRegistros = 0;
-  public pageSize = 5;
+  readonly tituloExcel = 'Usuarios';
 
   columns: TableColumn[] = [
     {key: 'id_Usuario', label: 'No.', type: 'text'},
     {key: 'codigo', label: 'Código', type: 'text'},
     {key: 'nombre_Completo', label: 'Nombres', type: 'text'},
-    {key: 'rol', label: 'Rol', type: 'text'},
+    {key: 'nombre_Rol', label: 'Rol', type: 'text'},
     {key: 'correo_Electronico', label: 'Correo Electrónico', type: 'text'},
     {key: 'estado', label: 'Estado', type: 'status'},
     {key: 'fecha_Creacion', label: 'Fecha de Creación', type: 'date'},
     {key: 'accion', label: 'Acción', type: 'actions'}
   ];
 
-  ngOnInit() {
-    this.obtenerUsuarios(1, this.pageSize);
-  }
+  override obtenerDatos(pageNumber: number, pageSize: number, filtro: string): void {
+    const cacheKey = `${pageNumber}-${pageSize}-${filtro}`;
 
-  cambiarPagina(event: PageEvent) {
-    this.obtenerUsuarios(
-      event.pageIndex + 1,
-      event.pageSize
-    );
-  }
+    if (this.filtrosCache.has(cacheKey)) {
+      const cached = this.filtrosCache.get(cacheKey);
+      this.listaData.data = cached.items;
+      this.totalRegistros = cached.totalCount;
+      return;
+    }
 
-  obtenerUsuarios(pageNumber: number, pageSize: number) {
-    this.usuarioServicio.listaPaginada(pageNumber, pageSize).subscribe({
+    this.usuarioServicio.listaPaginada(pageNumber, pageSize, filtro).subscribe({
       next: (resp: any) => {
         const arr = resp.data.items ?? [];
         this.totalRegistros = resp.data.totalCount;
-        this.listaUsuario.data = arr.map((u: IUsuario) => {
+        this.listaData.data = arr.map((u: IUsuario) => {
           return u;
+        });
+
+        this.filtrosCache.set(cacheKey, {
+          items: arr,
+          totalCount: this.totalRegistros
         });
       },
       error: (err) => console.error(err.message)
     });
   }
 
-  eliminar(usuario: IUsuario) {
+  eliminar(usuario: IUsuario): void {
     const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
       width: '500px',
       data: { mensaje: `¿Está seguro de eliminar al usuario ${usuario.nombre_Completo}?` }
@@ -80,7 +79,8 @@ export class UsuarioInicioComponent implements OnInit {
         this.usuarioServicio.eliminar(usuario.id_Usuario).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerUsuarios(1, this.pageSize);
+              this.limpiarCache();
+              this.obtenerDatos(1, this.pageSize, this.filtroActual);
               this.mostrarMensaje('Usuario eliminado correctamente.', 'success');
             }
           },
@@ -93,15 +93,15 @@ export class UsuarioInicioComponent implements OnInit {
     });
   }
 
-  nuevo() {
+  nuevo(): void {
     this.router.navigate(['usuario/usuario-registro', 0]);
   }
 
-  editar(usuario: IUsuarioRol) {
+  editar(usuario: IUsuarioRol): void {
     this.router.navigate(['usuario/usuario-editar', usuario.id_Usuario]);
   }
 
-  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
 
     this.snackBar.open(mensaje, 'Cerrar', {
@@ -112,15 +112,8 @@ export class UsuarioInicioComponent implements OnInit {
     });
   }
 
-  filtrarUsuarios(termino: string) {
-    this.listaUsuario.filter = termino.trim().toLowerCase();
-    if (this.listaUsuario.paginator) {
-      this.listaUsuario.paginator.firstPage();
-    }
-  }
-
-  exportarExcel() {
-    const datos = this.listaUsuario.data.map((usuario) => ({
+  exportarExcel(): void {
+    const datos = this.listaData.data.map((usuario) => ({
       ID: usuario.id_Usuario,
       Código: usuario.codigo,
       'Nombre Completo': usuario.nombre_Completo,

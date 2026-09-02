@@ -1,9 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIcon } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { Component, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { OfertaService } from '../../../core/services/oferta.service';
 import { IOferta } from '../../../core/interfaces/oferta';
@@ -11,36 +6,29 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogoConfirmacionComponent } from '../../../presentation/components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { Metodos } from '../../../shared/utility/metodos';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { IOfertaProducto } from '../../../core/interfaces/Dto/ioferta-producto';
 import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
 import { TableColumn } from '../../../shared/utility/components/tableColumn';
+import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
+import { MaterialModule } from '../../../shared/ui/material-module';
 
 @Component({
   selector: 'app-oferta-inicio',
   standalone: true,
   imports: [
-    MatTableModule,
-    MatButtonModule,
-    MatIcon,
-    MatFormFieldModule,
-    MatInputModule,
+    MaterialModule,
     RouterOutlet,
-    MatPaginatorModule,
     DataTableComponent
 ],
   templateUrl: './oferta-inicio.component.html',
   styleUrl: './oferta-inicio.component.scss'
 })
-export class OfertaInicioComponent implements OnInit {
+export class OfertaInicioComponent extends BaseListComponent<IOfertaProducto> {
   private readonly ofertaServicio = inject(OfertaService);
   private readonly snackBar = inject(MatSnackBar);
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
-  public listaOferta = new MatTableDataSource<IOfertaProducto>();
-  public tituloExcel = 'Ofertas';
-  public totalRegistros = 0;
-  public pageSize = 5;
+  readonly tituloExcel = 'Ofertas';
 
   columns: TableColumn[] = [
     {key: 'id_Oferta', label: 'No.', type: 'text'},
@@ -54,31 +42,34 @@ export class OfertaInicioComponent implements OnInit {
     {key: 'accion', label: 'Acción', type: 'actions'}
   ];
 
-  ngOnInit() {
-    this.obtenerOfertas(1, this.pageSize);
-  }
+  override obtenerDatos(pageNumber: number, pageSize: number, filtro: string ): void {
+    const cacheKey = `${pageNumber}-${pageSize}-${filtro}`;
 
-  cambiarPagina(event: PageEvent) {
-    this.obtenerOfertas(
-      event.pageIndex + 1,
-      event.pageSize
-    );
-  }
+    if (this.filtrosCache.has(cacheKey)) {
+      const cached = this.filtrosCache.get(cacheKey);
+      this.listaData.data = cached.items;
+      this.totalRegistros = cached.totalCount;
+      return;
+    }
 
-  obtenerOfertas(pageNumber: number, pageSize: number) {
-    this.ofertaServicio.listaPaginada(pageNumber, pageSize).subscribe({
+    this.ofertaServicio.listaPaginada(pageNumber, pageSize, filtro).subscribe({
       next: (resp: any) => {
         const arr = resp.data.items ?? [];
         this.totalRegistros = resp.data.totalCount;
-        this.listaOferta.data = arr.map((c: IOferta) => {
+        this.listaData.data = arr.map((c: IOferta) => {
           return c;
+        });
+
+        this.filtrosCache.set(cacheKey, {
+          items: arr,
+          totalCount: this.totalRegistros
         });
       },
       error: (err) => console.error(err.message)
     });
   }
 
-  eliminar(oferta: IOferta) {
+  eliminar(oferta: IOferta): void {
     const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
       width: '500px',
       data: {
@@ -91,7 +82,8 @@ export class OfertaInicioComponent implements OnInit {
         this.ofertaServicio.eliminar(oferta.id_Oferta).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerOfertas(1, this.pageSize);
+              this.limpiarCache();
+              this.obtenerDatos(1, this.pageSize, this.filtroActual);
               this.mostrarMensaje('Oferta eliminado correctamente.', 'success');
             }
           },
@@ -104,15 +96,15 @@ export class OfertaInicioComponent implements OnInit {
     });
   }
 
-  nuevo() {
+  nuevo(): void {
     this.router.navigate(['oferta/oferta-registro', 0]);
   }
 
-  editar(oferta: IOfertaProducto) {
+  editar(oferta: IOfertaProducto): void {
     this.router.navigate(['oferta/oferta-editar', oferta.id_Oferta]);
   }
 
-  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
 
     this.snackBar.open(mensaje, 'Cerrar', {
@@ -123,15 +115,8 @@ export class OfertaInicioComponent implements OnInit {
     });
   }
 
-  filtrarOfertas(termino: string) {
-    this.listaOferta.filter = termino.trim().toLowerCase();
-    if (this.listaOferta.paginator) {
-      this.listaOferta.paginator.firstPage();
-    }
-  }
-
-  exportarExcel() {
-    const datos = this.listaOferta.data.map((oferta) => ({
+  exportarExcel(): void {
+    const datos = this.listaData.data.map((oferta) => ({
       ID: oferta.id_Oferta,
       Código: oferta.codigo,
       Nombre: oferta.nombre_Oferta,

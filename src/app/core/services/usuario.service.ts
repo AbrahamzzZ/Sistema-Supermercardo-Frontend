@@ -16,11 +16,11 @@ export class UsuarioService {
     return this.http.get<IUsuarioRol[]>(this.apiUrl);
   }
 
-  listaPaginada(pageNumber: number, pageSize: number) {
+  listaPaginada(pageNumber: number, pageSize: number, filtro: string) {
     return this.http.get<{
       data: IUsuario[];
       totalCount: number;
-    }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+    }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}&filtro=${encodeURIComponent(filtro)}`);
   }
 
   obtener(id: number) {

@@ -14,11 +14,11 @@ export class TransportistaService {
     return this.http.get<ITransportista[]>(this.apiUrl);
   }
 
-  listaPaginada(pageNumber: number, pageSize: number) {
+  listaPaginada(pageNumber: number, pageSize: number, filtro: string) {
     return this.http.get<{
       data: ITransportista[];
       totalCount: number;
-    }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+    }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}&filtro=${encodeURIComponent(filtro)}`);
   }
 
   obtener(id: number) {

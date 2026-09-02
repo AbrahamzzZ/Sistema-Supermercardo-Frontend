@@ -55,7 +55,6 @@ export class DataTableComponent {
   }
 
   getRowClass(element: any): string {
-    // Si tiene propiedad stock, verificar si es menor a 10
     if (element.stock !== undefined) {
       if (element.stock === 0) {
         return 'row-agotado';

@@ -7,7 +7,7 @@
         <input
           matInput
           #searchInput
-          (keyup)="filtrarClientes(searchInput.value)"
+          (keyup)="filtrar(searchInput.value)"
           placeholder="Buscar clientes por varios criterios."
         />
         <mat-icon matSuffix>search</mat-icon>
@@ -28,7 +28,7 @@
     </div>
 
     <app-data-table
-      [dataSource]="listaCliente"
+      [dataSource]="listaData"
       [columns]="columns"
       [totalRegistros]="totalRegistros"
       [pageSize]="pageSize"

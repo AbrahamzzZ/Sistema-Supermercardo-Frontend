@@ -1,16 +1,15 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MaterialModule } from '../../../shared/ui/material-module';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatTableDataSource } from '@angular/material/table';
 import { RouterOutlet } from '@angular/router';
 import { Metodos } from '../../../shared/utility/metodos';
 import { LogService } from '../../../core/services/log.service';
 import { ILog } from '../../../core/interfaces/log';
 import { ModalLogComponent } from '../../components/modal/modal-log/modal-log.component';
 import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
-import { PageEvent } from '@angular/material/paginator';
 import { TableColumn } from '../../../shared/utility/components/tableColumn';
+import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 
 @Component({
   selector: 'app-log-inicio',
@@ -19,15 +18,12 @@ import { TableColumn } from '../../../shared/utility/components/tableColumn';
   templateUrl: './log-inicio.component.html',
   styleUrl: './log-inicio.component.scss'
 })
-export class LogInicioComponent implements OnInit {
+export class LogInicioComponent extends BaseListComponent<ILog> {
   private readonly dialog = inject(MatDialog);
   private readonly logServicio = inject(LogService);
   private readonly snackBar = inject(MatSnackBar);
-  public listaLog = new MatTableDataSource<ILog>();
-  public tituloExcel = 'Logs';
-  public totalRegistros = 0;
-  public pageSize = 5;
-  
+  readonly tituloExcel = 'Logs';
+
   columns: TableColumn[] = [
     {key: 'id_Log', label: 'No.', type: 'text'},
     {key: 'codigo_Error', label: 'Código de Error', type: 'text'},
@@ -38,31 +34,34 @@ export class LogInicioComponent implements OnInit {
     {key: 'accion', label: 'Acción', type: 'view'}
   ];
 
-  ngOnInit() {
-    this.obtenerLogs(1, this.pageSize);
-  }
+  override obtenerDatos(pageNumber: number, pageSize: number, filtro: string): void {
+    const cacheKey = `${pageNumber}-${pageSize}-${filtro}`;
 
-  cambiarPagina(event: PageEvent) {
-    this.obtenerLogs(
-      event.pageIndex + 1,
-      event.pageSize
-    );
-  }
+    if (this.filtrosCache.has(cacheKey)) {
+      const cached = this.filtrosCache.get(cacheKey);
+      this.listaData.data = cached.items;
+      this.totalRegistros = cached.totalCount;
+      return;
+    }
 
-  obtenerLogs(pageNumber: number, pageSize: number) {
-    this.logServicio.listaPaginada(pageNumber, pageSize).subscribe({
+    this.logServicio.listaPaginada(pageNumber, pageSize, filtro).subscribe({
       next: (resp: any) => {
         const arr = resp.data.items ?? [];
         this.totalRegistros = resp.data.totalCount;
-        this.listaLog.data = arr.map((l: ILog) => {
+        this.listaData.data = arr.map((l: ILog) => {
           return l;
+        });
+
+        this.filtrosCache.set(cacheKey, {
+          items: arr,
+          totalCount: this.totalRegistros
         });
       },
       error: (err) => console.error(err.message)
     });
   }
 
-  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
 
     this.snackBar.open(mensaje, 'Cerrar', {
@@ -73,15 +72,8 @@ export class LogInicioComponent implements OnInit {
     });
   }
 
-  filtrarLogs(termino: string) {
-    this.listaLog.filter = termino.trim().toLowerCase();
-    if (this.listaLog.paginator) {
-      this.listaLog.paginator.firstPage();
-    }
-  }
-
-  exportarExcel() {
-    const datos = this.listaLog.data.map((log) => ({
+  exportarExcel(): void {
+    const datos = this.listaData.data.map((log) => ({
       ID: log.id_Log,
       'Código Error': log.codigo_Error,
       'Mensaje Error': log.mensaje_Error,
@@ -121,7 +113,7 @@ export class LogInicioComponent implements OnInit {
     });
   }
 
-  ver(log: ILog) {
+  ver(log: ILog): void {
     this.dialog.open(ModalLogComponent, {
       width: '650px',
       maxHeight: '80vh',

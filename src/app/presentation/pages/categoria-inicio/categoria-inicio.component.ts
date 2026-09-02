@@ -1,5 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { CategoriaService } from '../../../core/services/categoria.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -10,7 +9,7 @@ import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-co
 import { MaterialModule } from '../../../shared/ui/material-module';
 import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
 import { TableColumn } from '../../../shared/utility/components/tableColumn';
-import { PageEvent } from '@angular/material/paginator';
+import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 
 @Component({
   selector: 'app-categoria-inicio',
@@ -23,15 +22,13 @@ import { PageEvent } from '@angular/material/paginator';
   templateUrl: './categoria-inicio.component.html',
   styleUrl: './categoria-inicio.component.scss'
 })
-export class CategoriaInicioComponent implements OnInit {
+export class CategoriaInicioComponent extends BaseListComponent<ICategoria> {
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
   private readonly categoriaServicio = inject(CategoriaService);
   private readonly snackBar = inject(MatSnackBar);
-  public listaCategoria = new MatTableDataSource<ICategoria>();
-  public tituloExcel = 'Categorías';
-  public totalRegistros = 0;
-  public pageSize = 5;
+  readonly tituloExcel = 'Categorías';
+
   columns: TableColumn[] = [
     {key: 'id_Categoria', label: 'No.', type: 'text'},
     {key: 'codigo', label: 'Código', type: 'text'},
@@ -41,31 +38,32 @@ export class CategoriaInicioComponent implements OnInit {
     {key: 'accion', label: 'Acción', type: 'actions'}
   ];
 
-  ngOnInit() {
-    this.obtenerCategorias(1, this.pageSize);
-  }
+  override obtenerDatos(pageNumber: number, pageSize: number, filtro: string): void {
+    const cacheKey = `${pageNumber}-${pageSize}-${filtro}`;
 
-  cambiarPagina(event: PageEvent) {
-    this.obtenerCategorias(
-      event.pageIndex + 1,
-      event.pageSize
-    );
-  }
+    if (this.filtrosCache.has(cacheKey)) {
+      const cached = this.filtrosCache.get(cacheKey);
+      this.listaData.data = cached.items;
+      this.totalRegistros = cached.totalCount;
+      return;
+    }
 
-  obtenerCategorias(pageNumber: number, pageSize: number) {
-    this.categoriaServicio.listaPaginada(pageNumber, pageSize).subscribe({
+    this.categoriaServicio.listaPaginada(pageNumber, pageSize, filtro).subscribe({
       next: (resp: any) => {
         const arr = resp.data.items ?? [];
         this.totalRegistros = resp.data.totalCount;
-        this.listaCategoria.data = arr.map((c: ICategoria) => {
-          return c;
+        this.listaData.data = arr;
+
+        this.filtrosCache.set(cacheKey, {
+          items: arr,
+          totalCount: this.totalRegistros
         });
       },
       error: (err) => console.error(err.message)
     });
   }
 
-  eliminar(categoria: ICategoria) {
+  eliminar(categoria: ICategoria): void {
     const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
       width: '500px',
       data: {
@@ -78,7 +76,8 @@ export class CategoriaInicioComponent implements OnInit {
         this.categoriaServicio.eliminar(categoria.id_Categoria).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerCategorias(1, this.pageSize);
+              this.limpiarCache();
+              this.obtenerDatos(1, this.pageSize, this.filtroActual);
               this.mostrarMensaje('Categoría eliminado correctamente.', 'success');
             }
           },
@@ -91,17 +90,16 @@ export class CategoriaInicioComponent implements OnInit {
     });
   }
 
-  nuevo() {
+  nuevo(): void {
     this.router.navigate(['categoria/categoria-registro', 0]);
   }
 
-  editar(categoria: ICategoria) {
+  editar(categoria: ICategoria): void {
     this.router.navigate(['categoria/categoria-editar', categoria.id_Categoria]);
   }
 
-  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
@@ -110,15 +108,8 @@ export class CategoriaInicioComponent implements OnInit {
     });
   }
 
-  filtrarCategorias(termino: string) {
-    this.listaCategoria.filter = termino.trim().toLowerCase();
-    if (this.listaCategoria.paginator) {
-      this.listaCategoria.paginator.firstPage();
-    }
-  }
-
-  exportarExcel() {
-    const datos = this.listaCategoria.data.map((categoria) => ({
+  exportarExcel(): void {
+    const datos = this.listaData.data.map((categoria) => ({
       ID: categoria.id_Categoria,
       Código: categoria.codigo,
       Nombre: categoria.nombre_Categoria,

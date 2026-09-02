@@ -7,14 +7,14 @@
         <input
           matInput
           #searchInput
-          (keyup)="filtrarSucursales(searchInput.value)"
+          (keyup)="filtrar(searchInput.value)"
           placeholder="Buscar sucursales por varios criterios."
         />
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
 
       <div class="container__search__actions">
-        <button class="container__search__button" mat-raised-button color="primary"(click)="nuevo()">
+        <button class="container__search__button" mat-raised-button color="primary" (click)="nuevo()">
           <mat-icon>person_add</mat-icon>
           Registrar sucursal
         </button>
@@ -36,7 +36,7 @@
     </div>
 
     <app-data-table
-      [dataSource]="listaSucursal"
+      [dataSource]="listaData"
       [columns]="columns"
       [totalRegistros]="totalRegistros"
       [pageSize]="pageSize"

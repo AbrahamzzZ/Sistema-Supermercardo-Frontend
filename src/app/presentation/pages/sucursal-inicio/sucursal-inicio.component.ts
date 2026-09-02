@@ -1,9 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SucursalService } from '../../../core/services/sucursal.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatTableDataSource } from '@angular/material/table';
 import { Router, RouterOutlet } from '@angular/router';
-import {  PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { Metodos } from '../../../shared/utility/metodos';
@@ -12,6 +10,7 @@ import { ISucursal } from '../../../core/interfaces/sucursal';
 import { MaterialModule } from '../../../shared/ui/material-module';
 import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
 import { TableColumn } from '../../../shared/utility/components/tableColumn';
+import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 
 @Component({
   selector: 'app-sucursal-inicio',
@@ -24,15 +23,12 @@ import { TableColumn } from '../../../shared/utility/components/tableColumn';
   templateUrl: './sucursal-inicio.component.html',
   styleUrl: './sucursal-inicio.component.scss'
 })
-export class SucursalInicioComponent implements OnInit {
+export class SucursalInicioComponent extends BaseListComponent<ISucursalNegocio> {
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
   private readonly sucursalServicio = inject(SucursalService);
   private readonly snackBar = inject(MatSnackBar);
-  public listaSucursal = new MatTableDataSource<ISucursalNegocio>();
-  public tituloExcel = 'Sucursales';
-  public totalRegistros = 0;
-  public pageSize = 5;
+  readonly tituloExcel = 'Sucursales';
 
   columns: TableColumn[] = [
     {key: 'id_Sucursal', label: 'No.', type: 'text'},
@@ -46,31 +42,34 @@ export class SucursalInicioComponent implements OnInit {
     {key: 'accion', label: 'Acción', type: 'actions'}
   ];
 
-  ngOnInit() {
-    this.obtenerSucursales(1, this.pageSize);
-  }
+  override obtenerDatos(pageNumber: number, pageSize: number, filtro: string): void {
+    const cacheKey = `${pageNumber}-${pageSize}-${filtro}`;
 
-  cambiarPagina(event: PageEvent) {
-    this.obtenerSucursales(
-      event.pageIndex + 1,
-      event.pageSize
-    );
-  }
+    if (this.filtrosCache.has(cacheKey)) {
+      const cached = this.filtrosCache.get(cacheKey);
+      this.listaData.data = cached.items;
+      this.totalRegistros = cached.totalCount;
+      return;
+    }
 
-  obtenerSucursales(pageNumber: number, pageSize: number) {
-    this.sucursalServicio.listaPaginada(pageNumber, pageSize).subscribe({
+    this.sucursalServicio.listaPaginada(pageNumber, pageSize, filtro).subscribe({
       next: (resp: any) => {
         const arr = resp.data.items ?? [];
         this.totalRegistros = resp.data.totalCount;
-        this.listaSucursal.data = arr.map((c: ISucursal) => {
+        this.listaData.data = arr.map((c: ISucursal) => {
           return c;
+        });
+
+        this.filtrosCache.set(cacheKey, {
+          items: arr,
+          totalCount: this.totalRegistros
         });
       },
       error: (err) => console.error(err.message)
     });
   }
 
-  eliminar(sucursal: ISucursalNegocio) {
+  eliminar(sucursal: ISucursalNegocio): void {
     const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
       width: '500px',
       data: {
@@ -83,7 +82,8 @@ export class SucursalInicioComponent implements OnInit {
         this.sucursalServicio.eliminar(sucursal.id_Sucursal).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerSucursales(1, this.pageSize);
+              this.limpiarCache();
+              this.obtenerDatos(1, this.pageSize, this.filtroActual);
               this.mostrarMensaje('Sucursal eliminada correctamente.', 'success');
             }
           },
@@ -96,19 +96,19 @@ export class SucursalInicioComponent implements OnInit {
     });
   }
 
-  nuevo() {
+  nuevo(): void {
     this.router.navigate(['sucursal/sucursal-registro', 0]);
   }
 
-  editar(sucursal: ISucursalNegocio) {
+  editar(sucursal: ISucursalNegocio): void {
     this.router.navigate(['sucursal/sucursal-editar', sucursal.id_Sucursal]);
   }
 
-  verMapa(){
+  verMapa(): void {
     this.router.navigate(['sucursal/mapa']);
   }
 
-  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
 
     this.snackBar.open(mensaje, 'Cerrar', {
@@ -119,15 +119,8 @@ export class SucursalInicioComponent implements OnInit {
     });
   }
 
-  filtrarSucursales(termino: string) {
-    this.listaSucursal.filter = termino.trim().toLowerCase();
-    if (this.listaSucursal.paginator) {
-      this.listaSucursal.paginator.firstPage();
-    }
-  }
-
-  exportarExcel() {
-    const datos = this.listaSucursal.data.map((sucursal) => ({
+  exportarExcel(): void {
+    const datos = this.listaData.data.map((sucursal) => ({
       ID: sucursal.id_Sucursal,
       Código: sucursal.codigo,
       Nombres: sucursal.nombre_Sucursal,

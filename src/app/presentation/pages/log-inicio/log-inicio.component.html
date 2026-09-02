@@ -7,7 +7,7 @@
         <input
           matInput
           #searchInput
-          (keyup)="filtrarLogs(searchInput.value)"
+          (keyup)="filtrar(searchInput.value)"
           placeholder="Buscar logs por varios criterios."
         />
         <mat-icon matSuffix>search</mat-icon>
@@ -24,7 +24,7 @@
     </div>
 
     <app-data-table
-      [dataSource]="listaLog"
+      [dataSource]="listaData"
       [columns]="columns"
       [totalRegistros]="totalRegistros"
       [pageSize]="pageSize"
