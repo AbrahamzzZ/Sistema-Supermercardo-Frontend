@@ -43,7 +43,7 @@ export class UsuarioInicioComponent implements OnInit {
     {key: 'id_Usuario', label: 'No.', type: 'text'},
     {key: 'codigo', label: 'Código', type: 'text'},
     {key: 'nombre_Completo', label: 'Nombres', type: 'text'},
-    {key: 'rol', label: 'Rol', type: 'text'},
+    {key: 'nombre_Rol', label: 'Rol', type: 'text'},
     {key: 'correo_Electronico', label: 'Correo Electrónico', type: 'text'},
     {key: 'estado', label: 'Estado', type: 'status'},
     {key: 'fecha_Creacion', label: 'Fecha de Creación', type: 'date'},
