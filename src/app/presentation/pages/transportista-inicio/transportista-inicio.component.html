@@ -7,7 +7,7 @@
         <input
           matInput
           #searchInput
-          (keyup)="filtrarTransportistas(searchInput.value)"
+          (keyup)="filtrar(searchInput.value)"
           placeholder="Buscar transportistas por varios criterios."
         />
         <mat-icon matSuffix>search</mat-icon>
@@ -28,7 +28,7 @@
     </div>
 
     <app-data-table
-      [dataSource]="listaTransportista"
+      [dataSource]="listaData"
       [columns]="columns"
       [totalRegistros]="totalRegistros"
       [pageSize]="pageSize"

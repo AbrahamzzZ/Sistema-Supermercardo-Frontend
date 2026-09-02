@@ -1,5 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { ClienteService } from '../../../core/services/cliente.service';
 import { ICliente } from '../../../core/interfaces/cliente';
@@ -7,11 +6,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Metodos } from '../../../shared/utility/metodos';
-import { PageEvent} from '@angular/material/paginator';
 import { MaterialModule } from '../../../shared/ui/material-module';
 import { TableColumn } from '../../../shared/utility/components/tableColumn';
 import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
-import { debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs';
+import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 
 @Component({
   selector: 'app-cliente-inicio',
@@ -24,19 +22,12 @@ import { debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs';
   templateUrl: './cliente-inicio.component.html',
   styleUrl: './cliente-inicio.component.scss'
 })
-export class ClienteInicioComponent implements OnInit {
+export class ClienteInicioComponent extends BaseListComponent<ICliente> {
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
   private readonly clienteServicio = inject(ClienteService);
   private readonly snackBar = inject(MatSnackBar);
-  public listaCliente = new MatTableDataSource<ICliente>();
-  public tituloExcel = 'Clientes';
-  public totalRegistros = 0;
-  public pageSize = 5;
-  public filtroActual = '';
-  private readonly filtroSubject = new Subject<string>();
-  private readonly filtrosCache = new Map<string, any>();
-  private abortController = new AbortController();
+  readonly tituloExcel = 'Clientes';
 
   columns: TableColumn[] = [
     {key: 'id_Cliente', label: 'No.', type: 'text'},
@@ -50,36 +41,12 @@ export class ClienteInicioComponent implements OnInit {
     {key: 'accion', label: 'Acción', type: 'actions'}
   ];
 
-  ngOnInit() {
-    this.filtroSubject.pipe(
-      debounceTime(400),
-      distinctUntilChanged(),
-      switchMap((filtro) => {
-        return new Promise<string>((resolve) => {
-          resolve(filtro);
-        });
-      })
-    ).subscribe((filtro) => {
-      this.obtenerClientes(1, this.pageSize, filtro);
-    });
-
-    this.obtenerClientes(1, this.pageSize, '');
-  }
-
-  cambiarPagina(event: PageEvent) {
-    this.obtenerClientes(
-      event.pageIndex + 1,
-      event.pageSize,
-      this.filtroActual
-    );
-  }
-
-  obtenerClientes(pageNumber: number, pageSize: number, filtro: string) {
+  override obtenerDatos(pageNumber: number, pageSize: number, filtro: string): void {
     const cacheKey = `${pageNumber}-${pageSize}-${filtro}`;
 
     if (this.filtrosCache.has(cacheKey)) {
       const cached = this.filtrosCache.get(cacheKey);
-      this.listaCliente.data = cached.items;
+      this.listaData.data = cached.items;
       this.totalRegistros = cached.totalCount;
       return;
     }
@@ -88,7 +55,7 @@ export class ClienteInicioComponent implements OnInit {
       next: (resp: any) => {
         const arr = resp.data.items ?? [];
         this.totalRegistros = resp.data.totalCount;
-        this.listaCliente.data = arr.map((cl: ICliente) => {
+        this.listaData.data = arr.map((cl: ICliente) => {
           return cl;
         });
 
@@ -101,14 +68,7 @@ export class ClienteInicioComponent implements OnInit {
     });
   }
 
-  filtrarClientes(termino: string) {
-    this.filtroActual = termino.trim();
-    this.abortController.abort();
-    this.abortController = new AbortController();
-    this.filtroSubject.next(this.filtroActual);
-  }
-
-  eliminar(cliente: ICliente) {
+  eliminar(cliente: ICliente): void {
     const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
       width: '500px',
       data: {
@@ -121,8 +81,8 @@ export class ClienteInicioComponent implements OnInit {
         this.clienteServicio.eliminar(cliente.id_Cliente).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.filtrosCache.clear();
-              this.obtenerClientes(1, this.pageSize, this.filtroActual);
+              this.limpiarCache();
+              this.obtenerDatos(1, this.pageSize, this.filtroActual);
               this.mostrarMensaje('Cliente eliminado correctamente.', 'success');
             }
           },
@@ -135,15 +95,15 @@ export class ClienteInicioComponent implements OnInit {
     });
   }
 
-  nuevo() {
+  nuevo(): void {
     this.router.navigate(['cliente/cliente-registro', 0]);
   }
 
-  editar(cliente: ICliente) {
+  editar(cliente: ICliente): void {
     this.router.navigate(['cliente/cliente-editar', cliente.id_Cliente]);
   }
 
-  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
@@ -153,8 +113,8 @@ export class ClienteInicioComponent implements OnInit {
     });
   }
 
-  exportarExcel() {
-    const datos = this.listaCliente.data.map((cliente) => ({
+  exportarExcel(): void {
+    const datos = this.listaData.data.map((cliente) => ({
       ID: cliente.id_Cliente,
       Código: cliente.codigo,
       Nombres: cliente.nombres,
