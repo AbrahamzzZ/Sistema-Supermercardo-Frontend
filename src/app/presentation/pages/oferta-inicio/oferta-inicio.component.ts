@@ -33,7 +33,7 @@ export class OfertaInicioComponent extends BaseListComponent<IOfertaProducto> {
   columns: TableColumn[] = [
     {key: 'id_Oferta', label: 'No.', type: 'text'},
     {key: 'codigo', label: 'Código', type: 'text'},
-    {key: 'nombre', label: 'Nombre', type: 'text'},
+    {key: 'nombre_Oferta', label: 'Nombre', type: 'text'},
     {key: 'nombre_Producto', label: 'Producto', type: 'text'},
     {key: 'fecha_Inicio', label: 'Fecha de Inicio', type: 'date'},
     {key: 'fecha_Fin', label: 'Fecha de Fin', type: 'date'},
