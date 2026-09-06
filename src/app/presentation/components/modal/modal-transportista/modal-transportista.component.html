@@ -16,56 +16,14 @@
 </mat-form-field>
 
 <div class="transportistas-scroll">
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef>ID</th>
-      <td mat-cell *matCellDef="let transportista">{{ transportista.id_Transportista }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="nombres">
-      <th mat-header-cell *matHeaderCellDef>Nombres</th>
-      <td mat-cell *matCellDef="let transportista">{{ transportista.nombres }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="apellidos">
-      <th mat-header-cell *matHeaderCellDef>Apellidos</th>
-      <td mat-cell *matCellDef="let transportista">{{ transportista.apellidos }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="cedula">
-      <th mat-header-cell *matHeaderCellDef>Cédula</th>
-      <td mat-cell *matCellDef="let transportista">{{ transportista.cedula }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="estado">
-      <th mat-header-cell *matHeaderCellDef>Estado</th>
-      <td
-        class="table__cell"
-        mat-cell
-        *matCellDef="let element"
-        [ngClass]="{
-          'table__estado-activo': element.estado,
-          'table__estado-no-activo': !element.estado
-        }"
-      >
-        {{ getEstado(element.estado) }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="accion">
-      <th mat-header-cell *matHeaderCellDef>Acción</th>
-      <td mat-cell *matCellDef="let transportista">
-        <div style="display: flex; justify-content: center">
-          <button mat-button color="primary" (click)="seleccionarTransportista(transportista)">
-            <mat-icon>check_circle</mat-icon> Seleccionar
-          </button>
-        </div>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
-    <tr mat-row *matRowDef="let row; columns: columnas"></tr>
-  </table>
+  <app-data-table
+    [dataSource]="dataSource"
+    [columns]="columnas"
+    [totalRegistros]="dataSource.data.length"
+    [pageSize]="10"
+    mensajeSinDatos="No hay transportistas activos que mostrar."
+    (seleccionar)="seleccionarTransportista($event)"
+  ></app-data-table>
 </div>
 
 <div class="boton-cerrar">

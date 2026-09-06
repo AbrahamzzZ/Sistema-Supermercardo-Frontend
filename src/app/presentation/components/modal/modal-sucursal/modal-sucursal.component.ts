@@ -1,17 +1,18 @@
-import { NgClass } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ISucursal } from '../../../../core/interfaces/sucursal';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SucursalService } from '../../../../core/services/sucursal.service';
 import { MaterialModule } from '../../../../shared/ui/material-module';
+import { DataTableComponent } from '../../../../shared/utility/components/data-table/data-table.component';
+import { TableColumn } from '../../../../shared/utility/components/tableColumn';
 
 @Component({
   selector: 'app-modal-sucursal',
   standalone: true,
   imports: [
-    NgClass,
-    MaterialModule
+    MaterialModule,
+    DataTableComponent
   ],
   templateUrl: './modal-sucursal.component.html',
   styleUrl: './modal-sucursal.component.scss'
@@ -20,7 +21,13 @@ export class ModalSucursalComponent {
   private readonly sucursalService = inject(SucursalService);
   private readonly dialogRef = inject(MatDialogRef<ModalSucursalComponent>);
   dataSource = new MatTableDataSource<ISucursal>([]);
-  columnas: string[] = ['id', 'codigo', 'nombre', 'direccion', 'estado', 'accion'];
+  columnas: TableColumn[] = [
+    {key: 'id_Sucursal', label: 'ID', type: 'number'},
+    {key: 'codigo', label: 'Código', type: 'text'},
+    {key: 'nombre_Sucursal', label: 'Nombre', type: 'text'},
+    {key: 'direccion_Sucursal', label: 'Dirección', type: 'text'},
+    {key: 'accion', label: 'Acción', type: 'select'}
+  ];
   filtro = '';
 
   constructor(
@@ -32,7 +39,7 @@ export class ModalSucursalComponent {
   obtenerSucursales() {
     this.sucursalService.lista().subscribe({
       next: (resp: any) => {
-        this.dataSource.data = resp.data;
+        this.dataSource.data = resp.data.filter((data: ISucursal) => data.estado === true);
 
         this.dataSource.filterPredicate = (data: ISucursal, filter: string) => {
           const termino = filter.trim().toLowerCase();

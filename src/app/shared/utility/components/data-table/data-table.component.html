@@ -37,6 +37,12 @@
               </button>
             }
 
+            @case ('select') {
+              <button mat-button color="primary" (click)="onSeleccionar(element)">
+                <mat-icon>check_circle</mat-icon> Seleccionar
+              </button>
+            }
+
             @case ('actions') {
                 <button mat-icon-button (click)="onEditar(element)">
                 <mat-icon>edit</mat-icon>

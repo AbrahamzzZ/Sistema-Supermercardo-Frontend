@@ -1,8 +1,8 @@
 export interface ILog {
     id_Log: number;
-    codigo_Error: string;
-    mensaje_Error: string;
-    detalle_Error: string;
+    codigo: string;
+    mensaje: string;
+    detalle: string;
     id_Usuario?: number;
     fecha: string;
     endpoint: string;

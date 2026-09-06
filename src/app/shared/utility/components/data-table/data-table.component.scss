@@ -98,6 +98,25 @@ $message-bg-color: #fafafa;
   }
 }
 
+:host ::ng-deep .mat-mdc-paginator-container {
+  align-items: center;
+}
+
+:host ::ng-deep .mat-mdc-paginator-range-label {
+  display: flex;
+  align-items: center;
+  min-height: 36px;
+  margin-top: 0;
+  line-height: normal;
+  position: relative;
+  top: 2px;
+}
+
+:host ::ng-deep .mat-mdc-paginator-page-size {
+  display: flex;
+  align-items: center;
+}
+
 @media (max-width: 768px) {
 
   .table {

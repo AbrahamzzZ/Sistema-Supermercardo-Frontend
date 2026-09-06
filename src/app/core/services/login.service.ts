@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 import { appsettings } from '../setting/api/appsettings';
 import { ITokenData } from '../setting/token/itoken-data';
 import { jwtDecode } from 'jwt-decode';
-import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { NavigationStart, Router } from '@angular/router';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ModalInactividadComponent } from '../../presentation/components/modal/modal-inactividad/modal-inactividad.component';
 
 @Injectable({
@@ -18,8 +18,20 @@ export class LoginService {
   private readonly ngZone = inject(NgZone);
   private readonly dialog = inject(MatDialog);
   private readonly timeoutInMs: number = 10 * 60 * 1000; // 10 minutos
-  private timeoutId: any;
+  private timeoutId: ReturnType<typeof setTimeout> | undefined;
+  private inactivityDialogRef?: MatDialogRef<ModalInactividadComponent>;
+  private cerrarDialogoSinCerrarSesion = false;
+  private readonly activityEvents = ['mousemove', 'mousedown', 'keypress', 'touchstart', 'scroll'];
+  private readonly resetearPorActividad = () => this.resetear();
   private  readonly apiUrl: string = appsettings.apiUrl + 'Usuario';
+
+  constructor() {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart && event.url.startsWith('/login')) {
+        this.detenerMonitoreo();
+      }
+    });
+  }
 
   login(credenciales: ILogin): Observable<unknown> {
     return this.http.post(`${this.apiUrl}/login`, credenciales);
@@ -69,15 +81,23 @@ export class LoginService {
   }
 
   iniciarMonitoreo() {
+    this.detenerMonitoreo();
     this.resetear();
 
-    const eventos = ['mousemove', 'mousedown', 'keypress', 'touchstart', 'scroll'];
-    eventos.forEach((event) => {
-      window.addEventListener(event, () => this.resetear());
+    this.activityEvents.forEach((event) => {
+      window.addEventListener(event, this.resetearPorActividad);
     });
   }
 
   resetear() {
+    if (!this.obtenerSesionValida() || this.router.url.startsWith('/login')) {
+      return;
+    }
+
+    if (this.inactivityDialogRef) {
+      return;
+    }
+
     clearTimeout(this.timeoutId);
 
     this.ngZone.runOutsideAngular(() => {
@@ -90,11 +110,16 @@ export class LoginService {
   }
 
   private mostrarModalAdvertencia() {
+    if (!this.obtenerSesionValida() || this.router.url.startsWith('/login')) {
+      return;
+    }
+
     const dialogRef = this.dialog.open(ModalInactividadComponent, {
       width: '400px',
       disableClose: true,
       data: { tiempoRestante: 60 }
     });
+    this.inactivityDialogRef = dialogRef;
 
     let segundos = 60;
     const interval = setInterval(() => {
@@ -110,6 +135,13 @@ export class LoginService {
 
     dialogRef.afterClosed().subscribe((result) => {
       clearInterval(interval);
+      this.inactivityDialogRef = undefined;
+
+      if (this.cerrarDialogoSinCerrarSesion) {
+        this.cerrarDialogoSinCerrarSesion = false;
+        return;
+      }
+
       if (result === true) {
         this.resetear();
       } else {
@@ -120,11 +152,31 @@ export class LoginService {
 
   detenerMonitoreo() {
     clearTimeout(this.timeoutId);
-    const eventos = ['mousemove', 'mousedown', 'keypress', 'touchstart', 'scroll'];
+    this.timeoutId = undefined;
 
-    eventos.forEach((event) => {
-      window.removeEventListener(event, this.resetear.bind(this));
+    this.activityEvents.forEach((event) => {
+      window.removeEventListener(event, this.resetearPorActividad);
     });
+
+    if (this.inactivityDialogRef) {
+      this.cerrarDialogoSinCerrarSesion = true;
+      this.inactivityDialogRef.close();
+    }
+    this.inactivityDialogRef = undefined;
+  }
+
+  private obtenerSesionValida(): boolean {
+    const token = this.obtenerToken();
+    if (!token) {
+      return false;
+    }
+
+    try {
+      const { exp } = jwtDecode<{ exp?: number }>(token);
+      return !exp || exp * 1000 > Date.now();
+    } catch {
+      return false;
+    }
   }
 
   logoutPorInactividad() {
