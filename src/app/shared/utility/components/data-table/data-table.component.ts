@@ -30,6 +30,8 @@ export class DataTableComponent {
 
   @Output() ver = new EventEmitter<any>();
 
+  @Output() seleccionar = new EventEmitter<any>();
+
   @Output() cambioPagina = new EventEmitter<PageEvent>();
 
   get displayedColumns(): string[] {
@@ -82,6 +84,10 @@ export class DataTableComponent {
 
   onVer(element: any): void {
     this.ver.emit(element);
+  }
+
+  onSeleccionar(element: any): void {
+    this.seleccionar.emit(element);
   }
 
   onPageChange(event: PageEvent): void {

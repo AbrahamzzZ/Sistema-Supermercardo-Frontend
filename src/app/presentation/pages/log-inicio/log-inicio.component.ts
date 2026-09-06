@@ -26,7 +26,7 @@ export class LogInicioComponent extends BaseListComponent<ILog> {
 
   columns: TableColumn[] = [
     {key: 'id_Log', label: 'No.', type: 'text'},
-    {key: 'codigo_Error', label: 'Código de Error', type: 'text'},
+    {key: 'codigo', label: 'Código de Error', type: 'text'},
     {key: 'fecha', label: 'Fecha', type: 'date'},
     {key: 'endpoint', label: 'Endpoint', type: 'text'},
     {key: 'metodo', label: 'Método', type: 'text'},
@@ -75,9 +75,9 @@ export class LogInicioComponent extends BaseListComponent<ILog> {
   exportarExcel(): void {
     const datos = this.listaData.data.map((log) => ({
       ID: log.id_Log,
-      'Código Error': log.codigo_Error,
-      'Mensaje Error': log.mensaje_Error,
-      'Detalle Error': log.detalle_Error,
+      'Código': log.codigo,
+      'Mensaje': log.mensaje,
+      'Detalle': log.detalle,
       'ID Usuario': log.id_Usuario,
       Fecha: this.getFechaRegistro(log.fecha ?? ''),
       Endpoint: log.endpoint,
@@ -92,9 +92,9 @@ export class LogInicioComponent extends BaseListComponent<ILog> {
 
     Metodos.exportarExcel(this.tituloExcel, datos, [
       'ID',
-      'Código Error',
-      'Mensaje Error',
-      'Detalle Error',
+      'Código',
+      'Mensaje',
+      'Detalle',
       'ID Usuario',
       'Fecha',
       'EndPoint',
