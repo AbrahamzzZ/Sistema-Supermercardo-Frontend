@@ -2,8 +2,12 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
 export class Metodos {
+  
   static generarCodigo(): string {
-    return Math.floor(10000 + Math.random() * 90000).toString();
+    const array = new Uint32Array(1);
+    crypto.getRandomValues(array);
+    const numero = 10000 + (array[0] % 90000);
+    return numero.toString();
   }
 
   static getFechaCreacion(): string {
