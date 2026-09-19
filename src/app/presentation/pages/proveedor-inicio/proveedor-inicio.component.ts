@@ -12,15 +12,14 @@ import { TableColumn } from '../../../shared/utility/components/tableColumn';
 import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 
 @Component({
-  selector: 'app-proveedor-inicio',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    RouterOutlet,
-    DataTableComponent
-],
-  templateUrl: './proveedor-inicio.component.html',
-  styleUrl: './proveedor-inicio.component.scss'
+    selector: 'app-proveedor-inicio',
+    imports: [
+        MaterialModule,
+        RouterOutlet,
+        DataTableComponent
+    ],
+    templateUrl: './proveedor-inicio.component.html',
+    styleUrl: './proveedor-inicio.component.scss'
 })
 export class ProveedorInicioComponent extends BaseListComponent<IProveedor> {
   private readonly router = inject(Router);

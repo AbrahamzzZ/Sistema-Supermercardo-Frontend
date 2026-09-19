@@ -8,13 +8,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-  selector: 'app-editar-proveedor',
-  standalone: true,
-  imports: [
-    MaterialModule
-  ],
-  templateUrl: './editar-proveedor.component.html',
-  styleUrl: './editar-proveedor.component.scss'
+    selector: 'app-editar-proveedor',
+    imports: [
+        MaterialModule
+    ],
+    templateUrl: './editar-proveedor.component.html',
+    styleUrl: './editar-proveedor.component.scss'
 })
 export class EditarProveedorComponent implements OnInit {
   private readonly proveedorServicio = inject(ProveedorService);

@@ -12,13 +12,12 @@ import { Observable } from 'rxjs';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-  selector: 'app-proveedor',
-  standalone: true,
-  imports: [
-    MaterialModule
-  ],
-  templateUrl: './registro-proveedor.component.html',
-  styleUrl: './registro-proveedor.component.scss'
+    selector: 'app-proveedor',
+    imports: [
+        MaterialModule
+    ],
+    templateUrl: './registro-proveedor.component.html',
+    styleUrl: './registro-proveedor.component.scss'
 })
 export class RegistroProveedorComponent implements OnInit, CanComponentDeactive {
   private idProveedor!: number;

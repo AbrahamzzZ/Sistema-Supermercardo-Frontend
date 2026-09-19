@@ -15,13 +15,12 @@ import { MatSelectChange } from '@angular/material/select';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-  selector: 'app-usuario',
-  standalone: true,
-  imports: [
-    MaterialModule
-  ],
-  templateUrl: './registro-usuario.component.html',
-  styleUrl: './registro-usuario.component.scss'
+    selector: 'app-usuario',
+    imports: [
+        MaterialModule
+    ],
+    templateUrl: './registro-usuario.component.html',
+    styleUrl: './registro-usuario.component.scss'
 })
 export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive {
   private idUsuario!: number;

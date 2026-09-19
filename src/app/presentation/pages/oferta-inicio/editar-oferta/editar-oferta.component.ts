@@ -12,13 +12,12 @@ import { IOferta } from '../../../../core/interfaces/oferta';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-  selector: 'app-editar-oferta',
-  standalone: true,
-  imports: [
-    MaterialModule
-  ],
-  templateUrl: './editar-oferta.component.html',
-  styleUrl: './editar-oferta.component.scss'
+    selector: 'app-editar-oferta',
+    imports: [
+        MaterialModule
+    ],
+    templateUrl: './editar-oferta.component.html',
+    styleUrl: './editar-oferta.component.scss'
 })
 export class EditarOfertaComponent implements OnInit {
   idOferta!: number;

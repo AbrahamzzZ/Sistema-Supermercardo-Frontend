@@ -5,11 +5,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-modal-inactividad',
-  standalone: true,
-  imports: [MatButtonModule, MatIcon],
-  templateUrl: './modal-inactividad.component.html',
-  styleUrl: './modal-inactividad.component.scss'
+    selector: 'app-modal-inactividad',
+    imports: [MatButtonModule, MatIcon],
+    templateUrl: './modal-inactividad.component.html',
+    styleUrl: './modal-inactividad.component.scss'
 })
 export class ModalInactividadComponent {
   private servicio = inject(LoginService);

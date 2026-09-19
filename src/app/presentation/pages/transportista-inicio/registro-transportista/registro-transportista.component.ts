@@ -13,14 +13,13 @@ import { CanComponentDeactive } from '../../../../core/guards/formulario-incompl
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-  selector: 'app-transportista',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    NgIf
-  ],
-  templateUrl: './registro-transportista.component.html',
-  styleUrl: './registro-transportista.component.scss'
+    selector: 'app-transportista',
+    imports: [
+        MaterialModule,
+        NgIf
+    ],
+    templateUrl: './registro-transportista.component.html',
+    styleUrl: './registro-transportista.component.scss'
 })
 export class RegistroTransportistaComponent implements OnInit, CanComponentDeactive {
   private idTransportista!: number;

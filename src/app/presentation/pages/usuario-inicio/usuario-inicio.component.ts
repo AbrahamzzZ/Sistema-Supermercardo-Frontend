@@ -13,15 +13,14 @@ import { TableColumn } from '../../../shared/utility/components/tableColumn';
 import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 
 @Component({
-  selector: 'app-usuario-inicio',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    RouterOutlet,
-    DataTableComponent
-],
-  templateUrl: './usuario-inicio.component.html',
-  styleUrl: './usuario-inicio.component.scss'
+    selector: 'app-usuario-inicio',
+    imports: [
+        MaterialModule,
+        RouterOutlet,
+        DataTableComponent
+    ],
+    templateUrl: './usuario-inicio.component.html',
+    styleUrl: './usuario-inicio.component.scss'
 })
 export class UsuarioInicioComponent extends BaseListComponent<IUsuarioRol> {
   private readonly usuarioServicio = inject(UsuarioService);

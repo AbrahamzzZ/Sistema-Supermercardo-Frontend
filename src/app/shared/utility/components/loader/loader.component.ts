@@ -5,11 +5,10 @@ import { MaterialModule } from '../../../ui/material-module';
 
 
 @Component({
-  selector: 'app-loader',
-  standalone: true,
-  imports: [MaterialModule, NgIf],
-  templateUrl: './loader.component.html',
-  styleUrl: './loader.component.scss'
+    selector: 'app-loader',
+    imports: [MaterialModule, NgIf],
+    templateUrl: './loader.component.html',
+    styleUrl: './loader.component.scss'
 })
 export class LoaderComponent {
   private readonly loaderService = inject(LoaderService);

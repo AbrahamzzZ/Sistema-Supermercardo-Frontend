@@ -11,15 +11,14 @@ import { MatPaginator } from '@angular/material/paginator';
 import { NegocioService } from '../../../../core/services/negocio.service';
 
 @Component({
-  selector: 'app-detalle-venta',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    FormsModule,
-    CurrencyPipe
-  ],
-  templateUrl: './detalle-venta.component.html',
-  styleUrl: './detalle-venta.component.scss'
+    selector: 'app-detalle-venta',
+    imports: [
+        MaterialModule,
+        FormsModule,
+        CurrencyPipe
+    ],
+    templateUrl: './detalle-venta.component.html',
+    styleUrl: './detalle-venta.component.scss'
 })
 export class DetalleVentaComponent implements OnInit, AfterViewInit {
   public mensajeBusqueda = '';

@@ -4,11 +4,10 @@ import { IMenu } from '../../../../core/interfaces/menu';
 import { MaterialModule } from '../../../ui/material-module';
 
 @Component({
-  selector: 'app-sidnebar',
-  standalone: true,
-  imports: [MaterialModule, RouterLink],
-  templateUrl: './sidnebar.component.html',
-  styleUrl: './sidnebar.component.scss'
+    selector: 'app-sidnebar',
+    imports: [MaterialModule, RouterLink],
+    templateUrl: './sidnebar.component.html',
+    styleUrl: './sidnebar.component.scss'
 })
 export class SidnebarComponent {
   @Input() menus: IMenu[] = [];

@@ -8,14 +8,13 @@ import { Validaciones } from '../../../shared/utility/validaciones';
 import { MaterialModule } from '../../../shared/ui/material-module';
 
 @Component({
-  selector: 'app-negocio-inicio',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    FormsModule,
-  ],
-  templateUrl: './negocio-inicio.component.html',
-  styleUrl: './negocio-inicio.component.scss'
+    selector: 'app-negocio-inicio',
+    imports: [
+        MaterialModule,
+        FormsModule,
+    ],
+    templateUrl: './negocio-inicio.component.html',
+    styleUrl: './negocio-inicio.component.scss'
 })
 export class NegocioInicioComponent implements OnInit{
   public idNegocio = 1;

@@ -12,13 +12,12 @@ import { CanComponentDeactive } from '../../../../core/guards/formulario-incompl
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-  selector: 'app-registro-categoria',
-  standalone: true,
-  imports: [
-    MaterialModule
-  ],
-  templateUrl: './registro-categoria.component.html',
-  styleUrl: './registro-categoria.component.scss'
+    selector: 'app-registro-categoria',
+    imports: [
+        MaterialModule
+    ],
+    templateUrl: './registro-categoria.component.html',
+    styleUrl: './registro-categoria.component.scss'
 })
 export class RegistroCategoriaComponent implements OnInit, CanComponentDeactive {
   private idCategoria!: number;

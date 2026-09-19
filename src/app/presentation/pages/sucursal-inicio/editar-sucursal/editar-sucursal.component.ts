@@ -9,13 +9,12 @@ import { Validaciones } from '../../../../shared/utility/validaciones';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-  selector: 'app-editar-sucursal',
-  standalone: true,
-  imports: [
-    MaterialModule
-  ],
-  templateUrl: './editar-sucursal.component.html',
-  styleUrl: './editar-sucursal.component.scss'
+    selector: 'app-editar-sucursal',
+    imports: [
+        MaterialModule
+    ],
+    templateUrl: './editar-sucursal.component.html',
+    styleUrl: './editar-sucursal.component.scss'
 })
 export class EditarSucursalComponent implements OnInit {
   private readonly sucursalServicio = inject(SucursalService);

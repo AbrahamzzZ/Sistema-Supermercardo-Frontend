@@ -24,15 +24,14 @@ import { MaterialModule } from '../../../shared/ui/material-module';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-venta-inicio',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    FormsModule,
-    CurrencyPipe
-  ],
-  templateUrl: './venta-inicio.component.html',
-  styleUrl: './venta-inicio.component.scss'
+    selector: 'app-venta-inicio',
+    imports: [
+        MaterialModule,
+        FormsModule,
+        CurrencyPipe
+    ],
+    templateUrl: './venta-inicio.component.html',
+    styleUrl: './venta-inicio.component.scss'
 })
 export class VentaInicioComponent implements OnInit, AfterViewInit{
   private readonly router = inject(Router);

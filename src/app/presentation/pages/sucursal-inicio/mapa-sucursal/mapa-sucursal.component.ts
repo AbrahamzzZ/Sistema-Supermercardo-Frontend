@@ -15,11 +15,10 @@ L.Icon.Default.mergeOptions({
 });
 
 @Component({
-  selector: 'app-mapa-sucursal',
-  standalone: true,
-  imports: [MaterialModule, GoogleMapsModule, CommonModule],
-  templateUrl: './mapa-sucursal.component.html',
-  styleUrl: './mapa-sucursal.component.scss'
+    selector: 'app-mapa-sucursal',
+    imports: [MaterialModule, GoogleMapsModule, CommonModule],
+    templateUrl: './mapa-sucursal.component.html',
+    styleUrl: './mapa-sucursal.component.scss'
 })
 export class MapaSucursalComponent implements OnInit, AfterViewInit {
   private sucursalService = inject(SucursalService);

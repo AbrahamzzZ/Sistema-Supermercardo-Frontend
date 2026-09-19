@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, provideAppInitializer } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -9,23 +9,21 @@ import { LoaderInterceptor } from './core/interceptor/loader.interceptor';
 import { setOptions, importLibrary } from '@googlemaps/js-api-loader';
 import { environment as ENV } from '../../environments/environment';
 
-function loadGoogleMaps() {
-  return async () => {
-    if (!ENV.API_GOOGLE_MAPS) {
-      console.warn('Google Maps API Key no definida. Usando Leaflet.');
-      return;
-    }
+async function loadGoogleMaps() {
+  if (!ENV.API_GOOGLE_MAPS) {
+    console.warn('Google Maps API Key no definida. Usando Leaflet.');
+    return;
+  }
 
-    try {
-      setOptions({
-        key: ENV.API_GOOGLE_MAPS
-      });
+  try {
+    setOptions({
+      key: ENV.API_GOOGLE_MAPS
+    });
 
-      await importLibrary('maps');
-    } catch (error) {
-      console.warn('Google Maps no disponible. Fallback a Leaflet.', error);
-    }
-  };
+    await importLibrary('maps');
+  } catch (error) {
+    console.warn('Google Maps no disponible. Fallback a Leaflet.', error);
+  }
 }
 
 export const appConfig: ApplicationConfig = {
@@ -50,10 +48,6 @@ export const appConfig: ApplicationConfig = {
       multi: true
     },
 
-    {
-      provide: APP_INITIALIZER,
-      useFactory: loadGoogleMaps,
-      multi: true
-    }
+    provideAppInitializer(loadGoogleMaps)
   ]
 };

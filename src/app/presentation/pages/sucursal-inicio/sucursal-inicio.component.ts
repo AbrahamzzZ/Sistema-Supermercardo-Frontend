@@ -13,15 +13,14 @@ import { TableColumn } from '../../../shared/utility/components/tableColumn';
 import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 
 @Component({
-  selector: 'app-sucursal-inicio',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    RouterOutlet,
-    DataTableComponent
-],
-  templateUrl: './sucursal-inicio.component.html',
-  styleUrl: './sucursal-inicio.component.scss'
+    selector: 'app-sucursal-inicio',
+    imports: [
+        MaterialModule,
+        RouterOutlet,
+        DataTableComponent
+    ],
+    templateUrl: './sucursal-inicio.component.html',
+    styleUrl: './sucursal-inicio.component.scss'
 })
 export class SucursalInicioComponent extends BaseListComponent<ISucursalNegocio> {
   private readonly router = inject(Router);

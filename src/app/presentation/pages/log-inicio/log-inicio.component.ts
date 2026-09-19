@@ -12,11 +12,10 @@ import { TableColumn } from '../../../shared/utility/components/tableColumn';
 import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 
 @Component({
-  selector: 'app-log-inicio',
-  standalone: true,
-  imports: [MaterialModule, RouterOutlet, DataTableComponent],
-  templateUrl: './log-inicio.component.html',
-  styleUrl: './log-inicio.component.scss'
+    selector: 'app-log-inicio',
+    imports: [MaterialModule, RouterOutlet, DataTableComponent],
+    templateUrl: './log-inicio.component.html',
+    styleUrl: './log-inicio.component.scss'
 })
 export class LogInicioComponent extends BaseListComponent<ILog> {
   private readonly dialog = inject(MatDialog);

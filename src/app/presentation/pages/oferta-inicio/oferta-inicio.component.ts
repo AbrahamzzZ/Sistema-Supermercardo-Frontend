@@ -13,15 +13,14 @@ import { BaseListComponent } from '../../../shared/utility/components/baseListCo
 import { MaterialModule } from '../../../shared/ui/material-module';
 
 @Component({
-  selector: 'app-oferta-inicio',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    RouterOutlet,
-    DataTableComponent
-],
-  templateUrl: './oferta-inicio.component.html',
-  styleUrl: './oferta-inicio.component.scss'
+    selector: 'app-oferta-inicio',
+    imports: [
+        MaterialModule,
+        RouterOutlet,
+        DataTableComponent
+    ],
+    templateUrl: './oferta-inicio.component.html',
+    styleUrl: './oferta-inicio.component.scss'
 })
 export class OfertaInicioComponent extends BaseListComponent<IOfertaProducto> {
   private readonly ofertaServicio = inject(OfertaService);

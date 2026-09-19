@@ -12,15 +12,14 @@ import { TableColumn } from '../../../shared/utility/components/tableColumn';
 import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 
 @Component({
-  selector: 'app-transportista-inicio',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    RouterOutlet,
-    DataTableComponent
-],
-  templateUrl: './transportista-inicio.component.html',
-  styleUrl: './transportista-inicio.component.scss'
+    selector: 'app-transportista-inicio',
+    imports: [
+        MaterialModule,
+        RouterOutlet,
+        DataTableComponent
+    ],
+    templateUrl: './transportista-inicio.component.html',
+    styleUrl: './transportista-inicio.component.scss'
 })
 export class TransportistaInicioComponent extends BaseListComponent<ITransportista> {
   private readonly router = inject(Router);

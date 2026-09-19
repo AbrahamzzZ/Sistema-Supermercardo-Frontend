@@ -8,13 +8,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-  selector: 'app-editar-cliente',
-  standalone: true,
-  imports: [
-    MaterialModule
-  ],
-  templateUrl: './editar-cliente.component.html',
-  styleUrl: './editar-cliente.component.scss'
+    selector: 'app-editar-cliente',
+    imports: [
+        MaterialModule
+    ],
+    templateUrl: './editar-cliente.component.html',
+    styleUrl: './editar-cliente.component.scss'
 })
 export class EditarClienteComponent implements OnInit {
   private clienteServicio = inject(ClienteService);
