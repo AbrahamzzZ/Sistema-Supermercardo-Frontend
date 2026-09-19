@@ -4,58 +4,56 @@
       <mat-card-title class="container__title"> {{ verIA ? 'Asistente Inteligente' : 'Estadísticas del Negocio' }} </mat-card-title>
     </mat-card-header>
 
-      <ng-container *ngIf="!verIA; else iaTemplate">
-        <mat-card-content class="container__contenido">
-          <div class="container__botones-acciones">
-            <button mat-raised-button color="primary" (click)="descargarPDF()">
-              Exportar gráfico a PDF
-              <mat-icon>picture_as_pdf</mat-icon>
-            </button>
-            <button mat-raised-button color="accent" (click)="resumenIA()">
-              Ver resumen con la IA
-              <mat-icon>flare</mat-icon>
-            </button>
-          </div>
-          <div class="container__grafico-contenedor">
-            <canvas
-              baseChart
-              class="container__canvas"
-              [data]="chartData"
-              [type]="chartType"
-              [options]="chartOptions"
-              [plugins]="chartPlugins"
+    @if (!verIA) {
+      <mat-card-content class="container__contenido">
+        <div class="container__botones-acciones">
+          <button mat-raised-button color="primary" (click)="descargarPDF()">
+            Exportar gráfico a PDF
+            <mat-icon>picture_as_pdf</mat-icon>
+          </button>
+          <button mat-raised-button color="accent" (click)="resumenIA()">
+            Ver resumen con la IA
+            <mat-icon>flare</mat-icon>
+          </button>
+        </div>
+        <div class="container__grafico-contenedor">
+          <canvas
+            baseChart
+            class="container__canvas"
+            [data]="chartData"
+            [type]="chartType"
+            [options]="chartOptions"
+            [plugins]="chartPlugins"
             >
-            </canvas>
-          </div>
-        </mat-card-content>
+          </canvas>
+        </div>
+      </mat-card-content>
+      <mat-card-actions class="container__acciones">
+        <div class="container__botones">
+          <button mat-raised-button color="primary" (click)="verEstadisticas1()">
+            Productos más comprados
+          </button>
+          <button mat-raised-button color="accent" (click)="verEstadisticas2()">
+            Productos más vendidos
+          </button>
+          <button mat-raised-button color="warn" (click)="verEstadisticas3()">
+            Empleados más productivos
+          </button>
+          <button mat-raised-button color="primary" (click)="verEstadisticas4()">
+            Clientes frecuentes
+          </button>
+          <button mat-raised-button color="accent" (click)="verEstadisticas5()">
+            Proveedores preferidos
+          </button>
+          <button mat-raised-button color="warn" (click)="verEstadisticas6()">
+            Viajes transportistas
+          </button>
+        </div>
+      </mat-card-actions>
+    } @else {
+      <app-ia-chat (cerrarIA)="volverEstadisticas()"></app-ia-chat>
+    }
 
-        <mat-card-actions class="container__acciones">
-          <div class="container__botones">
-            <button mat-raised-button color="primary" (click)="verEstadisticas1()">
-              Productos más comprados
-            </button>
-            <button mat-raised-button color="accent" (click)="verEstadisticas2()">
-              Productos más vendidos
-            </button>
-            <button mat-raised-button color="warn" (click)="verEstadisticas3()">
-              Empleados más productivos
-            </button>
-            <button mat-raised-button color="primary" (click)="verEstadisticas4()">
-              Clientes frecuentes
-            </button>
-            <button mat-raised-button color="accent" (click)="verEstadisticas5()">
-              Proveedores preferidos
-            </button>
-            <button mat-raised-button color="warn" (click)="verEstadisticas6()">
-              Viajes transportistas
-            </button>
-          </div>
-        </mat-card-actions>
-      </ng-container>
-
-      <ng-template #iaTemplate>
-        <app-ia-chat (cerrarIA)="volverEstadisticas()"></app-ia-chat>
-      </ng-template>
 
   </mat-card>
 </div>

@@ -9,45 +9,45 @@
         width="100%"
         [center]="center"
         [zoom]="zoom"
-      >
-        <map-marker
-          *ngFor="let marker of markers"
-          #markerRef="mapMarker"
-          [position]="marker.position"
-          [title]="marker.title"
-          (mapClick)="abrirInfoWindow(marker, markerRef)"
         >
-        </map-marker>
+        @for (marker of markers; track marker) {
+          <map-marker
+            #markerRef="mapMarker"
+            [position]="marker.position"
+            [title]="marker.title"
+            (mapClick)="abrirInfoWindow(marker, markerRef)"
+            >
+          </map-marker>
+        }
 
         <map-info-window #infoWindow>
-          <div class="info-window" *ngIf="infoWindowData">
-            <h3 class="info-window__title">
-              {{ infoWindowData['nombre_Sucursal'] }}
-            </h3>
-
-            <div class="info-window__item">
-              <strong>Dirección:</strong>
-              <span>{{ infoWindowData['direccion_Sucursal'] }}</span>
-            </div>
-
-            <div class="info-window__item">
-              <strong>Ciudad:</strong>
-              <span>{{ infoWindowData['ciudad_Sucursal'] }}</span>
-            </div>
-
-            <div class="info-window__item">
-              <strong>Estado:</strong>
-              <span
+          @if (infoWindowData) {
+            <div class="info-window">
+              <h3 class="info-window__title">
+                {{ infoWindowData['nombre_Sucursal'] }}
+              </h3>
+              <div class="info-window__item">
+                <strong>Dirección:</strong>
+                <span>{{ infoWindowData['direccion_Sucursal'] }}</span>
+              </div>
+              <div class="info-window__item">
+                <strong>Ciudad:</strong>
+                <span>{{ infoWindowData['ciudad_Sucursal'] }}</span>
+              </div>
+              <div class="info-window__item">
+                <strong>Estado:</strong>
+                <span
                 [ngClass]="
                   infoWindowData['estado']
                     ? 'info-window__activo'
                     : 'info-window__inactivo'
                 "
-              >
-                {{ infoWindowData['estado'] ? 'Activo' : 'Inactivo' }}
-              </span>
+                  >
+                  {{ infoWindowData['estado'] ? 'Activo' : 'Inactivo' }}
+                </span>
+              </div>
             </div>
-          </div>
+          }
         </map-info-window>
       </google-map>
     </div>

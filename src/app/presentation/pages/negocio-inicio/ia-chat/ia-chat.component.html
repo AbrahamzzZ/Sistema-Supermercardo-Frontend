@@ -1,28 +1,30 @@
 <div class="ia-card">
   <div >
-		<button mat-button color="warn" (click)="volver()">
-			<mat-icon>keyboard_backspace</mat-icon> Volver
-		</button>
-	</div>
-    <mat-form-field appearance="outline" class="ia-input">
-      <mat-label>Escribe tu pregunta</mat-label>
-      <textarea
-        matInput
-        rows="4"
-        [(ngModel)]="prompt"
-      ></textarea>
-    </mat-form-field>
-
-    <button 
-      mat-raised-button 
-      color="primary"
-      (click)="generar()"
-      [disabled]="loading || !prompt">
-      {{ loading ? 'Generando...' : 'Generar Respuesta' }}
+    <button mat-button color="warn" (click)="volver()">
+      <mat-icon>keyboard_backspace</mat-icon> Volver
     </button>
+  </div>
+  <mat-form-field appearance="outline" class="ia-input">
+    <mat-label>Escribe tu pregunta</mat-label>
+    <textarea
+      matInput
+      rows="4"
+      [(ngModel)]="prompt"
+    ></textarea>
+  </mat-form-field>
 
-    <div class="ia-respuesta" *ngIf="respuesta">
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="generar()"
+    [disabled]="loading || !prompt">
+    {{ loading ? 'Generando...' : 'Generar Respuesta' }}
+  </button>
+
+  @if (respuesta) {
+    <div class="ia-respuesta">
       <h4>Respuesta:</h4>
       <p>{{ respuesta }}</p>
     </div>
+  }
 </div>
