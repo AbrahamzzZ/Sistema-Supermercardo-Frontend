@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --serve-path /MinimarketEase",
-    "build": "ng build --base-href /MinimarketEase/",
+    "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "format": "prettier --write \"src/**/*.{ts,html,scss,css,json,md}\"",
