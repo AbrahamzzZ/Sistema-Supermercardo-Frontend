@@ -12,17 +12,17 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^17.3.0",
-    "@angular/cdk": "^17.3.10",
-    "@angular/common": "^17.3.0",
-    "@angular/compiler": "^17.3.0",
-    "@angular/core": "^17.3.0",
-    "@angular/forms": "^17.3.0",
-    "@angular/google-maps": "^17.3.10",
-    "@angular/material": "^17.3.10",
-    "@angular/platform-browser": "^17.3.0",
-    "@angular/platform-browser-dynamic": "^17.3.0",
-    "@angular/router": "^17.3.0",
+    "@angular/animations": "^21.2.23",
+    "@angular/cdk": "^21.2.14",
+    "@angular/common": "^21.2.23",
+    "@angular/compiler": "^21.2.23",
+    "@angular/core": "^21.2.23",
+    "@angular/forms": "^21.2.23",
+    "@angular/google-maps": "^20.2.14",
+    "@angular/material": "^21.2.14",
+    "@angular/platform-browser": "^21.2.23",
+    "@angular/platform-browser-dynamic": "^21.2.23",
+    "@angular/router": "^21.2.23",
     "@googlemaps/js-api-loader": "^2.0.2",
     "chart.js": "^4.4.3",
     "file-saver": "^2.0.5",
@@ -35,12 +35,12 @@
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "xlsx": "^0.18.5",
-    "zone.js": "~0.14.3"
+    "zone.js": "~0.15.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^17.3.11",
-    "@angular/cli": "^17.3.11",
-    "@angular/compiler-cli": "^17.3.0",
+    "@angular/build": "^21.2.24",
+    "@angular/cli": "^21.2.24",
+    "@angular/compiler-cli": "^21.2.23",
     "@types/file-saver": "^2.0.7",
     "@types/jasmine": "~5.1.0",
     "@types/leaflet": "^1.9.18",
@@ -53,7 +53,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "prettier": "^3.5.3",
-    "typescript": "~5.4.2",
-    "typescript-eslint": "8.34.1"
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.70.0"
   }
 }

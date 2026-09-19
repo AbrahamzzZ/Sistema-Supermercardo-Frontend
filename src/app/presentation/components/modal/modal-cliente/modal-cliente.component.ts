@@ -8,14 +8,13 @@ import { DataTableComponent } from '../../../../shared/utility/components/data-t
 import { TableColumn } from '../../../../shared/utility/components/tableColumn';
 
 @Component({
-  selector: 'app-modal-cliente',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    DataTableComponent
-  ],
-  templateUrl: './modal-cliente.component.html',
-  styleUrl: './modal-cliente.component.scss'
+    selector: 'app-modal-cliente',
+    imports: [
+        MaterialModule,
+        DataTableComponent
+    ],
+    templateUrl: './modal-cliente.component.html',
+    styleUrl: './modal-cliente.component.scss'
 })
 export class ModalClienteComponent {
   private readonly clienteService = inject(ClienteService);

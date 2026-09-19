@@ -15,13 +15,12 @@ import { MatSelectChange } from '@angular/material/select';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-  selector: 'app-producto',
-  standalone: true,
-  imports: [
-    MaterialModule
-  ],
-  templateUrl: './registro-producto.component.html',
-  styleUrl: './registro-producto.component.scss'
+    selector: 'app-producto',
+    imports: [
+        MaterialModule
+    ],
+    templateUrl: './registro-producto.component.html',
+    styleUrl: './registro-producto.component.scss'
 })
 export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
   private idProducto!: number;

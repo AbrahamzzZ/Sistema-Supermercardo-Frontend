@@ -9,11 +9,10 @@ import { MaterialModule } from '../../../../shared/ui/material-module';
 import { IaChatComponent } from "../ia-chat/ia-chat.component";
 
 @Component({
-  selector: 'app-estadistica-negocio',
-  standalone: true,
-  imports: [MaterialModule, NgChartsModule, IaChatComponent],
-  templateUrl: './estadistica-negocio.component.html',
-  styleUrl: './estadistica-negocio.component.scss'
+    selector: 'app-estadistica-negocio',
+    imports: [MaterialModule, NgChartsModule, IaChatComponent],
+    templateUrl: './estadistica-negocio.component.html',
+    styleUrl: './estadistica-negocio.component.scss'
 })
 export class EstadisticaNegocioComponent {
   private readonly negocioService = inject(NegocioService);

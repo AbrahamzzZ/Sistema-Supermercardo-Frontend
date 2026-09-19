@@ -10,11 +10,10 @@ import { MaterialModule } from '../../../shared/ui/material-module';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-inicio',
-  standalone: true,
-  imports: [MaterialModule, FormatoFechaPipe],
-  templateUrl: './inicio.component.html',
-  styleUrls: ['./inicio.component.scss']
+    selector: 'app-inicio',
+    imports: [MaterialModule, FormatoFechaPipe],
+    templateUrl: './inicio.component.html',
+    styleUrls: ['./inicio.component.scss']
 })
 export class InicioComponent implements OnInit, OnDestroy {
   private readonly snackBar = inject(MatSnackBar);

@@ -9,13 +9,12 @@ import { Metodos } from '../../../../shared/utility/metodos';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-  selector: 'app-editar-transportista',
-  standalone: true,
-  imports: [
-    MaterialModule
-  ],
-  templateUrl: './editar-transportista.component.html',
-  styleUrl: './editar-transportista.component.scss'
+    selector: 'app-editar-transportista',
+    imports: [
+        MaterialModule
+    ],
+    templateUrl: './editar-transportista.component.html',
+    styleUrl: './editar-transportista.component.scss'
 })
 export class EditarTransportistaComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);

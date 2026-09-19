@@ -12,15 +12,14 @@ import { TableColumn } from '../../../shared/utility/components/tableColumn';
 import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 
 @Component({
-  selector: 'app-categoria-inicio',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    RouterOutlet,
-    DataTableComponent
-],
-  templateUrl: './categoria-inicio.component.html',
-  styleUrl: './categoria-inicio.component.scss'
+    selector: 'app-categoria-inicio',
+    imports: [
+        MaterialModule,
+        RouterOutlet,
+        DataTableComponent
+    ],
+    templateUrl: './categoria-inicio.component.html',
+    styleUrl: './categoria-inicio.component.scss'
 })
 export class CategoriaInicioComponent extends BaseListComponent<ICategoria> {
   private readonly router = inject(Router);

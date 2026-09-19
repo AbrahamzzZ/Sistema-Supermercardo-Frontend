@@ -8,11 +8,10 @@ import { MenuService } from '../../../../core/services/menu.service';
 import { SidnebarComponent } from '../../../../shared/utility/components/sidnebar/sidnebar.component';
 
 @Component({
-  selector: 'app-main-layout',
-  standalone: true,
-  imports: [SidnebarComponent, MaterialModule, RouterOutlet],
-  templateUrl: './main-layout.component.html',
-  styleUrl: './main-layout.component.scss'
+    selector: 'app-main-layout',
+    imports: [SidnebarComponent, MaterialModule, RouterOutlet],
+    templateUrl: './main-layout.component.html',
+    styleUrl: './main-layout.component.scss'
 })
 export class MainLayoutComponent implements OnInit{
   @ViewChild('sidenav') sidenav!: MatSidenav;

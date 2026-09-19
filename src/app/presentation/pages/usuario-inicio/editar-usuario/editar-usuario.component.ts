@@ -11,13 +11,12 @@ import { MatSelectChange } from '@angular/material/select';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-  selector: 'app-editar-usuario',
-  standalone: true,
-  imports: [
-    MaterialModule
-  ],
-  templateUrl: './editar-usuario.component.html',
-  styleUrl: './editar-usuario.component.scss'
+    selector: 'app-editar-usuario',
+    imports: [
+        MaterialModule
+    ],
+    templateUrl: './editar-usuario.component.html',
+    styleUrl: './editar-usuario.component.scss'
 })
 export class EditarUsuarioComponent implements OnInit {
   private readonly usuarioServicio = inject(UsuarioService);

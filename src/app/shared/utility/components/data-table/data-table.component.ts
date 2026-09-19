@@ -5,11 +5,10 @@ import { TableColumn } from '../tableColumn';
 import { MaterialModule } from '../../../ui/material-module';
 
 @Component({
-  selector: 'app-data-table',
-  standalone: true,
-  imports: [MaterialModule],
-  templateUrl: './data-table.component.html',
-  styleUrl: './data-table.component.scss'
+    selector: 'app-data-table',
+    imports: [MaterialModule],
+    templateUrl: './data-table.component.html',
+    styleUrl: './data-table.component.scss'
 })
 export class DataTableComponent {
   @Input() dataSource = new MatTableDataSource<any>();

@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $primary-color: #333;
 $warning-color: #d32f2f;
 $warning-hover: #b71c1c;
@@ -21,7 +23,7 @@ $transition: all 0.3s ease;
   cursor: pointer;
 
   &:hover {
-    background-color: darken($bg-color, 10%);
+    background-color: color.adjust($bg-color, $lightness: -10%);
   }
 }
 
@@ -61,7 +63,7 @@ $transition: all 0.3s ease;
       cursor: pointer;
 
       &:hover {
-        background-color: lighten($cancel-color, 40%);
+        background-color: color.adjust($cancel-color, $lightness: 40%);
       }
     }
 

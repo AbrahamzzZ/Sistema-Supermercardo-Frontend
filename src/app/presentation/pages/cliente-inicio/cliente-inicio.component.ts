@@ -12,15 +12,14 @@ import { DataTableComponent } from "../../../shared/utility/components/data-tabl
 import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 
 @Component({
-  selector: 'app-cliente-inicio',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    RouterOutlet,
-    DataTableComponent
-],
-  templateUrl: './cliente-inicio.component.html',
-  styleUrl: './cliente-inicio.component.scss'
+    selector: 'app-cliente-inicio',
+    imports: [
+        MaterialModule,
+        RouterOutlet,
+        DataTableComponent
+    ],
+    templateUrl: './cliente-inicio.component.html',
+    styleUrl: './cliente-inicio.component.scss'
 })
 export class ClienteInicioComponent extends BaseListComponent<ICliente> {
   private readonly router = inject(Router);

@@ -14,13 +14,12 @@ import { NegocioService } from '../../../../core/services/negocio.service';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-  selector: 'app-registrar-sucursal',
-  standalone: true,
-  imports: [
-    MaterialModule
-  ],
-  templateUrl: './registrar-sucursal.component.html',
-  styleUrl: './registrar-sucursal.component.scss'
+    selector: 'app-registrar-sucursal',
+    imports: [
+        MaterialModule
+    ],
+    templateUrl: './registrar-sucursal.component.html',
+    styleUrl: './registrar-sucursal.component.scss'
 })
 export class RegistrarSucursalComponent implements OnInit, CanComponentDeactive {
   private idSucursal!: number;

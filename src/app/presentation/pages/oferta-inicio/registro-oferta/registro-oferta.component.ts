@@ -15,13 +15,12 @@ import { CanComponentDeactive } from '../../../../core/guards/formulario-incompl
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-  selector: 'app-registro-oferta',
-  standalone: true,
-  imports: [
-    MaterialModule
-  ],
-  templateUrl: './registro-oferta.component.html',
-  styleUrl: './registro-oferta.component.scss'
+    selector: 'app-registro-oferta',
+    imports: [
+        MaterialModule
+    ],
+    templateUrl: './registro-oferta.component.html',
+    styleUrl: './registro-oferta.component.scss'
 })
 export class RegistroOfertaComponent implements OnInit, CanComponentDeactive {
   private idOferta!: number;

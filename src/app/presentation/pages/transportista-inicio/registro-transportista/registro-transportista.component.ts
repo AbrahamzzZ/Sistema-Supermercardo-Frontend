@@ -1,7 +1,7 @@
 import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Validaciones } from '../../../../shared/utility/validaciones';
-import { NgIf } from '@angular/common';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ITransportista } from '../../../../core/interfaces/transportista';
@@ -13,14 +13,12 @@ import { CanComponentDeactive } from '../../../../core/guards/formulario-incompl
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-  selector: 'app-transportista',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    NgIf
-  ],
-  templateUrl: './registro-transportista.component.html',
-  styleUrl: './registro-transportista.component.scss'
+    selector: 'app-transportista',
+    imports: [
+    MaterialModule
+],
+    templateUrl: './registro-transportista.component.html',
+    styleUrl: './registro-transportista.component.scss'
 })
 export class RegistroTransportistaComponent implements OnInit, CanComponentDeactive {
   private idTransportista!: number;

@@ -8,14 +8,13 @@ import { DataTableComponent } from '../../../../shared/utility/components/data-t
 import { TableColumn } from '../../../../shared/utility/components/tableColumn';
 
 @Component({
-  selector: 'app-modal-transportista',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    DataTableComponent
-  ],
-  templateUrl: './modal-transportista.component.html',
-  styleUrl: './modal-transportista.component.scss'
+    selector: 'app-modal-transportista',
+    imports: [
+        MaterialModule,
+        DataTableComponent
+    ],
+    templateUrl: './modal-transportista.component.html',
+    styleUrl: './modal-transportista.component.scss'
 })
 export class ModalTransportistaComponent {
   private readonly transportistaService = inject(TransportistaService);

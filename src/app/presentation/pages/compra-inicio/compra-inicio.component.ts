@@ -21,14 +21,13 @@ import { MaterialModule } from '../../../shared/ui/material-module';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-compra-inicio',
-  standalone: true,
-  imports: [
-    MaterialModule,
-    FormsModule,
-  ],
-  templateUrl: './compra-inicio.component.html',
-  styleUrl: './compra-inicio.component.scss'
+    selector: 'app-compra-inicio',
+    imports: [
+        MaterialModule,
+        FormsModule,
+    ],
+    templateUrl: './compra-inicio.component.html',
+    styleUrl: './compra-inicio.component.scss'
 })
 export class CompraInicioComponent implements OnInit, AfterViewInit {
   private readonly servicioCompra = inject(CompraService);

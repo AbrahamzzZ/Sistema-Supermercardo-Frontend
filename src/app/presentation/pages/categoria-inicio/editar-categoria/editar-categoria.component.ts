@@ -8,13 +8,12 @@ import { ICategoria } from '../../../../core/interfaces/categoria';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-  selector: 'app-editar-categoria',
-  standalone: true,
-  imports: [
-    MaterialModule
-  ],
-  templateUrl: './editar-categoria.component.html',
-  styleUrl: './editar-categoria.component.scss'
+    selector: 'app-editar-categoria',
+    imports: [
+        MaterialModule
+    ],
+    templateUrl: './editar-categoria.component.html',
+    styleUrl: './editar-categoria.component.scss'
 })
 export class EditarCategoriaComponent implements OnInit {
   private categoriaServicio = inject(CategoriaService);

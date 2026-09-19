@@ -11,13 +11,12 @@ import { ICategoria } from '../../../../core/interfaces/categoria';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-  selector: 'app-producto-editar',
-  standalone: true,
-  imports: [
-    MaterialModule
-  ],
-  templateUrl: './producto-editar.component.html',
-  styleUrl: './producto-editar.component.scss'
+    selector: 'app-producto-editar',
+    imports: [
+        MaterialModule
+    ],
+    templateUrl: './producto-editar.component.html',
+    styleUrl: './producto-editar.component.scss'
 })
 export class ProductoEditarComponent implements OnInit {
   private productoServicio = inject(ProductoService);

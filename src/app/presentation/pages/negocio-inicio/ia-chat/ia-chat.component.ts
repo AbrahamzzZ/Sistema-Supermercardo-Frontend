@@ -4,11 +4,10 @@ import { NegocioService } from '../../../../core/services/negocio.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-ia-chat',
-  standalone: true,
-  imports: [MaterialModule, FormsModule],
-  templateUrl: './ia-chat.component.html',
-  styleUrl: './ia-chat.component.scss'
+    selector: 'app-ia-chat',
+    imports: [MaterialModule, FormsModule],
+    templateUrl: './ia-chat.component.html',
+    styleUrl: './ia-chat.component.scss'
 })
 export class IaChatComponent {
   prompt = '';

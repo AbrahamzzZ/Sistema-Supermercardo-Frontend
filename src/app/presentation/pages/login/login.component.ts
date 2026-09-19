@@ -7,13 +7,12 @@ import { LoginService } from '../../../core/services/login.service';
 import { MaterialModule } from '../../../shared/ui/material-module';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [
-    MaterialModule
-  ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+    selector: 'app-login',
+    imports: [
+        MaterialModule
+    ],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
   public hide = true;
