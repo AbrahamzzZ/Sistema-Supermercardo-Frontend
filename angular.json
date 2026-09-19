@@ -57,6 +57,13 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "testing": {
+              "aot": false,
+              "optimization": false,
+              "extractLicenses": false,
+              "styles": ["@angular/material/prebuilt-themes/indigo-pink.css", "src/styles.scss"],
+              "polyfills": ["zone.js", "zone.js/testing"]
             }
           },
           "defaultConfiguration": "production"
@@ -80,14 +87,11 @@
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["@angular/material/prebuilt-themes/indigo-pink.css", "src/styles.scss"],
-            "scripts": []
+            "buildTarget": ":build:testing",
+            "runner": "vitest"
           }
         },
         "lint": {

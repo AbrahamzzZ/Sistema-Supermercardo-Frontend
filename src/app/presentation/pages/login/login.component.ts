@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -7,20 +7,19 @@ import { LoginService } from '../../../core/services/login.service';
 import { MaterialModule } from '../../../shared/ui/material-module';
 
 @Component({
-    selector: 'app-login',
-    imports: [
-        MaterialModule
-    ],
-    templateUrl: './login.component.html',
-    styleUrl: './login.component.scss'
+  selector: 'app-login',
+  imports: [MaterialModule],
+  templateUrl: './login.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
   public hide = true;
   private readonly loginServicio = inject(LoginService);
   public loginForm!: FormGroup;
   private readonly snackBar = inject(MatSnackBar);
-  private readonly router = inject(Router)
-  private readonly route = inject(ActivatedRoute)
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -39,7 +38,6 @@ export class LoginComponent implements OnInit {
           this.mostrarMensaje('La sesión fue cerrada exitosamente', 'logout');
         }
 
-        
         sessionStorage.setItem('logout-message-shown', 'true');
         this.router.navigate([], {
           relativeTo: this.route,
@@ -83,7 +81,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  mostrarMensaje(mensaje: string,  tipo: 'success' | 'error' | 'logout' | 'inactivity' = 'success') {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' | 'logout' | 'inactivity' = 'success') {
     let className: string;
     let textoAccion: string;
 

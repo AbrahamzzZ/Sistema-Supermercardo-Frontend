@@ -2,7 +2,12 @@ import { ApplicationConfig, provideAppInitializer } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  provideHttpClient,
+  withInterceptorsFromDi,
+  withXhr
+} from '@angular/common/http';
 import { AuthInterceptor } from './core/interceptor/auth.interceptor';
 import { ErrorInterceptor } from './core/interceptor/error.interceptor';
 import { LoaderInterceptor } from './core/interceptor/loader.interceptor';
@@ -30,7 +35,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideAnimationsAsync(),
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withXhr(), withInterceptorsFromDi()),
 
     {
       provide: HTTP_INTERCEPTORS,

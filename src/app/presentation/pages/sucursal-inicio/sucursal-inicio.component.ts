@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { SucursalService } from '../../../core/services/sucursal.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterOutlet } from '@angular/router';
@@ -8,19 +8,16 @@ import { Metodos } from '../../../shared/utility/metodos';
 import { ISucursalNegocio } from '../../../core/interfaces/Dto/sucursal-negocio';
 import { ISucursal } from '../../../core/interfaces/sucursal';
 import { MaterialModule } from '../../../shared/ui/material-module';
-import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
+import { DataTableComponent } from '../../../shared/utility/components/data-table/data-table.component';
 import { TableColumn } from '../../../shared/utility/components/tableColumn';
 import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 
 @Component({
-    selector: 'app-sucursal-inicio',
-    imports: [
-        MaterialModule,
-        RouterOutlet,
-        DataTableComponent
-    ],
-    templateUrl: './sucursal-inicio.component.html',
-    styleUrl: './sucursal-inicio.component.scss'
+  selector: 'app-sucursal-inicio',
+  imports: [MaterialModule, RouterOutlet, DataTableComponent],
+  templateUrl: './sucursal-inicio.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './sucursal-inicio.component.scss'
 })
 export class SucursalInicioComponent extends BaseListComponent<ISucursalNegocio> {
   private readonly router = inject(Router);
@@ -30,15 +27,15 @@ export class SucursalInicioComponent extends BaseListComponent<ISucursalNegocio>
   readonly tituloExcel = 'Sucursales';
 
   columns: TableColumn[] = [
-    {key: 'id_Sucursal', label: 'No.', type: 'text'},
-    {key: 'codigo', label: 'Código', type: 'text'},
-    {key: 'nombre_Sucursal', label: 'Nombre', type: 'text'},
-    {key: 'direccion_Sucursal', label: 'Dirección', type: 'text'},
-    {key: 'latitud', label: 'Latitud', type: 'text'},
-    {key: 'longitud', label: 'Longitud', type: 'text'},
-    {key: 'ciudad_Sucursal', label: 'Ciudad', type: 'text'},
-    {key: 'estado', label: 'Estado', type: 'status'},
-    {key: 'accion', label: 'Acción', type: 'actions'}
+    { key: 'id_Sucursal', label: 'No.', type: 'text' },
+    { key: 'codigo', label: 'Código', type: 'text' },
+    { key: 'nombre_Sucursal', label: 'Nombre', type: 'text' },
+    { key: 'direccion_Sucursal', label: 'Dirección', type: 'text' },
+    { key: 'latitud', label: 'Latitud', type: 'text' },
+    { key: 'longitud', label: 'Longitud', type: 'text' },
+    { key: 'ciudad_Sucursal', label: 'Ciudad', type: 'text' },
+    { key: 'estado', label: 'Estado', type: 'status' },
+    { key: 'accion', label: 'Acción', type: 'actions' }
   ];
 
   override obtenerDatos(pageNumber: number, pageSize: number, filtro: string): void {

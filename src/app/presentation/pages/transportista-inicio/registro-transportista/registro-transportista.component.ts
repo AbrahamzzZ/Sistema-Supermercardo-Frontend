@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Validaciones } from '../../../../shared/utility/validaciones';
 
@@ -13,12 +13,11 @@ import { CanComponentDeactive } from '../../../../core/guards/formulario-incompl
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-    selector: 'app-transportista',
-    imports: [
-    MaterialModule
-],
-    templateUrl: './registro-transportista.component.html',
-    styleUrl: './registro-transportista.component.scss'
+  selector: 'app-transportista',
+  imports: [MaterialModule],
+  templateUrl: './registro-transportista.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './registro-transportista.component.scss'
 })
 export class RegistroTransportistaComponent implements OnInit, CanComponentDeactive {
   private idTransportista!: number;

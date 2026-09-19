@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { NegocioService } from '../../../../core/services/negocio.service';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration, ChartType } from 'chart.js';
@@ -6,13 +6,14 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MaterialModule } from '../../../../shared/ui/material-module';
-import { IaChatComponent } from "../ia-chat/ia-chat.component";
+import { IaChatComponent } from '../ia-chat/ia-chat.component';
 
 @Component({
-    selector: 'app-estadistica-negocio',
-    imports: [MaterialModule, NgChartsModule, IaChatComponent],
-    templateUrl: './estadistica-negocio.component.html',
-    styleUrl: './estadistica-negocio.component.scss'
+  selector: 'app-estadistica-negocio',
+  imports: [MaterialModule, NgChartsModule, IaChatComponent],
+  templateUrl: './estadistica-negocio.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './estadistica-negocio.component.scss'
 })
 export class EstadisticaNegocioComponent {
   private readonly negocioService = inject(NegocioService);
@@ -176,8 +177,8 @@ export class EstadisticaNegocioComponent {
       this.chartData &&
       this.chartData.datasets &&
       this.chartData.datasets.length > 0 &&
-      this.chartData.datasets.some(dataset =>
-        Array.isArray(dataset.data) && dataset.data.length > 0
+      this.chartData.datasets.some(
+        (dataset) => Array.isArray(dataset.data) && dataset.data.length > 0
       );
 
     if (!tieneDatos) {
@@ -235,7 +236,7 @@ export class EstadisticaNegocioComponent {
   resumenIA() {
     this.verIA = true;
   }
-  
+
   volverEstadisticas() {
     this.verIA = false;
   }

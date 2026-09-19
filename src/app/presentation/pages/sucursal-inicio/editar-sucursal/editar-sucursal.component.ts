@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SucursalService } from '../../../../core/services/sucursal.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -9,12 +9,11 @@ import { Validaciones } from '../../../../shared/utility/validaciones';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-    selector: 'app-editar-sucursal',
-    imports: [
-        MaterialModule
-    ],
-    templateUrl: './editar-sucursal.component.html',
-    styleUrl: './editar-sucursal.component.scss'
+  selector: 'app-editar-sucursal',
+  imports: [MaterialModule],
+  templateUrl: './editar-sucursal.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './editar-sucursal.component.scss'
 })
 export class EditarSucursalComponent implements OnInit {
   private readonly sucursalServicio = inject(SucursalService);

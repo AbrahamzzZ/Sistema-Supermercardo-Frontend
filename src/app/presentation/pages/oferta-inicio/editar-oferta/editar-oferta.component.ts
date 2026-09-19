@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,12 +12,11 @@ import { IOferta } from '../../../../core/interfaces/oferta';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-    selector: 'app-editar-oferta',
-    imports: [
-        MaterialModule
-    ],
-    templateUrl: './editar-oferta.component.html',
-    styleUrl: './editar-oferta.component.scss'
+  selector: 'app-editar-oferta',
+  imports: [MaterialModule],
+  templateUrl: './editar-oferta.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './editar-oferta.component.scss'
 })
 export class EditarOfertaComponent implements OnInit {
   idOferta!: number;

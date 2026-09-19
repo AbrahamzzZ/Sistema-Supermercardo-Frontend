@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoriaService } from '../../../../core/services/categoria.service';
@@ -12,12 +12,11 @@ import { CanComponentDeactive } from '../../../../core/guards/formulario-incompl
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-    selector: 'app-registro-categoria',
-    imports: [
-        MaterialModule
-    ],
-    templateUrl: './registro-categoria.component.html',
-    styleUrl: './registro-categoria.component.scss'
+  selector: 'app-registro-categoria',
+  imports: [MaterialModule],
+  templateUrl: './registro-categoria.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './registro-categoria.component.scss'
 })
 export class RegistroCategoriaComponent implements OnInit, CanComponentDeactive {
   private idCategoria!: number;

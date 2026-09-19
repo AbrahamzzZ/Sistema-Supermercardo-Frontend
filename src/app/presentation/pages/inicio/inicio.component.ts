@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription, interval } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IOfertaProducto } from '../../../core/interfaces/Dto/ioferta-producto';
@@ -10,10 +10,11 @@ import { MaterialModule } from '../../../shared/ui/material-module';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-inicio',
-    imports: [MaterialModule, FormatoFechaPipe],
-    templateUrl: './inicio.component.html',
-    styleUrls: ['./inicio.component.scss']
+  selector: 'app-inicio',
+  imports: [MaterialModule, FormatoFechaPipe],
+  templateUrl: './inicio.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrls: ['./inicio.component.scss']
 })
 export class InicioComponent implements OnInit, OnDestroy {
   private readonly snackBar = inject(MatSnackBar);
@@ -28,7 +29,7 @@ export class InicioComponent implements OnInit, OnDestroy {
   private indiceOferta = 0;
 
   get animationDuration(): string {
-    const segundosPorTarjeta = 3; 
+    const segundosPorTarjeta = 3;
     return `${this.ofertas.length * segundosPorTarjeta}s`;
   }
 

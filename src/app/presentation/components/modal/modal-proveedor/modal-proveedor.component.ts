@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { IProveedor } from '../../../../core/interfaces/proveedor';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ProveedorService } from '../../../../core/services/proveedor.service';
@@ -8,29 +8,26 @@ import { DataTableComponent } from '../../../../shared/utility/components/data-t
 import { TableColumn } from '../../../../shared/utility/components/tableColumn';
 
 @Component({
-    selector: 'app-modal-proveedor',
-    imports: [
-        MaterialModule,
-        DataTableComponent
-    ],
-    templateUrl: './modal-proveedor.component.html',
-    styleUrl: './modal-proveedor.component.scss'
+  selector: 'app-modal-proveedor',
+  imports: [MaterialModule, DataTableComponent],
+  templateUrl: './modal-proveedor.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './modal-proveedor.component.scss'
 })
 export class ModalProveedorComponent {
   private readonly proveedorService = inject(ProveedorService);
   private readonly dialogRef = inject(MatDialogRef<ModalProveedorComponent>);
   dataSource = new MatTableDataSource<IProveedor>([]);
   columnas: TableColumn[] = [
-    {key: 'id_Proveedor', label: 'ID', type: 'number'},
-    {key: 'nombres', label: 'Nombres', type: 'text'},
-    {key: 'apellidos', label: 'Apellidos', type: 'text'},
-    {key: 'cedula', label: 'Cédula', type: 'text'},
-    {key: 'accion', label: 'Acción', type: 'select'}
+    { key: 'id_Proveedor', label: 'ID', type: 'number' },
+    { key: 'nombres', label: 'Nombres', type: 'text' },
+    { key: 'apellidos', label: 'Apellidos', type: 'text' },
+    { key: 'cedula', label: 'Cédula', type: 'text' },
+    { key: 'accion', label: 'Acción', type: 'select' }
   ];
   filtro = '';
 
-  constructor(
-  ) {
+  constructor() {
     this.obtenerProveedores();
   }
 

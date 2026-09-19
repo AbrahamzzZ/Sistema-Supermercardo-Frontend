@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Validaciones } from '../../../../shared/utility/validaciones';
 import { ProveedorService } from '../../../../core/services/proveedor.service';
@@ -8,12 +8,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-    selector: 'app-editar-proveedor',
-    imports: [
-        MaterialModule
-    ],
-    templateUrl: './editar-proveedor.component.html',
-    styleUrl: './editar-proveedor.component.scss'
+  selector: 'app-editar-proveedor',
+  imports: [MaterialModule],
+  templateUrl: './editar-proveedor.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './editar-proveedor.component.scss'
 })
 export class EditarProveedorComponent implements OnInit {
   private readonly proveedorServicio = inject(ProveedorService);

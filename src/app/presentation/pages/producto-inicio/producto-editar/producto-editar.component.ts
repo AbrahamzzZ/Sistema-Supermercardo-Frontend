@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ProductoService } from '../../../../core/services/producto.service';
 import { Validaciones } from '../../../../shared/utility/validaciones';
@@ -11,12 +11,11 @@ import { ICategoria } from '../../../../core/interfaces/categoria';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-    selector: 'app-producto-editar',
-    imports: [
-        MaterialModule
-    ],
-    templateUrl: './producto-editar.component.html',
-    styleUrl: './producto-editar.component.scss'
+  selector: 'app-producto-editar',
+  imports: [MaterialModule],
+  templateUrl: './producto-editar.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './producto-editar.component.scss'
 })
 export class ProductoEditarComponent implements OnInit {
   private productoServicio = inject(ProductoService);

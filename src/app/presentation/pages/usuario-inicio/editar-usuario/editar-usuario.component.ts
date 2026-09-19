@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Validaciones } from '../../../../shared/utility/validaciones';
 import { UsuarioService } from '../../../../core/services/usuario.service';
@@ -11,12 +11,11 @@ import { MatSelectChange } from '@angular/material/select';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-    selector: 'app-editar-usuario',
-    imports: [
-        MaterialModule
-    ],
-    templateUrl: './editar-usuario.component.html',
-    styleUrl: './editar-usuario.component.scss'
+  selector: 'app-editar-usuario',
+  imports: [MaterialModule],
+  templateUrl: './editar-usuario.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './editar-usuario.component.scss'
 })
 export class EditarUsuarioComponent implements OnInit {
   private readonly usuarioServicio = inject(UsuarioService);

@@ -1,4 +1,11 @@
-import { Component, inject, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { SucursalService } from '../../../../core/services/sucursal.service';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 import { GoogleMapsModule, MapInfoWindow, MapMarker } from '@angular/google-maps';
@@ -15,10 +22,11 @@ L.Icon.Default.mergeOptions({
 });
 
 @Component({
-    selector: 'app-mapa-sucursal',
-    imports: [MaterialModule, GoogleMapsModule, CommonModule],
-    templateUrl: './mapa-sucursal.component.html',
-    styleUrl: './mapa-sucursal.component.scss'
+  selector: 'app-mapa-sucursal',
+  imports: [MaterialModule, GoogleMapsModule, CommonModule],
+  templateUrl: './mapa-sucursal.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './mapa-sucursal.component.scss'
 })
 export class MapaSucursalComponent implements OnInit, AfterViewInit {
   private sucursalService = inject(SucursalService);
@@ -134,7 +142,10 @@ export class MapaSucursalComponent implements OnInit, AfterViewInit {
     `;
   }
 
-  abrirInfoWindow(marker: { position: google.maps.LatLngLiteral; title: string; data: unknown }, markerRef: MapMarker) {
+  abrirInfoWindow(
+    marker: { position: google.maps.LatLngLiteral; title: string; data: unknown },
+    markerRef: MapMarker
+  ) {
     this.infoWindowData = marker.data as Record<string, unknown>;
     this.infoWindow.open(markerRef);
   }

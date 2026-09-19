@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MaterialModule } from '../../../shared/ui/material-module';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -7,15 +7,16 @@ import { Metodos } from '../../../shared/utility/metodos';
 import { LogService } from '../../../core/services/log.service';
 import { ILog } from '../../../core/interfaces/log';
 import { ModalLogComponent } from '../../components/modal/modal-log/modal-log.component';
-import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
+import { DataTableComponent } from '../../../shared/utility/components/data-table/data-table.component';
 import { TableColumn } from '../../../shared/utility/components/tableColumn';
 import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 
 @Component({
-    selector: 'app-log-inicio',
-    imports: [MaterialModule, RouterOutlet, DataTableComponent],
-    templateUrl: './log-inicio.component.html',
-    styleUrl: './log-inicio.component.scss'
+  selector: 'app-log-inicio',
+  imports: [MaterialModule, RouterOutlet, DataTableComponent],
+  templateUrl: './log-inicio.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './log-inicio.component.scss'
 })
 export class LogInicioComponent extends BaseListComponent<ILog> {
   private readonly dialog = inject(MatDialog);
@@ -24,13 +25,13 @@ export class LogInicioComponent extends BaseListComponent<ILog> {
   readonly tituloExcel = 'Logs';
 
   columns: TableColumn[] = [
-    {key: 'id_Log', label: 'No.', type: 'text'},
-    {key: 'codigo', label: 'Código de Error', type: 'text'},
-    {key: 'fecha', label: 'Fecha', type: 'date'},
-    {key: 'endpoint', label: 'Endpoint', type: 'text'},
-    {key: 'metodo', label: 'Método', type: 'text'},
-    {key: 'nivel', label: 'Nivel', type: 'text'},
-    {key: 'accion', label: 'Acción', type: 'view'}
+    { key: 'id_Log', label: 'No.', type: 'text' },
+    { key: 'codigo', label: 'Código de Error', type: 'text' },
+    { key: 'fecha', label: 'Fecha', type: 'date' },
+    { key: 'endpoint', label: 'Endpoint', type: 'text' },
+    { key: 'metodo', label: 'Método', type: 'text' },
+    { key: 'nivel', label: 'Nivel', type: 'text' },
+    { key: 'accion', label: 'Acción', type: 'view' }
   ];
 
   override obtenerDatos(pageNumber: number, pageSize: number, filtro: string): void {
@@ -74,9 +75,9 @@ export class LogInicioComponent extends BaseListComponent<ILog> {
   exportarExcel(): void {
     const datos = this.listaData.data.map((log) => ({
       ID: log.id_Log,
-      'Código': log.codigo,
-      'Mensaje': log.mensaje,
-      'Detalle': log.detalle,
+      Código: log.codigo,
+      Mensaje: log.mensaje,
+      Detalle: log.detalle,
       'ID Usuario': log.id_Usuario,
       Fecha: this.getFechaRegistro(log.fecha ?? ''),
       Endpoint: log.endpoint,

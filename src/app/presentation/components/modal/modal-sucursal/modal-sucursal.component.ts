@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ISucursal } from '../../../../core/interfaces/sucursal';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -8,30 +8,26 @@ import { DataTableComponent } from '../../../../shared/utility/components/data-t
 import { TableColumn } from '../../../../shared/utility/components/tableColumn';
 
 @Component({
-    selector: 'app-modal-sucursal',
-    imports: [
-        MaterialModule,
-        DataTableComponent
-    ],
-    templateUrl: './modal-sucursal.component.html',
-    styleUrl: './modal-sucursal.component.scss'
+  selector: 'app-modal-sucursal',
+  imports: [MaterialModule, DataTableComponent],
+  templateUrl: './modal-sucursal.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './modal-sucursal.component.scss'
 })
 export class ModalSucursalComponent {
   private readonly sucursalService = inject(SucursalService);
   private readonly dialogRef = inject(MatDialogRef<ModalSucursalComponent>);
   dataSource = new MatTableDataSource<ISucursal>([]);
   columnas: TableColumn[] = [
-    {key: 'id_Sucursal', label: 'ID', type: 'number'},
-    {key: 'codigo', label: 'Código', type: 'text'},
-    {key: 'nombre_Sucursal', label: 'Nombre', type: 'text'},
-    {key: 'direccion_Sucursal', label: 'Dirección', type: 'text'},
-    {key: 'accion', label: 'Acción', type: 'select'}
+    { key: 'id_Sucursal', label: 'ID', type: 'number' },
+    { key: 'codigo', label: 'Código', type: 'text' },
+    { key: 'nombre_Sucursal', label: 'Nombre', type: 'text' },
+    { key: 'direccion_Sucursal', label: 'Dirección', type: 'text' },
+    { key: 'accion', label: 'Acción', type: 'select' }
   ];
   filtro = '';
 
-  constructor(
-
-  ) {
+  constructor() {
     this.obtenerSucursales();
   }
 

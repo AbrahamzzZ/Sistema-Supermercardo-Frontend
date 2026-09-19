@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  OnInit,
+  ViewChild,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -24,16 +31,13 @@ import { MaterialModule } from '../../../shared/ui/material-module';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-    selector: 'app-venta-inicio',
-    imports: [
-        MaterialModule,
-        FormsModule,
-        CurrencyPipe
-    ],
-    templateUrl: './venta-inicio.component.html',
-    styleUrl: './venta-inicio.component.scss'
+  selector: 'app-venta-inicio',
+  imports: [MaterialModule, FormsModule, CurrencyPipe],
+  templateUrl: './venta-inicio.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './venta-inicio.component.scss'
 })
-export class VentaInicioComponent implements OnInit, AfterViewInit{
+export class VentaInicioComponent implements OnInit, AfterViewInit {
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
   private readonly servicioVenta = inject(VentaService);
@@ -58,14 +62,14 @@ export class VentaInicioComponent implements OnInit, AfterViewInit{
     'descuento',
     'accion'
   ];
-  public numeroDocumento= '';
+  public numeroDocumento = '';
   public totalSinDescuento = 0;
   public pagaCon = 0;
   public cambio = 0;
   public totalConDescuento = 0;
   public montoDescuento = 0;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  
+
   ngOnInit(): void {
     this.obtenerNumeroDocumento();
   }
@@ -300,7 +304,11 @@ export class VentaInicioComponent implements OnInit, AfterViewInit{
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' | 'oferta' = 'success') {
     const className =
-      tipo === 'success' ? 'success-snackbar' : tipo === 'oferta' ? 'oferta-snackbar' : 'error-snackbar';
+      tipo === 'success'
+        ? 'success-snackbar'
+        : tipo === 'oferta'
+          ? 'oferta-snackbar'
+          : 'error-snackbar';
 
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,

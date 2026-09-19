@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoriaService } from '../../../../core/services/categoria.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -8,12 +8,11 @@ import { ICategoria } from '../../../../core/interfaces/categoria';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-    selector: 'app-editar-categoria',
-    imports: [
-        MaterialModule
-    ],
-    templateUrl: './editar-categoria.component.html',
-    styleUrl: './editar-categoria.component.scss'
+  selector: 'app-editar-categoria',
+  imports: [MaterialModule],
+  templateUrl: './editar-categoria.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './editar-categoria.component.scss'
 })
 export class EditarCategoriaComponent implements OnInit {
   private categoriaServicio = inject(CategoriaService);

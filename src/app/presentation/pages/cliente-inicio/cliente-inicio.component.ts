@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { ClienteService } from '../../../core/services/cliente.service';
 import { ICliente } from '../../../core/interfaces/cliente';
@@ -8,18 +8,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Metodos } from '../../../shared/utility/metodos';
 import { MaterialModule } from '../../../shared/ui/material-module';
 import { TableColumn } from '../../../shared/utility/components/tableColumn';
-import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
+import { DataTableComponent } from '../../../shared/utility/components/data-table/data-table.component';
 import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 
 @Component({
-    selector: 'app-cliente-inicio',
-    imports: [
-        MaterialModule,
-        RouterOutlet,
-        DataTableComponent
-    ],
-    templateUrl: './cliente-inicio.component.html',
-    styleUrl: './cliente-inicio.component.scss'
+  selector: 'app-cliente-inicio',
+  imports: [MaterialModule, RouterOutlet, DataTableComponent],
+  templateUrl: './cliente-inicio.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './cliente-inicio.component.scss'
 })
 export class ClienteInicioComponent extends BaseListComponent<ICliente> {
   private readonly router = inject(Router);
@@ -29,15 +26,15 @@ export class ClienteInicioComponent extends BaseListComponent<ICliente> {
   readonly tituloExcel = 'Clientes';
 
   columns: TableColumn[] = [
-    {key: 'id_Cliente', label: 'No.', type: 'text'},
-    {key: 'codigo', label: 'Código', type: 'text'},
-    {key: 'nombres', label: 'Nombres', type: 'text'},
-    {key: 'apellidos', label: 'Apellidos', type: 'text'},
-    {key: 'cedula', label: 'Cédula', type: 'text'},
-    {key: 'telefono', label: 'Teléfono', type: 'text'},
-    {key: 'correo_Electronico', label: 'Correo Electrónico', type: 'text'},
-    {key: 'fecha_Creacion', label: 'Fecha de Registro', type: 'date'},
-    {key: 'accion', label: 'Acción', type: 'actions'}
+    { key: 'id_Cliente', label: 'No.', type: 'text' },
+    { key: 'codigo', label: 'Código', type: 'text' },
+    { key: 'nombres', label: 'Nombres', type: 'text' },
+    { key: 'apellidos', label: 'Apellidos', type: 'text' },
+    { key: 'cedula', label: 'Cédula', type: 'text' },
+    { key: 'telefono', label: 'Teléfono', type: 'text' },
+    { key: 'correo_Electronico', label: 'Correo Electrónico', type: 'text' },
+    { key: 'fecha_Creacion', label: 'Fecha de Registro', type: 'date' },
+    { key: 'accion', label: 'Acción', type: 'actions' }
   ];
 
   override obtenerDatos(pageNumber: number, pageSize: number, filtro: string): void {

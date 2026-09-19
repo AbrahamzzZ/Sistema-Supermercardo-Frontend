@@ -1,5 +1,12 @@
 import { CurrencyPipe } from '@angular/common';
-import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  OnInit,
+  ViewChild,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { VentaService } from '../../../../core/services/venta.service';
@@ -11,14 +18,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { NegocioService } from '../../../../core/services/negocio.service';
 
 @Component({
-    selector: 'app-detalle-venta',
-    imports: [
-        MaterialModule,
-        FormsModule,
-        CurrencyPipe
-    ],
-    templateUrl: './detalle-venta.component.html',
-    styleUrl: './detalle-venta.component.scss'
+  selector: 'app-detalle-venta',
+  imports: [MaterialModule, FormsModule, CurrencyPipe],
+  templateUrl: './detalle-venta.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './detalle-venta.component.scss'
 })
 export class DetalleVentaComponent implements OnInit, AfterViewInit {
   public mensajeBusqueda = '';
@@ -99,7 +103,6 @@ export class DetalleVentaComponent implements OnInit, AfterViewInit {
 
     this.servicio.obtener(numeroDocumento).subscribe({
       next: (resp: any) => {
-
         const venta = resp.data;
 
         this.venta.patchValue({
@@ -125,17 +128,13 @@ export class DetalleVentaComponent implements OnInit, AfterViewInit {
             this.dataSource.data = Array.isArray(detalle) ? detalle : [detalle];
           },
           error: () => {
-            this.mostrarMensaje(
-              'Error al obtener el detalle de la venta.',
-              'error'
-            );
+            this.mostrarMensaje('Error al obtener el detalle de la venta.', 'error');
           }
         });
       },
       error: () => {
         this.limpiar();
-        this.mensajeBusqueda =
-          'No existe ningún detalle de venta con ese número de documento.';
+        this.mensajeBusqueda = 'No existe ningún detalle de venta con ese número de documento.';
       }
     });
   }
@@ -185,11 +184,7 @@ export class DetalleVentaComponent implements OnInit, AfterViewInit {
       doc.text(`Vendedor: ${this.venta.value.nombreUsuario}`, 10, 78);
       doc.text(`Código: ${this.venta.value.codigoUsuario}`, 110, 78);
 
-      doc.text(
-        `Cliente: ${this.venta.value.cliente}`,
-        10,
-        84
-      );
+      doc.text(`Cliente: ${this.venta.value.cliente}`, 10, 84);
       doc.text(`Cédula: ${this.venta.value.cedulaCliente}`, 110, 84);
 
       // Columnas de la tabla
@@ -234,8 +229,16 @@ export class DetalleVentaComponent implements OnInit, AfterViewInit {
         12,
         finalY + 12
       );
-      doc.text(`Pagó con: $${Number.parseFloat(this.venta.value.pagaCon).toFixed(2)}`, 12, finalY + 18);
-      doc.text(`Cambio: $${Number.parseFloat(this.venta.value.cambio).toFixed(2)}`, 100, finalY + 12);
+      doc.text(
+        `Pagó con: $${Number.parseFloat(this.venta.value.pagaCon).toFixed(2)}`,
+        12,
+        finalY + 18
+      );
+      doc.text(
+        `Cambio: $${Number.parseFloat(this.venta.value.cambio).toFixed(2)}`,
+        100,
+        finalY + 12
+      );
 
       // Mensaje final
       doc.setFontSize(9);

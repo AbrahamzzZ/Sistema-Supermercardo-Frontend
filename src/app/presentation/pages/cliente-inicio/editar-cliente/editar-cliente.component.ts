@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Validaciones } from '../../../../shared/utility/validaciones';
 import { ClienteService } from '../../../../core/services/cliente.service';
@@ -8,12 +8,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-    selector: 'app-editar-cliente',
-    imports: [
-        MaterialModule
-    ],
-    templateUrl: './editar-cliente.component.html',
-    styleUrl: './editar-cliente.component.scss'
+  selector: 'app-editar-cliente',
+  imports: [MaterialModule],
+  templateUrl: './editar-cliente.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './editar-cliente.component.scss'
 })
 export class EditarClienteComponent implements OnInit {
   private clienteServicio = inject(ClienteService);

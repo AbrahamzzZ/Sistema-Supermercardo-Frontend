@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CanComponentDeactive } from '../../../../core/guards/formulario-incompleto.guard';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -14,12 +14,11 @@ import { NegocioService } from '../../../../core/services/negocio.service';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-    selector: 'app-registrar-sucursal',
-    imports: [
-        MaterialModule
-    ],
-    templateUrl: './registrar-sucursal.component.html',
-    styleUrl: './registrar-sucursal.component.scss'
+  selector: 'app-registrar-sucursal',
+  imports: [MaterialModule],
+  templateUrl: './registrar-sucursal.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './registrar-sucursal.component.scss'
 })
 export class RegistrarSucursalComponent implements OnInit, CanComponentDeactive {
   private idSucursal!: number;

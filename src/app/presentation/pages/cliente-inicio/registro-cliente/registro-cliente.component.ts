@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Validaciones } from '../../../../shared/utility/validaciones';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,12 +12,11 @@ import { CanComponentDeactive } from '../../../../core/guards/formulario-incompl
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-    selector: 'app-cliente',
-    imports: [
-        MaterialModule
-    ],
-    templateUrl: './registro-cliente.component.html',
-    styleUrl: './registro-cliente.component.scss'
+  selector: 'app-cliente',
+  imports: [MaterialModule],
+  templateUrl: './registro-cliente.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './registro-cliente.component.scss'
 })
 export class RegistroClienteComponent implements OnInit, CanComponentDeactive {
   private idCliente!: number;

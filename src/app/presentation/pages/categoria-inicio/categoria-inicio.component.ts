@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { CategoriaService } from '../../../core/services/categoria.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -7,19 +7,16 @@ import { MatDialog } from '@angular/material/dialog';
 import { Metodos } from '../../../shared/utility/metodos';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { MaterialModule } from '../../../shared/ui/material-module';
-import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
+import { DataTableComponent } from '../../../shared/utility/components/data-table/data-table.component';
 import { TableColumn } from '../../../shared/utility/components/tableColumn';
 import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 
 @Component({
-    selector: 'app-categoria-inicio',
-    imports: [
-        MaterialModule,
-        RouterOutlet,
-        DataTableComponent
-    ],
-    templateUrl: './categoria-inicio.component.html',
-    styleUrl: './categoria-inicio.component.scss'
+  selector: 'app-categoria-inicio',
+  imports: [MaterialModule, RouterOutlet, DataTableComponent],
+  templateUrl: './categoria-inicio.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './categoria-inicio.component.scss'
 })
 export class CategoriaInicioComponent extends BaseListComponent<ICategoria> {
   private readonly router = inject(Router);
@@ -29,12 +26,12 @@ export class CategoriaInicioComponent extends BaseListComponent<ICategoria> {
   readonly tituloExcel = 'Categorías';
 
   columns: TableColumn[] = [
-    {key: 'id_Categoria', label: 'No.', type: 'text'},
-    {key: 'codigo', label: 'Código', type: 'text'},
-    {key: 'nombre_Categoria', label: 'Nombre', type: 'text'},
-    {key: 'estado', label: 'Estado', type: 'status'},
-    {key: 'fecha_Creacion', label: 'Fecha de Registro', type: 'date'},
-    {key: 'accion', label: 'Acción', type: 'actions'}
+    { key: 'id_Categoria', label: 'No.', type: 'text' },
+    { key: 'codigo', label: 'Código', type: 'text' },
+    { key: 'nombre_Categoria', label: 'Nombre', type: 'text' },
+    { key: 'estado', label: 'Estado', type: 'status' },
+    { key: 'fecha_Creacion', label: 'Fecha de Registro', type: 'date' },
+    { key: 'accion', label: 'Acción', type: 'actions' }
   ];
 
   override obtenerDatos(pageNumber: number, pageSize: number, filtro: string): void {

@@ -1,15 +1,16 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-    selector: 'app-modal-log',
-    imports: [MaterialModule],
-    templateUrl: './modal-log.component.html',
-    styleUrl: './modal-log.component.scss'
+  selector: 'app-modal-log',
+  imports: [MaterialModule],
+  templateUrl: './modal-log.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './modal-log.component.scss'
 })
 export class ModalLogComponent {
-  public data = inject<{ mensaje: string, id_Log: number }>(MAT_DIALOG_DATA);
+  public data = inject<{ mensaje: string; id_Log: number }>(MAT_DIALOG_DATA);
 
   copy() {
     navigator.clipboard.writeText(JSON.stringify(this.data, null, 2));

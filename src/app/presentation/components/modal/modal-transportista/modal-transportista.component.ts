@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ITransportista } from '../../../../core/interfaces/transportista';
 import { MatDialogRef } from '@angular/material/dialog';
 import { TransportistaService } from '../../../../core/services/transportista.service';
@@ -8,29 +8,26 @@ import { DataTableComponent } from '../../../../shared/utility/components/data-t
 import { TableColumn } from '../../../../shared/utility/components/tableColumn';
 
 @Component({
-    selector: 'app-modal-transportista',
-    imports: [
-        MaterialModule,
-        DataTableComponent
-    ],
-    templateUrl: './modal-transportista.component.html',
-    styleUrl: './modal-transportista.component.scss'
+  selector: 'app-modal-transportista',
+  imports: [MaterialModule, DataTableComponent],
+  templateUrl: './modal-transportista.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './modal-transportista.component.scss'
 })
 export class ModalTransportistaComponent {
   private readonly transportistaService = inject(TransportistaService);
   private readonly dialogRef = inject(MatDialogRef<ModalTransportistaComponent>);
   dataSource = new MatTableDataSource<ITransportista>([]);
   columnas: TableColumn[] = [
-    {key: 'id_Transportista', label: 'ID', type: 'number'},
-    {key: 'nombres', label: 'Nombres', type: 'text'},
-    {key: 'apellidos', label: 'Apellidos', type: 'text'},
-    {key: 'cedula', label: 'Cédula', type: 'text'},
-    {key: 'accion', label: 'Acción', type: 'select'}
+    { key: 'id_Transportista', label: 'ID', type: 'number' },
+    { key: 'nombres', label: 'Nombres', type: 'text' },
+    { key: 'apellidos', label: 'Apellidos', type: 'text' },
+    { key: 'cedula', label: 'Cédula', type: 'text' },
+    { key: 'accion', label: 'Acción', type: 'select' }
   ];
   filtro = '';
 
-  constructor(
-  ) {
+  constructor() {
     this.obtenerTransportistas();
   }
 
