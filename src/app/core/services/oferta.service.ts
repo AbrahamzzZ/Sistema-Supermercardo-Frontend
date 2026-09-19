@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { appsettings } from '../setting/api/appsettings';
+import { environment } from '../../../../environments/environment';
 import { IOferta } from '../interfaces/oferta';
 import { IOfertaProducto } from '../interfaces/Dto/ioferta-producto';
 import { ApiResponse } from '../setting/api/apiResponse';
@@ -10,7 +10,7 @@ import { ApiResponse } from '../setting/api/apiResponse';
 })
 export class OfertaService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = appsettings.apiUrl + 'Oferta';
+  private readonly apiUrl: string = environment.API_URL + 'Oferta';
 
   lista() {
     return this.http.get<IOfertaProducto[]>(this.apiUrl);

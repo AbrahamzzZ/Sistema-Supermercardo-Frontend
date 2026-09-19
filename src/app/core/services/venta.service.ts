@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { appsettings } from '../setting/api/appsettings';
+import { environment } from '../../../../environments/environment';
 import { IVenta } from '../interfaces/venta';
 import { ApiResponse } from '../setting/api/apiResponse';
 import { IVentaRepuesta } from '../interfaces/Dto/venta/iventa-repuesta';
@@ -11,7 +11,7 @@ import { IDetallesVenta } from '../interfaces/Dto/venta/idetalles-venta';
 })
 export class VentaService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = appsettings.apiUrl + 'Venta';
+  private readonly apiUrl: string = environment.API_URL + 'Venta';
 
   obtenerNuevoNumeroDocumento() {
     return this.http.get<{ numeroDocumento: string }>(`${this.apiUrl}/numero-documento`);

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { appsettings } from '../setting/api/appsettings';
+import { environment } from '../../../../environments/environment';
 import { IProducto } from '../interfaces/producto';
 import { ApiResponse } from '../setting/api/apiResponse';
 import { IProductoCategoria } from '../interfaces/Dto/iproducto-categoria';
@@ -11,7 +11,7 @@ import { IProductoRespuesta } from '../interfaces/Dto/iproducto-respuesta';
 })
 export class ProductoService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = appsettings.apiUrl + 'Producto';
+  private readonly apiUrl: string = environment.API_URL + 'Producto';
 
   lista() {
     return this.http.get<IProductoCategoria[]>(this.apiUrl);

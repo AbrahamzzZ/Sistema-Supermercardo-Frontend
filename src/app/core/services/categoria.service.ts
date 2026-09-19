@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { appsettings } from '../setting/api/appsettings';
+import { environment } from '../../../../environments/environment';
 import { ICategoria } from '../interfaces/categoria';
 import { ApiResponse } from '../setting/api/apiResponse';
 
@@ -9,7 +9,7 @@ import { ApiResponse } from '../setting/api/apiResponse';
 })
 export class CategoriaService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = appsettings.apiUrl + 'Categoria';
+  private readonly apiUrl: string = environment.API_URL + 'Categoria';
 
   lista() {
     return this.http.get<ICategoria[]>(this.apiUrl);

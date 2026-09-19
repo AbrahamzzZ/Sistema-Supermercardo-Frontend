@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, NgZone } from '@angular/core';
 import { ILogin } from '../interfaces/Dto/login';
 import { Observable } from 'rxjs';
-import { appsettings } from '../setting/api/appsettings';
+import { environment } from '../../../../environments/environment';
 import { ITokenData } from '../setting/token/itoken-data';
 import { jwtDecode } from 'jwt-decode';
 import { NavigationStart, Router } from '@angular/router';
@@ -23,7 +23,7 @@ export class LoginService {
   private cerrarDialogoSinCerrarSesion = false;
   private readonly activityEvents = ['mousemove', 'mousedown', 'keypress', 'touchstart', 'scroll'];
   private readonly resetearPorActividad = () => this.resetear();
-  private  readonly apiUrl: string = appsettings.apiUrl + 'Usuario';
+  private readonly apiUrl: string = environment.API_URL + 'Usuario';
 
   constructor() {
     this.router.events.subscribe((event) => {

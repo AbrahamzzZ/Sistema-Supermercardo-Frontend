@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { appsettings } from '../setting/api/appsettings';
+import { environment } from '../../../../environments/environment';
 import { ILog } from '../interfaces/log';
 
 @Injectable({
@@ -8,7 +8,7 @@ import { ILog } from '../interfaces/log';
 })
 export class LogService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = appsettings.apiUrl + 'Log';
+  private readonly apiUrl: string = environment.API_URL + 'Log';
 
   listaPaginada(pageNumber: number, pageSize: number, filtro: string) {
     return this.http.get<{
