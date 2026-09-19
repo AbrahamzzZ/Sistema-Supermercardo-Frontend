@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OfertaService } from '../../../../core/services/oferta.service';
@@ -15,12 +15,11 @@ import { CanComponentDeactive } from '../../../../core/guards/formulario-incompl
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-    selector: 'app-registro-oferta',
-    imports: [
-        MaterialModule
-    ],
-    templateUrl: './registro-oferta.component.html',
-    styleUrl: './registro-oferta.component.scss'
+  selector: 'app-registro-oferta',
+  imports: [MaterialModule],
+  templateUrl: './registro-oferta.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './registro-oferta.component.scss'
 })
 export class RegistroOfertaComponent implements OnInit, CanComponentDeactive {
   private idOferta!: number;

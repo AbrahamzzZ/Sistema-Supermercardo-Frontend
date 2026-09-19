@@ -1,14 +1,15 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-    selector: 'app-dialogo-numero-documento',
-    imports: [MatDialogModule, MatIcon, MatButtonModule],
-    templateUrl: './dialogo-numero-documento.component.html',
-    styleUrl: './dialogo-numero-documento.component.scss'
+  selector: 'app-dialogo-numero-documento',
+  imports: [MatDialogModule, MatIcon, MatButtonModule],
+  templateUrl: './dialogo-numero-documento.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './dialogo-numero-documento.component.scss'
 })
 export class DialogoNumeroDocumentoComponent {
   private readonly snackBar = inject(MatSnackBar);

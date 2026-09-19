@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NegocioService } from '../../../core/services/negocio.service';
@@ -8,15 +8,13 @@ import { Validaciones } from '../../../shared/utility/validaciones';
 import { MaterialModule } from '../../../shared/ui/material-module';
 
 @Component({
-    selector: 'app-negocio-inicio',
-    imports: [
-        MaterialModule,
-        FormsModule,
-    ],
-    templateUrl: './negocio-inicio.component.html',
-    styleUrl: './negocio-inicio.component.scss'
+  selector: 'app-negocio-inicio',
+  imports: [MaterialModule, FormsModule],
+  templateUrl: './negocio-inicio.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './negocio-inicio.component.scss'
 })
-export class NegocioInicioComponent implements OnInit{
+export class NegocioInicioComponent implements OnInit {
   public idNegocio = 1;
   public negocio!: FormGroup;
   private router = inject(Router);

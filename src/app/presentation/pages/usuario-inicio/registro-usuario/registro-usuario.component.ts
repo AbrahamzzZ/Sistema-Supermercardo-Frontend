@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Validaciones } from '../../../../shared/utility/validaciones';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,12 +15,11 @@ import { MatSelectChange } from '@angular/material/select';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-    selector: 'app-usuario',
-    imports: [
-        MaterialModule
-    ],
-    templateUrl: './registro-usuario.component.html',
-    styleUrl: './registro-usuario.component.scss'
+  selector: 'app-usuario',
+  imports: [MaterialModule],
+  templateUrl: './registro-usuario.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './registro-usuario.component.scss'
 })
 export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive {
   private idUsuario!: number;

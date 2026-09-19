@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { OfertaService } from '../../../core/services/oferta.service';
 import { IOferta } from '../../../core/interfaces/oferta';
@@ -7,20 +7,17 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogoConfirmacionComponent } from '../../../presentation/components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { Metodos } from '../../../shared/utility/metodos';
 import { IOfertaProducto } from '../../../core/interfaces/Dto/ioferta-producto';
-import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
+import { DataTableComponent } from '../../../shared/utility/components/data-table/data-table.component';
 import { TableColumn } from '../../../shared/utility/components/tableColumn';
 import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 import { MaterialModule } from '../../../shared/ui/material-module';
 
 @Component({
-    selector: 'app-oferta-inicio',
-    imports: [
-        MaterialModule,
-        RouterOutlet,
-        DataTableComponent
-    ],
-    templateUrl: './oferta-inicio.component.html',
-    styleUrl: './oferta-inicio.component.scss'
+  selector: 'app-oferta-inicio',
+  imports: [MaterialModule, RouterOutlet, DataTableComponent],
+  templateUrl: './oferta-inicio.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './oferta-inicio.component.scss'
 })
 export class OfertaInicioComponent extends BaseListComponent<IOfertaProducto> {
   private readonly ofertaServicio = inject(OfertaService);
@@ -30,18 +27,18 @@ export class OfertaInicioComponent extends BaseListComponent<IOfertaProducto> {
   readonly tituloExcel = 'Ofertas';
 
   columns: TableColumn[] = [
-    {key: 'id_Oferta', label: 'No.', type: 'text'},
-    {key: 'codigo', label: 'Código', type: 'text'},
-    {key: 'nombre_Oferta', label: 'Nombre', type: 'text'},
-    {key: 'nombre_Producto', label: 'Producto', type: 'text'},
-    {key: 'fecha_Inicio', label: 'Fecha de Inicio', type: 'date'},
-    {key: 'fecha_Fin', label: 'Fecha de Fin', type: 'date'},
-    {key: 'descuento', label: 'Descuento', type: 'number'},
-    {key: 'estado', label: 'Estado', type: 'status'},
-    {key: 'accion', label: 'Acción', type: 'actions'}
+    { key: 'id_Oferta', label: 'No.', type: 'text' },
+    { key: 'codigo', label: 'Código', type: 'text' },
+    { key: 'nombre_Oferta', label: 'Nombre', type: 'text' },
+    { key: 'nombre_Producto', label: 'Producto', type: 'text' },
+    { key: 'fecha_Inicio', label: 'Fecha de Inicio', type: 'date' },
+    { key: 'fecha_Fin', label: 'Fecha de Fin', type: 'date' },
+    { key: 'descuento', label: 'Descuento', type: 'number' },
+    { key: 'estado', label: 'Estado', type: 'status' },
+    { key: 'accion', label: 'Acción', type: 'actions' }
   ];
 
-  override obtenerDatos(pageNumber: number, pageSize: number, filtro: string ): void {
+  override obtenerDatos(pageNumber: number, pageSize: number, filtro: string): void {
     const cacheKey = `${pageNumber}-${pageSize}-${filtro}`;
 
     if (this.filtrosCache.has(cacheKey)) {

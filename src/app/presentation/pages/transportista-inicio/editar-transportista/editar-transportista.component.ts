@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Validaciones } from '../../../../shared/utility/validaciones';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
@@ -9,12 +9,11 @@ import { Metodos } from '../../../../shared/utility/metodos';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-    selector: 'app-editar-transportista',
-    imports: [
-        MaterialModule
-    ],
-    templateUrl: './editar-transportista.component.html',
-    styleUrl: './editar-transportista.component.scss'
+  selector: 'app-editar-transportista',
+  imports: [MaterialModule],
+  templateUrl: './editar-transportista.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './editar-transportista.component.scss'
 })
 export class EditarTransportistaComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);

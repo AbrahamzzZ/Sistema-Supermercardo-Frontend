@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { TransportistaService } from '../../../core/services/transportista.service';
 import { ITransportista } from '../../../core/interfaces/transportista';
@@ -7,19 +7,16 @@ import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-co
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Metodos } from '../../../shared/utility/metodos';
 import { MaterialModule } from '../../../shared/ui/material-module';
-import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
+import { DataTableComponent } from '../../../shared/utility/components/data-table/data-table.component';
 import { TableColumn } from '../../../shared/utility/components/tableColumn';
 import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 
 @Component({
-    selector: 'app-transportista-inicio',
-    imports: [
-        MaterialModule,
-        RouterOutlet,
-        DataTableComponent
-    ],
-    templateUrl: './transportista-inicio.component.html',
-    styleUrl: './transportista-inicio.component.scss'
+  selector: 'app-transportista-inicio',
+  imports: [MaterialModule, RouterOutlet, DataTableComponent],
+  templateUrl: './transportista-inicio.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './transportista-inicio.component.scss'
 })
 export class TransportistaInicioComponent extends BaseListComponent<ITransportista> {
   private readonly router = inject(Router);
@@ -29,17 +26,17 @@ export class TransportistaInicioComponent extends BaseListComponent<ITransportis
   readonly tituloExcel = 'Transportistas';
 
   columns: TableColumn[] = [
-    {key: 'id_Transportista', label: 'No.', type: 'text'},
-    {key: 'codigo', label: 'Código', type: 'text'},
-    {key: 'nombres', label: 'Nombres', type: 'text'},
-    {key: 'apellidos', label: 'Apellidos', type: 'text'},
-    {key: 'cedula', label: 'Cédula', type: 'text'},
-    {key: 'telefono', label: 'Teléfono', type: 'text'},
-    {key: 'correo_Electronico', label: 'Correo Electrónico', type: 'text'},
-    {key: 'foto', label: 'Foto', type: 'image'},
-    {key: 'estado', label: 'Estado', type: 'status'},
-    {key: 'fecha_Creacion', label: 'Fecha de Creación', type: 'date'},
-    {key: 'accion', label: 'Acción', type: 'actions'}
+    { key: 'id_Transportista', label: 'No.', type: 'text' },
+    { key: 'codigo', label: 'Código', type: 'text' },
+    { key: 'nombres', label: 'Nombres', type: 'text' },
+    { key: 'apellidos', label: 'Apellidos', type: 'text' },
+    { key: 'cedula', label: 'Cédula', type: 'text' },
+    { key: 'telefono', label: 'Teléfono', type: 'text' },
+    { key: 'correo_Electronico', label: 'Correo Electrónico', type: 'text' },
+    { key: 'foto', label: 'Foto', type: 'image' },
+    { key: 'estado', label: 'Estado', type: 'status' },
+    { key: 'fecha_Creacion', label: 'Fecha de Creación', type: 'date' },
+    { key: 'accion', label: 'Acción', type: 'actions' }
   ];
 
   override obtenerDatos(pageNumber: number, pageSize: number, filtro: string): void {

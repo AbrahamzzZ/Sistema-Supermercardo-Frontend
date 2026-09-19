@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Validaciones } from '../../../../shared/utility/validaciones';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,12 +12,11 @@ import { Observable } from 'rxjs';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-    selector: 'app-proveedor',
-    imports: [
-        MaterialModule
-    ],
-    templateUrl: './registro-proveedor.component.html',
-    styleUrl: './registro-proveedor.component.scss'
+  selector: 'app-proveedor',
+  imports: [MaterialModule],
+  templateUrl: './registro-proveedor.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './registro-proveedor.component.scss'
 })
 export class RegistroProveedorComponent implements OnInit, CanComponentDeactive {
   private idProveedor!: number;

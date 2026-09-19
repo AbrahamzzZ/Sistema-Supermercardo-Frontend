@@ -1,14 +1,15 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableColumn } from '../tableColumn';
 import { MaterialModule } from '../../../ui/material-module';
 
 @Component({
-    selector: 'app-data-table',
-    imports: [MaterialModule],
-    templateUrl: './data-table.component.html',
-    styleUrl: './data-table.component.scss'
+  selector: 'app-data-table',
+  imports: [MaterialModule],
+  templateUrl: './data-table.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './data-table.component.scss'
 })
 export class DataTableComponent {
   @Input() dataSource = new MatTableDataSource<any>();
@@ -34,7 +35,7 @@ export class DataTableComponent {
   @Output() cambioPagina = new EventEmitter<PageEvent>();
 
   get displayedColumns(): string[] {
-    return this.columns.map(column => column.key);
+    return this.columns.map((column) => column.key);
   }
 
   getFechaRegistro(fecha: string): string {

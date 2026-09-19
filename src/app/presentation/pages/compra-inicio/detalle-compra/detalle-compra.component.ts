@@ -1,5 +1,12 @@
 import { CurrencyPipe } from '@angular/common';
-import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  OnInit,
+  ViewChild,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
@@ -11,16 +18,13 @@ import { MatPaginator } from '@angular/material/paginator';
 import { NegocioService } from '../../../../core/services/negocio.service';
 
 @Component({
-    selector: 'app-detalle-compra',
-    imports: [
-        MaterialModule,
-        FormsModule,
-        CurrencyPipe
-    ],
-    templateUrl: './detalle-compra.component.html',
-    styleUrl: './detalle-compra.component.scss'
+  selector: 'app-detalle-compra',
+  imports: [MaterialModule, FormsModule, CurrencyPipe],
+  templateUrl: './detalle-compra.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './detalle-compra.component.scss'
 })
-export class DetalleCompraComponent implements OnInit, AfterViewInit{
+export class DetalleCompraComponent implements OnInit, AfterViewInit {
   public mensajeBusqueda = '';
   public compra!: FormGroup;
   public nombreNegocio = '';
@@ -97,8 +101,7 @@ export class DetalleCompraComponent implements OnInit, AfterViewInit{
 
     if (numeroDocumento.length !== 5) {
       this.limpiar();
-      this.mensajeBusqueda =
-        'El número de documento debe tener 5 dígitos.';
+      this.mensajeBusqueda = 'El número de documento debe tener 5 dígitos.';
       return;
     }
 
@@ -106,8 +109,7 @@ export class DetalleCompraComponent implements OnInit, AfterViewInit{
       next: (resp: any) => {
         if (!resp?.data) {
           this.limpiar();
-          this.mensajeBusqueda =
-            'No existe ningún detalle de compra con ese número de documento.';
+          this.mensajeBusqueda = 'No existe ningún detalle de compra con ese número de documento.';
           return;
         }
 
@@ -136,17 +138,13 @@ export class DetalleCompraComponent implements OnInit, AfterViewInit{
             this.dataSource.data = Array.isArray(detalle) ? detalle : [detalle];
           },
           error: () => {
-            this.mostrarMensaje(
-              'Error al obtener el detalle de la compra.',
-              'error'
-            );
+            this.mostrarMensaje('Error al obtener el detalle de la compra.', 'error');
           }
         });
       },
       error: () => {
         this.limpiar();
-        this.mensajeBusqueda =
-          'No existe ningún detalle de compra con ese número de documento.';
+        this.mensajeBusqueda = 'No existe ningún detalle de compra con ese número de documento.';
       }
     });
   }
@@ -196,18 +194,10 @@ export class DetalleCompraComponent implements OnInit, AfterViewInit{
       doc.text(`Vendedor: ${this.compra.value.nombreUsuario}`, 10, 78);
       doc.text(`Código: ${this.compra.value.codigoUsuario}`, 110, 78);
 
-      doc.text(
-        `Proveedor: ${this.compra.value.proveedor}`,
-        10,
-        84
-      );
+      doc.text(`Proveedor: ${this.compra.value.proveedor}`, 10, 84);
       doc.text(`Cédula: ${this.compra.value.cedulaProveedor}`, 110, 84);
 
-      doc.text(
-        `Transportista: ${this.compra.value.transportista}`,
-        10,
-        90
-      );
+      doc.text(`Transportista: ${this.compra.value.transportista}`, 10, 90);
       doc.text(`Cédula: ${this.compra.value.cedulaTransportista}`, 110, 90);
 
       // Columnas de la tabla

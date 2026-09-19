@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { ProductoService } from '../../../core/services/producto.service';
 import { IProducto } from '../../../core/interfaces/producto';
@@ -8,19 +8,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Metodos } from '../../../shared/utility/metodos';
 import { IProductoCategoria } from '../../../core/interfaces/Dto/iproducto-categoria';
 import { MaterialModule } from '../../../shared/ui/material-module';
-import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
+import { DataTableComponent } from '../../../shared/utility/components/data-table/data-table.component';
 import { TableColumn } from '../../../shared/utility/components/tableColumn';
 import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 
 @Component({
-    selector: 'app-producto-inicio',
-    imports: [
-        MaterialModule,
-        RouterOutlet,
-        DataTableComponent
-    ],
-    templateUrl: './producto-inicio.component.html',
-    styleUrl: './producto-inicio.component.scss'
+  selector: 'app-producto-inicio',
+  imports: [MaterialModule, RouterOutlet, DataTableComponent],
+  templateUrl: './producto-inicio.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './producto-inicio.component.scss'
 })
 export class ProductoInicioComponent extends BaseListComponent<IProductoCategoria> {
   private readonly router = inject(Router);
@@ -30,17 +27,17 @@ export class ProductoInicioComponent extends BaseListComponent<IProductoCategori
   readonly tituloExcel = 'Productos';
 
   columns: TableColumn[] = [
-    {key: 'id_Producto', label: 'No.', type: 'text'},
-    {key: 'codigo', label: 'Código', type: 'text'},
-    {key: 'nombre_Producto', label: 'Nombre', type: 'text'},
-    {key: 'descripcion', label: 'Descripción', type: 'text'},
-    {key: 'nombre_Categoria', label: 'Categoría', type: 'text'},
-    {key: 'pais_Origen', label: 'País de Origen', type: 'text'},
-    {key: 'stock', label: 'Stock Disponible', type: 'text'},
-    {key: 'precio_Compra', label: 'Precio de Compra', type: 'currency'},
-    {key: 'precio_Venta', label: 'Precio de Venta', type: 'currency'},
-    {key: 'estado', label: 'Estado', type: 'stock'},
-    {key: 'accion', label: 'Acción', type: 'actions'}
+    { key: 'id_Producto', label: 'No.', type: 'text' },
+    { key: 'codigo', label: 'Código', type: 'text' },
+    { key: 'nombre_Producto', label: 'Nombre', type: 'text' },
+    { key: 'descripcion', label: 'Descripción', type: 'text' },
+    { key: 'nombre_Categoria', label: 'Categoría', type: 'text' },
+    { key: 'pais_Origen', label: 'País de Origen', type: 'text' },
+    { key: 'stock', label: 'Stock Disponible', type: 'text' },
+    { key: 'precio_Compra', label: 'Precio de Compra', type: 'currency' },
+    { key: 'precio_Venta', label: 'Precio de Venta', type: 'currency' },
+    { key: 'estado', label: 'Estado', type: 'stock' },
+    { key: 'accion', label: 'Acción', type: 'actions' }
   ];
 
   override obtenerDatos(pageNumber: number, pageSize: number, filtro: string): void {
@@ -73,8 +70,10 @@ export class ProductoInicioComponent extends BaseListComponent<IProductoCategori
   }
 
   verificarStockBajo(productos: IProducto[]): void {
-    const productosStockBajo = productos.filter(p => p.stock !== undefined && p.stock < 10 && p.stock > 0);
-    const productosAgotados = productos.filter(p => p.stock === 0);
+    const productosStockBajo = productos.filter(
+      (p) => p.stock !== undefined && p.stock < 10 && p.stock > 0
+    );
+    const productosAgotados = productos.filter((p) => p.stock === 0);
 
     if (productosAgotados.length > 0) {
       this.mostrarMensaje(`${productosAgotados.length} producto(s) sin stock disponible.`, 'error');
@@ -119,7 +118,12 @@ export class ProductoInicioComponent extends BaseListComponent<IProductoCategori
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' | 'warning' = 'success'): void {
-    const className = tipo === 'success' ? 'success-snackbar' : tipo === 'warning' ? 'warning-snackbar' : 'error-snackbar';
+    const className =
+      tipo === 'success'
+        ? 'success-snackbar'
+        : tipo === 'warning'
+          ? 'warning-snackbar'
+          : 'error-snackbar';
 
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 5000,

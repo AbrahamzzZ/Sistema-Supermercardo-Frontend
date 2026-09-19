@@ -1,13 +1,14 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output, ChangeDetectionStrategy } from '@angular/core';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 import { NegocioService } from '../../../../core/services/negocio.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'app-ia-chat',
-    imports: [MaterialModule, FormsModule],
-    templateUrl: './ia-chat.component.html',
-    styleUrl: './ia-chat.component.scss'
+  selector: 'app-ia-chat',
+  imports: [MaterialModule, FormsModule],
+  templateUrl: './ia-chat.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './ia-chat.component.scss'
 })
 export class IaChatComponent {
   prompt = '';
@@ -20,7 +21,7 @@ export class IaChatComponent {
   volver() {
     this.cerrarIA.emit();
   }
-  
+
   generar() {
     this.loading = true;
     this.respuesta = '';

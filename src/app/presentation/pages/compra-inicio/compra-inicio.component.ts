@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  OnInit,
+  ViewChild,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ModalProveedorComponent } from '../../components/modal/modal-proveedor/modal-proveedor.component';
 import { IProveedor } from '../../../core/interfaces/proveedor';
@@ -21,13 +28,11 @@ import { MaterialModule } from '../../../shared/ui/material-module';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-    selector: 'app-compra-inicio',
-    imports: [
-        MaterialModule,
-        FormsModule,
-    ],
-    templateUrl: './compra-inicio.component.html',
-    styleUrl: './compra-inicio.component.scss'
+  selector: 'app-compra-inicio',
+  imports: [MaterialModule, FormsModule],
+  templateUrl: './compra-inicio.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './compra-inicio.component.scss'
 })
 export class CompraInicioComponent implements OnInit, AfterViewInit {
   private readonly servicioCompra = inject(CompraService);
@@ -129,10 +134,7 @@ export class CompraInicioComponent implements OnInit, AfterViewInit {
 
   agregarProducto() {
     if (this.productoSeleccionado && this.producto.cantidad > 0) {
-      if (
-        this.producto.precioCompra >= 0 &&
-        this.producto.precioVenta >= 0
-      ) {
+      if (this.producto.precioCompra >= 0 && this.producto.precioVenta >= 0) {
         if (!Number.isInteger(this.producto.cantidad)) {
           this.mostrarMensaje('La cantidad debe ser un número entero.', 'error');
           return;

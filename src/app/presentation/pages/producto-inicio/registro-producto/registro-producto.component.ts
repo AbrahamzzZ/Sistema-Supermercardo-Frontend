@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Validaciones } from '../../../../shared/utility/validaciones';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,12 +15,11 @@ import { MatSelectChange } from '@angular/material/select';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
 @Component({
-    selector: 'app-producto',
-    imports: [
-        MaterialModule
-    ],
-    templateUrl: './registro-producto.component.html',
-    styleUrl: './registro-producto.component.scss'
+  selector: 'app-producto',
+  imports: [MaterialModule],
+  templateUrl: './registro-producto.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './registro-producto.component.scss'
 })
 export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
   private idProducto!: number;

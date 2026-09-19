@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { UsuarioService } from '../../../core/services/usuario.service';
 import { IUsuario } from '../../../core/interfaces/usuario';
@@ -8,19 +8,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Metodos } from '../../../shared/utility/metodos';
 import { IUsuarioRol } from '../../../core/interfaces/Dto/iusuario-rol';
 import { MaterialModule } from '../../../shared/ui/material-module';
-import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
+import { DataTableComponent } from '../../../shared/utility/components/data-table/data-table.component';
 import { TableColumn } from '../../../shared/utility/components/tableColumn';
 import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 
 @Component({
-    selector: 'app-usuario-inicio',
-    imports: [
-        MaterialModule,
-        RouterOutlet,
-        DataTableComponent
-    ],
-    templateUrl: './usuario-inicio.component.html',
-    styleUrl: './usuario-inicio.component.scss'
+  selector: 'app-usuario-inicio',
+  imports: [MaterialModule, RouterOutlet, DataTableComponent],
+  templateUrl: './usuario-inicio.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './usuario-inicio.component.scss'
 })
 export class UsuarioInicioComponent extends BaseListComponent<IUsuarioRol> {
   private readonly usuarioServicio = inject(UsuarioService);
@@ -30,14 +27,14 @@ export class UsuarioInicioComponent extends BaseListComponent<IUsuarioRol> {
   readonly tituloExcel = 'Usuarios';
 
   columns: TableColumn[] = [
-    {key: 'id_Usuario', label: 'No.', type: 'text'},
-    {key: 'codigo', label: 'Código', type: 'text'},
-    {key: 'nombre_Completo', label: 'Nombres', type: 'text'},
-    {key: 'nombre_Rol', label: 'Rol', type: 'text'},
-    {key: 'correo_Electronico', label: 'Correo Electrónico', type: 'text'},
-    {key: 'estado', label: 'Estado', type: 'status'},
-    {key: 'fecha_Creacion', label: 'Fecha de Creación', type: 'date'},
-    {key: 'accion', label: 'Acción', type: 'actions'}
+    { key: 'id_Usuario', label: 'No.', type: 'text' },
+    { key: 'codigo', label: 'Código', type: 'text' },
+    { key: 'nombre_Completo', label: 'Nombres', type: 'text' },
+    { key: 'nombre_Rol', label: 'Rol', type: 'text' },
+    { key: 'correo_Electronico', label: 'Correo Electrónico', type: 'text' },
+    { key: 'estado', label: 'Estado', type: 'status' },
+    { key: 'fecha_Creacion', label: 'Fecha de Creación', type: 'date' },
+    { key: 'accion', label: 'Acción', type: 'actions' }
   ];
 
   override obtenerDatos(pageNumber: number, pageSize: number, filtro: string): void {

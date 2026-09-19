@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
 import { IMenu } from '../../../../core/interfaces/menu';
@@ -8,18 +8,19 @@ import { MenuService } from '../../../../core/services/menu.service';
 import { SidnebarComponent } from '../../../../shared/utility/components/sidnebar/sidnebar.component';
 
 @Component({
-    selector: 'app-main-layout',
-    imports: [SidnebarComponent, MaterialModule, RouterOutlet],
-    templateUrl: './main-layout.component.html',
-    styleUrl: './main-layout.component.scss'
+  selector: 'app-main-layout',
+  imports: [SidnebarComponent, MaterialModule, RouterOutlet],
+  templateUrl: './main-layout.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './main-layout.component.scss'
 })
-export class MainLayoutComponent implements OnInit{
+export class MainLayoutComponent implements OnInit {
   @ViewChild('sidenav') sidenav!: MatSidenav;
   private readonly loginServicio = inject(LoginService);
   private readonly menuServicio = inject(MenuService);
   isCollapsed = true;
-  nombreUsuario = "";
-  tipoUsuario = "";
+  nombreUsuario = '';
+  tipoUsuario = '';
   menus: IMenu[] = [];
 
   ngOnInit() {

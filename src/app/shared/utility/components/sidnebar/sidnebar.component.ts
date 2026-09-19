@@ -1,13 +1,21 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { IMenu } from '../../../../core/interfaces/menu';
 import { MaterialModule } from '../../../ui/material-module';
 
 @Component({
-    selector: 'app-sidnebar',
-    imports: [MaterialModule, RouterLink],
-    templateUrl: './sidnebar.component.html',
-    styleUrl: './sidnebar.component.scss'
+  selector: 'app-sidnebar',
+  imports: [MaterialModule, RouterLink],
+  templateUrl: './sidnebar.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './sidnebar.component.scss'
 })
 export class SidnebarComponent {
   @Input() menus: IMenu[] = [];
@@ -16,7 +24,7 @@ export class SidnebarComponent {
   @Input() isCollapsed = true;
   @Output() toggle = new EventEmitter<void>();
   private readonly router = inject(Router);
-  
+
   toggleSidebar() {
     this.toggle.emit();
   }

@@ -1,6 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MatTableDataSource} from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { IOferta } from '../../../../core/interfaces/oferta';
 import { OfertaService } from '../../../../core/services/oferta.service';
 import { IOfertaProducto } from '../../../../core/interfaces/Dto/ioferta-producto';
@@ -9,29 +9,26 @@ import { DataTableComponent } from '../../../../shared/utility/components/data-t
 import { TableColumn } from '../../../../shared/utility/components/tableColumn';
 
 @Component({
-    selector: 'app-modal-oferta',
-    imports: [
-        MaterialModule,
-        DataTableComponent
-    ],
-    templateUrl: './modal-oferta.component.html',
-    styleUrl: './modal-oferta.component.scss'
+  selector: 'app-modal-oferta',
+  imports: [MaterialModule, DataTableComponent],
+  templateUrl: './modal-oferta.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './modal-oferta.component.scss'
 })
 export class ModalOfertaComponent {
   private readonly ofertaService = inject(OfertaService);
   private readonly dialogRef = inject(MatDialogRef<ModalOfertaComponent>);
   dataSource = new MatTableDataSource<IOfertaProducto>([]);
   columnas: TableColumn[] = [
-    {key: 'id_Oferta', label: 'ID', type: 'number'},
-    {key: 'codigo', label: 'Código', type: 'text'},
-    {key: 'nombre_Oferta', label: 'Nombre', type: 'text'},
-    {key: 'nombre_Producto', label: 'Producto', type: 'text'},
-    {key: 'accion', label: 'Acción', type: 'select'}
+    { key: 'id_Oferta', label: 'ID', type: 'number' },
+    { key: 'codigo', label: 'Código', type: 'text' },
+    { key: 'nombre_Oferta', label: 'Nombre', type: 'text' },
+    { key: 'nombre_Producto', label: 'Producto', type: 'text' },
+    { key: 'accion', label: 'Acción', type: 'select' }
   ];
   filtro = '';
 
-  constructor(
-  ) {
+  constructor() {
     this.obtenerOfertas();
   }
 

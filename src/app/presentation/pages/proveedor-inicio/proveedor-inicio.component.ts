@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { ProveedorService } from '../../../core/services/proveedor.service';
 import { IProveedor } from '../../../core/interfaces/proveedor';
@@ -7,19 +7,16 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Metodos } from '../../../shared/utility/metodos';
 import { MaterialModule } from '../../../shared/ui/material-module';
-import { DataTableComponent } from "../../../shared/utility/components/data-table/data-table.component";
+import { DataTableComponent } from '../../../shared/utility/components/data-table/data-table.component';
 import { TableColumn } from '../../../shared/utility/components/tableColumn';
 import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 
 @Component({
-    selector: 'app-proveedor-inicio',
-    imports: [
-        MaterialModule,
-        RouterOutlet,
-        DataTableComponent
-    ],
-    templateUrl: './proveedor-inicio.component.html',
-    styleUrl: './proveedor-inicio.component.scss'
+  selector: 'app-proveedor-inicio',
+  imports: [MaterialModule, RouterOutlet, DataTableComponent],
+  templateUrl: './proveedor-inicio.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './proveedor-inicio.component.scss'
 })
 export class ProveedorInicioComponent extends BaseListComponent<IProveedor> {
   private readonly router = inject(Router);
@@ -29,16 +26,16 @@ export class ProveedorInicioComponent extends BaseListComponent<IProveedor> {
   readonly tituloExcel = 'Proveedores';
 
   columns: TableColumn[] = [
-    {key: 'id_Proveedor', label: 'No.', type: 'text'},
-    {key: 'codigo', label: 'Código', type: 'text'},
-    {key: 'nombres', label: 'Nombres', type: 'text'},
-    {key: 'apellidos', label: 'Apellidos', type: 'text'},
-    {key: 'cedula', label: 'Cédula', type: 'text'},
-    {key: 'telefono', label: 'Teléfono', type: 'text'},
-    {key: 'correo_Electronico', label: 'Correo Electrónico', type: 'text'},
-    {key: 'estado', label: 'Estado', type: 'status'},
-    {key: 'fecha_Creacion', label: 'Fecha de Creación', type: 'date'},
-    {key: 'accion', label: 'Acción', type: 'actions'}
+    { key: 'id_Proveedor', label: 'No.', type: 'text' },
+    { key: 'codigo', label: 'Código', type: 'text' },
+    { key: 'nombres', label: 'Nombres', type: 'text' },
+    { key: 'apellidos', label: 'Apellidos', type: 'text' },
+    { key: 'cedula', label: 'Cédula', type: 'text' },
+    { key: 'telefono', label: 'Teléfono', type: 'text' },
+    { key: 'correo_Electronico', label: 'Correo Electrónico', type: 'text' },
+    { key: 'estado', label: 'Estado', type: 'status' },
+    { key: 'fecha_Creacion', label: 'Fecha de Creación', type: 'date' },
+    { key: 'accion', label: 'Acción', type: 'actions' }
   ];
 
   override obtenerDatos(pageNumber: number, pageSize: number, filtro: string): void {
