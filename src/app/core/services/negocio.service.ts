@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { appsettings } from '../setting/api/appsettings';
+import { environment } from '../../../../environments/environment';
 import { INegocio } from '../interfaces/negocio';
 import { ApiResponse } from '../setting/api/apiResponse';
 import { ProductoMasVendido } from '../interfaces/Dto/negocio/producto-mas-vendido';
@@ -16,7 +16,7 @@ import { AnalisisIARequest } from '../interfaces/Dto/negocio/IA/analisisIAReques
 })
 export class NegocioService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = appsettings.apiUrl + 'Negocio';
+  private readonly apiUrl: string = environment.API_URL + 'Negocio';
 
   obtener(id: number) {
     return this.http.get<ApiResponse<INegocio>>(`${this.apiUrl}/${id}`);

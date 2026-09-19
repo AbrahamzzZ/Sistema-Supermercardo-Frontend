@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { appsettings } from '../setting/api/appsettings';
+import { environment } from '../../../../environments/environment';
 import { ITransportista } from '../interfaces/transportista';
 import { ApiResponse } from '../setting/api/apiResponse';
 @Injectable({
@@ -8,7 +8,7 @@ import { ApiResponse } from '../setting/api/apiResponse';
 })
 export class TransportistaService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = appsettings.apiUrl + 'Transportista';
+  private readonly apiUrl: string = environment.API_URL + 'Transportista';
 
   lista() {
     return this.http.get<ITransportista[]>(this.apiUrl);

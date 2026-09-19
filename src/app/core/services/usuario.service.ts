@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { appsettings } from '../setting/api/appsettings';
+import { environment } from '../../../../environments/environment';
 import { IUsuario } from '../interfaces/usuario';
 import { ApiResponse } from '../setting/api/apiResponse';
 import { IUsuarioRol } from '../interfaces/Dto/iusuario-rol';
@@ -10,7 +10,7 @@ import { IUsuarioRol } from '../interfaces/Dto/iusuario-rol';
 })
 export class UsuarioService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = appsettings.apiUrl + 'Usuario';
+  private readonly apiUrl: string = environment.API_URL + 'Usuario';
 
   lista() {
     return this.http.get<IUsuarioRol[]>(this.apiUrl);

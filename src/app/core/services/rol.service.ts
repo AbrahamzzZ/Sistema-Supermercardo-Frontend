@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { appsettings } from '../setting/api/appsettings';
+import { environment } from '../../../../environments/environment';
 import { IRol } from '../interfaces/rol';
 
 @Injectable({
@@ -8,7 +8,7 @@ import { IRol } from '../interfaces/rol';
 })
 export class RolService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = appsettings.apiUrl + 'Rol';
+  private readonly apiUrl: string = environment.API_URL + 'Rol';
 
   lista() {
     return this.http.get<IRol[]>(this.apiUrl);

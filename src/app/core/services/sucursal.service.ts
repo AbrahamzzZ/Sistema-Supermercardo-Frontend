@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { appsettings } from '../setting/api/appsettings';
+import { environment } from '../../../../environments/environment';
 import { ISucursal } from '../interfaces/sucursal';
 import { ApiResponse } from '../setting/api/apiResponse';
 import { ISucursalNegocio } from '../interfaces/Dto/sucursal-negocio';
@@ -10,7 +10,7 @@ import { ISucursalNegocio } from '../interfaces/Dto/sucursal-negocio';
 })
 export class SucursalService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = appsettings.apiUrl + 'Sucursal';
+  private readonly apiUrl: string = environment.API_URL + 'Sucursal';
 
   lista() {
     return this.http.get<ISucursalNegocio[]>(this.apiUrl);

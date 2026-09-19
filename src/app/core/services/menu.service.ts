@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { appsettings } from '../setting/api/appsettings';
+import { environment } from '../../../../environments/environment';
 import { IMenu } from '../interfaces/menu';
 import { ApiResponse } from '../setting/api/apiResponse';
 
@@ -9,7 +9,7 @@ import { ApiResponse } from '../setting/api/apiResponse';
 })
 export class MenuService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = appsettings.apiUrl + 'Menu';
+  private readonly apiUrl: string = environment.API_URL + 'Menu';
 
   obtener(id: number) {
     return this.http.get<ApiResponse<IMenu[]>>(`${this.apiUrl}/${id}`);

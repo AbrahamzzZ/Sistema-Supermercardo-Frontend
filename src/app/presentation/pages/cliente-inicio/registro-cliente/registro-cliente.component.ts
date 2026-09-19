@@ -21,11 +21,11 @@ import { MaterialModule } from '../../../../shared/ui/material-module';
 })
 export class RegistroClienteComponent implements OnInit, CanComponentDeactive {
   private idCliente!: number;
-  private route = inject(ActivatedRoute);
-  private clienteServicio = inject(ClienteService);
-  private snackBar = inject(MatSnackBar);
-  private formBuilder = inject(FormBuilder);
-  private router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly clienteServicio = inject(ClienteService);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly router = inject(Router);
 
   public formCliente = this.formBuilder.nonNullable.group({
     codigo: [Metodos.generarCodigo()],

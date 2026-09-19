@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { appsettings } from '../setting/api/appsettings';
+import { environment } from '../../../../environments/environment';
 import { ICompra } from '../interfaces/compra';
 import { ApiResponse } from '../setting/api/apiResponse';
 import { ICompraRepuesta } from '../interfaces/Dto/compra/icompra-repuesta';
@@ -11,7 +11,7 @@ import { IDetallesCompra } from '../interfaces/Dto/compra/idetalles-compra';
 })
 export class CompraService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = appsettings.apiUrl + 'Compra';
+  private readonly apiUrl: string = environment.API_URL + 'Compra';
 
   obtenerNuevoNumeroDocumento() {
     return this.http.get<{ numeroDocumento: string }>(`${this.apiUrl}/numero-documento`);
