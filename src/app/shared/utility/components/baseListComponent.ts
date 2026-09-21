@@ -32,6 +32,7 @@ export abstract class BaseListComponent<T> implements OnInit {
   }
 
   cambiarPagina(event: any): void {
+    this.pageSize = event.pageSize;
     this.obtenerDatos(
       event.pageIndex + 1,
       event.pageSize,

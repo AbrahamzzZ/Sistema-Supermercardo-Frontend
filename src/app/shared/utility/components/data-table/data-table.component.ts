@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableColumn } from '../tableColumn';
 import { MaterialModule } from '../../../ui/material-module';
@@ -11,7 +12,9 @@ import { MaterialModule } from '../../../ui/material-module';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './data-table.component.scss'
 })
-export class DataTableComponent {
+export class DataTableComponent implements OnChanges {
+  @ViewChild(MatPaginator) private paginator?: MatPaginator;
+
   @Input() dataSource = new MatTableDataSource<any>();
 
   @Input() columns: TableColumn[] = [];
@@ -33,6 +36,12 @@ export class DataTableComponent {
   @Output() seleccionar = new EventEmitter<any>();
 
   @Output() cambioPagina = new EventEmitter<PageEvent>();
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['totalRegistros'] && this.paginator) {
+      this.paginator.pageIndex = 0;
+    }
+  }
 
   get displayedColumns(): string[] {
     return this.columns.map((column) => column.key);
