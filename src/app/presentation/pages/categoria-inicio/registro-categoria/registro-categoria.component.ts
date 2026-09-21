@@ -1,88 +1,86 @@
-import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoriaService } from '../../../../core/services/categoria.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Metodos } from '../../../../shared/utility/metodos';
 import { Validaciones } from '../../../../shared/utility/validaciones';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ICategoria } from '../../../../core/interfaces/categoria';
-import { Observable } from 'rxjs';
 import { CanComponentDeactive } from '../../../../core/guards/formulario-incompleto.guard';
 import { MaterialModule } from '../../../../shared/ui/material-module';
-
+import { form, FormField, required, minLength, maxLength, submit } from '@angular/forms/signals';
 @Component({
   selector: 'app-registro-categoria',
-  imports: [MaterialModule],
+  imports: [MaterialModule, FormField],
   templateUrl: './registro-categoria.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './registro-categoria.component.scss'
 })
 export class RegistroCategoriaComponent implements OnInit, CanComponentDeactive {
-  private idCategoria!: number;
+  private readonly idCategoria = signal<number | undefined>(undefined);
+  private readonly salidaAutorizada = signal(false);
+  protected readonly guardando = signal(false);
+
   private readonly route = inject(ActivatedRoute);
   private readonly categoriaServicio = inject(CategoriaService);
   private readonly snackBar = inject(MatSnackBar);
-  private readonly formBuilder = inject(FormBuilder);
   private readonly router = inject(Router);
 
-  public formCategoria = this.formBuilder.nonNullable.group({
-    codigo: [Metodos.generarCodigo()],
-    nombre: ['', [Validators.required, Validaciones.soloLetras(), Validators.maxLength(70)]],
-    estado: [false]
+  protected readonly categoriaModel = signal({
+    codigo: Metodos.generarCodigo(),
+    nombre: '',
+    estado: false
   });
+
+  protected readonly categoriaForm = form(this.categoriaModel, (schema) => {
+    required(schema.nombre, {message: 'Ingrese un nombre.'});
+    minLength(schema.nombre, 4, {message: 'Nombre demasiado corto.'});
+    maxLength(schema.nombre, 30, {message: 'Nombre demasiado largo.'});
+    Validaciones.soloLetrasSignal(schema.nombre);
+  });
+
+  private tieneCambioSinGuardar() : boolean {
+    return this.categoriaModel().nombre !== '';
+  }
 
   @HostListener('window:beforeunload', ['$event'])
   onBeforeReload(e: BeforeUnloadEvent) {
-    const camposEditables = ['nombreCompleto', 'clave', 'correoElectronico'];
-    const camposConDatos = camposEditables.some(
-      (campo) => this.formCategoria.get(campo)?.value !== ''
-    );
 
-    if (camposConDatos) {
+    if (this.tieneCambioSinGuardar()) {
       e.preventDefault();
       e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
     }
   }
 
   ngOnInit(): void {
-    if (this.route.snapshot.params['id']) {
-      this.idCategoria = Number.parseInt(this.route.snapshot.params['id']);
-    }
+   if(this.route.snapshot.params['id']){
+    this.idCategoria.set(Number.parseInt(this.route.snapshot.params['id']));
+   }
   }
 
-  registrarCategoria() {
-    const categoria: ICategoria = {
-      id_Categoria: this.idCategoria || 0,
-      codigo: Metodos.generarCodigo(),
-      nombre_Categoria: this.formCategoria.value.nombre?.trim() ?? '',
-      estado: this.formCategoria.value.estado ?? false,
-      fecha_Creacion: Metodos.getFechaCreacion()
-    };
+  async registrarCategoria() {
+    await submit(this.categoriaForm, async (form) => {
+      const categoria: ICategoria = {
+        id_Categoria: this.idCategoria() || 0,
+        codigo: Metodos.generarCodigo(),
+        nombre_Categoria: form().value().nombre.trim(),
+        estado: form().value().estado
+      };
 
-    this.formCategoria.markAllAsTouched();
+      this.guardando.set(true);
 
-    if (!this.formCategoria.valid) {
-      this.mostrarMensaje('Formulatio inválido', 'error');
-      return;
-    }
-
-    this.categoriaServicio.registrar(categoria).subscribe({
-      next: (data) => {
-        if (data.isSuccess) {
-          this.router.navigate(['/categoria'], { skipLocationChange: true });
-          this.mostrarMensaje('¡Categoría registrada exitosamente!', 'success');
-        }
-      },
-      error: (err: HttpErrorResponse) => {
-        console.log('Error 400:', err.error);
-        if (err.error?.errors) {
-          Object.entries(err.error.errors).forEach(([campo, errores]) => {
-            console.log(`Error en ${campo}:`, errores);
-          });
-          this.mostrarMensaje('Error al registrar la Categoría', 'error');
-        }
-      }
+      this.categoriaServicio.registrar(categoria).subscribe({
+        next: (data) => {
+          if(data.isSuccess){
+            this.salidaAutorizada.set(true);
+            this.router.navigate(['/categoria'], { skipLocationChange: true});
+            this.mostrarMensaje('¡Categoría registrada exitosamente!', 'success');
+          }
+        },
+        error: () => {
+          this.mostrarMensaje('Error al registrar la categoría', 'error');
+        },
+        complete: () => this.guardando.set(false)
+      });
     });
   }
 
@@ -101,19 +99,7 @@ export class RegistroCategoriaComponent implements OnInit, CanComponentDeactive 
     });
   }
 
-  canDeactive(): boolean | Observable<boolean> {
-    const camposEditables = ['nombre'];
-    const camposVacios = camposEditables.some(
-      (campo) => this.formCategoria.get(campo)?.value === ''
-    );
-    const camposConDatos = camposEditables.some(
-      (campo) => this.formCategoria.get(campo)?.value !== ''
-    );
-
-    return camposConDatos && camposVacios ? false : true;
-  }
-
-  get nombreField(): FormControl<string> {
-    return this.formCategoria.controls.nombre;
+  canDeactive(): boolean {
+    return this.salidaAutorizada() || !this.tieneCambioSinGuardar();
   }
 }

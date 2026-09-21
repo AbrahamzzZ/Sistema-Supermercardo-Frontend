@@ -5,44 +5,28 @@
     </mat-card-header>
 
     <mat-card-content>
-      <form class="form" [formGroup]="formCategoria">
-        <mat-form-field appearance="outline" class="form__field" >
-          <mat-label>Codigo: </mat-label>
-          <input matInput type="text" formControlName="codigo" readonly />
+      <form class="form" novalidate>
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Código</mat-label>
+          <input id="codigo" matInput type="text" [value]="categoriaModel().codigo" readonly aria-label="Código"/>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form__field">
-          <mat-label>Nombre: </mat-label>
-          <input matInput type="text" formControlName="nombre" maxlength="60" minlength="5" />
-          @if (nombreField.hasError('required')) {
-            <mat-error class="form__error">Ingrese un nombre.</mat-error>
-          } @else if (nombreField.hasError('minlength')) {
-            <mat-error class="form__error">Nombre demasiado corto.</mat-error>
-          } @else if (nombreField.hasError('soloLetras')) {
-            <mat-error class="form__error">El nombre solo debe contener letras.</mat-error>
+          <mat-label>Nombre</mat-label>
+          <input id="nombre" matInput type="text" [formField]="categoriaForm.nombre" aria-label="Nombre" />
+
+          @if (categoriaForm.nombre().touched() && categoriaForm.nombre().invalid()) {
+            <mat-error class="form__error">
+              {{ categoriaForm.nombre().errors()[0]?.message }}
+            </mat-error>
           }
         </mat-form-field>
 
-        <mat-checkbox formControlName="estado">Activo</mat-checkbox>
-        
-        <div class="form__action">
-          <button
-            class="form__button form__button--primary"
-            mat-raised-button
-            type="button"
-            (click)="registrarCategoria()"
-          >
-            Registrar
-          </button>
+        <mat-checkbox [formField]="categoriaForm.estado">Activo</mat-checkbox>
 
-          <button
-            class="form__button form__button--secondary"
-            mat-stroked-button
-            type="button"
-            (click)="regresar()"
-          >
-            Regresar
-          </button>
+        <div class="form__action">
+          <button class="form__button form__button--primary" mat-raised-button type="button" [disabled]="guardando()"(click)="registrarCategoria()">Registrar</button>
+          <button class="form__button form__button--secondary" mat-stroked-button type="button" (click)="regresar()">Regresar</button>
         </div>
       </form>
     </mat-card-content>
