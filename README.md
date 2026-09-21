@@ -1,6 +1,6 @@
-# Sistema de Ventas - Frontend (Angular 17)
+# Sistema de Ventas - Frontend (Angular 22)
 
-Aplicación web desarrollada en **Angular 17** que consume una API REST en .NET 8 para la gestión integral de un negocio.
+Aplicación web desarrollada en **Angular 22** que consume una API REST en .NET 8 para la gestión integral de un negocio.
 
 Incluye administración de usuarios, ventas, compras, inventario, reportes y estadísticas con gráficos interactivos.
 
@@ -58,7 +58,7 @@ La IA analiza la información del sistema y genera un resumen interpretativo par
 
 ## Tecnologías utilizadas
 
-- Angular 17
+- Angular 22
 - Angular Material
 - SCSS
 - Chart.js
