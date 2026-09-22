@@ -1,9 +1,6 @@
-import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy, signal } from '@angular/core';
 import { Validaciones } from '../../../../shared/utility/validaciones';
-
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ITransportista } from '../../../../core/interfaces/transportista';
 import { Metodos } from '../../../../shared/utility/metodos';
 import { TransportistaService } from '../../../../core/services/transportista.service';
@@ -11,59 +8,66 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { CanComponentDeactive } from '../../../../core/guards/formulario-incompleto.guard';
 import { MaterialModule } from '../../../../shared/ui/material-module';
+import { email, form, FormField, maxLength, minLength, required, submit } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-transportista',
-  imports: [MaterialModule],
+  imports: [MaterialModule, FormField],
   templateUrl: './registro-transportista.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './registro-transportista.component.scss'
 })
 export class RegistroTransportistaComponent implements OnInit, CanComponentDeactive {
-  private idTransportista!: number;
+  private readonly idTransportista = signal<number | undefined>(undefined);
+  private readonly salidaAutorizada = signal(false);
+  private readonly guardando = signal(false);
+
   private readonly route = inject(ActivatedRoute);
   private readonly transportistaServicio = inject(TransportistaService);
   private readonly snackBar = inject(MatSnackBar);
-  private readonly formBuilder = inject(FormBuilder);
   private readonly router = inject(Router);
   public imagenURL: string | ArrayBuffer | null = null;
 
-  public formTransportista = this.formBuilder.nonNullable.group({
-    codigo: [Metodos.generarCodigo()],
-    nombres: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(30),
-        Validaciones.soloLetras()
-      ]
-    ],
-    apellidos: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(30),
-        Validaciones.soloLetras()
-      ]
-    ],
-    cedula: ['', [Validators.required, Validaciones.soloNumeros()]],
-    telefono: ['', [Validators.required, Validaciones.soloNumeros()]],
-    correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
-    imageBase64: ['', [Validators.required]],
-    imagen: [''],
-    estado: [false]
+  protected readonly transportistaModel = signal({
+    codigo: Metodos.generarCodigo(),
+    nombres: '',
+    apellidos: '',
+    cedula: '',
+    telefono: '',
+    correo_Electronico: '',
+    imagenBase64: '',
+    estado: false
   });
+
+  protected readonly transportistaForm = form(this.transportistaModel, (schema) => {
+    required(schema.nombres, {message: 'Ingrese un nombre.'});
+    minLength(schema.nombres, 3, {message: 'Nombres demasiado cortos.'});
+    maxLength(schema.nombres, 30, {message: 'Nombres demasiado largos.'});
+    required(schema.apellidos, {message: 'Ingrese sus apellidos.'});
+    minLength(schema.apellidos, 3, {message: 'Nombres demasiado cortos.'});
+    maxLength(schema.apellidos, 30, {message: 'Nombres demasiado largos.'});
+    required(schema.cedula, {message: 'Ingrese su cédula.'});
+    maxLength(schema.cedula, 10, {message: 'La cédula debe tener 10 dígitos.'});
+    required(schema.telefono, {message: 'Ingrese su teléfono.'});
+    maxLength(schema.telefono, 10, {message: 'El teléfono debe tener 10 dígitos.'});
+    required(schema.correo_Electronico, {message: 'Ingrese su correo electrónico.'});
+    required(schema.imagenBase64, {message: 'Es obligatorio subir una foto del transportista.'});
+    maxLength(schema.correo_Electronico, 50, {message: 'El correo electrónico es demasiado largo.'});
+    email(schema.correo_Electronico, {message: 'Ingrese un correo valido'});
+    Validaciones.soloLetrasSignal(schema.nombres);
+    Validaciones.soloLetrasSignal(schema.apellidos);
+    Validaciones.soloNumerosSignal(schema.cedula, 10);
+    Validaciones.soloNumerosSignal(schema.telefono, 10);
+  });
+
+  private tieneCambioSinGuardar() : boolean {
+    return this.transportistaModel().nombres !== '' || this.transportistaModel().apellidos != '' || this.transportistaModel().cedula != '' || this.transportistaModel().telefono != '' || this.transportistaModel().correo_Electronico != '';
+  }
 
   @HostListener('window:beforeunload', ['$event'])
   onBeforeReload(e: BeforeUnloadEvent) {
-    const camposEditables = ['nombres', 'apellidos', 'cedula', 'telefono', 'correoElectronico'];
-    const camposConDatos = camposEditables.some(
-      (campo) => this.formTransportista.get(campo)?.value !== ''
-    );
 
-    if (camposConDatos) {
+    if (this.tieneCambioSinGuardar()) {
       e.preventDefault();
       e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
     }
@@ -71,49 +75,39 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
 
   ngOnInit(): void {
     if (this.route.snapshot.params['id']) {
-      this.idTransportista = Number.parseInt(this.route.snapshot.params['id']);
+      this.idTransportista.set(Number.parseInt(this.route.snapshot.params['id']));
     }
   }
 
-  registrarTransportista() {
-    const transportista: ITransportista = {
-      id_Transportista: this.idTransportista || 0,
-      codigo: Metodos.generarCodigo(),
-      nombres: this.formTransportista.value.nombres?.trim() ?? '',
-      apellidos: this.formTransportista.value.apellidos?.trim() ?? '',
-      cedula: this.formTransportista.value.cedula ?? '',
-      telefono: this.formTransportista.value.telefono ?? '',
-      correo_Electronico: this.formTransportista.value.correoElectronico?.trim() ?? '',
-      foto: this.formTransportista.value.imagen ?? '',
-      imagenBase64: this.formTransportista.value.imageBase64 ?? '',
-      estado: this.formTransportista.value.estado ?? false,
-      fecha_Creacion: Metodos.getFechaCreacion()
-    };
-
-    this.formTransportista.markAllAsTouched();
-
-    if (!this.formTransportista.valid) {
-      this.mostrarMensaje('Formulario inválido.', 'error');
-      return;
-    }
-
-    this.transportistaServicio.registrar(transportista).subscribe({
-      next: (data) => {
-        if (data.isSuccess) {
-          this.router.navigate(['/transportista'], { skipLocationChange: true });
-          this.mostrarMensaje('¡Transportista registrado exitosamente!', 'success');
-        }
-        console.log(data);
-      },
-      error: (err: HttpErrorResponse) => {
-        console.log('Error 400:', err.error);
-        if (err.error?.errors) {
-          Object.entries(err.error.errors).forEach(([campo, errores]) => {
-            console.log(`Error en ${campo}:`, errores);
-          });
-          this.mostrarMensaje('Error al registrar el Transportista', 'error');
-        }
+  async registrarTransportista() {
+    await submit(this.transportistaForm, async (form) => {
+      const transportista: ITransportista = {
+        id_Transportista: this.idTransportista() || 0,
+        codigo: Metodos.generarCodigo(),
+        nombres: form().value().nombres.trim(),
+        apellidos: form().value().apellidos.trim(),
+        cedula: form().value().cedula.trim(),
+        telefono: form().value().telefono.trim(),
+        correo_Electronico: form().value().correo_Electronico.trimEnd(),
+        imagenBase64: form().value().imagenBase64.trim(),
+        estado: form().value().estado
       }
+      
+      this.guardando.set(true);
+
+      this.transportistaServicio.registrar(transportista).subscribe({
+        next: (data) => {
+          if (data.isSuccess) {
+            this.salidaAutorizada.set(true);
+            this.router.navigate(['/transportista'], { skipLocationChange: true });
+            this.mostrarMensaje('¡Transportista registrado exitosamente!', 'success');
+          }
+        },
+        error: () => {
+          this.mostrarMensaje('Error al registrar el Transportista', 'error');
+        },
+        complete: () => this.guardando.set(false)
+      });
     });
   }
 
@@ -141,8 +135,8 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
       reader.onload = () => {
         this.imagenURL = reader.result as string; // Vista previa de la imagen
 
-        this.formTransportista.controls.imageBase64.setValue(this.imagenURL?.split(',')[1]); // Guardar solo la parte Base64
-        this.imagenBase64Field.markAsTouched();
+        const imagenBase64 = this.imagenURL?.split(',')[1] ?? '';
+        this.transportistaModel.update((modelo) => ({ ...modelo, imagenBase64 }));
       };
 
       reader.readAsDataURL(file); // Convierte la imagen a Base64
@@ -150,44 +144,11 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
   }
 
   eliminarImagen(): void {
-    this.imagenBase64Field.setValue('');
-    this.imagenBase64Field.markAsUntouched();
+    this.transportistaModel.update((modelo) => ({ ...modelo, imagenBase64: '' }));
     this.imagenURL = '';
   }
 
   canDeactive(): boolean | Observable<boolean> {
-    const camposEditables = ['nombres', 'apellidos', 'cedula', 'telefono', 'correoElectronico'];
-    const camposVacios = camposEditables.some(
-      (campo) => this.formTransportista.get(campo)?.value === ''
-    );
-    const camposConDatos = camposEditables.some(
-      (campo) => this.formTransportista.get(campo)?.value !== ''
-    );
-
-    return camposConDatos && camposVacios ? false : true;
-  }
-
-  get nombresField(): FormControl<string> {
-    return this.formTransportista.controls.nombres;
-  }
-
-  get apellidosField(): FormControl<string> {
-    return this.formTransportista.controls.apellidos;
-  }
-
-  get cedulaField(): FormControl<string> {
-    return this.formTransportista.controls.cedula;
-  }
-
-  get telefonoField(): FormControl<string> {
-    return this.formTransportista.controls.telefono;
-  }
-
-  get correoElectronicoField(): FormControl<string> {
-    return this.formTransportista.controls.correoElectronico;
-  }
-
-  get imagenBase64Field(): FormControl<string> {
-    return this.formTransportista.controls.imageBase64;
+    return this.salidaAutorizada() || !this.tieneCambioSinGuardar();
   }
 }

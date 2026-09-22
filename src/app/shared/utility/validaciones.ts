@@ -23,6 +23,23 @@ export class Validaciones {
     })
   }
 
+  static formatoClaveSignal(path: SchemaPath<string>): void {
+    validate(path, ({ value }) => {
+      const valor = value().trim();
+      if (!valor) return null;
+      const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z\d])[A-Za-z\d\W]{8,}$/;
+      return regex.test(valor)
+        ? null
+        : { kind: 'formatoClave', message: 'La clave debe incluir letras, números y un carácter especial.' };
+    });
+  }
+
+  static rolRequeridoSignal(path: SchemaPath<number>): void {
+    validate(path, ({ value }) =>
+      value() > 0 ? null : { kind: 'rolInvalido', message: 'Debe seleccionar un rol.' }
+    );
+  }
+
   static soloNumeros(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null =>
       /^\d{10}$/.test(control.value) ? null : { soloNumeros: true };
