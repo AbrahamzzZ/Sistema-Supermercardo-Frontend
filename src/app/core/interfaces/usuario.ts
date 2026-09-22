@@ -7,5 +7,5 @@ export interface IUsuario {
   id_Rol: number;
   nombre_Rol?: string;
   estado: boolean;
-  fecha_Creacion: string;
+  fecha_Creacion?: string;
 }
