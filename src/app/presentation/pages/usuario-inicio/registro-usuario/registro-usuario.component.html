@@ -1,61 +1,61 @@
 <div class="container">
-  <mat-card class="container__card">
-    <mat-card-header class="container__header">
-      <mat-card-title class="container__title">Registro de usuarios</mat-card-title>
-    </mat-card-header>
+	<mat-card class="container__card">
+		<mat-card-header class="container__header">
+			<mat-card-title class="container__title">Registro de usuarios</mat-card-title>
+		</mat-card-header>
 
-    <mat-card-content>
-      <form class="form" novalidate>
-        <mat-form-field appearance="outline" class="form__field">
-          <mat-label>Codigo: </mat-label>
-          <input id="codigo" matInput type="text" [value]="usuarioModel().codigo" readonly aria-label="Código" />
-        </mat-form-field>
+		<mat-card-content>
+		<form class="form" novalidate>
+			<mat-form-field appearance="outline" class="form__field">
+			<mat-label>Código: </mat-label>
+			<input id="codigo" matInput type="text" [value]="usuarioModel().codigo" readonly aria-label="Código" />
+			</mat-form-field>
 
-        <mat-form-field appearance="outline" class="form__field">
-          <mat-label>Nombre completo: </mat-label>
-          <input id="nombre_Completo" matInput type="text" [formField]="usuarioForm.nombre_Completo" aria-label="Nombre completo" />
+			<mat-form-field appearance="outline" class="form__field">
+			<mat-label>Nombre completo: </mat-label>
+			<input id="nombre_Completo" matInput type="text" [formField]="usuarioForm.nombre_Completo" aria-label="Nombre completo" />
 
-           @if (usuarioForm.nombre_Completo().touched() && usuarioForm.nombre_Completo().invalid()) {
-            <mat-error class="form__error">{{ usuarioForm.nombre_Completo().errors()[0]?.message }}</mat-error>
-          }
-        </mat-form-field>
+			@if (usuarioForm.nombre_Completo().touched() && usuarioForm.nombre_Completo().invalid()) {
+				<mat-error class="form__error">{{ usuarioForm.nombre_Completo().errors()[0]?.message }}</mat-error>
+			}
+			</mat-form-field>
 
-        <mat-form-field appearance="outline" class="form__field">
-          <mat-label>Clave: </mat-label>
-          <input id="clave" matInput type="password" [formField]="usuarioForm.clave" aria-label="Clave" />
-          @if (usuarioForm.clave().touched() && usuarioForm.clave().invalid()) {
-            <mat-error class="form__error">{{ usuarioForm.clave().errors()[0]?.message }}</mat-error>
-          }
-        </mat-form-field>
+			<mat-form-field appearance="outline" class="form__field">
+				<mat-label>Clave: </mat-label>
+				<input id="clave" matInput type="password" [formField]="usuarioForm.clave" aria-label="Clave" />
+				@if (usuarioForm.clave().touched() && usuarioForm.clave().invalid()) {
+					<mat-error class="form__error">{{ usuarioForm.clave().errors()[0]?.message }}</mat-error>
+				}
+			</mat-form-field>
 
-        <mat-form-field appearance="outline" class="form__field">
-          <mat-label>Correo Electrónico: </mat-label>
-          <input id="correo_Electronico" matInput type="email" [formField]="usuarioForm.correo_Electronico" aria-label="Correo Electrónico" />
-  
-          @if (usuarioForm.correo_Electronico().touched() && usuarioForm.correo_Electronico().invalid()) {
-            <mat-error class="form__error">{{ usuarioForm.correo_Electronico().errors()[0]?.message }}</mat-error>
-          }
-        </mat-form-field>
+			<mat-form-field appearance="outline" class="form__field">
+				<mat-label>Correo Electrónico: </mat-label>
+				<input id="correo_Electronico" matInput type="email" [formField]="usuarioForm.correo_Electronico" aria-label="Correo Electrónico" />
+		
+				@if (usuarioForm.correo_Electronico().touched() && usuarioForm.correo_Electronico().invalid()) {
+					<mat-error class="form__error">{{ usuarioForm.correo_Electronico().errors()[0]?.message }}</mat-error>
+				}
+			</mat-form-field>
 
-        <mat-form-field appearance="outline" class="form__field">
-          <mat-label>Seleccione un rol</mat-label>
-          <mat-select disableRipple [formField]="usuarioForm.rol">
-            @for (rol of roles(); track rol.idRol) {
-              <mat-option [value]="rol.idRol">{{ rol.nombre }}</mat-option>
-            }
-          </mat-select>
-          @if (usuarioForm.rol().touched() && usuarioForm.rol().invalid()) {
-            <mat-error class="form__error">{{ usuarioForm.rol().errors()[0]?.message }}</mat-error>
-          }
-        </mat-form-field>
+			<mat-form-field appearance="outline" class="form__field">
+				<mat-label>Seleccione un rol</mat-label>
+				<mat-select disableRipple [formField]="usuarioForm.rol">
+					@for (rol of roles(); track rol.idRol) {
+					<mat-option [value]="rol.idRol">{{ rol.nombre }}</mat-option>
+					}
+				</mat-select>
+				@if (usuarioForm.rol().touched() && usuarioForm.rol().invalid()) {
+					<mat-error class="form__error">{{ usuarioForm.rol().errors()[0]?.message }}</mat-error>
+				}
+			</mat-form-field>
 
-        <mat-checkbox [formField]="usuarioForm.estado">Activo</mat-checkbox>
+			<mat-checkbox [formField]="usuarioForm.estado">Activo</mat-checkbox>
 
-        <div class="form__action">
-          <button class="form__button form__button--primary" mat-raised-button type="button" (click)="registrarUsuario()">Registrar</button>
-          <button class="form__button form__button--secondary" mat-stroked-button type="button" (click)="regresar()">Regresar</button>
-        </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
+			<div class="form__action">
+				<button class="form__button form__button--primary" mat-raised-button type="button" (click)="registrarUsuario()">Registrar</button>
+				<button class="form__button form__button--secondary" mat-stroked-button type="button" (click)="regresar()">Regresar</button>
+			</div>
+		</form>
+		</mat-card-content>
+	</mat-card>
 </div>

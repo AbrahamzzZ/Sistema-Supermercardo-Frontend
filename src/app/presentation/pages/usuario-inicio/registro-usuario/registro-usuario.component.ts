@@ -10,6 +10,7 @@ import { RolService } from '../../../../core/services/rol.service';
 import { IRol } from '../../../../core/interfaces/rol';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 import { email, form, FormField, maxLength, minLength, required, submit } from '@angular/forms/signals';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-usuario',
@@ -124,7 +125,7 @@ export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive {
     });
   }
 
-  canDeactive(): boolean {
+  canDeactive(): boolean | Observable<boolean>{
     return this.salidaAutorizada() || !this.tieneCambioSinGuardar();
   }
 }
