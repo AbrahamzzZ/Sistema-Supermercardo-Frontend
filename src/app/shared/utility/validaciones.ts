@@ -91,9 +91,31 @@ export class Validaciones {
       control.value && control.value !== 0 ? null : { productoInvalido: true };
   }
 
+  static productoRequeridoSignal(path: SchemaPath<number>): void {
+    validate(path, ({ value }) =>
+      value() > 0 ? null : { kind: 'productoInvalido', message: 'Debe seleccionar un producto.' }
+    );
+  }
+
+  static fechaFinValidaSignal(fechaFinPath: SchemaPath<Date>, fechaInicioPath: SchemaPath<Date>): void {
+    validate(fechaFinPath, ({ value, valueOf }) => {
+      const fechaFin = value();
+      const fechaInicio = valueOf(fechaInicioPath);
+
+      if (!fechaFin || !fechaInicio) return null;
+      return fechaFin < fechaInicio ? { kind: 'fechaFinInvalida', message: 'La fecha fin debe ser posterior a la fecha inicio.' } : null;
+    });
+  }
+
   static categoriaRequerida(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null =>
       control.value && control.value !== 0 ? null : { categoriaInvalida: true };
+  }
+
+  static categoriaRequeridaSignal(path: SchemaPath<number>): void {
+    validate(path, ({ value }) =>
+      value() > 0 ? null : { kind: 'categoriaInvalida', message: 'Debe seleccionar una categoría.' }
+    );
   }
 
   static coordenadaValida(): ValidatorFn {
@@ -103,5 +125,16 @@ export class Validaciones {
       const numero = Number.parseFloat(String(valor));
       return Number.isNaN(numero) || numero < -180 || numero > 180 ? { coordenadaInvalida: true } : null;
     };
+  }
+
+  static coordenadaValidaSignal(path: SchemaPath<string>, nombre: string): void {
+    validate(path, ({ value }) => {
+      const valor = value().trim();
+      if (!valor) return null;
+      const numero = Number.parseFloat(valor);
+      return Number.isNaN(numero) || numero < -180 || numero > 180
+        ? { kind: 'coordenadaInvalida', message: `Ingrese una ${nombre} válida.` }
+        : null;
+    });
   }
 }

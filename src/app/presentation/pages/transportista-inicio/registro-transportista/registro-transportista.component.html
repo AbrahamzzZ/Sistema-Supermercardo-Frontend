@@ -39,23 +39,23 @@
               <mat-label>Telefono: </mat-label>
               <input id="telefono" matInput type="text" inputmode="numeric" [formField]="transportistaForm.telefono" aria-label="Teléfono" />
 
-                @if (transportistaForm.telefono().touched() && transportistaForm.telefono().invalid()) {
-                  <mat-error class="form__error">{{ transportistaForm.telefono().errors()[0]?.message }}</mat-error>
-                }
-              </mat-form-field>
+              @if (transportistaForm.telefono().touched() && transportistaForm.telefono().invalid()) {
+                <mat-error class="form__error">{{ transportistaForm.telefono().errors()[0]?.message }}</mat-error>
+              }
+            </mat-form-field>
 
-              <mat-form-field appearance="outline" class="form__field">
-                <mat-label>Correo Electrónico: </mat-label>
-                <input id="correo_Electronico" matInput type="email" [formField]="transportistaForm.correo_Electronico" aria-label="Correo Electrónico"/>
+            <mat-form-field appearance="outline" class="form__field">
+              <mat-label>Correo Electrónico: </mat-label>
+              <input id="correo_Electronico" matInput type="email" [formField]="transportistaForm.correo_Electronico" aria-label="Correo Electrónico"/>
 
-                @if (transportistaForm.correo_Electronico().touched() && transportistaForm.correo_Electronico().invalid()) {
-                  <mat-error class="form__error">{{ transportistaForm.correo_Electronico().errors()[0]?.message }}</mat-error>
-                }        
-              </mat-form-field>
-            </div>
-            <div class="form__right">
-              <div class="form-group">
-                <label for="fileInput">Foto del Transportista:</label>
+              @if (transportistaForm.correo_Electronico().touched() && transportistaForm.correo_Electronico().invalid()) {
+                <mat-error class="form__error">{{ transportistaForm.correo_Electronico().errors()[0]?.message }}</mat-error>
+              }        
+            </mat-form-field>
+          </div>
+          <div class="form__right">
+            <div class="form-group">
+              <label for="fileInput">Foto del Transportista:</label>
                 <div class="file-input-container">
                   <input type="file" (change)="subirImagen($event)" accept="image/*" #fotoTransportista class="file-input" id="fileInput" />
                     <label for="fileInput" class="file-label">
@@ -87,14 +87,14 @@
                     }
                   </div>
 
-                  <mat-checkbox [formField]="transportistaForm.estado">Activo</mat-checkbox>
-                </div>
+                <mat-checkbox [formField]="transportistaForm.estado">Activo</mat-checkbox>
               </div>
-              <div class="form__action">
-                <button class="form__button form__button--primary" mat-raised-button type="button" (click)="registrarTransportista()">Registrar</button>
-                <button class="form__button form__button--secondary" mat-stroked-button type="button" (click)="regresar()">Regresar</button>
-              </div>
-            </form>
-          </mat-card-content>
-        </mat-card>
-      </div>
+            </div>
+          <div class="form__action">
+          <button class="form__button form__button--primary" mat-raised-button type="button" (click)="registrarTransportista()">Registrar</button>
+          <button class="form__button form__button--secondary" mat-stroked-button type="button" (click)="regresar()">Regresar</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
