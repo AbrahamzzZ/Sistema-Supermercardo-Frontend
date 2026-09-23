@@ -21,8 +21,14 @@
   }
 
   &__title {
-    align-content: flex-start;
-    color: #4a4a4a;
+    font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
+    color: #000000;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   }
 
   .form {

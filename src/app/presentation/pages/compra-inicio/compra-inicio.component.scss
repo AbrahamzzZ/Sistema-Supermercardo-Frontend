@@ -46,6 +46,16 @@
   min-width: 200px;
 }
 
+.compra-formulario__fila--producto {
+  .form__field {
+    min-width: 120px;
+  }
+
+  button {
+    flex-shrink: 0;
+  }
+}
+
 .compra-formulario__acciones-grid {
   display: grid;
   grid-template-columns: 1fr 2fr;

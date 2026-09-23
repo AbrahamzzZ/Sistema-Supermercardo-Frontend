@@ -9,12 +9,14 @@ import { Validaciones } from '../../../../shared/utility/validaciones';
 import { INegocio } from '../../../../core/interfaces/negocio';
 import { NegocioService } from '../../../../core/services/negocio.service';
 import { MaterialModule } from '../../../../shared/ui/material-module';
+import { ERRORES_DINAMICOS } from '../../../../shared/ui/form-field-options';
 import { form, FormField, maxLength, minLength, required, submit } from '@angular/forms/signals';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-formulario-sucursal',
   imports: [MaterialModule, FormField],
+  providers: [ERRORES_DINAMICOS],
   templateUrl: './formulario-sucursal.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './formulario-sucursal.component.scss'

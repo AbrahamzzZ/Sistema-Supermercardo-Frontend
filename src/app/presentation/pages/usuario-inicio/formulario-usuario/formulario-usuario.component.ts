@@ -9,12 +9,14 @@ import { CanComponentDeactive } from '../../../../core/guards/formulario-incompl
 import { RolService } from '../../../../core/services/rol.service';
 import { IRol } from '../../../../core/interfaces/rol';
 import { MaterialModule } from '../../../../shared/ui/material-module';
+import { ERRORES_DINAMICOS } from '../../../../shared/ui/form-field-options';
 import { email, form, FormField, maxLength, minLength, required, submit } from '@angular/forms/signals';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-formulario-usuario',
   imports: [MaterialModule, FormField],
+  providers: [ERRORES_DINAMICOS],
   templateUrl: './formulario-usuario.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './formulario-usuario.component.scss'

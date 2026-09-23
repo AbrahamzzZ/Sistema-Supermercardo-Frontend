@@ -13,7 +13,8 @@ import { ErrorInterceptor } from './core/interceptor/error.interceptor';
 import { LoaderInterceptor } from './core/interceptor/loader.interceptor';
 import { setOptions, importLibrary } from '@googlemaps/js-api-loader';
 import { environment as ENV } from '../../environments/environment';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { PaginadorEspanol } from './shared/ui/paginador-espanol';
 
 async function loadGoogleMaps() {
   if (!ENV.API_GOOGLE_MAPS) {
@@ -53,9 +54,9 @@ export const appConfig: ApplicationConfig = {
       useClass: ErrorInterceptor,
       multi: true
     },
-    {
-      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useValue: { subscriptSizing: 'dynamic' }
+    { 
+      provide: MatPaginatorIntl, 
+      useClass: PaginadorEspanol 
     },
 
     provideAppInitializer(loadGoogleMaps)
