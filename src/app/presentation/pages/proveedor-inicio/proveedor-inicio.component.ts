@@ -93,11 +93,11 @@ export class ProveedorInicioComponent extends BaseListComponent<IProveedor> {
   }
 
   nuevo(): void {
-    this.router.navigate(['proveedor/proveedor-registro', 0]);
+    this.router.navigate(['proveedor/registro']);
   }
 
   editar(proveedor: IProveedor): void {
-    this.router.navigate(['proveedor/proveedor-editar', proveedor.id_Proveedor]);
+    this.router.navigate(['proveedor/editar',proveedor.id_Proveedor]);
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {

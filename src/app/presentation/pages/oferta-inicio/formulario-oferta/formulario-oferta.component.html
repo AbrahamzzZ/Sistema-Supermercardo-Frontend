@@ -1,0 +1,89 @@
+<div class="container">
+	<mat-card class="container__card">
+		<mat-card-header class="container__header">
+			<mat-card-title class="container__title">
+				{{ esEdicion() ? 'Editar información de la oferta' : 'Registro de ofertas' }}
+			</mat-card-title>
+		</mat-card-header>
+
+		<mat-card-content>
+			<form class="form" novalidate>
+				<div class="container__form">
+					<div class="form__left">
+						<mat-form-field appearance="outline" class="form__field">
+							<mat-label>Código: </mat-label>
+							<input id="codigo" matInput type="text" [value]="ofertaModel().codigo" readonly aria-label="Código" />
+						</mat-form-field>
+
+						<mat-form-field appearance="outline" class="form__field">
+							<mat-label>Nombre: </mat-label>
+							<input id="nombre" matInput type="text" [formField]="ofertaForm.nombre" aria-label="Nombre" />
+							@if (ofertaForm.nombre().touched() && ofertaForm.nombre().invalid()) {
+								<mat-error class="form__error">{{ ofertaForm.nombre().errors()[0]?.message }}</mat-error>
+							}
+						</mat-form-field>
+
+						<mat-form-field appearance="outline" class="form__textarea">
+							<mat-label>Descripción: </mat-label>
+							<textarea id="descripcion" matInput [formField]="ofertaForm.descripcion" aria-label="Descripción"></textarea>
+							@if (ofertaForm.descripcion().touched() && ofertaForm.descripcion().invalid()) {
+								<mat-error class="form__error">{{ ofertaForm.descripcion().errors()[0]?.message }}</mat-error>
+							}
+						</mat-form-field>
+
+						<mat-form-field appearance="outline" class="form__field">
+							<mat-label>Seleccione un producto</mat-label>
+							<mat-select disableRipple [formField]="ofertaForm.producto">
+							@for (producto of productos(); track producto.id_Producto) {
+								<mat-option [value]="producto.id_Producto">{{ producto.nombre_Producto }}</mat-option>
+							}
+							</mat-select>
+							@if (ofertaForm.producto().touched() && ofertaForm.producto().invalid()) {
+								<mat-error class="form__error">{{ ofertaForm.producto().errors()[0]?.message }}</mat-error>
+							}
+						</mat-form-field>
+					</div>
+					<div class="form__right">
+						<mat-form-field appearance="outline" class="form__field">
+							<mat-label>Fecha Inicio:</mat-label>
+							<input id="fecha_Inicio" matInput [matDatepicker]="pickerInicio" [formField]="ofertaForm.fecha_Inicio" aria-label="Fecha_Inicio" />
+							<mat-datepicker-toggle matIconSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+							<mat-datepicker #pickerInicio></mat-datepicker>
+							@if (ofertaForm.fecha_Inicio().touched() && ofertaForm.fecha_Inicio().invalid()) {
+								<mat-error class="form__error">{{ ofertaForm.fecha_Inicio().errors()[0]?.message }}</mat-error>
+							}
+						</mat-form-field>
+
+						<mat-form-field appearance="outline" class="form__field">
+							<mat-label>Fecha Fin:</mat-label>
+							<input id="fecha_Fin" matInput [matDatepicker]="pickerFin" [formField]="ofertaForm.fecha_Fin" aria-label="Fecha_Fin"/>
+							<mat-datepicker-toggle matIconSuffix [for]="pickerFin"></mat-datepicker-toggle>
+							<mat-datepicker #pickerFin></mat-datepicker>
+							@if (ofertaForm.fecha_Fin().touched() && ofertaForm.fecha_Fin().invalid()) {
+								<mat-error class="form__error">{{ ofertaForm.fecha_Fin().errors()[0]?.message }}</mat-error>
+							}
+						</mat-form-field>
+
+						<mat-form-field appearance="outline" class="form__field">
+							<mat-label>Descuento: </mat-label>
+							<input id="descuento" matInput type="number" step="1" [formField]="ofertaForm.descuento" aria-label="Descuento" />
+							@if (ofertaForm.descuento().touched() && ofertaForm.descuento().invalid()) {
+								<mat-error class="form__error">{{ ofertaForm.descuento().errors()[0]?.message }}</mat-error>
+							}
+							<span matSuffix>% &nbsp;</span>
+						</mat-form-field>
+
+						<mat-checkbox [formField]="ofertaForm.estado">Activo</mat-checkbox>
+					</div>
+				</div>
+
+				<div class="form__action">
+					<button class="form__button form__button--primary" mat-raised-button type="button" [disabled]="guardando()" (click)="guardar()">
+						{{ esEdicion() ? 'Guardar cambios' : 'Registrar' }}
+					</button>
+					<button class="form__button form__button--secondary" mat-stroked-button type="button" (click)="regresar()">Regresar</button>
+				</div>
+			</form>
+		</mat-card-content>
+	</mat-card>
+</div>

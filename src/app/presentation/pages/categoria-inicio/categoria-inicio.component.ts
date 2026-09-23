@@ -87,11 +87,11 @@ export class CategoriaInicioComponent extends BaseListComponent<ICategoria> {
   }
 
   nuevo(): void {
-    this.router.navigate(['categoria/categoria-registro', 0]);
+    this.router.navigate(['categoria/registro']);
   }
 
   editar(categoria: ICategoria): void {
-    this.router.navigate(['categoria/categoria-editar', categoria.id_Categoria]);
+    this.router.navigate(['categoria/editar',categoria.id_Categoria]);
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {

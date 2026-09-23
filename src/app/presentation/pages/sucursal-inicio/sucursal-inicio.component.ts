@@ -93,11 +93,11 @@ export class SucursalInicioComponent extends BaseListComponent<ISucursalNegocio>
   }
 
   nuevo(): void {
-    this.router.navigate(['sucursal/sucursal-registro', 0]);
+    this.router.navigate(['sucursal/registro']);
   }
 
   editar(sucursal: ISucursalNegocio): void {
-    this.router.navigate(['sucursal/sucursal-editar', sucursal.id_Sucursal]);
+    this.router.navigate(['sucursal/editar', sucursal.id_Sucursal]);
   }
 
   verMapa(): void {

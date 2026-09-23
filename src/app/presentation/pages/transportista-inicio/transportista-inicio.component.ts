@@ -56,7 +56,7 @@ export class TransportistaInicioComponent extends BaseListComponent<ITransportis
 
         this.listaData.data = arr.map((t: ITransportista) => {
           if (t.foto && typeof t.foto === 'string') {
-            t.foto = `data:image/*;base64,${t.foto}`;
+            t.foto = Metodos.base64AImagen(t.foto);
           } else {
             t.foto = 'assets/images/default-avatar.jpg';
           }
@@ -100,11 +100,11 @@ export class TransportistaInicioComponent extends BaseListComponent<ITransportis
   }
 
   nuevo(): void {
-    this.router.navigate(['transportista/transportista-registro', 0]);
+    this.router.navigate(['transportista/registro']);
   }
 
   editar(transportista: ITransportista): void {
-    this.router.navigate(['transportista/transportista-editar', transportista.id_Transportista]);
+    this.router.navigate(['transportista/editar', transportista.id_Transportista]);
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {
@@ -118,17 +118,18 @@ export class TransportistaInicioComponent extends BaseListComponent<ITransportis
     });
   }
 
-  exportarExcel(): void {
+  async exportarExcel(): Promise<void> {
     const datos = this.listaData.data.map((transportista) => ({
-      ID: transportista.id_Transportista,
-      Código: transportista.codigo,
-      Nombres: transportista.nombres,
-      Apellidos: transportista.apellidos,
-      Cedula: transportista.cedula,
-      Telefono: transportista.telefono,
-      'Correo Electronico': transportista.correo_Electronico,
-      Estado: this.getEstado(transportista.estado),
-      'Fecha Creacion': this.getFechaRegistro(transportista.fecha_Creacion ?? '')
+      id: transportista.id_Transportista,
+      foto: transportista.foto,
+      codigo: transportista.codigo,
+      nombres: transportista.nombres,
+      apellidos: transportista.apellidos,
+      cedula: transportista.cedula,
+      telefono: transportista.telefono,
+      correo: transportista.correo_Electronico,
+      estado: this.getEstado(transportista.estado),
+      fecha: this.getFechaRegistro(transportista.fecha_Creacion ?? '')
     }));
 
     if (!datos || datos.length === 0) {
@@ -136,18 +137,29 @@ export class TransportistaInicioComponent extends BaseListComponent<ITransportis
       return;
     }
 
-    Metodos.exportarExcel(this.tituloExcel, datos, [
-      'ID',
-      'Código',
-      'Nombres',
-      'Apellidos',
-      'Cedula',
-      'Telefono',
-      'Correo Electronico',
-      'Estado',
-      'Fecha Creacion'
-    ]);
-    this.mostrarMensaje('Excel generado exitosamente.', 'success');
+    try {
+      await Metodos.exportarExcelConImagenes(
+        this.tituloExcel,
+        [
+          { header: 'ID', key: 'id', width: 6 },
+          { header: 'Foto', key: 'foto', width: 11 },
+          { header: 'Código', key: 'codigo', width: 10 },
+          { header: 'Nombres', key: 'nombres', width: 22 },
+          { header: 'Apellidos', key: 'apellidos', width: 22 },
+          { header: 'Cedula', key: 'cedula', width: 13 },
+          { header: 'Telefono', key: 'telefono', width: 13 },
+          { header: 'Correo Electronico', key: 'correo', width: 28 },
+          { header: 'Estado', key: 'estado', width: 11 },
+          { header: 'Fecha Creacion', key: 'fecha', width: 15 }
+        ],
+        datos,
+        'foto'
+      );
+      this.mostrarMensaje('Excel generado exitosamente.', 'success');
+    } catch (err) {
+      console.error(err);
+      this.mostrarMensaje('Error al generar el Excel.', 'error');
+    }
   }
 
   getEstado(estado: boolean): string {
