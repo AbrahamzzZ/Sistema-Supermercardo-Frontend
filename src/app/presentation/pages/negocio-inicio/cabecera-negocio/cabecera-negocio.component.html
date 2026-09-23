@@ -1,0 +1,24 @@
+<img class="cabecera__logo" [src]="logoURL()" alt="Logo del negocio" />
+
+<div class="cabecera__info">
+  <span class="cabecera__saludo">
+    {{ nombreUsuario() ? 'Hola, ' + nombreUsuario() : 'Bienvenido' }}
+  </span>
+  <h1 class="cabecera__nombre">{{ negocio()?.nombre ?? 'Cargando…' }}</h1>
+
+  @if (negocio(); as n) {
+    <div class="cabecera__datos">
+      <span class="cabecera__dato"><mat-icon>badge</mat-icon> RUC {{ n.ruc }}</span>
+      <span class="cabecera__dato"><mat-icon>call</mat-icon> {{ n.telefono }}</span>
+      <span class="cabecera__dato"><mat-icon>mail</mat-icon> {{ n.correo_Electronico }}</span>
+      <span class="cabecera__dato"><mat-icon>location_on</mat-icon> {{ n.direccion }}</span>
+    </div>
+  }
+</div>
+
+@if (puedeEditar()) {
+  <button mat-flat-button color="primary" class="cabecera__editar" [disabled]="!negocio()" (click)="editar()">
+    <mat-icon>edit</mat-icon>
+    Editar información
+  </button>
+}

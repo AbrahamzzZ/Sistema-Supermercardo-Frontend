@@ -1,30 +1,70 @@
-<div class="ia-card">
-  <div >
-    <button mat-button color="warn" (click)="volver()">
-      <mat-icon>keyboard_backspace</mat-icon> Volver
-    </button>
-  </div>
-  <mat-form-field appearance="outline" class="ia-input">
-    <mat-label>Escribe tu pregunta</mat-label>
-    <textarea
-      matInput
-      rows="4"
-      [(ngModel)]="prompt"
-    ></textarea>
-  </mat-form-field>
-
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="generar()"
-    [disabled]="loading || !prompt">
-    {{ loading ? 'Generando...' : 'Generar Respuesta' }}
-  </button>
-
-  @if (respuesta) {
-    <div class="ia-respuesta">
-      <h4>Respuesta:</h4>
-      <p>{{ respuesta }}</p>
+<section class="chat">
+  <header class="chat__cabecera">
+    <div class="chat__avatar"><mat-icon>auto_awesome</mat-icon></div>
+    <div class="chat__titulos">
+      <h3>Asistente IA</h3>
+      <span>Pregúntame sobre tu negocio</span>
     </div>
-  }
-</div>
+    @if (mensajes().length) {
+      <button mat-icon-button matTooltip="Limpiar conversación" (click)="limpiar()">
+        <mat-icon>delete_sweep</mat-icon>
+      </button>
+    }
+  </header>
+
+  <div class="chat__mensajes" #mensajesContenedor>
+    @if (!mensajes().length) {
+      <div class="chat__bienvenida">
+        <mat-icon>forum</mat-icon>
+        <p>Hola, soy tu asistente. Puedo analizar las estadísticas que estás viendo o responder tus dudas.</p>
+
+        @if (contexto()) {
+          <button mat-stroked-button color="primary" class="chat__resumir" (click)="resumirGrafico()">
+            <mat-icon>insights</mat-icon>
+            Resumir "{{ tituloContexto() }}"
+          </button>
+        }
+
+        <div class="chat__sugerencias">
+          @for (sugerencia of sugerencias; track sugerencia) {
+            <button type="button" class="chat__sugerencia" (click)="enviar(sugerencia)">{{ sugerencia }}</button>
+          }
+        </div>
+      </div>
+    }
+
+    @for (mensaje of mensajes(); track $index) {
+      <div class="chat__burbuja chat__burbuja--{{ mensaje.rol }}" [class.chat__burbuja--error]="mensaje.error">
+        {{ mensaje.texto }}
+      </div>
+    }
+
+    @if (cargando()) {
+      <div class="chat__burbuja chat__burbuja--ia chat__escribiendo">
+        <span></span><span></span><span></span>
+      </div>
+    }
+  </div>
+
+  <footer class="chat__pie">
+    @if (mensajes().length && contexto()) {
+      <button mat-button color="primary" class="chat__resumir-mini" [disabled]="cargando()" (click)="resumirGrafico()">
+        <mat-icon>insights</mat-icon>
+        Resumir gráfico actual
+      </button>
+    }
+
+    <div class="chat__entrada">
+      <textarea
+        rows="1"
+        placeholder="Escribe tu pregunta…"
+        [(ngModel)]="prompt"
+        (keydown)="alPresionarTecla($event)"
+        aria-label="Pregunta para el asistente"
+      ></textarea>
+      <button mat-icon-button color="primary" matTooltip="Enviar" [disabled]="cargando() || !prompt.trim()" (click)="enviar()">
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+  </footer>
+</section>

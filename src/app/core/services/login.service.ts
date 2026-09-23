@@ -70,6 +70,11 @@ export class LoginService {
     return null;
   }
 
+  esAdministrador(): boolean {
+    const rol = String(this.obtenerDatosToken()?.role ?? '').trim().toLowerCase();
+    return rol === '1' || rol === 'administrador';
+  }
+
   obtenerPermisosDesdeToken(): string[] {
     const token = localStorage.getItem('token');
     if (!token) return [];
