@@ -5,6 +5,7 @@ import { NegocioService } from '../../../core/services/negocio.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { INegocio } from '../../../core/interfaces/negocio';
 import { Validaciones } from '../../../shared/utility/validaciones';
+import { Metodos } from '../../../shared/utility/metodos';
 import { MaterialModule } from '../../../shared/ui/material-module';
 
 @Component({
@@ -58,7 +59,7 @@ export class NegocioInicioComponent implements OnInit {
           });
 
           if (resp.data.logo && typeof resp.data.logo === 'string') {
-            this.imagenURL = `data:image/*;base64,${resp.data.logo}`;
+            this.imagenURL = Metodos.base64AImagen(resp.data.logo);
             this.formNegocio.controls.imageBase64.setValue(resp.data.logo);
           } else {
             this.imagenURL = '../assets/images/default-avatar.jpg'; // Imagen por defecto

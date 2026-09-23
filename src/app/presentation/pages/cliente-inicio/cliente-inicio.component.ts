@@ -92,11 +92,11 @@ export class ClienteInicioComponent extends BaseListComponent<ICliente> {
   }
 
   nuevo(): void {
-    this.router.navigate(['cliente/cliente-registro', 0]);
+    this.router.navigate(['cliente/registro']);
   }
 
   editar(cliente: ICliente): void {
-    this.router.navigate(['cliente/cliente-editar', cliente.id_Cliente]);
+    this.router.navigate(['cliente/editar', cliente.id_Cliente]);
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {

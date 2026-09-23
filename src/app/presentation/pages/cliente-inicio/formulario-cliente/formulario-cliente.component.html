@@ -1,0 +1,70 @@
+<div class="container">
+  <mat-card class="container__card">
+    <mat-card-header class="container__header">
+      <mat-card-title class="container__title">
+        {{ esEdicion() ? 'Editar información del cliente' : 'Registro de clientes' }}
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form class="form" novalidate>
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Código: </mat-label>
+          <input id="codigo" matInput type="text" [value]="clienteModel().codigo" readonly aria-label="Código" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Nombres: </mat-label>
+          <input id="nombres" matInput type="text" [formField]="clienteForm.nombres" aria-label="Nombres" />
+
+          @if (clienteForm.nombres().touched() && clienteForm.nombres().invalid()) {
+            <mat-error class="form__error">{{ clienteForm.nombres().errors()[0]?.message }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Apellidos: </mat-label>
+          <input id="apellidos" matInput type="text" [formField]="clienteForm.apellidos" aria-label="Apellidos" />
+
+          @if (clienteForm.apellidos().touched() && clienteForm.apellidos().invalid()) {
+            <mat-error class="form__error">{{ clienteForm.apellidos().errors()[0]?.message }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Cédula: </mat-label>
+          <input id="cedula" matInput type="text" inputmode="numeric" [formField]="clienteForm.cedula" aria-label="Cédula" />
+
+          @if (clienteForm.cedula().touched() && clienteForm.cedula().invalid()) {
+            <mat-error class="form__error">{{ clienteForm.cedula().errors()[0]?.message }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Teléfono: </mat-label>
+          <input id="telefono" matInput type="text" inputmode="numeric" [formField]="clienteForm.telefono" aria-label="Teléfono" />
+
+          @if (clienteForm.telefono().touched() && clienteForm.telefono().invalid()) {
+            <mat-error class="form__error">{{ clienteForm.telefono().errors()[0]?.message }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Correo Electrónico: </mat-label>
+          <input id="correo_Electronico" matInput type="email" [formField]="clienteForm.correo_Electronico" aria-label="Correo Electrónico" />
+
+          @if (clienteForm.correo_Electronico().touched() && clienteForm.correo_Electronico().invalid()) {
+            <mat-error class="form__error">{{ clienteForm.correo_Electronico().errors()[0]?.message }}</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="form__action">
+          <button class="form__button form__button--primary" mat-raised-button type="button" [disabled]="guardando()" (click)="guardar()">
+            {{ esEdicion() ? 'Guardar cambios' : 'Registrar' }}
+          </button>
+          <button class="form__button form__button--secondary" mat-raised-button type="button" (click)="regresar()">Regresar</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

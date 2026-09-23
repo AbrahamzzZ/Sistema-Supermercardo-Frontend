@@ -93,11 +93,11 @@ export class OfertaInicioComponent extends BaseListComponent<IOfertaProducto> {
   }
 
   nuevo(): void {
-    this.router.navigate(['oferta/oferta-registro', 0]);
+    this.router.navigate(['oferta/registro']);
   }
 
   editar(oferta: IOfertaProducto): void {
-    this.router.navigate(['oferta/oferta-editar', oferta.id_Oferta]);
+    this.router.navigate(['oferta/editar', oferta.id_Oferta]);
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {

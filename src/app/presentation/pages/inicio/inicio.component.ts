@@ -102,11 +102,11 @@ export class InicioComponent implements OnInit, OnDestroy {
   }
 
   irAProductos() {
-    this.router.navigate(['/producto/producto-registro/0']);
+    this.router.navigate(['/producto/registro']);
   }
 
   irAOfertas() {
-    this.router.navigate(['/oferta/oferta-registro/0']);
+    this.router.navigate(['/oferta/registro']);
   }
 
   irAReportes() {

@@ -1,0 +1,68 @@
+<div class="container">
+  <mat-card class="container__card">
+    <mat-card-header class="container__header">
+      <mat-card-title class="container__title">
+        {{ esEdicion() ? 'Editar información del producto' : 'Registro de productos' }}
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form class="form" novalidate>
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Codigo: </mat-label>
+          <input matInput type="text" [value]="productoModel().codigo" readonly />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Nombre: </mat-label>
+          <input matInput type="text" [formField]="productoForm.nombre" />
+          @if (productoForm.nombre().touched() && productoForm.nombre().invalid()) {
+            <mat-error class="form__error">{{ productoForm.nombre().errors()[0]?.message }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form__textarea">
+          <mat-label>Descripción: </mat-label>
+          <textarea id="descripcion" matInput [formField]="productoForm.descripcion" aria-label="Descripción"></textarea>
+          @if (productoForm.descripcion().touched() && productoForm.descripcion().invalid()) {
+            <mat-error class="form__error">{{ productoForm.descripcion().errors()[0]?.message }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>Seleccione una categoría</mat-label>
+          <mat-select
+            disableRipple
+            [formField]="productoForm.categoria"
+          >
+            @for (categoria of categorias(); track categoria.id_Categoria) {
+              <mat-option [value]="categoria.id_Categoria">{{
+                categoria.nombre_Categoria
+              }}</mat-option>
+            }
+          </mat-select>
+          @if (productoForm.categoria().touched() && productoForm.categoria().invalid()) {
+            <mat-error class="form__error">{{ productoForm.categoria().errors()[0]?.message }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form__field">
+          <mat-label>País de origen: </mat-label>
+          <input id="pais_Origen" matInput type="text" [formField]="productoForm.paisOrigen" aria-label="País_Origen"/>
+          @if (productoForm.paisOrigen().touched() && productoForm.paisOrigen().invalid()) {
+            <mat-error class="form__error">{{ productoForm.paisOrigen().errors()[0]?.message }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-checkbox [formField]="productoForm.estado">Agotado</mat-checkbox>
+
+        <div class="form__action">
+          <button class="form__button form__button--primary" mat-raised-button type="button" [disabled]="guardando()" (click)="guardar()">
+            {{ esEdicion() ? 'Guardar cambios' : 'Registrar' }}
+          </button>
+          <button class="form__button form__button--secondary" mat-stroked-button type="button" (click)="regresar()">Regresar</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

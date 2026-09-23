@@ -110,11 +110,11 @@ export class ProductoInicioComponent extends BaseListComponent<IProductoCategori
   }
 
   nuevo(): void {
-    this.router.navigate(['producto/producto-registro', 0]);
+    this.router.navigate(['producto/registro']);
   }
 
   editar(producto: IProducto): void {
-    this.router.navigate(['producto/producto-editar', producto.id_Producto]);
+    this.router.navigate(['producto/editar', producto.id_Producto]);
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' | 'warning' = 'success'): void {

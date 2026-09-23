@@ -13,6 +13,7 @@ import { ErrorInterceptor } from './core/interceptor/error.interceptor';
 import { LoaderInterceptor } from './core/interceptor/loader.interceptor';
 import { setOptions, importLibrary } from '@googlemaps/js-api-loader';
 import { environment as ENV } from '../../environments/environment';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 async function loadGoogleMaps() {
   if (!ENV.API_GOOGLE_MAPS) {
@@ -51,6 +52,10 @@ export const appConfig: ApplicationConfig = {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
       multi: true
+    },
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { subscriptSizing: 'dynamic' }
     },
 
     provideAppInitializer(loadGoogleMaps)
