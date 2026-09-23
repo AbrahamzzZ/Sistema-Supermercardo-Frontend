@@ -25,10 +25,8 @@ import { CompraInicioComponent } from './presentation/pages/compra-inicio/compra
 import { VentaInicioComponent } from './presentation/pages/venta-inicio/venta-inicio.component';
 import { DetalleCompraComponent } from './presentation/pages/compra-inicio/detalle-compra/detalle-compra.component';
 import { DetalleVentaComponent } from './presentation/pages/venta-inicio/detalle-venta/detalle-venta.component';
-import { NegocioInicioComponent } from './presentation/pages/negocio-inicio/negocio-inicio.component';
 import { SucursalInicioComponent } from './presentation/pages/sucursal-inicio/sucursal-inicio.component';
 import { FormularioSucursalComponent } from './presentation/pages/sucursal-inicio/formulario-sucursal/formulario-sucursal.component';
-import { EstadisticaNegocioComponent } from './presentation/pages/negocio-inicio/estadistica-negocio/estadistica-negocio.component';
 import { LogInicioComponent } from './presentation/pages/log-inicio/log-inicio.component';
 import { MapaSucursalComponent } from './presentation/pages/sucursal-inicio/mapa-sucursal/mapa-sucursal.component';
 
@@ -263,20 +261,8 @@ export const routes: Routes = [
       },
 
       //Modulo Negocio
-      {
-        path: 'negocio/1',
-        component: NegocioInicioComponent,
-        canMatch: [RolGuard],
-        canActivate: [Autenticacion],
-        title: 'Información del negocio'
-      },
-      {
-        path: 'negocio/1/estadistica',
-        component: EstadisticaNegocioComponent,
-        canMatch: [RolGuard],
-        canActivate: [Autenticacion],
-        title: 'Estadisticas del negocio'
-      },
+      { path: 'negocio/1', redirectTo: 'home', pathMatch: 'full' },
+      { path: 'negocio/1/estadistica', redirectTo: 'home', pathMatch: 'full' },
 
       //Modulo Log
       {

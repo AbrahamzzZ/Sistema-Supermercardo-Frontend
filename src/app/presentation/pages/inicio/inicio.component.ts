@@ -1,36 +1,62 @@
-import { Component, inject, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Subscription, interval } from 'rxjs';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IOfertaProducto } from '../../../core/interfaces/Dto/ioferta-producto';
-import { OfertaService } from '../../../core/services/oferta.service';
 import { IProductoCategoria } from '../../../core/interfaces/Dto/iproducto-categoria';
+import { INegocio } from '../../../core/interfaces/negocio';
+import { OfertaService } from '../../../core/services/oferta.service';
 import { ProductoService } from '../../../core/services/producto.service';
+import { LoginService } from '../../../core/services/login.service';
 import { FormatoFechaPipe } from '../../../shared/pipes/formato-fecha.pipe';
 import { MaterialModule } from '../../../shared/ui/material-module';
-import { Router } from '@angular/router';
+import { CabeceraNegocioComponent } from '../negocio-inicio/cabecera-negocio/cabecera-negocio.component';
+import {
+  ClaveEstadistica,
+  ContextoEstadistica,
+  PanelEstadisticasComponent
+} from '../negocio-inicio/panel-estadisticas/panel-estadisticas.component';
+import { IaChatComponent } from '../negocio-inicio/ia-chat/ia-chat.component';
+
+interface AccionRapida {
+  titulo: string;
+  icono: string;
+  ruta: string;
+}
 
 @Component({
   selector: 'app-inicio',
-  imports: [MaterialModule, FormatoFechaPipe],
+  imports: [MaterialModule, FormatoFechaPipe, CabeceraNegocioComponent, PanelEstadisticasComponent, IaChatComponent],
   templateUrl: './inicio.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./inicio.component.scss']
 })
-export class InicioComponent implements OnInit, OnDestroy {
+export class InicioComponent implements OnInit {
   private readonly snackBar = inject(MatSnackBar);
   private readonly ofertaServicio = inject(OfertaService);
   private readonly productoServicio = inject(ProductoService);
-  private router = inject(Router);
-  public ofertas: IOfertaProducto[] = [];
-  public ofertaActual: IOfertaProducto | null = null;
-  public productosStockBajo: IProductoCategoria[] = [];
-  public readonly stockMinimo = 10;
-  private subscripcion!: Subscription;
-  private indiceOferta = 0;
+  private readonly loginServicio = inject(LoginService);
+  private readonly router = inject(Router);
+
+  protected readonly esAdministrador = this.loginServicio.esAdministrador();
+  protected readonly nombreUsuario = this.loginServicio.obtenerDatosToken()?.unique_name ?? '';
+  protected readonly estadisticasPermitidas: ClaveEstadistica[] | null = this.esAdministrador
+    ? null
+    : ['comprados', 'vendidos'];
+
+  protected readonly accionesRapidas: AccionRapida[] = [
+    { titulo: 'Registrar venta', icono: 'point_of_sale', ruta: '/venta' },
+    { titulo: 'Registrar producto', icono: 'inventory_2', ruta: '/producto/registro' },
+    { titulo: 'Registrar oferta', icono: 'local_offer', ruta: '/oferta/registro' }
+  ];
+
+  protected readonly stockMinimo = 10;
+  protected readonly ofertas = signal<IOfertaProducto[]>([]);
+  protected readonly productosStockBajo = signal<IProductoCategoria[]>([]);
+  protected readonly nombreNegocio = signal('');
+  protected readonly contexto = signal<ContextoEstadistica>({ titulo: '', datos: '' });
 
   get animationDuration(): string {
-    const segundosPorTarjeta = 3;
-    return `${this.ofertas.length * segundosPorTarjeta}s`;
+    return `${this.ofertas().length * 3}s`;
   }
 
   ngOnInit(): void {
@@ -38,78 +64,46 @@ export class InicioComponent implements OnInit, OnDestroy {
     this.obtenerProductosStockBajo();
   }
 
-  obtenerOfertas() {
+  private obtenerOfertas(): void {
     this.ofertaServicio.lista().subscribe({
-      next: (resp: any) => {
-        this.ofertas = resp.data;
-        if (this.ofertas.length > 0) {
-          this.iniciarRotacion();
-        }
-      },
+      next: (resp: any) => this.ofertas.set(resp.data ?? []),
       error: (err) => {
         console.error('Error al obtener las ofertas:', err);
-        this.mostrarMensaje('Error al obtener las ofertas.', 'error');
+        this.mostrarMensaje('Error al obtener las ofertas.');
       }
     });
   }
 
-  iniciarRotacion() {
-    this.mostrarSiguienteOferta();
-    this.subscripcion = interval(5000).subscribe(() => {
-      this.mostrarSiguienteOferta();
-    });
-  }
-
-  mostrarSiguienteOferta() {
-    if (this.ofertas.length === 0) return;
-    this.ofertaActual = this.ofertas[this.indiceOferta];
-    this.indiceOferta = (this.indiceOferta + 1) % this.ofertas.length;
-  }
-
-  obtenerProductosStockBajo() {
+  private obtenerProductosStockBajo(): void {
     this.productoServicio.lista().subscribe({
       next: (resp: any) => {
         const productos: IProductoCategoria[] = resp.data ?? [];
-        this.productosStockBajo = productos.filter(
-          (producto) => producto.estado && producto.stock < this.stockMinimo
+        this.productosStockBajo.set(
+          productos.filter((producto) => producto.estado && producto.stock < this.stockMinimo)
         );
       },
-      error: (err) => {
-        console.error('Error al obtener el stock de productos:', err);
-      }
+      error: (err) => console.error('Error al obtener el stock de productos:', err)
     });
   }
 
-  ngOnDestroy(): void {
-    if (this.subscripcion) {
-      this.subscripcion.unsubscribe();
-    }
+  alCargarNegocio(negocio: INegocio): void {
+    this.nombreNegocio.set(negocio.nombre);
   }
 
-  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
-    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+  alCambiarEstadistica(contexto: ContextoEstadistica): void {
+    this.contexto.set(contexto);
+  }
 
+  irA(ruta: string): void {
+    this.router.navigate([ruta]);
+  }
+
+  private mostrarMensaje(mensaje: string): void {
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
       verticalPosition: 'bottom',
-      panelClass: [className]
+      panelClass: ['error-snackbar']
     });
-  }
-
-  irAVentas() {
-    this.router.navigate(['/venta']);
-  }
-
-  irAProductos() {
-    this.router.navigate(['/producto/registro']);
-  }
-
-  irAOfertas() {
-    this.router.navigate(['/oferta/registro']);
-  }
-
-  irAReportes() {
-    this.router.navigate(['/negocio/1/estadistica']);
   }
 }

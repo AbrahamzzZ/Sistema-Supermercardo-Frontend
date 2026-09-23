@@ -1,37 +1,47 @@
-<div class="container">
-  <header class="page-header">
-    <div>
-      <h1>Panel administrativo</h1>
-      <p class="subtitle">Acceso rápido a registros y reportes</p>
-    </div>
-  </header>
+<div class="inicio">
+  <app-cabecera-negocio
+    class="inicio__tarjeta"
+    [puedeEditar]="esAdministrador"
+    [nombreUsuario]="nombreUsuario"
+    (negocioCargado)="alCargarNegocio($event)"
+  ></app-cabecera-negocio>
 
-  @if(productosStockBajo.length > 0){
-    <section class="stock-bajo-container">
-      <div class="stock-bajo-header">
+  @if (productosStockBajo().length > 0) {
+    <section class="stock-bajo">
+      <div class="stock-bajo__cabecera">
         <mat-icon>warning</mat-icon>
         <span>Productos con stock bajo (menos de {{ stockMinimo }} unidades)</span>
       </div>
-      <div class="stock-bajo-lista">
-        @for(producto of productosStockBajo; track producto.id_Producto){
-          <div class="stock-bajo-item">
-            <span class="nombre">{{ producto.nombre_Producto }}</span>
-            <span class="cantidad">{{ producto.stock }} und.</span>
+      <div class="stock-bajo__lista">
+        @for (producto of productosStockBajo(); track producto.id_Producto) {
+          <div class="stock-bajo__item">
+            <span class="stock-bajo__nombre">{{ producto.nombre_Producto }}</span>
+            <span class="stock-bajo__cantidad">{{ producto.stock }} und.</span>
           </div>
         }
       </div>
     </section>
   }
 
-  @if(ofertas.length > 0){
-    <section class="oferta-container">
-      <div class="ofertas-viewport">
-        <div class="ofertas-track" [style.animationDuration]="animationDuration" [class.no-animation]="ofertas.length === 1">
+  <section class="inicio__acciones">
+    @for (accion of accionesRapidas; track accion.ruta) {
+      <button type="button" class="accion" (click)="irA(accion.ruta)">
+        <span class="accion__icono"><mat-icon>{{ accion.icono }}</mat-icon></span>
+        <span class="accion__titulo">{{ accion.titulo }}</span>
+        <mat-icon class="accion__flecha">arrow_forward</mat-icon>
+      </button>
+    }
+  </section>
 
-          @for(i of [0,1,2,3]; track i){
-            @for(oferta of ofertas; track oferta.id_Oferta){
-              <div class="oferta-item">
-                <mat-card class="oferta-card">
+  @if (ofertas().length > 0) {
+    <section class="ofertas">
+      <h2 class="inicio__subtitulo"><mat-icon>local_offer</mat-icon> Ofertas activas</h2>
+      <div class="ofertas__viewport">
+        <div class="ofertas__track" [style.animationDuration]="animationDuration" [class.ofertas__track--quieto]="ofertas().length === 1">
+          @for (i of [0, 1, 2, 3]; track i) {
+            @for (oferta of ofertas(); track oferta.id_Oferta) {
+              <div class="ofertas__item">
+                <mat-card class="ofertas__card">
                   <mat-card-header>
                     <mat-card-title>{{ oferta.nombre_Oferta }}</mat-card-title>
                     <mat-card-subtitle>
@@ -39,7 +49,7 @@
                     </mat-card-subtitle>
                   </mat-card-header>
                   <mat-card-content>
-                    <p class="descripcion">{{ oferta.descripcion }}</p>
+                    <p class="ofertas__descripcion">{{ oferta.descripcion }}</p>
                   </mat-card-content>
                 </mat-card>
               </div>
@@ -50,25 +60,18 @@
     </section>
   }
 
-  <section class="quick-actions">
-    <mat-card class="action-card" (click)="irAVentas()" (keydown.enter)="irAReportes()" tabindex="0">
-      <mat-icon>point_of_sale</mat-icon>
-      <span>Registrar venta</span>
-    </mat-card>
+  <div class="inicio__contenido" [class.inicio__contenido--completo]="!esAdministrador">
+    <app-panel-estadisticas
+      class="inicio__tarjeta"
+      [permitidas]="estadisticasPermitidas"
+      [nombreNegocio]="nombreNegocio()"
+      (contextoCambio)="alCambiarEstadistica($event)"
+    ></app-panel-estadisticas>
 
-    <mat-card class="action-card" (click)="irAProductos()" (keydown.enter)="irAReportes()" tabindex="0">
-      <mat-icon>inventory_2</mat-icon>
-      <span>Registrar productos</span>
-    </mat-card>
-
-    <mat-card class="action-card" (click)="irAOfertas()" (keydown.enter)="irAReportes()" tabindex="0">
-      <mat-icon>local_offer</mat-icon>
-      <span>Registrar ofertas</span>
-    </mat-card>
-
-    <mat-card class="action-card" (click)="irAReportes()" (keydown.enter)="irAReportes()" tabindex="0">
-      <mat-icon>bar_chart</mat-icon>
-      <span>Reportes</span>
-    </mat-card>
-  </section>
+    @if (esAdministrador) {
+      <section class="inicio__tarjeta">
+        <app-ia-chat [contexto]="contexto().datos" [tituloContexto]="contexto().titulo"></app-ia-chat>
+      </section>
+    }
+  </div>
 </div>

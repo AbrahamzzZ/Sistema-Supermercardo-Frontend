@@ -1,0 +1,39 @@
+<header class="panel__cabecera">
+  <div>
+    <h2>Estadísticas</h2>
+    <span>{{ seleccionada().titulo }}</span>
+  </div>
+  <button mat-stroked-button color="primary" [disabled]="cargando() || !valores().length" (click)="descargarPDF()">
+    <mat-icon>picture_as_pdf</mat-icon>
+    Exportar PDF
+  </button>
+</header>
+
+<div class="panel__opciones" role="tablist">
+  @for (estadistica of estadisticas(); track estadistica.clave) {
+    <button
+      type="button"
+      role="tab"
+      class="panel__opcion"
+      [class.panel__opcion--activa]="estadistica.clave === seleccionada().clave"
+      [attr.aria-selected]="estadistica.clave === seleccionada().clave"
+      (click)="seleccionar(estadistica)"
+    >
+      <mat-icon>{{ estadistica.icono }}</mat-icon>
+      {{ estadistica.titulo }}
+    </button>
+  }
+</div>
+
+<div class="panel__grafico">
+  @if (cargando()) {
+    <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+  } @else if (!valores().length) {
+    <div class="panel__vacio">
+      <mat-icon>query_stats</mat-icon>
+      <p>No hay datos para esta estadística todavía.</p>
+    </div>
+  } @else {
+    <canvas baseChart [data]="chartData()" [type]="seleccionada().tipo" [options]="chartOptions()"></canvas>
+  }
+</div>

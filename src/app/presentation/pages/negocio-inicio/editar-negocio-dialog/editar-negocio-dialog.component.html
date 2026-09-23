@@ -1,0 +1,85 @@
+<h2 mat-dialog-title class="dialogo__titulo">
+  <mat-icon>storefront</mat-icon>
+  Editar información del negocio
+</h2>
+
+<mat-dialog-content>
+  <form class="dialogo__grid" novalidate>
+    <div class="dialogo__campos">
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input matInput [formField]="negocioForm.nombre" />
+        @if (negocioForm.nombre().touched() && negocioForm.nombre().invalid()) {
+          <mat-error>{{ negocioForm.nombre().errors()[0]?.message }}</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="dialogo__fila">
+        <mat-form-field appearance="outline">
+          <mat-label>Teléfono</mat-label>
+          <input matInput inputmode="numeric" [formField]="negocioForm.telefono" />
+          @if (negocioForm.telefono().touched() && negocioForm.telefono().invalid()) {
+            <mat-error>{{ negocioForm.telefono().errors()[0]?.message }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>RUC</mat-label>
+          <input matInput inputmode="numeric" [formField]="negocioForm.ruc" />
+          @if (negocioForm.ruc().touched() && negocioForm.ruc().invalid()) {
+            <mat-error>{{ negocioForm.ruc().errors()[0]?.message }}</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Dirección</mat-label>
+        <input matInput [formField]="negocioForm.direccion" />
+        @if (negocioForm.direccion().touched() && negocioForm.direccion().invalid()) {
+          <mat-error>{{ negocioForm.direccion().errors()[0]?.message }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Correo electrónico</mat-label>
+        <input matInput type="email" [formField]="negocioForm.correo_Electronico" />
+        @if (negocioForm.correo_Electronico().touched() && negocioForm.correo_Electronico().invalid()) {
+          <mat-error>{{ negocioForm.correo_Electronico().errors()[0]?.message }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="dialogo__logo">
+      <span class="dialogo__logo-titulo">Logo del negocio</span>
+
+      <div class="dialogo__logo-preview" [class.dialogo__logo-preview--vacio]="!imagenURL()">
+        @if (imagenURL(); as url) {
+          <img [src]="url" alt="Logo del negocio" />
+          <button mat-mini-fab type="button" class="dialogo__logo-eliminar" matTooltip="Quitar logo" (click)="eliminarImagen()">
+            <mat-icon>delete</mat-icon>
+          </button>
+        } @else {
+          <mat-icon class="dialogo__logo-icono">add_photo_alternate</mat-icon>
+          <span>Sin logo</span>
+        }
+      </div>
+
+      <input type="file" accept="image/*" id="logoNegocio" class="dialogo__file" (change)="subirImagen($event)" />
+      <label for="logoNegocio" class="dialogo__file-label">
+        <mat-icon>cloud_upload</mat-icon>
+        {{ imagenURL() ? 'Cambiar logo' : 'Subir logo' }}
+      </label>
+
+      @if (negocioForm.logo().touched() && negocioForm.logo().invalid()) {
+        <mat-error class="dialogo__logo-error">{{ negocioForm.logo().errors()[0]?.message }}</mat-error>
+      }
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="cerrar()">Cancelar</button>
+  <button mat-flat-button color="primary" type="button" [disabled]="guardando()" (click)="guardar()">
+    {{ guardando() ? 'Guardando…' : 'Guardar cambios' }}
+  </button>
+</mat-dialog-actions>
