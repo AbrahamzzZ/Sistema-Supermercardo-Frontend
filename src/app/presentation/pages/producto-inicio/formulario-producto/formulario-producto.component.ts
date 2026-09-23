@@ -9,12 +9,14 @@ import { CanComponentDeactive } from '../../../../core/guards/formulario-incompl
 import { CategoriaService } from '../../../../core/services/categoria.service';
 import { ICategoria } from '../../../../core/interfaces/categoria';
 import { MaterialModule } from '../../../../shared/ui/material-module';
+import { ERRORES_DINAMICOS } from '../../../../shared/ui/form-field-options';
 import { form, FormField, maxLength, minLength, required, submit } from '@angular/forms/signals';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-formulario-producto',
   imports: [MaterialModule, FormField],
+  providers: [ERRORES_DINAMICOS],
   templateUrl: './formulario-producto.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './formulario-producto.component.scss'

@@ -175,3 +175,8 @@ app-footer {
   padding: 2px !important;
   background: #e2eeb7 !important;
 }
+
+//Estilos para el selector "Ítems por página" del paginador
+.mat-mdc-paginator .mat-mdc-form-field-flex {
+  margin-top: 0;
+}

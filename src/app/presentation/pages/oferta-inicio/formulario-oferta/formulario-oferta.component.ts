@@ -10,11 +10,13 @@ import { ProductoService } from '../../../../core/services/producto.service';
 import { IProducto } from '../../../../core/interfaces/producto';
 import { CanComponentDeactive } from '../../../../core/guards/formulario-incompleto.guard';
 import { MaterialModule } from '../../../../shared/ui/material-module';
+import { ERRORES_DINAMICOS } from '../../../../shared/ui/form-field-options';
 import { form, FormField, max, maxLength, min, minLength, required, submit } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-formulario-oferta',
   imports: [MaterialModule, FormField],
+  providers: [ERRORES_DINAMICOS],
   templateUrl: './formulario-oferta.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './formulario-oferta.component.scss'
