@@ -8,7 +8,7 @@
     <div class="dialogo__campos">
       <mat-form-field appearance="outline">
         <mat-label>Nombre</mat-label>
-        <input matInput [formField]="negocioForm.nombre" />
+        <input id="nombre" matInput [formField]="negocioForm.nombre" aria-label="Nombre"/>
         @if (negocioForm.nombre().touched() && negocioForm.nombre().invalid()) {
           <mat-error>{{ negocioForm.nombre().errors()[0]?.message }}</mat-error>
         }
@@ -17,7 +17,7 @@
       <div class="dialogo__fila">
         <mat-form-field appearance="outline">
           <mat-label>Teléfono</mat-label>
-          <input matInput inputmode="numeric" [formField]="negocioForm.telefono" />
+          <input id="telefono" matInput inputmode="numeric" [formField]="negocioForm.telefono" aria-label="Teléfono"/>
           @if (negocioForm.telefono().touched() && negocioForm.telefono().invalid()) {
             <mat-error>{{ negocioForm.telefono().errors()[0]?.message }}</mat-error>
           }
@@ -25,7 +25,7 @@
 
         <mat-form-field appearance="outline">
           <mat-label>RUC</mat-label>
-          <input matInput inputmode="numeric" [formField]="negocioForm.ruc" />
+          <input id="ruc" matInput inputmode="numeric" [formField]="negocioForm.ruc" aria-label="RUC"/>
           @if (negocioForm.ruc().touched() && negocioForm.ruc().invalid()) {
             <mat-error>{{ negocioForm.ruc().errors()[0]?.message }}</mat-error>
           }
@@ -34,7 +34,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Dirección</mat-label>
-        <input matInput [formField]="negocioForm.direccion" />
+        <input id="direccion" matInput [formField]="negocioForm.direccion" aria-label="Dirección"/>
         @if (negocioForm.direccion().touched() && negocioForm.direccion().invalid()) {
           <mat-error>{{ negocioForm.direccion().errors()[0]?.message }}</mat-error>
         }
@@ -42,7 +42,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Correo electrónico</mat-label>
-        <input matInput type="email" [formField]="negocioForm.correo_Electronico" />
+        <input id="correo_Electonico" matInput type="email" [formField]="negocioForm.correo_Electronico" aria-label="Correo_Electrónico"/>
         @if (negocioForm.correo_Electronico().touched() && negocioForm.correo_Electronico().invalid()) {
           <mat-error>{{ negocioForm.correo_Electronico().errors()[0]?.message }}</mat-error>
         }

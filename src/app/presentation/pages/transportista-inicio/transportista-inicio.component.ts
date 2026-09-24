@@ -129,7 +129,7 @@ export class TransportistaInicioComponent extends BaseListComponent<ITransportis
       telefono: transportista.telefono,
       correo: transportista.correo_Electronico,
       estado: this.getEstado(transportista.estado),
-      fecha: this.getFechaRegistro(transportista.fecha_Creacion ?? '')
+      fecha: Metodos.formatearFecha(transportista.fecha_Creacion)
     }));
 
     if (!datos || datos.length === 0) {
@@ -164,14 +164,5 @@ export class TransportistaInicioComponent extends BaseListComponent<ITransportis
 
   getEstado(estado: boolean): string {
     return estado ? 'Activo' : 'No Activo';
-  }
-
-  getFechaRegistro(fecha: string): string {
-    const fechaObj = new Date(fecha);
-    return fechaObj.toLocaleDateString('es-ES', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    });
   }
 }
