@@ -39,6 +39,7 @@ export class InicioComponent implements OnInit {
 
   protected readonly esAdministrador = this.loginServicio.esAdministrador();
   protected readonly nombreUsuario = this.loginServicio.obtenerDatosToken()?.unique_name ?? '';
+  protected readonly rolUsuario = this.loginServicio.obtenerDatosToken()?.role ?? '';
   protected readonly estadisticasPermitidas: ClaveEstadistica[] | null = this.esAdministrador
     ? null
     : ['comprados', 'vendidos'];

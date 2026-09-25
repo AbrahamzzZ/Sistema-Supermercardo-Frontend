@@ -30,9 +30,9 @@
       display: flex;
       align-items: center;
       gap: 5px;
-      background-color: #fce4e4;
-      color: #ee4a4a;
-      border: 1px solid #d32f2f;
+      background-color: var(--color-error-suave);
+      color: var(--color-error);
+      border: 1px solid var(--color-error);
       padding: 4px 8px;
       border-radius: 6px;
       font-size: 14px;

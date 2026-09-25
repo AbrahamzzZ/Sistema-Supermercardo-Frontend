@@ -7,14 +7,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { CanComponentDeactive } from '../../../../core/guards/formulario-incompleto.guard';
 import { MaterialModule } from '../../../../shared/ui/material-module';
-import { ERRORES_DINAMICOS } from '../../../../shared/ui/form-field-options';
+import { ESPACIO_FIJO_ERRORES } from '../../../../shared/ui/form-field-options';
 import { email, form, FormField, maxLength, minLength, required, submit } from '@angular/forms/signals';
 import { Validaciones } from '../../../../shared/utility/validaciones';
 
 @Component({
   selector: 'app-formulario-cliente',
   imports: [MaterialModule, FormField],
-  providers: [ERRORES_DINAMICOS],
+  providers: [ESPACIO_FIJO_ERRORES],
   templateUrl: './formulario-cliente.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './formulario-cliente.component.scss'

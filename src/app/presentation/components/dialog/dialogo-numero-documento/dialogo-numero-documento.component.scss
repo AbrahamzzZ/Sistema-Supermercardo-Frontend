@@ -12,13 +12,13 @@
   font-weight: 600;
   text-align: center;
   margin-bottom: 10px;
-  color: #3f51b5;
+  color: var(--color-primario);
 }
 
 .dialog-text {
   font-size: 0.95rem;
   text-align: center;
-  color: #666;
+  color: var(--color-texto-secundario);
   margin-bottom: 18px;
 }
 
@@ -26,12 +26,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(135deg, #e3f2fd, #e0f7fa);
+  background: linear-gradient(135deg, var(--color-primario-suave), var(--color-primario-suave));
   padding: 14px 18px;
   border-radius: 10px;
   font-weight: 600;
   font-size: 1.25rem;
-  color: #004d40;
+  color: var(--color-primario-800);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s ease;
 }

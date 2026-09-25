@@ -1,9 +1,14 @@
 <img class="cabecera__logo" [src]="logoURL()" alt="Logo del negocio" />
 
 <div class="cabecera__info">
-  <span class="cabecera__saludo">
-    {{ nombreUsuario() ? 'Hola, ' + nombreUsuario() : 'Bienvenido' }}
-  </span>
+  <div class="cabecera__usuario">
+    <span class="cabecera__saludo">
+      {{ nombreUsuario() ? 'Hola, ' + nombreUsuario() : 'Bienvenido' }}
+    </span>
+    @if (rolUsuario()) {
+      <span class="cabecera__rol">{{ rolUsuario() }}</span>
+    }
+  </div>
   <h1 class="cabecera__nombre">{{ negocio()?.nombre ?? 'Cargando…' }}</h1>
 
   @if (negocio(); as n) {

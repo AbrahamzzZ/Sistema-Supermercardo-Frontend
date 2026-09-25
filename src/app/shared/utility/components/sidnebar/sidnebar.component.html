@@ -1,30 +1,36 @@
-<div class="sidebar" [ngClass]="{ 'sidebar-collapsed': isCollapsed }">
-    <button class="sidebar-toggle-btn-inside" (click)="toggleSidebar()">
-        <mat-icon>menu</mat-icon>
+<aside class="sidebar" [ngClass]="{ 'sidebar-collapsed': isCollapsed }">
+    <button class="sidebar-toggle-btn-inside" (click)="toggleSidebar()" aria-label="Alternar menú">
+        <mat-icon>{{ isCollapsed ? 'menu' : 'menu_open' }}</mat-icon>
     </button>
-    <div class="user-info" >
-        @if(!isCollapsed){
-            <span class="user-name">{{ nombreUsuario }}</span>
-            <span class="user-role">{{ tipoUsuario }}</span>
-        }
-    </div>
+
     <nav class="sidebar-menu">
-        <button mat-button routerLink="/home" class="menu-item" [matTooltip]="isCollapsed ? 'Inicio' : ''">
-            <mat-icon>home</mat-icon><span class="text">Home</span>
-        </button>
-        @for (menu of menus; track $index) {
-            <button mat-button [routerLink]="menu.urlMenu" class="menu-item" [matTooltip]="isCollapsed ? menu.nombreMenu : ''">
-                <mat-icon>{{ menu.nombreIcono }}</mat-icon>
-                @if(!isCollapsed){
-                    <span class="text">{{ menu.nombreMenu }}</span>
-                }
-            </button>
+        @for (seccion of secciones; track seccion.nombre) {
+            <div class="seccion" [class.abierta]="seccionesAbiertas.has(seccion.nombre)">
+                <button class="seccion-titulo" (click)="toggleSeccion(seccion.nombre)"
+                    [attr.aria-expanded]="seccionesAbiertas.has(seccion.nombre)">
+                    <span>{{ seccion.nombre }}</span>
+                    <mat-icon class="flecha">expand_more</mat-icon>
+                </button>
+
+                <div class="seccion-contenido">
+                    <div class="seccion-items">
+                        @for (menu of seccion.menus; track menu.idMenu) {
+                            <a [routerLink]="menu.urlMenu" routerLinkActive="active" class="menu-item"
+                                [matTooltip]="isCollapsed ? menu.nombreMenu : ''" matTooltipPosition="right">
+                                <mat-icon>{{ menu.nombreIcono }}</mat-icon>
+                                <span class="text">{{ menu.nombreMenu }}</span>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
         }
     </nav>
-    <button mat-button class="menu-item salir" (click)="logout()" [matTooltip]="isCollapsed ? 'Salir' : ''">
-        <mat-icon>exit_to_app</mat-icon>
-        @if(!isCollapsed){
-            <span class="text">Salir</span>
-        }
-    </button>
-</div>
+
+    <div class="sidebar-footer">
+        <button class="menu-item salir" (click)="logout()" [matTooltip]="isCollapsed ? 'Salir' : ''" matTooltipPosition="right">
+            <mat-icon>logout</mat-icon>
+            <span class="text">Cerrar sesión</span>
+        </button>
+    </div>
+</aside>

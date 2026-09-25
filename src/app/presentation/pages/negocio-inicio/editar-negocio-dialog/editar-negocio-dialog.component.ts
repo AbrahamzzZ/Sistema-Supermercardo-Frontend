@@ -7,12 +7,12 @@ import { NegocioService } from '../../../../core/services/negocio.service';
 import { Validaciones } from '../../../../shared/utility/validaciones';
 import { Metodos } from '../../../../shared/utility/metodos';
 import { MaterialModule } from '../../../../shared/ui/material-module';
-import { ERRORES_DINAMICOS } from '../../../../shared/ui/form-field-options';
+import { ESPACIO_FIJO_ERRORES } from '../../../../shared/ui/form-field-options';
 
 @Component({
   selector: 'app-editar-negocio-dialog',
   imports: [MaterialModule, FormField],
-  providers: [ERRORES_DINAMICOS],
+  providers: [ESPACIO_FIJO_ERRORES],
   templateUrl: './editar-negocio-dialog.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './editar-negocio-dialog.component.scss'

@@ -1,6 +1,6 @@
 $table-padding: 6px;
-$table-border-color: #b3aeae;
-$message-bg-color: #fafafa;
+$table-border-color: var(--color-borde);
+$message-bg-color: var(--color-superficie-alt);
 
 .table {
   width: 100%;
@@ -42,38 +42,38 @@ $message-bg-color: #fafafa;
 }
 
 .row-stock-bajo {
-  background-color: #fef3c7 !important;
+  background-color: var(--color-advertencia-suave) !important;
   animation: stockBajoAnimation 2s infinite;
 
   td {
-    border-bottom: 2px solid #fbbf24 !important;
+    border-bottom: 2px solid var(--color-advertencia) !important;
   }
 }
 
 .row-agotado {
-  background-color: #fee2e2 !important;
+  background-color: var(--color-error-suave) !important;
   animation: agotadoAnimation 2s infinite;
 
   td {
-    border-bottom: 2px solid #ef4444 !important;
+    border-bottom: 2px solid var(--color-error) !important;
   }
 }
 
 @keyframes stockBajoAnimation {
   0%, 100% {
-    background-color: #fef3c7;
+    background-color: var(--color-advertencia-suave);
   }
   50% {
-    background-color: #fde68a;
+    background-color: var(--color-advertencia-suave);
   }
 }
 
 @keyframes agotadoAnimation {
   0%, 100% {
-    background-color: #fee2e2;
+    background-color: var(--color-error-suave);
   }
   50% {
-    background-color: #fecaca;
+    background-color: var(--color-error-suave);
   }
 }
 

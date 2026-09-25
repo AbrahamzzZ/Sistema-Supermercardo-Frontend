@@ -1,9 +1,8 @@
-@use 'sass:color';
 
-$primary-color: #333;
-$warning-color: #d32f2f;
-$warning-hover: #b71c1c;
-$cancel-color: #555;
+$primary-color: var(--color-texto);
+$warning-color: var(--color-error);
+$warning-hover: var(--color-error-hover);
+$cancel-color: var(--color-texto-secundario);
 $padding: 16px;
 $border-radius: 10px;
 $transition: all 0.3s ease;
@@ -14,7 +13,7 @@ $transition: all 0.3s ease;
   align-items: center;
 }
 
-@mixin button-style($bg-color, $text-color: white) {
+@mixin button-style($bg-color, $hover-color, $text-color: white) {
   background-color: $bg-color;
   color: $text-color;
   padding: 10px 16px;
@@ -23,7 +22,7 @@ $transition: all 0.3s ease;
   cursor: pointer;
 
   &:hover {
-    background-color: color.adjust($bg-color, $lightness: -10%);
+    background-color: $hover-color;
   }
 }
 
@@ -63,12 +62,12 @@ $transition: all 0.3s ease;
       cursor: pointer;
 
       &:hover {
-        background-color: color.adjust($cancel-color, $lightness: 40%);
+        background-color: var(--color-superficie-alt);
       }
     }
 
     .delete-button {
-      @include button-style($warning-color);
+      @include button-style($warning-color, $warning-hover);
     }
   }
 }

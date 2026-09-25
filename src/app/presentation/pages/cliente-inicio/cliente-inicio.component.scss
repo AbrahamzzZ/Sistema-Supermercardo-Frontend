@@ -1,19 +1,18 @@
 $table-padding: 6px;
-$message-bg-color: #fafafa;
-$table-border-color: #b3aeae;
+$message-bg-color: var(--color-superficie-alt);
+$table-border-color: var(--color-borde);
 
 .container {
   margin: 20px;
 
   &__title {
     font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
-    color: #000000;
+    color: var(--color-texto);
     text-align: center;
     margin-bottom: 20px;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   }
 
   &__search {
@@ -119,7 +118,6 @@ $table-border-color: #b3aeae;
   }
 }
 
-// Media Query: Tablets y móviles
 @media (max-width: 768px) {
   .container {
     padding: 10px;
@@ -176,7 +174,7 @@ $table-border-color: #b3aeae;
 }
 
 ::ng-deep .container__search__input .mat-mdc-form-field-subscript-wrapper{
-  background: #ffffff;
+  background: transparent;
 }
 
 ::ng-deep .container__search__input .mat-mdc-text-field-wrapper {

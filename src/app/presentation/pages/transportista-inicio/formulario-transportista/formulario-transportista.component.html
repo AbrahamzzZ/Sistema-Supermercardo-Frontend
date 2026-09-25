@@ -9,7 +9,46 @@
     <mat-card-content>
       <form class="form" novalidate>
         <div class="container__form">
-          <div class="form__left">
+          <!-- Foto -->
+          <div class="foto">
+            <span class="foto__titulo">Foto del transportista</span>
+            <input type="file" (change)="subirImagen($event)" accept="image/*" #fotoTransportista class="file-input" id="fileInput" />
+
+            <div class="foto__marco" [class.foto__marco--vacio]="!imagenURL">
+              @if (imagenURL) {
+                <img [src]="imagenURL" alt="Foto del transportista" />
+                <button mat-icon-button type="button" class="delete-button" aria-label="Eliminar foto"
+                  (click)="eliminarImagen(); fotoTransportista.value = ''">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              } @else {
+                <label for="fileInput" class="foto__placeholder">
+                  <mat-icon>add_a_photo</mat-icon>
+                  <span>Sin foto</span>
+                </label>
+              }
+            </div>
+
+            <label for="fileInput" class="boton-archivo">
+              <mat-icon>cloud_upload</mat-icon>
+              {{ imagenURL ? 'Cambiar foto' : 'Subir foto' }}
+            </label>
+
+            @if (transportistaForm.imagenBase64().touched() && transportistaForm.imagenBase64().invalid()) {
+              <mat-error class="form__error">
+                {{ transportistaForm.imagenBase64().errors()[0]?.message }}
+              </mat-error>
+            }
+          </div>
+
+          <!-- Datos -->
+          <div class="form__datos">
+
+            <mat-form-field appearance="outline" class="form__field">
+              <mat-label>Código: </mat-label>
+              <input id="codigo" matInput type="text" [value]="transportistaModel().codigo" readonly aria-label="Código" />
+            </mat-form-field>
+
             <mat-form-field appearance="outline" class="form__field">
               <mat-label>Nombres: </mat-label>
               <input id="nombres" matInput type="text" [formField]="transportistaForm.nombres" aria-label="Nombres">
@@ -38,7 +77,7 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form__field">
-              <mat-label>Telefono: </mat-label>
+              <mat-label>Teléfono: </mat-label>
               <input id="telefono" matInput type="text" inputmode="numeric" [formField]="transportistaForm.telefono" aria-label="Teléfono" />
 
               @if (transportistaForm.telefono().touched() && transportistaForm.telefono().invalid()) {
@@ -46,7 +85,7 @@
               }
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="form__field">
+            <mat-form-field appearance="outline" class="form__field form__field--completo">
               <mat-label>Correo Electrónico: </mat-label>
               <input id="correo_Electronico" matInput type="email" [formField]="transportistaForm.correo_Electronico" aria-label="Correo Electrónico"/>
 
@@ -54,47 +93,8 @@
                 <mat-error class="form__error">{{ transportistaForm.correo_Electronico().errors()[0]?.message }}</mat-error>
               }
             </mat-form-field>
-          </div>
-          <div class="form__right">
-            <mat-form-field appearance="outline" class="form__field">
-              <mat-label>Código: </mat-label>
-              <input id="codigo" matInput type="text" [value]="transportistaModel().codigo" readonly aria-label="Código" />
-            </mat-form-field>
 
-            <div class="form-group">
-              <label for="fileInput">Foto del Transportista:</label>
-              <div class="file-input-container">
-                <input type="file" (change)="subirImagen($event)" accept="image/*" #fotoTransportista class="file-input" id="fileInput" />
-                <label for="fileInput" class="file-label">
-                  <span class="file-button">
-                    <mat-icon>cloud_upload</mat-icon>
-                    Seleccionar Foto
-                  </span>
-                  @if (imagenURL) {
-                    <span class="file-filename">
-                      {{ imagenURL ? 'Archivo seleccionado' : '' }}
-                    </span>
-                  }
-                </label>
-                @if (transportistaForm.imagenBase64().touched() && transportistaForm.imagenBase64().invalid()) {
-                  <mat-error class="form__error">
-                    {{ transportistaForm.imagenBase64().errors()[0]?.message }}
-                  </mat-error>
-                }
-              </div>
-
-              <!-- Vista previa de la imagen -->
-              @if (imagenURL) {
-                <div class="preview-container">
-                  <img [src]="imagenURL" alt="Foto del transportista" />
-                  <button mat-icon-button type="button" class="delete-button" (click)="eliminarImagen()">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-                </div>
-              }
-            </div>
-
-            <mat-checkbox [formField]="transportistaForm.estado">Activo</mat-checkbox>
+            <mat-checkbox class="form__estado" [formField]="transportistaForm.estado">Activo</mat-checkbox>
           </div>
         </div>
         <div class="form__action">

@@ -6,7 +6,7 @@
 <mat-dialog-content>
   <form class="dialogo__grid" novalidate>
     <div class="dialogo__campos">
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="form__field">
         <mat-label>Nombre</mat-label>
         <input id="nombre" matInput [formField]="negocioForm.nombre" aria-label="Nombre"/>
         @if (negocioForm.nombre().touched() && negocioForm.nombre().invalid()) {
@@ -15,7 +15,7 @@
       </mat-form-field>
 
       <div class="dialogo__fila">
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>Teléfono</mat-label>
           <input id="telefono" matInput inputmode="numeric" [formField]="negocioForm.telefono" aria-label="Teléfono"/>
           @if (negocioForm.telefono().touched() && negocioForm.telefono().invalid()) {
@@ -23,7 +23,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" class="form__field">
           <mat-label>RUC</mat-label>
           <input id="ruc" matInput inputmode="numeric" [formField]="negocioForm.ruc" aria-label="RUC"/>
           @if (negocioForm.ruc().touched() && negocioForm.ruc().invalid()) {
@@ -32,7 +32,7 @@
         </mat-form-field>
       </div>
 
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="form__field">
         <mat-label>Dirección</mat-label>
         <input id="direccion" matInput [formField]="negocioForm.direccion" aria-label="Dirección"/>
         @if (negocioForm.direccion().touched() && negocioForm.direccion().invalid()) {
@@ -40,7 +40,7 @@
         }
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="form__field">
         <mat-label>Correo electrónico</mat-label>
         <input id="correo_Electonico" matInput type="email" [formField]="negocioForm.correo_Electronico" aria-label="Correo_Electrónico"/>
         @if (negocioForm.correo_Electronico().touched() && negocioForm.correo_Electronico().invalid()) {
@@ -65,7 +65,7 @@
       </div>
 
       <input type="file" accept="image/*" id="logoNegocio" class="dialogo__file" (change)="subirImagen($event)" />
-      <label for="logoNegocio" class="dialogo__file-label">
+      <label for="logoNegocio" class="boton-archivo">
         <mat-icon>cloud_upload</mat-icon>
         {{ imagenURL() ? 'Cambiar logo' : 'Subir logo' }}
       </label>

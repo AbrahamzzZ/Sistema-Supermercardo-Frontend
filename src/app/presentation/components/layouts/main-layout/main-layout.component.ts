@@ -6,10 +6,11 @@ import { MaterialModule } from '../../../../shared/ui/material-module';
 import { LoginService } from '../../../../core/services/login.service';
 import { MenuService } from '../../../../core/services/menu.service';
 import { SidnebarComponent } from '../../../../shared/utility/components/sidnebar/sidnebar.component';
+import { BreadcrumbComponent } from '../../../../shared/utility/components/breadcrumb/breadcrumb.component';
 
 @Component({
   selector: 'app-main-layout',
-  imports: [SidnebarComponent, MaterialModule, RouterOutlet],
+  imports: [SidnebarComponent, BreadcrumbComponent, MaterialModule, RouterOutlet],
   templateUrl: './main-layout.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './main-layout.component.scss'
@@ -19,16 +20,12 @@ export class MainLayoutComponent implements OnInit {
   private readonly loginServicio = inject(LoginService);
   private readonly menuServicio = inject(MenuService);
   isCollapsed = true;
-  nombreUsuario = '';
-  tipoUsuario = '';
   menus: IMenu[] = [];
 
   ngOnInit() {
     const datosToken = this.loginServicio.obtenerDatosToken();
 
     if (datosToken) {
-      this.nombreUsuario = datosToken.unique_name;
-      this.tipoUsuario = datosToken.role;
       const idUsuario = datosToken.nameid;
 
       this.menuServicio.obtener(idUsuario).subscribe({

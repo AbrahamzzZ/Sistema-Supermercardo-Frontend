@@ -8,13 +8,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CanComponentDeactive } from '../../../../core/guards/formulario-incompleto.guard';
 import { Observable } from 'rxjs';
 import { MaterialModule } from '../../../../shared/ui/material-module';
-import { ERRORES_DINAMICOS } from '../../../../shared/ui/form-field-options';
+import { ESPACIO_FIJO_ERRORES } from '../../../../shared/ui/form-field-options';
 import { email, form, FormField, maxLength, minLength, required, submit } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-formulario-proveedor',
   imports: [MaterialModule, FormField],
-  providers: [ERRORES_DINAMICOS],
+  providers: [ESPACIO_FIJO_ERRORES],
   templateUrl: './formulario-proveedor.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './formulario-proveedor.component.scss'

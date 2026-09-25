@@ -11,7 +11,7 @@
 }
 
 .venta-formulario__contenedor {
-  padding: 0 50px;
+  padding: 20px;
 }
 
 .venta-formulario__detalle-boton {
@@ -21,11 +21,11 @@
 
 .venta-formulario__bloque {
   border-radius: 12px;
-  background: #fafafa;
+  background: var(--color-superficie-alt);
 }
 
 .venta-formulario__bloque--cabecera {
-  background: #fdfdfd;
+  background: var(--color-superficie-alt);
 }
 
 .venta-formulario__subtitulo {

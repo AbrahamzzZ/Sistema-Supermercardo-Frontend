@@ -5,7 +5,7 @@
   min-height: 100vh;
   padding: 24px;
   box-sizing: border-box;
-  background: #e2eeb7;
+  background: var(--color-fondo);
 
   &__tarjeta {
     padding: 20px 24px;
@@ -21,10 +21,10 @@
     margin: 0 0 10px;
     font-size: 1.05rem;
     font-weight: 600;
-    color: #1f2937;
+    color: var(--color-texto);
 
     mat-icon {
-      color: #ff5722;
+      color: var(--color-advertencia);
     }
   }
 
@@ -67,7 +67,7 @@
   }
 
   &:focus-visible {
-    outline: 2px solid #3f51b5;
+    outline: 2px solid var(--color-primario);
     outline-offset: 2px;
   }
 
@@ -77,25 +77,25 @@
     width: 44px;
     height: 44px;
     border-radius: 12px;
-    background: #fff1eb;
-    color: #ff5722;
+    background: var(--color-advertencia-suave);
+    color: var(--color-advertencia);
   }
 
   &__titulo {
     flex: 1;
     font-size: 1rem;
     font-weight: 600;
-    color: #1f2937;
+    color: var(--color-texto);
   }
 
   &__flecha {
-    color: #9aa0b4;
+    color: var(--color-texto-suave);
   }
 }
 
 .stock-bajo {
-  background: #fff4e5;
-  border: 1px solid #f0ad4e;
+  background: var(--color-advertencia-suave);
+  border: 1px solid var(--color-advertencia);
   border-radius: 12px;
   padding: 12px 16px;
 
@@ -104,11 +104,11 @@
     align-items: center;
     gap: 8px;
     font-weight: 600;
-    color: #a15c00;
+    color: var(--color-advertencia);
     margin-bottom: 8px;
 
     mat-icon {
-      color: #f0ad4e;
+      color: var(--color-advertencia);
     }
   }
 
@@ -125,7 +125,7 @@
     align-items: center;
     gap: 8px;
     background: white;
-    border: 1px solid #f0ad4e;
+    border: 1px solid var(--color-advertencia);
     border-radius: 8px;
     padding: 6px 12px;
     font-size: 14px;
@@ -136,7 +136,7 @@
   }
 
   &__cantidad {
-    color: #d9534f;
+    color: var(--color-error);
     font-weight: 600;
   }
 }

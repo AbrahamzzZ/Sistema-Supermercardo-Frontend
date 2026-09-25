@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #3f51b5;
+    color: var(--color-primario);
     font-weight: 600;
   }
 
@@ -17,7 +17,7 @@
   &__campos {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 4px; // cada campo ya reserva espacio para su mensaje de error
 
     mat-form-field {
       width: 100%;
@@ -27,7 +27,8 @@
   &__fila {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 4px 12px;
+    align-items: start;
   }
 
   &__logo {
@@ -41,7 +42,7 @@
     align-self: flex-start;
     font-size: 0.9rem;
     font-weight: 500;
-    color: #555;
+    color: var(--color-texto-secundario);
   }
 
   &__logo-preview {
@@ -55,8 +56,8 @@
     justify-content: center;
     gap: 4px;
     border-radius: 16px;
-    background: #f5f7fb;
-    border: 1px solid #e3e6ef;
+    background: var(--color-superficie-alt);
+    border: 1px solid var(--color-borde);
 
     img {
       width: 100%;
@@ -68,7 +69,7 @@
 
     &--vacio {
       border-style: dashed;
-      color: #9aa0b4;
+      color: var(--color-texto-suave);
     }
   }
 
@@ -82,29 +83,12 @@
     position: absolute;
     top: -12px;
     right: -12px;
-    background: #f44336;
+    background: var(--color-error);
     color: white;
   }
 
   &__file {
     display: none;
-  }
-
-  &__file-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 16px;
-    border-radius: 20px;
-    background: #e8eaf6;
-    color: #3f51b5;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-
-    &:hover {
-      background: #c5cae9;
-    }
   }
 
   &__logo-error {

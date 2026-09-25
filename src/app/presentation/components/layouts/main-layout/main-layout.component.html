@@ -3,14 +3,13 @@
     <app-sidnebar
       [isCollapsed]="isCollapsed"
       (toggle)="toggleSidebar()"
-      [menus]="menus"
-      [nombreUsuario]="nombreUsuario"
-      [tipoUsuario]="tipoUsuario">
+      [menus]="menus">
     </app-sidnebar>
   </div>
 
   <main class="content" [ngClass]="{ 'content-expanded': isCollapsed }">
     <div class="content-inner">
+      <app-breadcrumb [menus]="menus"></app-breadcrumb>
       <router-outlet></router-outlet>
     </div>
   </main>

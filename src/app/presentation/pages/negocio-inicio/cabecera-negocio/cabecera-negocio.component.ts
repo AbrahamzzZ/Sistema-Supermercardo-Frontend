@@ -22,6 +22,7 @@ export class CabeceraNegocioComponent implements OnInit {
 
   readonly puedeEditar = input(false);
   readonly nombreUsuario = input('');
+  readonly rolUsuario = input('');
   readonly negocioCargado = output<INegocio>();
 
   protected readonly negocio = signal<INegocio | null>(null);

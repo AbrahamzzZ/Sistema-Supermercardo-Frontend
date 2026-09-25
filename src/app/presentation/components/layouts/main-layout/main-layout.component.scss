@@ -6,14 +6,15 @@
 
 .content {
   flex-grow: 1;
-  margin-left: 300px;
+  margin-left: 240px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .content-expanded {
-  margin-left: 60px;
+  margin-left: 72px;
 }
 
 .content-inner {
