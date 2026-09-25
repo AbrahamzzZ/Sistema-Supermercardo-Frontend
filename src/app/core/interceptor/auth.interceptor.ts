@@ -1,9 +1,10 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CLAVES_STORAGE } from '../constants/storage.const';
 
 export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem(CLAVES_STORAGE.token);
 
     if (req.url.includes('/login')) {
       return next.handle(req);
