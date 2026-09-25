@@ -10,6 +10,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter } from 'rxjs';
 import { IMenu } from '../../../../core/interfaces/menu';
+import { LoginService } from '../../../../core/services/login.service';
 import {
   agruparMenusPorSeccion,
   ISeccionMenu,
@@ -35,6 +36,7 @@ export class SidnebarComponent {
   @Input() isCollapsed = true;
   @Output() toggle = new EventEmitter<void>();
   private readonly router = inject(Router);
+  private readonly loginServicio = inject(LoginService);
 
   secciones: ISeccionMenu[] = agruparMenusPorSeccion([MENU_INICIO]);
   seccionesAbiertas = new Set<string>([obtenerSeccionDeRuta(this.router.url)]);
@@ -56,11 +58,6 @@ export class SidnebarComponent {
   }
 
   logout() {
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
-    sessionStorage.removeItem('logout-message-shown');
-    this.router.navigate(['/login'], {
-      queryParams: { motivo: 'sesion' }
-    });
+    this.loginServicio.logout();
   }
 }

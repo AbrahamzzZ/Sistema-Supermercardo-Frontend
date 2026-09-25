@@ -8,7 +8,7 @@ import { LogService } from '../../../core/services/log.service';
 import { ILog } from '../../../core/interfaces/log';
 import { ModalLogComponent } from '../../components/modal/modal-log/modal-log.component';
 import { DataTableComponent } from '../../../shared/utility/components/data-table/data-table.component';
-import { TableColumn } from '../../../shared/utility/components/tableColumn';
+import { TableColumn } from '../../../shared/utility/components/data-table/table-column';
 import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 
 @Component({
