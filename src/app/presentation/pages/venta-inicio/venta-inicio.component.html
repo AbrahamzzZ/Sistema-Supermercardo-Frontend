@@ -17,7 +17,7 @@
       <div class="venta-formulario__fila">
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>Fecha</mat-label>
-          <input matInput [value]="hoy" readonly />
+          <input id="fecha" matInput [value]="hoy" readonly aria-label="Fecha"/>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form__field">
@@ -38,20 +38,12 @@
       <div class="venta-formulario__fila">
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>Sucursal</mat-label>
-          <input
-            matInput
-            [value]="$safeNavigationMigration(sucursalSelecionada?.nombre_Sucursal)"
-            readonly
-          />
+          <input id="sucursal" matInput [value]="$safeNavigationMigration(sucursalSelecionada?.nombre_Sucursal)" readonly aria-label="Sucursal"/>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>Dirección</mat-label>
-          <input
-            matInput
-            [value]="$safeNavigationMigration(sucursalSelecionada?.direccion_Sucursal)"
-            readonly
-          />
+          <input id="direccion" matInput [value]="$safeNavigationMigration(sucursalSelecionada?.direccion_Sucursal)" readonly aria-label="Direcciòn"/>
         </mat-form-field>
 
         <button mat-raised-button color="primary" (click)="abrirModalSucursal()">
@@ -64,24 +56,12 @@
       <div class="venta-formulario__fila">
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>Cliente</mat-label>
-          <input
-            matInput
-            [value]="
-              clienteSeleccionado
-                ? clienteSeleccionado.nombres + ' ' + clienteSeleccionado.apellidos
-                : ''
-            "
-            readonly
-          />
+          <input id="clinte" matInput [value]="clienteSeleccionado ? clienteSeleccionado.nombres + ' ' + clienteSeleccionado.apellidos : ''" readonly aria-label="Cliente"/>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>Cédula</mat-label>
-          <input
-            matInput
-            [value]="$safeNavigationMigration(clienteSeleccionado?.cedula)"
-            readonly
-          />
+          <input id="cedula" matInput [value]="$safeNavigationMigration(clienteSeleccionado?.cedula)" readonly aria-label="Cèdula"/>
         </mat-form-field>
 
         <button mat-raised-button color="primary" (click)="abrirModalClientes()">
@@ -94,22 +74,12 @@
       <div class="venta-formulario__fila">
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>Oferta</mat-label>
-          <input
-            matInput
-            placeholder="Nombre"
-            [value]="$safeNavigationMigration(ofertaSeleccionado?.nombre_Oferta)"
-            readonly
-          />
+          <input id="oferta" matInput placeholder="Nombre" [value]="$safeNavigationMigration(ofertaSeleccionado?.nombre_Oferta)" readonly aria-label="Oferta"/>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>Descuento</mat-label>
-          <input
-            matInput
-            placeholder="Descuento"
-            [value]="$safeNavigationMigration(ofertaSeleccionado?.descuento)"
-            readonly
-          />
+          <input id="descuento" matInput placeholder="Descuento" [value]="$safeNavigationMigration(ofertaSeleccionado?.descuento)" readonly aria-label="Descuento"/>
           <span matSuffix>% &nbsp;</span>
         </mat-form-field>
 
@@ -126,31 +96,23 @@
         <div class="venta-formulario__fila">
           <mat-form-field appearance="outline" class="form__field">
             <mat-label>Código</mat-label>
-            <input
-              matInput
-              [value]="$safeNavigationMigration(productoSeleccionado?.codigo)"
-              readonly
-            />
+            <input id="codigo" matInput [value]="$safeNavigationMigration(productoSeleccionado?.codigo)" readonly aria-label="Còdigo"/>
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="form__field">
             <mat-label>Nombre</mat-label>
-            <input
-              matInput
-              [value]="$safeNavigationMigration(productoSeleccionado?.nombre_Producto)"
-              readonly
-            />
+            <input id="nombre" matInput [value]="$safeNavigationMigration(productoSeleccionado?.nombre_Producto)" readonly aria-label="Nombre"/>
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="form__field">
             <mat-label>Precio Venta</mat-label>
-            <input matInput type="number" [(ngModel)]="producto.precioVenta" />
+            <input id="precio_Venta" matInput type="number" [(ngModel)]="producto.precioVenta" aria-label="Precio_Venta"/>
             <span matTextPrefix>$&nbsp;</span>
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="form__field">
             <mat-label>Cantidad</mat-label>
-            <input matInput type="number" [(ngModel)]="producto.cantidad" />
+            <input id="cantidad" matInput type="number" [(ngModel)]="producto.cantidad" aria-label="Cantidad"/>
           </mat-form-field>
 
           <button mat-raised-button color="primary" (click)="abrirModalProductos()">
@@ -169,25 +131,25 @@
               <mat-form-field appearance="outline" class="form__field">
                 <mat-label>Total</mat-label>
                 <span matTextPrefix>$&nbsp;</span>
-                <input matInput [value]="mostrarTotal()" readonly />
+                <input id="total" matInput [value]="mostrarTotal()" readonly aria-label="Total" />
               </mat-form-field>
 
               <mat-form-field appearance="outline" class="form__field">
                 <mat-label>Con descuento</mat-label>
                 <span matTextPrefix>$&nbsp;</span>
-                <input matInput [value]="totalConDescuento" readonly />
+                <input id="con_Descuento" matInput [value]="totalConDescuento" readonly aria-label="Con_Descuento"/>
               </mat-form-field>
 
               <mat-form-field appearance="outline" class="form__field">
                 <mat-label>Paga con</mat-label>
                 <span matTextPrefix>$&nbsp;</span>
-                <input matInput [(ngModel)]="pagaCon" (ngModelChange)="calcularCambio()" />
+                <input id="paga_Con" matInput [(ngModel)]="pagaCon" (ngModelChange)="calcularCambio()" aria-label="Paga_Con"/>
               </mat-form-field>
 
               <mat-form-field appearance="outline" class="form__field">
                 <mat-label>Cambio</mat-label>
                 <span matTextPrefix>$&nbsp;</span>
-                <input matInput [value]="cambio" readonly />
+                <input id="cambio" matInput [value]="cambio" readonly aria-label="Cambio"/>
               </mat-form-field>
             </div>
           </div>
