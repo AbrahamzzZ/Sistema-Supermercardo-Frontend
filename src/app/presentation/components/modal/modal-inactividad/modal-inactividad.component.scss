@@ -18,25 +18,25 @@
 
 .modal-icon {
   font-size: 26px;
-  color: #f44336;
+  color: var(--color-error);
   animation: pulse 1.2s infinite;
 }
 
 .modal-title {
   font-size: 22px;
   font-weight: bold;
-  color: #d32f2f;
+  color: var(--color-error);
   margin: 0;
 }
 
 .modal-message {
   font-size: 16px;
   margin-bottom: 24px;
-  color: #333;
+  color: var(--color-texto);
 }
 
 .modal-message strong {
-  color: #d32f2f;
+  color: var(--color-error);
   font-weight: bold;
 }
 

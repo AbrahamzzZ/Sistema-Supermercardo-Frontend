@@ -1,0 +1,144 @@
+@use "sass:map";
+
+// =====================================================================
+//  Paleta de colores de la aplicación
+//  Basada en los colores de marca #79acde (azul) y #e2eeb7 (verde lima).
+//  Para cambiar un color de toda la app, cámbialo SOLO en este archivo.
+// =====================================================================
+
+// ---------- Primario (azul de marca) ----------
+$primario: (
+  50: #eef4fa,
+  100: #d9e6f4,
+  200: #bcd4ec,
+  300: #9bc0e5,
+  400: #79acde, // color de marca
+  500: #5a93cb,
+  600: #4479b0, // botones y acciones principales
+  700: #375f8c, // hover / presionado
+  800: #2c4b6d,
+  900: #213851,
+  A100: #d9e6f4,
+  A200: #9bc0e5,
+  A400: #5a93cb,
+  A700: #375f8c,
+  contrast: (
+    50: #1f2a37,
+    100: #1f2a37,
+    200: #1f2a37,
+    300: #1f2a37,
+    400: #1f2a37,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #1f2a37,
+    A200: #1f2a37,
+    A400: #ffffff,
+    A700: #ffffff
+  )
+);
+
+// ---------- Secundario (verde lima de marca) ----------
+$secundario: (
+  50: #f9fbef,
+  100: #f1f6dc,
+  200: #e2eeb7, // color de marca
+  300: #d0e293,
+  400: #bdd26f,
+  500: #a3b953,
+  600: #86993f,
+  700: #6a7a31,
+  800: #4f5c25,
+  900: #36401a
+);
+
+// ---------- Error (rojo apagado) ----------
+$error: (
+  50: #fbeceb,
+  100: #f5d0ce,
+  200: #eab0ad,
+  300: #de8e8a,
+  400: #d2706b,
+  500: #c0504d,
+  600: #a8413e,
+  700: #8c3432,
+  800: #702826,
+  900: #541d1c,
+  A100: #f5d0ce,
+  A200: #de8e8a,
+  A400: #c0504d,
+  A700: #8c3432,
+  contrast: (
+    50: #1f2a37,
+    100: #1f2a37,
+    200: #1f2a37,
+    300: #1f2a37,
+    400: #1f2a37,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #1f2a37,
+    A200: #1f2a37,
+    A400: #ffffff,
+    A700: #ffffff
+  )
+);
+
+// ---------- Variables CSS disponibles en toda la aplicación ----------
+:root {
+  // Primario
+  --color-primario-50: #{map.get($primario, 50)};
+  --color-primario-100: #{map.get($primario, 100)};
+  --color-primario-200: #{map.get($primario, 200)};
+  --color-primario-300: #{map.get($primario, 300)};
+  --color-primario-400: #{map.get($primario, 400)};
+  --color-primario-500: #{map.get($primario, 500)};
+  --color-primario: #{map.get($primario, 600)};
+  --color-primario-hover: #{map.get($primario, 700)};
+  --color-primario-800: #{map.get($primario, 800)};
+  --color-primario-900: #{map.get($primario, 900)};
+  --color-primario-suave: #{map.get($primario, 50)};
+  --color-marca: #{map.get($primario, 400)};
+
+  // Secundario
+  --color-secundario-50: #{map.get($secundario, 50)};
+  --color-secundario-100: #{map.get($secundario, 100)};
+  --color-secundario: #{map.get($secundario, 200)};
+  --color-secundario-300: #{map.get($secundario, 300)};
+  --color-secundario-oscuro: #{map.get($secundario, 700)};
+  --color-secundario-texto: #{map.get($secundario, 800)};
+
+  // Neutros
+  --color-fondo: #f5f7fa;
+  --color-superficie: #ffffff;
+  --color-superficie-alt: #f9fafb;
+  --color-borde: #e2e7ed;
+  --color-borde-fuerte: #cbd3dc;
+  --color-texto: #1f2a37;
+  --color-texto-secundario: #556270;
+  --color-texto-suave: #8793a1;
+  --color-deshabilitado: #b8c1cc;
+
+  // Estados (tonos apagados)
+  --color-exito: #3f8f6b;
+  --color-exito-suave: #e6f3ec;
+  --color-advertencia: #b7862b;
+  --color-advertencia-suave: #fbf3e0;
+  --color-error: #{map.get($error, 500)};
+  --color-error-hover: #{map.get($error, 700)};
+  --color-error-suave: #{map.get($error, 50)};
+  --color-info: #{map.get($primario, 600)};
+  --color-info-suave: #{map.get($primario, 50)};
+
+  // Sombras y bordes
+  --sombra-sm: 0 1px 2px rgba(31, 42, 55, 0.06), 0 1px 3px rgba(31, 42, 55, 0.08);
+  --sombra-md: 0 4px 12px rgba(31, 42, 55, 0.08);
+  --sombra-lg: 0 12px 32px rgba(31, 42, 55, 0.12);
+  --radio-sm: 6px;
+  --radio-md: 10px;
+  --radio-lg: 16px;
+}

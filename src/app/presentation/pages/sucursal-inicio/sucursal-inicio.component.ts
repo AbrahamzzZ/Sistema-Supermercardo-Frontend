@@ -9,7 +9,7 @@ import { ISucursalNegocio } from '../../../core/interfaces/Dto/sucursal-negocio'
 import { ISucursal } from '../../../core/interfaces/sucursal';
 import { MaterialModule } from '../../../shared/ui/material-module';
 import { DataTableComponent } from '../../../shared/utility/components/data-table/data-table.component';
-import { TableColumn } from '../../../shared/utility/components/tableColumn';
+import { TableColumn } from '../../../shared/utility/components/data-table/table-column';
 import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 
 @Component({

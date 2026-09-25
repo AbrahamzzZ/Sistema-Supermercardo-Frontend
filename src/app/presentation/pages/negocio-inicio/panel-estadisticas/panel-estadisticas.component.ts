@@ -179,7 +179,8 @@ export class PanelEstadisticasComponent implements OnInit {
   }
 
   private generarColores(cantidad: number): string[] {
-    const base = ['#3f51b5', '#26a69a', '#ffa726', '#ab47bc', '#ef5350', '#42a5f5', '#8d6e63', '#66bb6a'];
+    // Tonos apagados que combinan con la paleta de la app (ver src/styles/_paleta.scss)
+    const base = ['#4479b0', '#86993f', '#5f9ea0', '#c9955c', '#8a7fb5', '#79acde', '#b07a6b', '#5c6b7a'];
     return Array.from({ length: cantidad }, (_, i) => base[i % base.length]);
   }
 

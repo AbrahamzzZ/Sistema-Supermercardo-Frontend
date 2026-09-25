@@ -19,7 +19,7 @@
 
     span {
       font-size: 0.85rem;
-      color: #6b7280;
+      color: var(--color-texto-secundario);
     }
   }
 
@@ -34,10 +34,10 @@
     align-items: center;
     gap: 6px;
     padding: 6px 14px 6px 10px;
-    border: 1px solid #dfe3f0;
+    border: 1px solid var(--color-borde);
     border-radius: 20px;
     background: white;
-    color: #374151;
+    color: var(--color-texto);
     font: inherit;
     font-size: 0.85rem;
     cursor: pointer;
@@ -50,16 +50,16 @@
     }
 
     &:hover {
-      background: #f1f3f9;
+      background: var(--color-superficie-alt);
     }
 
     &--activa {
-      border-color: #3f51b5;
-      background: #3f51b5;
+      border-color: var(--color-primario);
+      background: var(--color-primario);
       color: white;
 
       &:hover {
-        background: #36459e;
+        background: var(--color-primario-hover);
       }
     }
   }
@@ -80,7 +80,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: #9aa0b4;
+    color: var(--color-texto-suave);
 
     mat-icon {
       font-size: 48px;

@@ -11,7 +11,7 @@
 }
 
 .compra-formulario__contenedor {
-  padding: 0 50px;
+  padding: 20px;
 }
 
 .compra-formulario__detalle-boton {
@@ -21,11 +21,11 @@
 
 .compra-formulario__bloque {
   border-radius: 12px;
-  background: #fafafa;
+  background: var(--color-superficie-alt);
 }
 
 .compra-formulario__bloque--cabecera {
-  background: #fdfdfd;
+  background: var(--color-superficie-alt);
 }
 
 .compra-formulario__subtitulo {

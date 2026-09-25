@@ -25,7 +25,6 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/leaflet/dist/leaflet.css",
               "src/styles.scss"
             ],
@@ -62,7 +61,7 @@
               "aot": false,
               "optimization": false,
               "extractLicenses": false,
-              "styles": ["@angular/material/prebuilt-themes/indigo-pink.css", "src/styles.scss"],
+              "styles": ["src/styles.scss"],
               "polyfills": ["zone.js", "zone.js/testing"]
             }
           },

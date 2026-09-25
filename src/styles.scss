@@ -1,13 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+@use 'styles/paleta';
+@use 'styles/tema-material';
 
-/*html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }*/
 html,
 body {
   height: 100%;
   margin: 0;
   display: flex;
   flex-direction: column;
+}
+
+body {
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  background: var(--color-fondo);
+  color: var(--color-texto);
 }
 
 app-root {
@@ -28,13 +34,13 @@ app-footer {
 .oferta-snackbar,
 .warning-snackbar {
   .mdc-snackbar__surface {
-    border-radius: 8px !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: var(--radio-md) !important;
+    box-shadow: var(--sombra-md) !important;
     transition: all 0.3s ease-in-out;
   }
 
   .mdc-snackbar__label {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
   }
 
@@ -44,75 +50,39 @@ app-footer {
   }
 }
 
+@mixin snackbar-color($fondo, $texto) {
+  .mdc-snackbar__surface {
+    background: $fondo !important;
+  }
+
+  .mdc-snackbar__label,
+  .mdc-button__label {
+    color: $texto !important;
+  }
+}
+
 .success-snackbar {
-  .mdc-snackbar__surface {
-    background-color: #16a34a !important;
-  }
-
-  .mdc-snackbar__label {
-    color: white !important;
-  }
-
-  .mdc-button__label {
-    color: white !important;
-  }
+  @include snackbar-color(var(--color-exito), #ffffff);
 }
 
-.error-snackbar {
-  .mdc-snackbar__surface {
-    background-color: #dc2626 !important;
-  }
-
-  .mdc-snackbar__label {
-    color: white !important;
-  }
-
-  .mdc-button__label {
-    color: white !important;
-  }
-}
-
+.error-snackbar,
 .logout-snackbar {
-  .mdc-snackbar__surface {
-    background-color: #dc2626 !important;
-  }
-
-  .mdc-snackbar__label {
-    color: white !important;
-  }
-
-  .mdc-button__label {
-    color: white !important;
-  }
+  @include snackbar-color(var(--color-error), #ffffff);
 }
 
 .inactivity-snackbar {
-  .mdc-snackbar__surface {
-    background-color: #ebf235 !important;
-  }
-
-  .mdc-snackbar__label {
-    color: #000000 !important;
-  }
-
-  .mdc-button__label {
-    color: #000000 !important;
-  }
+  @include snackbar-color(var(--color-secundario), var(--color-secundario-texto));
 }
 
 .oferta-snackbar {
+  @include snackbar-color(var(--color-primario), #ffffff);
+
   .mdc-snackbar__surface {
-    background: linear-gradient(135deg, #ce0bf5 0%, #5e16f9 100%) !important;
     animation: ofertaPulse 0.5s ease-in-out;
   }
 
   .mdc-snackbar__label {
-    color: white !important;
     font-weight: 600;
-  }
-
-  .mdc-button__label {
-    color: white !important;
   }
 }
 
@@ -131,18 +101,14 @@ app-footer {
 }
 
 .warning-snackbar {
+  @include snackbar-color(var(--color-advertencia), #ffffff);
+
   .mdc-snackbar__surface {
-    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
     animation: warningShake 0.5s ease-in-out;
   }
 
   .mdc-snackbar__label {
-    color: #78350f !important;
     font-weight: 600;
-  }
-
-  .mdc-button__label {
-    color: #78350f !important;
   }
 }
 
@@ -161,19 +127,103 @@ app-footer {
 @keyframes oferta-pulse {
   0%,
   100% {
-    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
+    box-shadow: 0 4px 12px rgba(68, 121, 176, 0.35);
     transform: scale(1);
   }
   50% {
-    box-shadow: 0 4px 20px rgba(124, 58, 237, 0.85);
+    box-shadow: 0 4px 20px rgba(68, 121, 176, 0.7);
     transform: scale(1.03);
+  }
+}
+
+//Campos compactos de los formularios (35px de alto). Se aplican con la clase "form__field"
+//en el mat-form-field; así se ven igual en páginas y en diálogos.
+.form__field {
+  .mat-mdc-form-field-subscript-wrapper {
+    background: #ffffff;
+  }
+
+  .mat-mdc-text-field-wrapper {
+    height: 35px !important;
+  }
+
+  .mat-mdc-form-field-flex {
+    margin-top: -11px;
+  }
+
+  .mdc-floating-label {
+    top: 50% !important;
+    margin-left: 0px;
+    transform: translateY(-50%) translateX(0) !important;
+    font-size: 14px !important;
+  }
+
+  .mdc-floating-label.mdc-floating-label--float-above {
+    top: 0 !important;
+    margin-left: 2px !important;
+    transform: translateY(-50%) scale(0.75) !important;
+    font-size: 12px;
+  }
+}
+
+//Botón para subir archivos (foto, logo). Se usa sobre un <label for="..."> de un input file oculto.
+.boton-archivo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: var(--color-primario-suave);
+  color: var(--color-primario);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover {
+    background: var(--color-primario-200);
+  }
+}
+
+//Botones de los formularios (registro/edición). Se usan los tokens de Angular Material
+//para que el color se aplique sin importar la especificidad de cada componente.
+.form__button--primary {
+  --mat-button-protected-container-color: var(--color-primario);
+  --mat-button-protected-label-text-color: #ffffff;
+  --mat-button-filled-container-color: var(--color-primario);
+  --mat-button-filled-label-text-color: #ffffff;
+
+  &:hover:not(:disabled) {
+    --mat-button-protected-container-color: var(--color-primario-hover);
+    --mat-button-filled-container-color: var(--color-primario-hover);
+  }
+}
+
+.form__button--secondary {
+  --mat-button-outlined-label-text-color: var(--color-texto-secundario);
+  --mat-button-outlined-outline-color: var(--color-borde-fuerte);
+
+  &:hover:not(:disabled) {
+    --mat-button-outlined-label-text-color: var(--color-primario);
+    --mat-button-outlined-outline-color: var(--color-primario);
   }
 }
 
 //Estilos personalizados para el submenu
 .mat-mdc-menu-content {
-  padding: 2px !important;
-  background: #e2eeb7 !important;
+  padding: 4px !important;
+  background: var(--color-superficie) !important;
+}
+
+.mat-mdc-menu-item:hover:not([disabled]) {
+  background: var(--color-secundario-50) !important;
 }
 
 //Estilos para el selector "Ítems por página" del paginador

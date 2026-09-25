@@ -8,7 +8,7 @@ import { DialogoConfirmacionComponent } from '../../../presentation/components/d
 import { Metodos } from '../../../shared/utility/metodos';
 import { IOfertaProducto } from '../../../core/interfaces/Dto/ioferta-producto';
 import { DataTableComponent } from '../../../shared/utility/components/data-table/data-table.component';
-import { TableColumn } from '../../../shared/utility/components/tableColumn';
+import { TableColumn } from '../../../shared/utility/components/data-table/table-column';
 import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 import { MaterialModule } from '../../../shared/ui/material-module';
 

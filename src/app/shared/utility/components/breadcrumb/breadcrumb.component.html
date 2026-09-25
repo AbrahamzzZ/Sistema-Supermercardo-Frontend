@@ -1,0 +1,18 @@
+@if (migas.length > 1) {
+<nav class="breadcrumb" aria-label="Ruta de navegación">
+    <ol>
+        @for (miga of migas; track $index; let ultima = $last) {
+            <li>
+                @if (miga.url) {
+                    <a [routerLink]="miga.url">{{ miga.etiqueta }}</a>
+                } @else {
+                    <span class="actual" aria-current="page">{{ miga.etiqueta }}</span>
+                }
+                @if (!ultima) {
+                    <mat-icon class="separador">chevron_right</mat-icon>
+                }
+            </li>
+        }
+    </ol>
+</nav>
+}

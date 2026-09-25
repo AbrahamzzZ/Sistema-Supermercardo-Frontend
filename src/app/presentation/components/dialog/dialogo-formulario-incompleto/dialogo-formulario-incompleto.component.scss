@@ -1,5 +1,5 @@
-$primary-color: #79ACDE;
-$secondary-color: #666;
+$primary-color: var(--color-primario);
+$secondary-color: var(--color-texto-secundario);
 $background-color: #ffffff;
 $box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 $border-radius: 8px;
@@ -47,12 +47,12 @@ $button-radius: 5px;
       @include button-style;
 
       &:first-child {
-        background-color: #79ACDE;
+        background-color: var(--color-primario);
         color: #ffffff;
       }
 
       &:last-child {
-        color: #5a5a5a;
+        color: var(--color-texto-secundario);
         background-color: transparent;
       }
     }

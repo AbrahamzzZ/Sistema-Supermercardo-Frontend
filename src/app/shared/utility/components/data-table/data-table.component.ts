@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy, OnChan
 import { PageEvent } from '@angular/material/paginator';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { TableColumn } from '../tableColumn';
+import { TableColumn } from './table-column';
 import { MaterialModule } from '../../../ui/material-module';
 import { FormatoFechaPipe } from '../../../pipes/formato-fecha.pipe';
 

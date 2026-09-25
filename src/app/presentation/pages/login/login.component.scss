@@ -1,14 +1,16 @@
+// Mismos valores que src/styles/_paleta.scss (aquí se usan con funciones de Sass como rgba())
 $primary-color: #79acde;
-$primary-dark: #5a8bc4;
+$primary-medium: #5a93cb;
+$primary-dark: #4479b0;
 $primary-light: #e2eeb7;
-$text-dark: #1f2937;
-$text-light: #000000;
-$error-color: #ff0000;
+$text-dark: #1f2a37;
+$text-light: #556270;
+$error-color: #c0504d;
 
 .login-container {
   display: flex;
   height: 100vh;
-  background: linear-gradient(135deg, $primary-color 0%, #6b9fd1 50%, $primary-light 100%);
+  background: linear-gradient(135deg, $primary-color 0%, $primary-medium 50%, $primary-light 100%);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
   .login-left {
@@ -157,7 +159,7 @@ $error-color: #ff0000;
 
             .email-icon,
             .lock-icon-prefix {
-              color: $primary-color;
+              color: $primary-dark;
               margin-right: 0.5rem;
             }
 
@@ -165,7 +167,7 @@ $error-color: #ff0000;
               color: $text-light;
 
               &:hover {
-                color: $primary-color;
+                color: $primary-dark;
               }
             }
           }
@@ -174,7 +176,7 @@ $error-color: #ff0000;
         .login-button {
           width: 100%;
           padding: 0.9rem 2rem;
-          background: linear-gradient(135deg, $primary-color, $primary-dark);
+          background: linear-gradient(135deg, $primary-medium, $primary-dark);
           color: white;
           border: none;
           border-radius: 50px;
@@ -184,11 +186,11 @@ $error-color: #ff0000;
           letter-spacing: 1px;
           cursor: pointer;
           transition: all 0.3s ease;
-          box-shadow: 0 10px 30px rgba($primary-color, 0.3);
+          box-shadow: 0 10px 30px rgba($primary-dark, 0.3);
 
           &:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba($primary-color, 0.4);
+            box-shadow: 0 15px 40px rgba($primary-dark, 0.4);
           }
 
           &:active:not(:disabled) {
@@ -246,7 +248,7 @@ $error-color: #ff0000;
     }
 
     .mdc-line-ripple::after {
-      border-bottom-color: $primary-color !important;
+      border-bottom-color: $primary-dark !important;
     }
 
     .mat-mdc-form-field-error {

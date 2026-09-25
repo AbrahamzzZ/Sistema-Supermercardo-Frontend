@@ -1,0 +1,73 @@
+// =====================================================================
+//  Tema de Angular Material (reemplaza al prebuilt indigo-pink)
+//  Mantiene el mismo estilo de componentes (M2) pero con la paleta de la app.
+// =====================================================================
+@use '@angular/material' as mat;
+@use 'paleta';
+
+$tema-primario: mat.m2-define-palette(paleta.$primario, 600, 300, 700);
+// El acento también es azul: checkboxes, radios y toggles quedan del color principal
+$tema-acento: mat.m2-define-palette(paleta.$primario, 500, 300, 700);
+$tema-error: mat.m2-define-palette(paleta.$error, 500, 300, 700);
+
+$tema: mat.m2-define-light-theme(
+  (
+    color: (
+      primary: $tema-primario,
+      accent: $tema-acento,
+      warn: $tema-error
+    ),
+    typography: mat.m2-define-typography-config(),
+    density: 0
+  )
+);
+
+@include mat.elevation-classes();
+@include mat.app-background();
+@include mat.all-component-themes($tema);
+@include mat.typography-hierarchy($tema);
+
+// ---------- Ajustes globales de componentes ----------
+html {
+  // Botones con esquinas suaves
+  --mat-button-filled-container-shape: var(--radio-sm);
+  --mat-button-outlined-container-shape: var(--radio-sm);
+  --mat-button-protected-container-shape: var(--radio-sm);
+  --mat-button-text-container-shape: var(--radio-sm);
+
+  // Diálogos
+  --mat-dialog-container-shape: var(--radio-lg);
+  --mat-dialog-container-color: var(--color-superficie);
+  --mat-dialog-subhead-color: var(--color-texto);
+  --mat-dialog-supporting-text-color: var(--color-texto-secundario);
+
+  // Tarjetas
+  --mat-card-elevated-container-shape: var(--radio-md);
+  --mat-card-outlined-container-shape: var(--radio-md);
+  --mat-card-outlined-outline-color: var(--color-borde);
+
+  // Menús desplegables y selects
+  --mat-menu-container-shape: var(--radio-md);
+  --mat-menu-container-color: var(--color-superficie);
+  --mat-select-panel-background-color: var(--color-superficie);
+
+  // Tooltips
+  --mat-tooltip-container-color: var(--color-primario-900);
+  --mat-tooltip-supporting-text-color: #ffffff;
+
+  // Tablas
+  --mat-table-background-color: var(--color-superficie);
+  --mat-table-header-headline-color: var(--color-texto);
+  --mat-table-row-item-label-text-color: var(--color-texto);
+  --mat-table-row-item-outline-color: var(--color-borde);
+
+  // Paginador
+  --mat-paginator-container-background-color: var(--color-superficie);
+  --mat-paginator-container-text-color: var(--color-texto-secundario);
+
+  // Snackbar por defecto
+  --mat-snack-bar-container-shape: var(--radio-md);
+  --mat-snack-bar-container-color: var(--color-primario-900);
+  --mat-snack-bar-supporting-text-color: #ffffff;
+  --mat-snack-bar-button-color: var(--color-secundario);
+}

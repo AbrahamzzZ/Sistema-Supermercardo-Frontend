@@ -2,8 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background: #e2eeb7;
+  min-height: 90vh;
+  background: var(--color-fondo);
 
   &__card {
     width: 100%;
@@ -22,13 +22,13 @@
 
   &__title {
     align-content: flex-start;
-    color: #4a4a4a;
+    color: var(--color-texto);
   }
 
   .form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 4px; // cada campo ya reserva espacio para su mensaje de error
 
     &__field {
       width: 100%;
@@ -62,12 +62,12 @@
       }
 
       &__button--primary {
-        background-color: #79ACDE;
+        background-color: var(--color-primario);
         color: #ffffff;
       }
 
       &__button--secondary {
-        color: #5a5a5a;
+        color: var(--color-texto-secundario);
         background-color: transparent;
       }
   }

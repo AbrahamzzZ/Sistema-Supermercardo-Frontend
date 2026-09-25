@@ -8,6 +8,7 @@ import { jwtDecode } from 'jwt-decode';
 import { NavigationStart, Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ModalInactividadComponent } from '../../presentation/components/modal/modal-inactividad/modal-inactividad.component';
+import { CLAVES_STORAGE } from '../constants/storage.const';
 
 @Injectable({
   providedIn: 'root'
@@ -38,15 +39,15 @@ export class LoginService {
   }
 
   guardarToken(token: string): void {
-    localStorage.setItem('token', token);
+    localStorage.setItem(CLAVES_STORAGE.token, token);
   }
 
   obtenerToken(): string | null {
-    return localStorage.getItem('token');
+    return localStorage.getItem(CLAVES_STORAGE.token);
   }
 
   eliminarToken(): void {
-    localStorage.removeItem('token');
+    localStorage.removeItem(CLAVES_STORAGE.token);
   }
 
   obtenerDatosToken(): ITokenData | null {
@@ -76,7 +77,7 @@ export class LoginService {
   }
 
   obtenerPermisosDesdeToken(): string[] {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem(CLAVES_STORAGE.token);
     if (!token) return [];
 
     const payload = JSON.parse(atob(token.split('.')[1]));

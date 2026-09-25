@@ -3,13 +3,12 @@
 
   &__title {
     font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
-    color: #000000;
+    color: var(--color-texto);
     text-align: center;
     margin-bottom: 20px;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     padding: 20px;
   }
 }
@@ -24,20 +23,20 @@
 }
 
 #leaflet-map {
-  background-color: #f0f0f0;
+  background-color: var(--color-superficie-alt);
 }
 
 .map-info {
   text-align: center;
   padding: 12px;
-  background-color: #e3f2fd;
-  border: 1px solid #90caf9;
+  background-color: var(--color-primario-suave);
+  border: 1px solid var(--color-primario-200);
   border-radius: 6px;
   margin-top: 10px;
 
   &__text {
     margin: 0;
-    color: #1565c0;
+    color: var(--color-primario-800);
     font-size: 14px;
     font-weight: 500;
   }
@@ -51,8 +50,8 @@
     margin: 0 0 12px 0;
     font-size: 16px;
     font-weight: bold;
-    color: #333;
-    border-bottom: 2px solid #2196F3;
+    color: var(--color-texto);
+    border-bottom: 2px solid var(--color-primario);
     padding-bottom: 8px;
   }
 
@@ -64,23 +63,23 @@
     font-size: 13px;
     
     strong {
-      color: #555;
+      color: var(--color-texto-secundario);
       font-weight: 600;
     }
 
     span {
-      color: #777;
+      color: var(--color-texto-suave);
       word-break: break-word;
     }
   }
 
   &__activo {
-    color: #4caf50;
+    color: var(--color-exito);
     font-weight: 600;
   }
 
   &__inactivo {
-    color: #f44336;
+    color: var(--color-error);
     font-weight: 600;
   }
 }
@@ -92,27 +91,27 @@
   h3 {
     margin: 0 0 10px 0;
     font-size: 15px;
-    color: #333;
-    border-bottom: 2px solid #2196F3;
+    color: var(--color-texto);
+    border-bottom: 2px solid var(--color-primario);
     padding-bottom: 6px;
   }
 
   p {
     margin: 6px 0;
-    color: #555;
+    color: var(--color-texto-secundario);
 
     strong {
-      color: #333;
+      color: var(--color-texto);
     }
   }
 
   .estado-activo {
-    color: #4caf50;
+    color: var(--color-exito);
     font-weight: 600;
   }
 
   .estado-inactivo {
-    color: #f44336;
+    color: var(--color-error);
     font-weight: 600;
   }
 }

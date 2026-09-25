@@ -7,14 +7,14 @@ import { Validaciones } from '../../../../shared/utility/validaciones';
 import { ICategoria } from '../../../../core/interfaces/categoria';
 import { CanComponentDeactive } from '../../../../core/guards/formulario-incompleto.guard';
 import { MaterialModule } from '../../../../shared/ui/material-module';
-import { ERRORES_DINAMICOS } from '../../../../shared/ui/form-field-options';
+import { ESPACIO_FIJO_ERRORES } from '../../../../shared/ui/form-field-options';
 import { form, FormField, required, minLength, maxLength, submit } from '@angular/forms/signals';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-formulario-categoria',
   imports: [MaterialModule, FormField],
-  providers: [ERRORES_DINAMICOS],
+  providers: [ESPACIO_FIJO_ERRORES],
   templateUrl: './formulario-categoria.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './formulario-categoria.component.scss'

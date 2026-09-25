@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ILogin } from '../../../core/interfaces/Dto/login';
 import { LoginService } from '../../../core/services/login.service';
 import { MaterialModule } from '../../../shared/ui/material-module';
+import { CLAVES_STORAGE } from '../../../core/constants/storage.const';
 
 @Component({
   selector: 'app-login',
@@ -27,8 +28,8 @@ export class LoginComponent implements OnInit {
       clave: new FormControl('', [Validators.required])
     });
 
-    const tieneToken = localStorage.getItem('token');
-    const yaShownMessage = sessionStorage.getItem('logout-message-shown');
+    const tieneToken = localStorage.getItem(CLAVES_STORAGE.token);
+    const yaShownMessage = sessionStorage.getItem(CLAVES_STORAGE.mensajeLogoutMostrado);
 
     this.route.queryParams.subscribe((params) => {
       if (params['motivo'] && !tieneToken && !yaShownMessage) {
@@ -36,9 +37,11 @@ export class LoginComponent implements OnInit {
           this.mostrarMensaje('La sesión fue cerrada por inactividad', 'inactivity');
         } else if (params['motivo'] === 'sesion') {
           this.mostrarMensaje('La sesión fue cerrada exitosamente', 'logout');
+        } else if (params['motivo'] === 'expirada') {
+          this.mostrarMensaje('Su sesión expiró. Vuelva a iniciar sesión', 'inactivity');
         }
 
-        sessionStorage.setItem('logout-message-shown', 'true');
+        sessionStorage.setItem(CLAVES_STORAGE.mensajeLogoutMostrado, 'true');
         this.router.navigate([], {
           relativeTo: this.route,
           queryParams: {},
@@ -59,7 +62,7 @@ export class LoginComponent implements OnInit {
           this.loginServicio.guardarToken(response.data.token);
 
           if (response) {
-            sessionStorage.removeItem('logout-message-shown');
+            sessionStorage.removeItem(CLAVES_STORAGE.mensajeLogoutMostrado);
             this.loginServicio.iniciarMonitoreo();
             this.mostrarMensaje('Inicio de sesión exitoso', 'success');
             this.router.navigate(['/home']);

@@ -7,7 +7,7 @@ import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-co
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Metodos } from '../../../shared/utility/metodos';
 import { MaterialModule } from '../../../shared/ui/material-module';
-import { TableColumn } from '../../../shared/utility/components/tableColumn';
+import { TableColumn } from '../../../shared/utility/components/data-table/table-column';
 import { DataTableComponent } from '../../../shared/utility/components/data-table/data-table.component';
 import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
 
