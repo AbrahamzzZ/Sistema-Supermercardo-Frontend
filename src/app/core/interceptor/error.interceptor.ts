@@ -4,13 +4,9 @@ import { Router } from '@angular/router';
 import { catchError, Observable, throwError, timeout, TimeoutError } from 'rxjs';
 import { CLAVES_STORAGE } from '../constants/storage.const';
 
-/** Tiempo máximo de espera de una petición antes de cancelarla. */
-const TIEMPO_ESPERA_MS = 30000;
-
-/** Errores donde el backend explica qué falló (validaciones, duplicados, no existe…). */
+const TIEMPO_ESPERA_MS = 30000; // Tiempo máximo de espera de una petición antes de cancelarla.
 const ESTADOS_CON_MENSAJE_DEL_BACKEND = [400, 404, 409, 422];
 
-/** Error que reciben los componentes en el `error` del subscribe. */
 export interface IErrorHttp {
   status: number;
   message: string;
@@ -89,7 +85,6 @@ export class ErrorInterceptor implements HttpInterceptor {
   private cerrarSesionExpirada(): void {
     localStorage.removeItem(CLAVES_STORAGE.token);
 
-    // Si varias peticiones fallan a la vez, se redirige una sola vez
     if (!this.router.url.startsWith('/login')) {
       this.router.navigate(['/login'], { queryParams: { motivo: 'expirada' } });
     }
