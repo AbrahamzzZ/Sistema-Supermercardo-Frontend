@@ -6,7 +6,7 @@ export interface ISeccionMenu {
 }
 
 export const SECCIONES_MENU: { nombre: string; rutas: string[] }[] = [
-  { nombre: 'General', rutas: ['home', 'negocio', 'sucursal', 'usuario'] },
+  { nombre: 'General', rutas: ['home', 'sucursal', 'usuario'] },
   { nombre: 'Operaciones', rutas: ['compra', 'venta', 'oferta'] },
   { nombre: 'Catálogo', rutas: ['producto', 'categoria'] },
   { nombre: 'Contactos', rutas: ['cliente', 'proveedor', 'transportista'] },
