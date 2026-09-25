@@ -116,7 +116,7 @@ export class UsuarioInicioComponent extends BaseListComponent<IUsuarioRol> {
       'Correo Electronico': usuario.correo_Electronico,
       Rol: usuario.nombre_Rol,
       Estado: this.getEstado(usuario.estado),
-      'Fecha Creacion': this.getFechaCreacion(usuario.fecha_Creacion)
+      'Fecha Creacion': Metodos.formatearFecha(usuario.fecha_Creacion)
     }));
 
     if (!datos || datos.length === 0) {
@@ -138,14 +138,5 @@ export class UsuarioInicioComponent extends BaseListComponent<IUsuarioRol> {
 
   getEstado(estado: boolean): string {
     return estado ? 'Activo' : 'No Activo';
-  }
-
-  getFechaCreacion(fecha: string): string {
-    const fechaObj = new Date(fecha);
-    return fechaObj.toLocaleDateString('es-ES', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    });
   }
 }

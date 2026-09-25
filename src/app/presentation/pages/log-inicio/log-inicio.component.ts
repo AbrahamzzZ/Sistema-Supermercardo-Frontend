@@ -79,7 +79,7 @@ export class LogInicioComponent extends BaseListComponent<ILog> {
       Mensaje: log.mensaje,
       Detalle: log.detalle,
       'ID Usuario': log.id_Usuario,
-      Fecha: this.getFechaRegistro(log.fecha ?? ''),
+      Fecha: Metodos.formatearFecha(log.fecha),
       Endpoint: log.endpoint,
       Metodo: log.metodo,
       Nivel: log.nivel
@@ -102,15 +102,6 @@ export class LogInicioComponent extends BaseListComponent<ILog> {
       'Nivel'
     ]);
     this.mostrarMensaje('Excel generado exitosamente.', 'success');
-  }
-
-  getFechaRegistro(fecha: string): string {
-    const fechaObj = new Date(fecha);
-    return fechaObj.toLocaleDateString('es-ES', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    });
   }
 
   ver(log: ILog): void {

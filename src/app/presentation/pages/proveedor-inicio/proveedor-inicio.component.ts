@@ -121,7 +121,7 @@ export class ProveedorInicioComponent extends BaseListComponent<IProveedor> {
       Telefono: proveedor.telefono,
       'Correo Electronico': proveedor.correo_Electronico,
       Estado: this.getEstado(proveedor.estado),
-      'Fecha Creacion': this.getFechaRegistro(proveedor.fecha_Creacion ?? '')
+      'Fecha Creacion': Metodos.formatearFecha(proveedor.fecha_Creacion)
     }));
 
     if (!datos || datos.length === 0) {
@@ -145,14 +145,5 @@ export class ProveedorInicioComponent extends BaseListComponent<IProveedor> {
 
   getEstado(estado: boolean): string {
     return estado ? 'Activo' : 'No Activo';
-  }
-
-  getFechaRegistro(fecha: string): string {
-    const fechaObj = new Date(fecha);
-    return fechaObj.toLocaleDateString('es-ES', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    });
   }
 }

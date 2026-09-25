@@ -2,6 +2,26 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
 export class Metodos {
+
+  static formatearFecha(fecha: string | Date | null | undefined): string {
+    if (!fecha) return '';
+
+    const fechaLocal =
+      typeof fecha === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(fecha)
+        ? (() => {
+            const [anio, mes, dia] = fecha.split('-').map(Number);
+            return new Date(anio, mes - 1, dia);
+          })()
+        : new Date(fecha);
+
+    if (Number.isNaN(fechaLocal.getTime())) return '';
+
+    return fechaLocal.toLocaleDateString('es-ES', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+  }
   
   static generarCodigo(): string {
     const array = new Uint32Array(1);
@@ -22,11 +42,6 @@ export class Metodos {
     ];
     const mime = tipos.find(([prefijo]) => base64.startsWith(prefijo))?.[1] ?? 'image/png';
     return `data:${mime};base64,${base64}`;
-  }
-
-  static getFechaCreacion(): string {
-    const fechaObj = new Date().toISOString();
-    return fechaObj;
   }
 
   static exportarExcel(nombreArchivo: string, datos: any[], columnas: string[]) {

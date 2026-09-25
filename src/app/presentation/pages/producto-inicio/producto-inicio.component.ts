@@ -118,12 +118,7 @@ export class ProductoInicioComponent extends BaseListComponent<IProductoCategori
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' | 'warning' = 'success'): void {
-    const className =
-      tipo === 'success'
-        ? 'success-snackbar'
-        : tipo === 'warning'
-          ? 'warning-snackbar'
-          : 'error-snackbar';
+    const className = tipo === 'success' ? 'success-snackbar' : tipo === 'warning' ? 'warning-snackbar' : 'error-snackbar';
 
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 5000,
@@ -169,14 +164,5 @@ export class ProductoInicioComponent extends BaseListComponent<IProductoCategori
 
   getEstado(estado: boolean): string {
     return estado ? 'Agotado' : 'No Agotado';
-  }
-
-  getFechaRegistro(fecha: string): string {
-    const fechaObj = new Date(fecha);
-    return fechaObj.toLocaleDateString('es-ES', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    });
   }
 }

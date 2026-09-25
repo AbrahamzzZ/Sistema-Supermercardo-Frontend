@@ -142,16 +142,24 @@ export class CompraInicioComponent implements OnInit, AfterViewInit {
 
         const subtotalCalculado =
           Number(this.producto.precioCompra) * Number(this.producto.cantidad);
-        const productoAgregado = {
-          id: this.productoSeleccionado.id_Producto,
-          nombre: this.productoSeleccionado.nombre_Producto,
-          precioCompra: Number(this.producto.precioCompra),
-          precioVenta: Number(this.producto.precioVenta),
-          cantidad: this.producto.cantidad,
-          subtotal: subtotalCalculado
-        };
+        const productoExistente = this.productosAgregados.find(
+          (item) => item.id === this.productoSeleccionado?.id_Producto
+        );
 
-        this.productosAgregados.push(productoAgregado);
+        if (productoExistente) {
+          productoExistente.cantidad += Number(this.producto.cantidad);
+          productoExistente.subtotal = productoExistente.precioCompra * productoExistente.cantidad;
+        } else {
+          this.productosAgregados.push({
+            id: this.productoSeleccionado.id_Producto,
+            nombre: this.productoSeleccionado.nombre_Producto,
+            precioCompra: Number(this.producto.precioCompra),
+            precioVenta: Number(this.producto.precioVenta),
+            cantidad: Number(this.producto.cantidad),
+            subtotal: subtotalCalculado
+          });
+        }
+
         this.dataSource.data = [...this.productosAgregados];
 
         this.productoSeleccionado = null;

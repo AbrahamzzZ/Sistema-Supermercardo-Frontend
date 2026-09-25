@@ -118,11 +118,11 @@ export class OfertaInicioComponent extends BaseListComponent<IOfertaProducto> {
       Nombre: oferta.nombre_Oferta,
       Producto: oferta.nombre_Producto,
       Descripcion: oferta.descripcion,
-      'Fecha Inicio': oferta.fecha_Inicio,
-      'Fecha Fin': oferta.fecha_Fin,
+      'Fecha Inicio': Metodos.formatearFecha(oferta.fecha_Inicio),
+      'Fecha Fin': Metodos.formatearFecha(oferta.fecha_Fin),
       Descuento: oferta.descuento,
       Estado: this.getEstado(oferta.estado),
-      'Fecha Creacion': this.getFechaRegistro(oferta.fecha_Creacion ?? '')
+      'Fecha Creacion': Metodos.formatearFecha(oferta.fecha_Creacion)
     }));
 
     if (!datos || datos.length === 0) {
@@ -147,23 +147,5 @@ export class OfertaInicioComponent extends BaseListComponent<IOfertaProducto> {
 
   getEstado(estado: boolean): string {
     return estado ? 'Activo' : 'No Activo';
-  }
-
-  getFechaInicioFin(fecha: string): string {
-    const fechaObj = new Date(fecha);
-    return fechaObj.toLocaleDateString('es-ES', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    });
-  }
-
-  getFechaRegistro(fecha: string): string {
-    const fechaObj = new Date(fecha);
-    return fechaObj.toLocaleDateString('es-ES', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    });
   }
 }

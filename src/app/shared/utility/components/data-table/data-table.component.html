@@ -8,7 +8,7 @@
         @switch (column.type) {
 
             @case ('date') {
-                {{ getFechaRegistro(element[column.key]) }}
+              {{ element[column.key] | formatoFecha }}
             }
 
             @case ('status') {

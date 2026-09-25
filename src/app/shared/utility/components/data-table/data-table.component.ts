@@ -4,10 +4,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableColumn } from '../tableColumn';
 import { MaterialModule } from '../../../ui/material-module';
+import { FormatoFechaPipe } from '../../../pipes/formato-fecha.pipe';
 
 @Component({
   selector: 'app-data-table',
-  imports: [MaterialModule],
+  imports: [MaterialModule, FormatoFechaPipe],
   templateUrl: './data-table.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './data-table.component.scss'
@@ -45,23 +46,6 @@ export class DataTableComponent implements OnChanges {
 
   get displayedColumns(): string[] {
     return this.columns.map((column) => column.key);
-  }
-
-  getFechaRegistro(fecha: string): string {
-    const fechaObj = /^\d{4}-\d{2}-\d{2}$/.test(fecha)
-      ? this.crearFechaLocal(fecha)
-      : new Date(fecha);
-
-    return fechaObj.toLocaleDateString('es-ES', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    });
-  }
-
-  private crearFechaLocal(fecha: string): Date {
-    const [anio, mes, dia] = fecha.split('-').map(Number);
-    return new Date(anio, mes - 1, dia);
   }
 
   getEstado(estado: boolean): string {

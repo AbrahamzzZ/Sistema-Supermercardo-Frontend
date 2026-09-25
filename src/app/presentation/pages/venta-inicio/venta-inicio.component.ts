@@ -170,33 +170,46 @@ export class VentaInicioComponent implements OnInit, AfterViewInit {
         return;
       }
 
-      if (this.producto.cantidad <= this.productoSeleccionado.stock!) {
+      const productoExistente = this.productosAgregados.find(
+        (item) => item.id === this.productoSeleccionado?.id_Producto
+      );
+      const cantidadExistente = productoExistente?.cantidad ?? 0;
+      const cantidad = Number(this.producto.cantidad);
+
+      if (cantidadExistente + cantidad <= this.productoSeleccionado.stock!) {
         const precioVenta = Number(this.productoSeleccionado.precio_Venta);
-        const cantidad = Number(this.producto.cantidad);
         const descuento = this.ofertaSeleccionado?.descuento ?? 0;
 
-        const subtotal = precioVenta * cantidad;
-        const montoDescuento = subtotal * (descuento / 100);
-        const subtotalConDescuento = subtotal - montoDescuento;
+        if (productoExistente) {
+          const nuevaCantidad = cantidadExistente + cantidad;
+          const descuentoAplicado = productoExistente.descuento;
+          const subtotal = productoExistente.precioVenta * nuevaCantidad;
 
-        const productoAgregado = {
-          id: this.productoSeleccionado.id_Producto,
-          nombre: this.productoSeleccionado.nombre_Producto,
-          precioVenta: precioVenta,
-          cantidad: cantidad,
-          descuento: descuento,
-          subtotal: subtotalConDescuento
-        };
+          productoExistente.cantidad = nuevaCantidad;
+          productoExistente.subtotal = subtotal * (1 - descuentoAplicado / 100);
+        } else {
+          const subtotal = precioVenta * cantidad;
+          const montoDescuento = subtotal * (descuento / 100);
 
-        this.productosAgregados.push(productoAgregado);
+          this.productosAgregados.push({
+            id: this.productoSeleccionado.id_Producto,
+            nombre: this.productoSeleccionado.nombre_Producto,
+            precioVenta,
+            cantidad,
+            descuento,
+            subtotal: subtotal - montoDescuento
+          });
+        }
+
         this.dataSource.data = [...this.productosAgregados];
 
         this.calcularTotal();
         this.productoSeleccionado = null;
         this.ofertaSeleccionado = null;
         this.producto.cantidad = 0;
+        this.producto.precioVenta = 0;
       } else {
-        this.mostrarMensaje('La cantidad supera al stock del producto.', 'error');
+        this.mostrarMensaje('La cantidad acumulada supera al stock del producto.', 'error');
       }
     } else {
       this.mostrarMensaje('No se acepta cantidades negativas.', 'error');
@@ -210,13 +223,9 @@ export class VentaInicioComponent implements OnInit, AfterViewInit {
   }
 
   calcularTotal() {
-    const total = this.productosAgregados.reduce(
-      (acc, item) => acc + item.precioVenta * item.cantidad,
-      0
-    );
-    const descuento = this.ofertaSeleccionado?.descuento || 0;
-    const montoDescuento = total * (descuento / 100);
-    const totalConDescuento = total - montoDescuento;
+    const total = this.productosAgregados.reduce((acc, item) => acc + Number(item.precioVenta) * Number(item.cantidad), 0);
+    const totalConDescuento = this.productosAgregados.reduce((acc, item) => acc + Number(item.subtotal), 0);
+    const montoDescuento = total - totalConDescuento;
 
     this.totalSinDescuento = total;
     this.totalConDescuento = totalConDescuento;
@@ -335,5 +344,9 @@ export class VentaInicioComponent implements OnInit, AfterViewInit {
 
     this.productosAgregados = [];
     this.dataSource.data = [];
+    this.totalSinDescuento = 0;
+    this.totalConDescuento = 0;
+    this.montoDescuento = 0;
+    this.cambio = 0;
   }
 }

@@ -110,7 +110,7 @@ export class CategoriaInicioComponent extends BaseListComponent<ICategoria> {
       Código: categoria.codigo,
       Nombre: categoria.nombre_Categoria,
       Estado: this.getEstado(categoria.estado),
-      'Fecha Creacion': this.getFechaRegistro(categoria.fecha_Creacion ?? '')
+      'Fecha Creacion': Metodos.formatearFecha(categoria.fecha_Creacion)
     }));
 
     if (!datos || datos.length === 0) {
@@ -130,14 +130,5 @@ export class CategoriaInicioComponent extends BaseListComponent<ICategoria> {
 
   getEstado(estado: boolean): string {
     return estado ? 'Activo' : 'No Activo';
-  }
-
-  getFechaRegistro(fecha: string): string {
-    const fechaObj = new Date(fecha);
-    return fechaObj.toLocaleDateString('es-ES', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    });
   }
 }

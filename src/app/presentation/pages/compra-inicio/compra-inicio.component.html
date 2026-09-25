@@ -18,7 +18,7 @@
       <div class="compra-formulario__fila">
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>Fecha</mat-label>
-          <input matInput [value]="hoy" readonly />
+          <input id="fecha" matInput [value]="hoy" readonly aria-label="Fecha"/>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form__field">
@@ -39,20 +39,12 @@
       <div class="compra-formulario__fila">
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>Sucursal</mat-label>
-          <input
-            matInput
-            [value]="$safeNavigationMigration(sucursalSelecionada?.nombre_Sucursal)"
-            readonly
-          />
+          <input id="sucursal" matInput [value]="$safeNavigationMigration(sucursalSelecionada?.nombre_Sucursal)" readonly aria-label="Sucursal"/>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>Dirección</mat-label>
-          <input
-            matInput
-            [value]="$safeNavigationMigration(sucursalSelecionada?.direccion_Sucursal)"
-            readonly
-          />
+          <input id="direccion" matInput [value]="$safeNavigationMigration(sucursalSelecionada?.direccion_Sucursal)" readonly aria-label="Direcciòn"/>
         </mat-form-field>
 
         <button mat-raised-button color="primary" (click)="abrirModalSucursales()">
@@ -65,24 +57,12 @@
       <div class="compra-formulario__fila">
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>Proveedor</mat-label>
-          <input
-            matInput
-            [value]="
-              proveedorSeleccionado
-                ? proveedorSeleccionado.nombres + ' ' + proveedorSeleccionado.apellidos
-                : ''
-            "
-            readonly
-          />
+          <input id="proveedor" matInput [value]=" proveedorSeleccionado ? proveedorSeleccionado.nombres + ' ' + proveedorSeleccionado.apellidos : ''" readonly aria-label="Proveedor"/>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>Cédula</mat-label>
-          <input
-            matInput
-            [value]="$safeNavigationMigration(proveedorSeleccionado?.cedula)"
-            readonly
-          />
+          <input id="cedula" matInput [value]="$safeNavigationMigration(proveedorSeleccionado?.cedula)" readonly aria-label="Cèdula"/>
         </mat-form-field>
 
         <button mat-raised-button color="primary" (click)="abrirModalProveedores()">
@@ -95,24 +75,12 @@
       <div class="compra-formulario__fila">
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>Transportista</mat-label>
-          <input
-            matInput
-            [value]="
-              transportistaSeleccionado
-                ? transportistaSeleccionado.nombres + ' ' + transportistaSeleccionado.apellidos
-                : ''
-            "
-            readonly
-          />
+          <input id="tranportista" matInput [value]=" transportistaSeleccionado ? transportistaSeleccionado.nombres + ' ' + transportistaSeleccionado.apellidos : '' " readonly aria-label="Transportista"/>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>Cédula</mat-label>
-          <input
-            matInput
-            [value]="$safeNavigationMigration(transportistaSeleccionado?.cedula)"
-            readonly
-          />
+          <input id="cedulaTransportista" matInput [value]="$safeNavigationMigration(transportistaSeleccionado?.cedula)" readonly aria-label="Cèdula"/>
         </mat-form-field>
 
         <button mat-raised-button color="primary" (click)="abrirModalTransportistas()">
@@ -129,37 +97,29 @@
       <div class="compra-formulario__fila compra-formulario__fila--producto">
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>Código</mat-label>
-          <input
-            matInput
-            [value]="$safeNavigationMigration(productoSeleccionado?.codigo)"
-            readonly
-          />
+          <input id="codigo" matInput [value]="$safeNavigationMigration(productoSeleccionado?.codigo)" readonly aria-label="Còdigo"/>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>Nombre</mat-label>
-          <input
-            matInput
-            [value]="$safeNavigationMigration(productoSeleccionado?.nombre_Producto)"
-            readonly
-          />
+          <input id="nombre" matInput [value]="$safeNavigationMigration(productoSeleccionado?.nombre_Producto)" readonly aria-label="Nombre"/>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>Precio Compra</mat-label>
-          <input matInput type="number" [(ngModel)]="producto.precioCompra" />
+          <input id="precio_Compra" matInput type="number" [(ngModel)]="producto.precioCompra" aria-label="Precio_Compra"/>
           <span matTextPrefix>$&nbsp;</span>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>Precio Venta</mat-label>
-          <input matInput type="number" [(ngModel)]="producto.precioVenta" />
+          <input id="precio_Venta" matInput type="number" [(ngModel)]="producto.precioVenta" aria-label="Precio_Venta"/>
           <span matTextPrefix>$&nbsp;</span>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>Cantidad</mat-label>
-          <input matInput type="number" [(ngModel)]="producto.cantidad" />
+          <input id="cantidad" matInput type="number" [(ngModel)]="producto.cantidad" aria-label="Cantidad"/>
         </mat-form-field>
 
         <button mat-raised-button color="primary" (click)="abrirModalProductos()">
@@ -175,7 +135,7 @@
       <div class="compra-formulario__acciones">
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>Total a pagar</mat-label>
-          <input matInput [value]="calcularTotal()" readonly />
+          <input id="tota_Pagar" matInput [value]="calcularTotal()" readonly aria-label="Total_Pagar"/>
           <span matTextPrefix>$&nbsp;</span>
         </mat-form-field>
 
