@@ -90,7 +90,7 @@ export class TransportistaInicioComponent extends BaseListComponent<ITransportis
   async exportarExcel(): Promise<void> {
     const datos = this.listaData.data.map((transportista) => ({
       id: transportista.id_Transportista,
-      foto: transportista.foto,
+      foto: Metodos.base64AImagen(transportista.foto),
       codigo: transportista.codigo,
       nombres: transportista.nombres,
       apellidos: transportista.apellidos,
