@@ -1,4 +1,4 @@
-<img class="cabecera__logo" [src]="logoURL()" alt="Logo del negocio" />
+<img class="cabecera__logo" [src]="logoURL()" (error)="usarLogoPredeterminado($event)" alt="Logo del negocio" />
 
 <div class="cabecera__info">
   <div class="cabecera__usuario">
