@@ -1,9 +1,11 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { HttpClient, httpResource } from '@angular/common/http';
+import { inject, Injectable, Signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { IUsuario } from '../interfaces/usuario';
 import { ApiResponse } from '../setting/api/apiResponse';
 import { IUsuarioRol } from '../interfaces/Dto/iusuario-rol';
+import { ApiPaginado } from '../setting/api/apiPaginado';
+import { ParamsPaginacion } from '../setting/api/apiParamsPaginacion';
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +15,14 @@ export class UsuarioService {
   private readonly apiUrl: string = environment.API_URL + 'Usuario';
 
   lista() {
-    return this.http.get<IUsuarioRol[]>(this.apiUrl);
+    return this.http.get<ApiResponse<IUsuarioRol[]>>(this.apiUrl);
   }
 
-  listaPaginada(pageNumber: number, pageSize: number, filtro: string) {
-    return this.http.get<{
-      data: IUsuario[];
-      totalCount: number;
-    }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}&filtro=${encodeURIComponent(filtro)}`);
+  listaPaginada(params: Signal<ParamsPaginacion>) {
+     return httpResource<ApiResponse<ApiPaginado<IUsuarioRol>>>(() => {
+      const p = params();
+      return { url: `${this.apiUrl}/paginacion`, params: {pageNumber: p.pageNumber, pageSize: p.pageSize, filtro: p.filtro}};
+    });
   }
 
   obtener(id: number) {
@@ -36,6 +38,6 @@ export class UsuarioService {
   }
 
   eliminar(id: number) {
-    return this.http.delete<ApiResponse<IUsuario>>(`${this.apiUrl}/${id}`);
+    return this.http.delete<ApiResponse<boolean>>(`${this.apiUrl}/${id}`);
   }
 }
