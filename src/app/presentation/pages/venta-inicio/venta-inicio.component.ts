@@ -170,9 +170,7 @@ export class VentaInicioComponent implements OnInit, AfterViewInit {
         return;
       }
 
-      const productoExistente = this.productosAgregados.find(
-        (item) => item.id === this.productoSeleccionado?.id_Producto
-      );
+      const productoExistente = this.productosAgregados.find((item) => item.id === this.productoSeleccionado?.id_Producto);
       const cantidadExistente = productoExistente?.cantidad ?? 0;
       const cantidad = Number(this.producto.cantidad);
 
@@ -186,7 +184,7 @@ export class VentaInicioComponent implements OnInit, AfterViewInit {
           const subtotal = productoExistente.precioVenta * nuevaCantidad;
 
           productoExistente.cantidad = nuevaCantidad;
-          productoExistente.subtotal = subtotal * (1 - descuentoAplicado / 100);
+          productoExistente.subtotal = this.redondearDinero(subtotal * (1 - descuentoAplicado / 100));
         } else {
           const subtotal = precioVenta * cantidad;
           const montoDescuento = subtotal * (descuento / 100);
@@ -197,7 +195,7 @@ export class VentaInicioComponent implements OnInit, AfterViewInit {
             precioVenta,
             cantidad,
             descuento,
-            subtotal: subtotal - montoDescuento
+            subtotal: this.redondearDinero(subtotal - montoDescuento)
           });
         }
 
@@ -223,15 +221,25 @@ export class VentaInicioComponent implements OnInit, AfterViewInit {
   }
 
   calcularTotal() {
-    const total = this.productosAgregados.reduce((acc, item) => acc + Number(item.precioVenta) * Number(item.cantidad), 0);
-    const totalConDescuento = this.productosAgregados.reduce((acc, item) => acc + Number(item.subtotal), 0);
-    const montoDescuento = total - totalConDescuento;
+    const total = this.redondearDinero(this.productosAgregados.reduce(
+      (acc, item) => acc + Number(item.precioVenta) * Number(item.cantidad),
+      0
+    ));
+    const totalConDescuento = this.redondearDinero(this.productosAgregados.reduce(
+      (acc, item) => acc + Number(item.subtotal),
+      0
+    ));
+    const montoDescuento = this.redondearDinero(total - totalConDescuento);
 
     this.totalSinDescuento = total;
     this.totalConDescuento = totalConDescuento;
     this.montoDescuento = montoDescuento;
 
     return totalConDescuento;
+  }
+
+  private redondearDinero(valor: number): number {
+    return Math.round((valor + Number.EPSILON) * 100) / 100;
   }
 
   calcularCambio() {
@@ -246,7 +254,7 @@ export class VentaInicioComponent implements OnInit, AfterViewInit {
           this.mostrarMensaje('El monto ingresado en "Paga con" es insuficiente.', 'error');
           this.cambio = 0;
         } else {
-          this.cambio = this.pagaCon - this.totalConDescuento;
+          this.cambio = this.redondearDinero(this.pagaCon - this.totalConDescuento);
         }
       }
     } else {

@@ -140,15 +140,12 @@ export class CompraInicioComponent implements OnInit, AfterViewInit {
           return;
         }
 
-        const subtotalCalculado =
-          Number(this.producto.precioCompra) * Number(this.producto.cantidad);
-        const productoExistente = this.productosAgregados.find(
-          (item) => item.id === this.productoSeleccionado?.id_Producto
-        );
+        const subtotalCalculado = this.redondearDinero(Number(this.producto.precioCompra) * Number(this.producto.cantidad));
+        const productoExistente = this.productosAgregados.find((item) => item.id === this.productoSeleccionado?.id_Producto);
 
         if (productoExistente) {
           productoExistente.cantidad += Number(this.producto.cantidad);
-          productoExistente.subtotal = productoExistente.precioCompra * productoExistente.cantidad;
+          productoExistente.subtotal = this.redondearDinero(productoExistente.precioCompra * productoExistente.cantidad);
         } else {
           this.productosAgregados.push({
             id: this.productoSeleccionado.id_Producto,
@@ -178,7 +175,13 @@ export class CompraInicioComponent implements OnInit, AfterViewInit {
   }
 
   calcularTotal() {
-    return this.productosAgregados.reduce((acc, p) => acc + p.precioCompra * p.cantidad, 0);
+    return this.redondearDinero(
+      this.productosAgregados.reduce((acc, producto) => acc + Number(producto.subtotal), 0)
+    );
+  }
+
+  private redondearDinero(valor: number): number {
+    return Math.round((valor + Number.EPSILON) * 100) / 100;
   }
 
   registrarCompra() {
