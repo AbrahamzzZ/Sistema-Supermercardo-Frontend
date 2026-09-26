@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableColumn } from './table-column';
 import { MaterialModule } from '../../../ui/material-module';
 import { FormatoFechaPipe } from '../../../pipes/formato-fecha.pipe';
+import { Metodos } from '../../metodos';
+import { IMAGE_DEFAULT } from '../../../../core/constants/imageDefault.const';
 
 @Component({
   selector: 'app-data-table',
@@ -54,6 +55,26 @@ export class DataTableComponent implements OnChanges {
 
   getEstadoStock(stock: number): string {
     return stock > 0 ? 'Agotado' : 'No Agotado';
+  }
+
+  getImageSource(element: unknown, key: string): string {
+    const row = element as Record<string, unknown> | null;
+    const value = [key, 'foto', 'imagen', 'imagenBase64', 'imageBase64', 'Foto', 'Imagen']
+      .map((field) => row?.[field])
+      .find((candidate) => typeof candidate === 'string' && candidate.trim());
+
+    if (typeof value !== 'string' || !value.trim()) {
+      return IMAGE_DEFAULT.default;
+    }
+
+    return Metodos.base64AImagen(value);
+  }
+
+  usarImagenPredeterminada(event: Event): void {
+    const imagen = event.target as HTMLImageElement;
+    if (imagen.getAttribute('src') !== IMAGE_DEFAULT.default) {
+      imagen.src = IMAGE_DEFAULT.default;
+    }
   }
 
   getRowClass(element: any): string {
