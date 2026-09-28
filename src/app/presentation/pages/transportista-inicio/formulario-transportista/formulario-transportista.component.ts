@@ -10,6 +10,7 @@ import { CanComponentDeactive } from '../../../../core/guards/formulario-incompl
 import { MaterialModule } from '../../../../shared/ui/material-module';
 import { ESPACIO_FIJO_ERRORES } from '../../../../shared/ui/form-field-options';
 import { email, form, FormField, maxLength, minLength, required, submit } from '@angular/forms/signals';
+import { IMAGE_DEFAULT } from '../../../../core/constants/imageDefault.const';
 
 @Component({
   selector: 'app-formulario-transportista',
@@ -29,7 +30,7 @@ export class FormularioTransportistaComponent implements OnInit, CanComponentDea
   private readonly transportistaServicio = inject(TransportistaService);
   private readonly snackBar = inject(MatSnackBar);
   private readonly router = inject(Router);
-  public imagenURL: string | null = null;
+  public imagenURL: string = IMAGE_DEFAULT.default;
 
   protected readonly transportistaModel = signal({
     codigo: Metodos.generarCodigo(),
@@ -99,7 +100,7 @@ export class FormularioTransportistaComponent implements OnInit, CanComponentDea
     this.transportistaServicio.obtener(this.idTransportista()).subscribe({
       next: (resp: any) => {
         if (resp?.data) {
-          const imagen = resp.data.imagen ?? resp.data.foto;
+          const imagen = resp.data.imagen ?? resp.data.foto ?? resp.data.imagenBase64;
           const tieneImagen = !!imagen && typeof imagen === 'string';
 
           this.transportistaModel.set({
@@ -113,9 +114,7 @@ export class FormularioTransportistaComponent implements OnInit, CanComponentDea
             estado: resp.data.estado
           });
 
-          this.imagenURL = tieneImagen
-            ? Metodos.base64AImagen(imagen)
-            : '../assets/images/default-avatar.jpg'; // Imagen por defecto
+          this.imagenURL = tieneImagen ? Metodos.base64AImagen(imagen) : IMAGE_DEFAULT.default;
 
           this.valoresIniciales = this.transportistaModel();
         }
@@ -196,6 +195,11 @@ export class FormularioTransportistaComponent implements OnInit, CanComponentDea
         const imagenBase64 = this.imagenURL?.split(',')[1] ?? '';
         this.transportistaModel.update((modelo) => ({ ...modelo, imagenBase64 }));
       };
+      reader.onerror = () => {
+        this.transportistaModel.update((modelo) => ({ ...modelo, imagenBase64: '' }));
+        this.imagenURL = IMAGE_DEFAULT.default;
+        this.transportistaForm.imagenBase64().markAsTouched();
+      };
 
       reader.readAsDataURL(file); // Convierte la imagen a Base64
     }
@@ -203,7 +207,16 @@ export class FormularioTransportistaComponent implements OnInit, CanComponentDea
 
   eliminarImagen(): void {
     this.transportistaModel.update((modelo) => ({ ...modelo, imagenBase64: '' }));
-    this.imagenURL = '';
+    this.imagenURL = IMAGE_DEFAULT.default;
+  }
+
+  usarImagenPredeterminada(event: Event): void {
+    const imagen = event.target as HTMLImageElement;
+    if (imagen.getAttribute('src') !== IMAGE_DEFAULT.default) {
+      this.transportistaModel.update((modelo) => ({ ...modelo, imagenBase64: '' }));
+      this.imagenURL = IMAGE_DEFAULT.default;
+      this.transportistaForm.imagenBase64().markAsTouched();
+    }
   }
 
   canDeactive(): boolean | Observable<boolean> {

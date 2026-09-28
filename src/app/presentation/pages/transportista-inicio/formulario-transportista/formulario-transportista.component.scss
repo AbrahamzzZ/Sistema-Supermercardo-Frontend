@@ -2,13 +2,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 90vh;
   background: var(--color-fondo);
 
   &__card {
     width: 100%;
-    max-width: 750px;
-    padding: 20px;
+    max-width: 900px;
+    padding: 24px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     border-radius: 12px;
     background: white;
@@ -27,10 +27,10 @@
 
   &__form {
     display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 24px;
+    grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
+    gap: 32px;
     align-items: start;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
   }
 
 .form {
@@ -41,9 +41,9 @@
     &__datos {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 4px 16px; // cada campo ya reserva espacio para su mensaje de error
-      align-items: start; // evita que un campo se estire cuando su vecino muestra error
-      padding-top: 26px; 
+      gap: 8px 16px;
+      align-items: start;
+      padding-top: 0;
     }
 
     &__field {
@@ -97,6 +97,9 @@
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  width: 100%;
+  max-width: 220px;
+  justify-self: center;
 
   &__titulo {
     align-self: flex-start;
@@ -193,11 +196,12 @@
 
     &__form {
       grid-template-columns: 1fr;
+      gap: 20px;
     }
   }
 
   .foto {
-    max-width: 200px;
+    max-width: 220px;
     width: 100%;
     margin: 0 auto;
   }
