@@ -5,7 +5,8 @@ import { NegocioService } from '../../../../core/services/negocio.service';
 import { INegocio } from '../../../../core/interfaces/negocio';
 import { Metodos } from '../../../../shared/utility/metodos';
 import { MaterialModule } from '../../../../shared/ui/material-module';
-import { EditarNegocioDialogComponent } from '../editar-negocio-dialog/editar-negocio-dialog.component';
+import { DialogoEditarNegocioComponent } from '../../../components/dialog/dialogo-editar-negocio/dialogo-editar-negocio.component';
+import { IMAGE_DEFAULT } from '../../../../core/constants/imageDefault.const';
 
 @Component({
   selector: 'app-cabecera-negocio',
@@ -28,8 +29,15 @@ export class CabeceraNegocioComponent implements OnInit {
   protected readonly negocio = signal<INegocio | null>(null);
   protected readonly logoURL = computed(() => {
     const logo = this.negocio()?.logo;
-    return logo ? Metodos.base64AImagen(logo) : 'assets/images/default-avatar.jpg';
+    return logo ? Metodos.base64AImagen(logo) : IMAGE_DEFAULT.default;
   });
+
+  usarLogoPredeterminado(event: Event): void {
+    const imagen = event.target as HTMLImageElement;
+    if (imagen.getAttribute('src') !== IMAGE_DEFAULT.default) {
+      imagen.src = IMAGE_DEFAULT.default;
+    }
+  }
 
   ngOnInit(): void {
     this.negocioServicio.obtener(this.idNegocio).subscribe({
@@ -51,7 +59,7 @@ export class CabeceraNegocioComponent implements OnInit {
     if (!negocio || !this.puedeEditar()) return;
 
     this.dialog
-      .open(EditarNegocioDialogComponent, { data: negocio, width: '760px', maxWidth: '95vw' })
+      .open(DialogoEditarNegocioComponent, { data: negocio, width: '760px', maxWidth: '95vw' })
       .afterClosed()
       .subscribe((actualizado?: INegocio) => {
         if (actualizado) this.actualizar(actualizado);

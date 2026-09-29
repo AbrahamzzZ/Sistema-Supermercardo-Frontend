@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, effect } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { ProductoService } from '../../../core/services/producto.service';
 import { IProducto } from '../../../core/interfaces/producto';
@@ -10,7 +10,8 @@ import { IProductoCategoria } from '../../../core/interfaces/Dto/iproducto-categ
 import { MaterialModule } from '../../../shared/ui/material-module';
 import { DataTableComponent } from '../../../shared/utility/components/data-table/data-table.component';
 import { TableColumn } from '../../../shared/utility/components/data-table/table-column';
-import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
+import { BaseListComponent } from '../../../shared/directive/baseListComponent';
+import { filter, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-producto-inicio',
@@ -40,39 +41,20 @@ export class ProductoInicioComponent extends BaseListComponent<IProductoCategori
     { key: 'accion', label: 'Acción', type: 'actions' }
   ];
 
-  override obtenerDatos(pageNumber: number, pageSize: number, filtro: string): void {
-    const cacheKey = `${pageNumber}-${pageSize}-${filtro}`;
+  protected readonly recurso = this.productoServicio.listaPaginada(this.params);
 
-    if (this.filtrosCache.has(cacheKey)) {
-      const cached = this.filtrosCache.get(cacheKey);
-      this.listaData.data = cached.items;
-      this.totalRegistros = cached.totalCount;
-      this.verificarStockBajo(cached.items);
-      return;
-    }
+  constructor() {
+    super();
 
-    this.productoServicio.listaPaginada(pageNumber, pageSize, filtro).subscribe({
-      next: (resp: any) => {
-        const arr = resp.data.items ?? [];
-        this.totalRegistros = resp.data.totalCount;
-        this.listaData.data = arr.map((c: IProducto) => {
-          return c;
-        });
-        this.verificarStockBajo(arr);
-
-        this.filtrosCache.set(cacheKey, {
-          items: arr,
-          totalCount: this.totalRegistros
-        });
-      },
-      error: (err) => console.error(err.message)
-    });
+    effect(() => {
+      if(this.recurso.error()){
+        this.mostrarMensaje('Error al cargar los productos.', 'error');
+      }
+    })
   }
 
   verificarStockBajo(productos: IProducto[]): void {
-    const productosStockBajo = productos.filter(
-      (p) => p.stock !== undefined && p.stock < 10 && p.stock > 0
-    );
+    const productosStockBajo = productos.filter((p) => p.stock !== undefined && p.stock < 10 && p.stock > 0);
     const productosAgotados = productos.filter((p) => p.stock === 0);
 
     if (productosAgotados.length > 0) {
@@ -85,27 +67,18 @@ export class ProductoInicioComponent extends BaseListComponent<IProductoCategori
   }
 
   eliminar(producto: IProducto): void {
-    const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
+    this.dialog.open(DialogoConfirmacionComponent, {
       width: '500px',
-      data: { mensaje: `¿Está seguro de eliminar este producto ${producto.nombre_Producto}?` }
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.productoServicio.eliminar(producto.id_Producto).subscribe({
-          next: (data) => {
-            if (data.isSuccess) {
-              this.limpiarCache();
-              this.obtenerDatos(1, this.pageSize, this.filtroActual);
-              this.mostrarMensaje('Producto eliminado correctamente.', 'success');
-            }
-          },
-          error: (err) => {
-            console.log(err.message);
-            this.mostrarMensaje('Error al eliminar el Producto.', 'error');
-          }
-        });
-      }
+      data: { mensaje: `¿Está seguro de eliminar el producto ${producto.nombre_Producto}?` }
+    }).afterClosed().pipe(filter(Boolean), switchMap(() => this.productoServicio.eliminar(producto.id_Producto)))
+    .subscribe({
+      next: (resp) => {
+        if(resp.isSuccess) {
+          this.refrescarDesdeInicio();
+          this.mostrarMensaje('Producto eliminado correctamente.', 'success');
+        }
+      },
+      error: () => this.mostrarMensaje('Error al eliminar el producto.', 'error')
     });
   }
 

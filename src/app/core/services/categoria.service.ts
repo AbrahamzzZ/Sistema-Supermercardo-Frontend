@@ -1,8 +1,10 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { HttpClient, httpResource } from '@angular/common/http';
+import { inject, Injectable, Signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { ICategoria } from '../interfaces/categoria';
 import { ApiResponse } from '../setting/api/apiResponse';
+import { ParamsPaginacion } from '../setting/api/apiParamsPaginacion';
+import { ApiPaginado } from '../setting/api/apiPaginado';
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +14,14 @@ export class CategoriaService {
   private readonly apiUrl: string = environment.API_URL + 'Categoria';
 
   lista() {
-    return this.http.get<ICategoria[]>(this.apiUrl);
+    return this.http.get<ApiResponse<ICategoria[]>>(this.apiUrl);
   }
 
-  listaPaginada(pageNumber: number, pageSize: number, filtro: string) {
-    return this.http.get<{
-      data: ICategoria[];
-      totalCount: number;
-    }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}&filtro=${encodeURIComponent(filtro)}`);
+  listaPaginada(params: Signal<ParamsPaginacion>) {
+    return httpResource<ApiResponse<ApiPaginado<ICategoria>>>(() => {
+      const p = params();
+      return { url: `${this.apiUrl}/paginacion`, params: {pageNumber: p.pageNumber, pageSize: p.pageSize, filtro: p.filtro}};
+    });
   }
 
   obtener(id: number) {
@@ -35,6 +37,6 @@ export class CategoriaService {
   }
 
   eliminar(id: number) {
-    return this.http.delete<ApiResponse<ICategoria>>(`${this.apiUrl}/${id}`);
+    return this.http.delete<ApiResponse<boolean>>(`${this.apiUrl}/${id}`);
   }
 }

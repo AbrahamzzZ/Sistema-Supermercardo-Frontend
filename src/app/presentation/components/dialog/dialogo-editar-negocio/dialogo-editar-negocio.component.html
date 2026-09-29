@@ -3,7 +3,7 @@
   Editar información del negocio
 </h2>
 
-<mat-dialog-content>
+<mat-dialog-content class="dialogo__contenido">
   <form class="dialogo__grid" novalidate>
     <div class="dialogo__campos">
       <mat-form-field appearance="outline" class="form__field">
@@ -52,9 +52,9 @@
     <div class="dialogo__logo">
       <span class="dialogo__logo-titulo">Logo del negocio</span>
 
-      <div class="dialogo__logo-preview" [class.dialogo__logo-preview--vacio]="!imagenURL()">
+      <div class="dialogo__logo-preview" [class.dialogo__logo-preview--vacio]="!negocioModel().logo">
         @if (imagenURL(); as url) {
-          <img [src]="url" alt="Logo del negocio" />
+          <img [src]="url" (error)="usarLogoPredeterminado($event)" alt="Logo del negocio" />
           <button mat-mini-fab type="button" class="dialogo__logo-eliminar" matTooltip="Quitar logo" (click)="eliminarImagen()">
             <mat-icon>delete</mat-icon>
           </button>
@@ -67,7 +67,7 @@
       <input type="file" accept="image/*" id="logoNegocio" class="dialogo__file" (change)="subirImagen($event)" />
       <label for="logoNegocio" class="boton-archivo">
         <mat-icon>cloud_upload</mat-icon>
-        {{ imagenURL() ? 'Cambiar logo' : 'Subir logo' }}
+        {{ negocioModel().logo ? 'Cambiar logo' : 'Subir logo' }}
       </label>
 
       @if (negocioForm.logo().touched() && negocioForm.logo().invalid()) {
@@ -77,7 +77,7 @@
   </form>
 </mat-dialog-content>
 
-<mat-dialog-actions align="end">
+<mat-dialog-actions class="dialogo__acciones" align="end">
   <button mat-button type="button" (click)="cerrar()">Cancelar</button>
   <button mat-flat-button color="primary" type="button" [disabled]="guardando()" (click)="guardar()">
     {{ guardando() ? 'Guardando…' : 'Guardar cambios' }}

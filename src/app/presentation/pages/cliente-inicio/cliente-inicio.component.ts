@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, effect } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { ClienteService } from '../../../core/services/cliente.service';
 import { ICliente } from '../../../core/interfaces/cliente';
@@ -9,7 +9,8 @@ import { Metodos } from '../../../shared/utility/metodos';
 import { MaterialModule } from '../../../shared/ui/material-module';
 import { TableColumn } from '../../../shared/utility/components/data-table/table-column';
 import { DataTableComponent } from '../../../shared/utility/components/data-table/data-table.component';
-import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
+import { BaseListComponent } from '../../../shared/directive/baseListComponent';
+import { filter, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-cliente-inicio',
@@ -37,57 +38,31 @@ export class ClienteInicioComponent extends BaseListComponent<ICliente> {
     { key: 'accion', label: 'Acción', type: 'actions' }
   ];
 
-  override obtenerDatos(pageNumber: number, pageSize: number, filtro: string): void {
-    const cacheKey = `${pageNumber}-${pageSize}-${filtro}`;
+  protected readonly recurso = this.clienteServicio.listaPaginada(this.params);
 
-    if (this.filtrosCache.has(cacheKey)) {
-      const cached = this.filtrosCache.get(cacheKey);
-      this.listaData.data = cached.items;
-      this.totalRegistros = cached.totalCount;
-      return;
-    }
-
-    this.clienteServicio.listaPaginada(pageNumber, pageSize, filtro).subscribe({
-      next: (resp: any) => {
-        const arr = resp.data.items ?? [];
-        this.totalRegistros = resp.data.totalCount;
-        this.listaData.data = arr.map((cl: ICliente) => {
-          return cl;
-        });
-
-        this.filtrosCache.set(cacheKey, {
-          items: arr,
-          totalCount: this.totalRegistros
-        });
-      },
-      error: (err) => console.error(err.message)
-    });
+  constructor() {
+    super();
+  
+    effect(() => {
+      if(this.recurso.error()){
+        this.mostrarMensaje('Error al cargar los clientes.', 'error');
+      }
+    })
   }
 
   eliminar(cliente: ICliente): void {
-    const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
+    this.dialog.open(DialogoConfirmacionComponent, {
       width: '500px',
-      data: {
-        mensaje: `¿Está seguro de eliminar al cliente ${cliente.nombres} ${cliente.apellidos}?`
-      }
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.clienteServicio.eliminar(cliente.id_Cliente).subscribe({
-          next: (data) => {
-            if (data.isSuccess) {
-              this.limpiarCache();
-              this.obtenerDatos(1, this.pageSize, this.filtroActual);
-              this.mostrarMensaje('Cliente eliminado correctamente.', 'success');
-            }
-          },
-          error: (err) => {
-            console.log(err.message);
-            this.mostrarMensaje('Error al eliminar al Cliente.', 'error');
-          }
-        });
-      }
+      data: { mensaje: `¿Está seguro de eliminar al cliente ${cliente.nombres} ${cliente.apellidos}?` }
+    }).afterClosed().pipe(filter(Boolean), switchMap(() => this.clienteServicio.eliminar(cliente.id_Cliente)))
+    .subscribe({
+      next: (resp) => {
+        if(resp.isSuccess) {
+          this.refrescarDesdeInicio();
+          this.mostrarMensaje('Cliente eliminada correctamente.', 'success');
+        }
+      },
+      error: () => this.mostrarMensaje('Error al eliminar el cliente.', 'error')
     });
   }
 

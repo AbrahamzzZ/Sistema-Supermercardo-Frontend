@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, effect } from '@angular/core';
 import { MaterialModule } from '../../../shared/ui/material-module';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -9,7 +9,7 @@ import { ILog } from '../../../core/interfaces/log';
 import { ModalLogComponent } from '../../components/modal/modal-log/modal-log.component';
 import { DataTableComponent } from '../../../shared/utility/components/data-table/data-table.component';
 import { TableColumn } from '../../../shared/utility/components/data-table/table-column';
-import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
+import { BaseListComponent } from '../../../shared/directive/baseListComponent';
 
 @Component({
   selector: 'app-log-inicio',
@@ -34,31 +34,16 @@ export class LogInicioComponent extends BaseListComponent<ILog> {
     { key: 'accion', label: 'Acción', type: 'view' }
   ];
 
-  override obtenerDatos(pageNumber: number, pageSize: number, filtro: string): void {
-    const cacheKey = `${pageNumber}-${pageSize}-${filtro}`;
+  protected readonly recurso = this.logServicio.listaPaginada(this.params);
 
-    if (this.filtrosCache.has(cacheKey)) {
-      const cached = this.filtrosCache.get(cacheKey);
-      this.listaData.data = cached.items;
-      this.totalRegistros = cached.totalCount;
-      return;
-    }
+  constructor() {
+    super();
 
-    this.logServicio.listaPaginada(pageNumber, pageSize, filtro).subscribe({
-      next: (resp: any) => {
-        const arr = resp.data.items ?? [];
-        this.totalRegistros = resp.data.totalCount;
-        this.listaData.data = arr.map((l: ILog) => {
-          return l;
-        });
-
-        this.filtrosCache.set(cacheKey, {
-          items: arr,
-          totalCount: this.totalRegistros
-        });
-      },
-      error: (err) => console.error(err.message)
-    });
+    effect(() => {
+      if(this.recurso.error()){
+        this.mostrarMensaje('Error al cargar los logs.', 'error');
+      }
+    })
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {

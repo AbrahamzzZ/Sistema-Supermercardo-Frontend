@@ -3,21 +3,34 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    margin: 0;
+    padding: 24px 28px 16px;
     color: var(--color-primario);
     font-weight: 600;
+  }
+
+  &__contenido {
+    margin: 0;
+    padding: 8px 28px 24px;
+  }
+
+  &__acciones {
+    gap: 8px;
+    margin: 0;
+    padding: 12px 28px 24px;
   }
 
   &__grid {
     display: grid;
     grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
     gap: 24px;
-    padding-top: 8px;
+    padding-top: 4px;
   }
 
   &__campos {
     display: flex;
     flex-direction: column;
-    gap: 4px; // cada campo ya reserva espacio para su mensaje de error
+    gap: 4px; 
 
     mat-form-field {
       width: 100%;
@@ -98,6 +111,18 @@
 }
 
 @media (max-width: 700px) {
+  .dialogo__titulo {
+    padding: 20px 20px 14px;
+  }
+
+  .dialogo__contenido {
+    padding: 8px 20px 20px;
+  }
+
+  .dialogo__acciones {
+    padding: 10px 20px 20px;
+  }
+
   .dialogo__grid,
   .dialogo__fila {
     grid-template-columns: 1fr;

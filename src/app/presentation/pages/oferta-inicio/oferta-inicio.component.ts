@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, effect } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { OfertaService } from '../../../core/services/oferta.service';
 import { IOferta } from '../../../core/interfaces/oferta';
@@ -9,8 +9,9 @@ import { Metodos } from '../../../shared/utility/metodos';
 import { IOfertaProducto } from '../../../core/interfaces/Dto/ioferta-producto';
 import { DataTableComponent } from '../../../shared/utility/components/data-table/data-table.component';
 import { TableColumn } from '../../../shared/utility/components/data-table/table-column';
-import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
+import { BaseListComponent } from '../../../shared/directive/baseListComponent';
 import { MaterialModule } from '../../../shared/ui/material-module';
+import { filter, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-oferta-inicio',
@@ -38,57 +39,31 @@ export class OfertaInicioComponent extends BaseListComponent<IOfertaProducto> {
     { key: 'accion', label: 'Acción', type: 'actions' }
   ];
 
-  override obtenerDatos(pageNumber: number, pageSize: number, filtro: string): void {
-    const cacheKey = `${pageNumber}-${pageSize}-${filtro}`;
+  protected readonly recurso = this.ofertaServicio.listaPaginada(this.params);
 
-    if (this.filtrosCache.has(cacheKey)) {
-      const cached = this.filtrosCache.get(cacheKey);
-      this.listaData.data = cached.items;
-      this.totalRegistros = cached.totalCount;
-      return;
-    }
+  constructor() {
+    super();
 
-    this.ofertaServicio.listaPaginada(pageNumber, pageSize, filtro).subscribe({
-      next: (resp: any) => {
-        const arr = resp.data.items ?? [];
-        this.totalRegistros = resp.data.totalCount;
-        this.listaData.data = arr.map((c: IOferta) => {
-          return c;
-        });
-
-        this.filtrosCache.set(cacheKey, {
-          items: arr,
-          totalCount: this.totalRegistros
-        });
-      },
-      error: (err) => console.error(err.message)
-    });
+    effect(() => {
+      if(this.recurso.error()){
+        this.mostrarMensaje('Error al cargar las ofertas.', 'error');
+      }
+    })
   }
 
   eliminar(oferta: IOferta): void {
-    const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
+    this.dialog.open(DialogoConfirmacionComponent, {
       width: '500px',
-      data: {
-        mensaje: `¿Está seguro de eliminar la oferta ${oferta.nombre_Oferta}?`
-      }
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.ofertaServicio.eliminar(oferta.id_Oferta).subscribe({
-          next: (data) => {
-            if (data.isSuccess) {
-              this.limpiarCache();
-              this.obtenerDatos(1, this.pageSize, this.filtroActual);
-              this.mostrarMensaje('Oferta eliminado correctamente.', 'success');
-            }
-          },
-          error: (err) => {
-            console.log(err.message);
-            this.mostrarMensaje('Error al eliminar la oferta.', 'error');
-          }
-        });
-      }
+      data: { mensaje: `¿Está seguro de eliminar la categoría ${oferta.nombre_Oferta}?` }
+    }).afterClosed().pipe(filter(Boolean), switchMap(() => this.ofertaServicio.eliminar(oferta.id_Oferta)))
+    .subscribe({
+      next: (resp) => {
+        if(resp.isSuccess) {
+          this.refrescarDesdeInicio();
+          this.mostrarMensaje('Oferta eliminada correctamente.', 'success');
+        }
+      },
+      error: () => this.mostrarMensaje('Error al eliminar la oferta.', 'error')
     });
   }
 

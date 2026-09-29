@@ -28,7 +28,7 @@
             }
 
             @case ('image') {
-              <img class="table__img" [src]="element[column.key]" alt="Vista previa"/>
+              <img class="table__img" [src]="getImageSource(element, column.key)" (error)="usarImagenPredeterminada($event)" alt="Foto" />
             }
 
             @case ('view') {

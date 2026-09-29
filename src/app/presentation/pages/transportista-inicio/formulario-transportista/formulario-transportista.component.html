@@ -14,9 +14,9 @@
             <span class="foto__titulo">Foto del transportista</span>
             <input type="file" (change)="subirImagen($event)" accept="image/*" #fotoTransportista class="file-input" id="fileInput" />
 
-            <div class="foto__marco" [class.foto__marco--vacio]="!imagenURL">
+            <div class="foto__marco" [class.foto__marco--vacio]="!transportistaModel().imagenBase64">
               @if (imagenURL) {
-                <img [src]="imagenURL" alt="Foto del transportista" />
+                <img [src]="imagenURL" (error)="usarImagenPredeterminada($event)" alt="Foto del transportista" />
                 <button mat-icon-button type="button" class="delete-button" aria-label="Eliminar foto"
                   (click)="eliminarImagen(); fotoTransportista.value = ''">
                   <mat-icon>delete</mat-icon>
@@ -31,7 +31,7 @@
 
             <label for="fileInput" class="boton-archivo">
               <mat-icon>cloud_upload</mat-icon>
-              {{ imagenURL ? 'Cambiar foto' : 'Subir foto' }}
+              {{ transportistaModel().imagenBase64 ? 'Cambiar foto' : 'Subir foto' }}
             </label>
 
             @if (transportistaForm.imagenBase64().touched() && transportistaForm.imagenBase64().invalid()) {

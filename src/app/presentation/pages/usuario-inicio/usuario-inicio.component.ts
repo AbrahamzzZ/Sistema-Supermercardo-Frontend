@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, effect } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { UsuarioService } from '../../../core/services/usuario.service';
 import { IUsuario } from '../../../core/interfaces/usuario';
@@ -10,7 +10,8 @@ import { IUsuarioRol } from '../../../core/interfaces/Dto/iusuario-rol';
 import { MaterialModule } from '../../../shared/ui/material-module';
 import { DataTableComponent } from '../../../shared/utility/components/data-table/data-table.component';
 import { TableColumn } from '../../../shared/utility/components/data-table/table-column';
-import { BaseListComponent } from '../../../shared/utility/components/baseListComponent';
+import { BaseListComponent } from '../../../shared/directive/baseListComponent';
+import { filter, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-usuario-inicio',
@@ -37,55 +38,31 @@ export class UsuarioInicioComponent extends BaseListComponent<IUsuarioRol> {
     { key: 'accion', label: 'Acción', type: 'actions' }
   ];
 
-  override obtenerDatos(pageNumber: number, pageSize: number, filtro: string): void {
-    const cacheKey = `${pageNumber}-${pageSize}-${filtro}`;
+  protected readonly recurso = this.usuarioServicio.listaPaginada(this.params);
 
-    if (this.filtrosCache.has(cacheKey)) {
-      const cached = this.filtrosCache.get(cacheKey);
-      this.listaData.data = cached.items;
-      this.totalRegistros = cached.totalCount;
-      return;
-    }
+  constructor() {
+    super();
 
-    this.usuarioServicio.listaPaginada(pageNumber, pageSize, filtro).subscribe({
-      next: (resp: any) => {
-        const arr = resp.data.items ?? [];
-        this.totalRegistros = resp.data.totalCount;
-        this.listaData.data = arr.map((u: IUsuario) => {
-          return u;
-        });
-
-        this.filtrosCache.set(cacheKey, {
-          items: arr,
-          totalCount: this.totalRegistros
-        });
-      },
-      error: (err) => console.error(err.message)
-    });
+    effect(() => {
+      if(this.recurso.error()){
+        this.mostrarMensaje('Error al cargar los usuarios.', 'error');
+      }
+    })
   }
 
   eliminar(usuario: IUsuario): void {
-    const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
+    this.dialog.open(DialogoConfirmacionComponent, {
       width: '500px',
       data: { mensaje: `¿Está seguro de eliminar al usuario ${usuario.nombre_Completo}?` }
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.usuarioServicio.eliminar(usuario.id_Usuario).subscribe({
-          next: (data) => {
-            if (data.isSuccess) {
-              this.limpiarCache();
-              this.obtenerDatos(1, this.pageSize, this.filtroActual);
-              this.mostrarMensaje('Usuario eliminado correctamente.', 'success');
-            }
-          },
-          error: (err) => {
-            console.log(err.message);
-            this.mostrarMensaje('Error al eliminar al usuario.', 'error');
-          }
-        });
-      }
+    }).afterClosed().pipe(filter(Boolean), switchMap(() => this.usuarioServicio.eliminar(usuario.id_Usuario)))
+    .subscribe({
+      next: (resp) => {
+        if(resp.isSuccess) {
+          this.refrescarDesdeInicio();
+          this.mostrarMensaje('Usaurio eliminado correctamente.', 'success');
+        }
+      },
+      error: () => this.mostrarMensaje('Error al eliminar el usuario.', 'error')
     });
   }
 

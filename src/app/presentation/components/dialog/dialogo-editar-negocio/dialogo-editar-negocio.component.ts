@@ -1,31 +1,32 @@
-import { Component, inject, ChangeDetectionStrategy, signal } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { FormField, form, required, minLength, maxLength, email, submit } from '@angular/forms/signals';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { email, form, FormField, maxLength, minLength, required, submit } from '@angular/forms/signals';
 import { INegocio } from '../../../../core/interfaces/negocio';
 import { NegocioService } from '../../../../core/services/negocio.service';
-import { Validaciones } from '../../../../shared/utility/validaciones';
-import { Metodos } from '../../../../shared/utility/metodos';
 import { MaterialModule } from '../../../../shared/ui/material-module';
+import { Metodos } from '../../../../shared/utility/metodos';
+import { Validaciones } from '../../../../shared/utility/validaciones';
 import { ESPACIO_FIJO_ERRORES } from '../../../../shared/ui/form-field-options';
+import { IMAGE_DEFAULT } from '../../../../core/constants/imageDefault.const';
 
 @Component({
-  selector: 'app-editar-negocio-dialog',
   imports: [MaterialModule, FormField],
   providers: [ESPACIO_FIJO_ERRORES],
-  templateUrl: './editar-negocio-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './editar-negocio-dialog.component.scss'
+  selector: 'app-dialogo-editar-negocio',
+  styleUrl: './dialogo-editar-negocio.component.scss',
+  templateUrl: './dialogo-editar-negocio.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
-export class EditarNegocioDialogComponent {
-  private readonly dialogRef = inject(MatDialogRef<EditarNegocioDialogComponent, INegocio>);
+export class DialogoEditarNegocioComponent {
+  private readonly dialogRef = inject(MatDialogRef<DialogoEditarNegocioComponent, INegocio>);
   private readonly negocio = inject<INegocio>(MAT_DIALOG_DATA);
   private readonly negocioServicio = inject(NegocioService);
   private readonly snackBar = inject(MatSnackBar);
 
   protected readonly guardando = signal(false);
-  protected readonly imagenURL = signal<string | null>(
-    this.negocio.logo ? Metodos.base64AImagen(this.negocio.logo) : null
+  protected readonly imagenURL = signal<string>(
+    this.negocio.logo ? Metodos.base64AImagen(this.negocio.logo) : IMAGE_DEFAULT.default
   );
 
   protected readonly negocioModel = signal({
@@ -62,12 +63,26 @@ export class EditarNegocioDialogComponent {
       this.negocioModel.update((modelo) => ({ ...modelo, logo: dataUri.split(',')[1] ?? '' }));
       this.negocioForm.logo().markAsTouched();
     };
+    reader.onerror = () => {
+      this.negocioModel.update((modelo) => ({ ...modelo, logo: '' }));
+      this.negocioForm.logo().markAsTouched();
+      this.imagenURL.set(IMAGE_DEFAULT.default);
+    };
     reader.readAsDataURL(file);
   }
 
   eliminarImagen(): void {
-    this.imagenURL.set(null);
+    this.imagenURL.set(IMAGE_DEFAULT.default);
     this.negocioModel.update((modelo) => ({ ...modelo, logo: '' }));
+  }
+
+  usarLogoPredeterminado(event: Event): void {
+    const imagen = event.target as HTMLImageElement;
+    if (imagen.getAttribute('src') !== IMAGE_DEFAULT.default) {
+      this.negocioModel.update((modelo) => ({ ...modelo, logo: '' }));
+      this.negocioForm.logo().markAsTouched();
+      this.imagenURL.set(IMAGE_DEFAULT.default);
+    }
   }
 
   async guardar(): Promise<void> {

@@ -1,4 +1,3 @@
-/** Cómo se muestra el valor de una columna en la tabla. */
 export type TipoColumna =
   | 'text'
   | 'number'

@@ -1,5 +1,6 @@
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { IMAGE_DEFAULT } from '../../core/constants/imageDefault.const';
 
 export class Metodos {
 
@@ -30,18 +31,26 @@ export class Metodos {
     return numero.toString();
   }
 
-  static base64AImagen(base64: string): string {
+  static base64AImagen(valor: string | null | undefined): string {
+    const imagen = (valor ?? '').trim();
+    if (!imagen) return IMAGE_DEFAULT.default;
+    if (/^(data:image\/|https?:\/\/|blob:)/i.test(imagen)) return imagen;
+
+    const base64Limpio = imagen.replace(/\s/g, '');
     const tipos: [string, string][] = [
       ['/9j/', 'image/jpeg'],
       ['iVBORw0KGgo', 'image/png'],
       ['R0lGOD', 'image/gif'],
       ['UklGR', 'image/webp'],
       ['Qk', 'image/bmp'],
-      ['PHN2Zy', 'image/svg+xml'], // <svg
-      ['PD94bWwg', 'image/svg+xml'] // <?xml
+      ['PHN2Zy', 'image/svg+xml'],
+      ['PD94bWwg', 'image/svg+xml']
     ];
-    const mime = tipos.find(([prefijo]) => base64.startsWith(prefijo))?.[1] ?? 'image/png';
-    return `data:${mime};base64,${base64}`;
+    const mime = tipos.find(([prefijo]) => base64Limpio.startsWith(prefijo))?.[1];
+    if (mime) return `data:${mime};base64,${base64Limpio}`;
+    if (/^(\/|assets\/)/i.test(imagen)) return imagen;
+
+    return `data:image/png;base64,${base64Limpio}`;
   }
 
   static exportarExcel(nombreArchivo: string, datos: any[], columnas: string[]) {
