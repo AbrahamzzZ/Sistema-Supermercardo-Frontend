@@ -9,9 +9,8 @@ describe('IaChatComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [IaChatComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(IaChatComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

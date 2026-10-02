@@ -1,4 +1,12 @@
-import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy, signal, computed } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  inject,
+  OnInit,
+  ChangeDetectionStrategy,
+  signal,
+  computed
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoriaService } from '../../../../core/services/categoria.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -40,22 +48,20 @@ export class FormularioCategoriaComponent implements OnInit, CanComponentDeactiv
   private valoresIniciales = this.categoriaModel();
 
   protected readonly categoriaForm = form(this.categoriaModel, (schema) => {
-    required(schema.nombre, {message: 'Ingrese un nombre.'});
-    minLength(schema.nombre, 4, {message: 'Nombre demasiado corto.'});
-    maxLength(schema.nombre, 30, {message: 'Nombre demasiado largo.'});
+    required(schema.nombre, { message: 'Ingrese un nombre.' });
+    minLength(schema.nombre, 4, { message: 'Nombre demasiado corto.' });
+    maxLength(schema.nombre, 30, { message: 'Nombre demasiado largo.' });
     Validaciones.soloLetrasSignal(schema.nombre);
   });
 
   private tieneCambioSinGuardar(): boolean {
     const actual = this.categoriaModel();
     const inicial = this.valoresIniciales;
-    return actual.nombre !== inicial.nombre
-      || actual.estado !== inicial.estado;
+    return actual.nombre !== inicial.nombre || actual.estado !== inicial.estado;
   }
 
   @HostListener('window:beforeunload', ['$event'])
   onBeforeReload(e: BeforeUnloadEvent) {
-
     if (this.tieneCambioSinGuardar()) {
       e.preventDefault();
       e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
@@ -117,7 +123,10 @@ export class FormularioCategoriaComponent implements OnInit, CanComponentDeactiv
         error: (err) => {
           console.error(err);
           this.guardando.set(false);
-          this.mostrarMensaje(this.esEdicion() ? 'Error al editar la categoría' : 'Error al registrar la categoría', 'error');
+          this.mostrarMensaje(
+            this.esEdicion() ? 'Error al editar la categoría' : 'Error al registrar la categoría',
+            'error'
+          );
         },
         complete: () => this.guardando.set(false)
       });

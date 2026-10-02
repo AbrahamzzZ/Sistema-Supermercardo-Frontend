@@ -2,21 +2,16 @@
   <h1 class="container__title">Mapa de Sucursales</h1>
 
   <!-- Google Maps -->
-  @if(useGoogleMaps){
+  @if (useGoogleMaps) {
     <div class="map-container">
-      <google-map
-        height="100%"
-        width="100%"
-        [center]="center"
-        [zoom]="zoom"
-        >
+      <google-map height="100%" width="100%" [center]="center" [zoom]="zoom">
         @for (marker of markers; track marker) {
           <map-marker
             #markerRef="mapMarker"
             [position]="marker.position"
             [title]="marker.title"
             (mapClick)="abrirInfoWindow(marker, markerRef)"
-            >
+          >
           </map-marker>
         }
 
@@ -37,12 +32,10 @@
               <div class="info-window__item">
                 <strong>Estado:</strong>
                 <span
-                [ngClass]="
-                  infoWindowData['estado']
-                    ? 'info-window__activo'
-                    : 'info-window__inactivo'
-                "
-                  >
+                  [ngClass]="
+                    infoWindowData['estado'] ? 'info-window__activo' : 'info-window__inactivo'
+                  "
+                >
                   {{ infoWindowData['estado'] ? 'Activo' : 'Inactivo' }}
                 </span>
               </div>
@@ -54,13 +47,11 @@
   }
 
   <!-- Leaflet Map -->
-  @if(!useGoogleMaps){
+  @if (!useGoogleMaps) {
     <div class="map-container" id="leaflet-map"></div>
 
     <div class="map-info">
-      <p class="map-info__text">
-        Mapa de OpenStreetMap (sin token de Google Maps disponible).
-      </p>
+      <p class="map-info__text">Mapa de OpenStreetMap (sin token de Google Maps disponible).</p>
     </div>
   }
 </div>

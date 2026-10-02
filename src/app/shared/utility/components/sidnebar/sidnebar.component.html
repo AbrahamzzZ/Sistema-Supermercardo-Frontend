@@ -1,36 +1,49 @@
 <aside class="sidebar" [ngClass]="{ 'sidebar-collapsed': isCollapsed }">
-    <button class="sidebar-toggle-btn-inside" (click)="toggleSidebar()" aria-label="Alternar menú">
-        <mat-icon>{{ isCollapsed ? 'menu' : 'menu_open' }}</mat-icon>
-    </button>
+  <button class="sidebar-toggle-btn-inside" (click)="toggleSidebar()" aria-label="Alternar menú">
+    <mat-icon>{{ isCollapsed ? 'menu' : 'menu_open' }}</mat-icon>
+  </button>
 
-    <nav class="sidebar-menu">
-        @for (seccion of secciones; track seccion.nombre) {
-            <div class="seccion" [class.abierta]="seccionesAbiertas.has(seccion.nombre)">
-                <button class="seccion-titulo" (click)="toggleSeccion(seccion.nombre)"
-                    [attr.aria-expanded]="seccionesAbiertas.has(seccion.nombre)">
-                    <span>{{ seccion.nombre }}</span>
-                    <mat-icon class="flecha">expand_more</mat-icon>
-                </button>
-
-                <div class="seccion-contenido">
-                    <div class="seccion-items">
-                        @for (menu of seccion.menus; track menu.idMenu) {
-                            <a [routerLink]="menu.urlMenu" routerLinkActive="active" class="menu-item"
-                                [matTooltip]="isCollapsed ? menu.nombreMenu : ''" matTooltipPosition="right">
-                                <mat-icon>{{ menu.nombreIcono }}</mat-icon>
-                                <span class="text">{{ menu.nombreMenu }}</span>
-                            </a>
-                        }
-                    </div>
-                </div>
-            </div>
-        }
-    </nav>
-
-    <div class="sidebar-footer">
-        <button class="menu-item salir" (click)="logout()" [matTooltip]="isCollapsed ? 'Salir' : ''" matTooltipPosition="right">
-            <mat-icon>logout</mat-icon>
-            <span class="text">Cerrar sesión</span>
+  <nav class="sidebar-menu">
+    @for (seccion of secciones; track seccion.nombre) {
+      <div class="seccion" [class.abierta]="seccionesAbiertas.has(seccion.nombre)">
+        <button
+          class="seccion-titulo"
+          (click)="toggleSeccion(seccion.nombre)"
+          [attr.aria-expanded]="seccionesAbiertas.has(seccion.nombre)"
+        >
+          <span>{{ seccion.nombre }}</span>
+          <mat-icon class="flecha">expand_more</mat-icon>
         </button>
-    </div>
+
+        <div class="seccion-contenido">
+          <div class="seccion-items">
+            @for (menu of seccion.menus; track menu.idMenu) {
+              <a
+                [routerLink]="menu.urlMenu"
+                routerLinkActive="active"
+                class="menu-item"
+                [matTooltip]="isCollapsed ? menu.nombreMenu : ''"
+                matTooltipPosition="right"
+              >
+                <mat-icon>{{ menu.nombreIcono }}</mat-icon>
+                <span class="text">{{ menu.nombreMenu }}</span>
+              </a>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  </nav>
+
+  <div class="sidebar-footer">
+    <button
+      class="menu-item salir"
+      (click)="logout()"
+      [matTooltip]="isCollapsed ? 'Salir' : ''"
+      matTooltipPosition="right"
+    >
+      <mat-icon>logout</mat-icon>
+      <span class="text">Cerrar sesión</span>
+    </button>
+  </div>
 </aside>

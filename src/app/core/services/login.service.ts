@@ -72,7 +72,9 @@ export class LoginService {
   }
 
   esAdministrador(): boolean {
-    const rol = String(this.obtenerDatosToken()?.role ?? '').trim().toLowerCase();
+    const rol = String(this.obtenerDatosToken()?.role ?? '')
+      .trim()
+      .toLowerCase();
     return rol === '1' || rol === 'administrador';
   }
 

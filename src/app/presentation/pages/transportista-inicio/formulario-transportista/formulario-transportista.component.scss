@@ -33,10 +33,10 @@
     margin-bottom: 24px;
   }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 
     &__datos {
       display: grid;
@@ -125,7 +125,9 @@
 
     &--vacio {
       border: 2px dashed var(--color-borde-fuerte);
-      transition: border-color 0.2s ease, background 0.2s ease;
+      transition:
+        border-color 0.2s ease,
+        background 0.2s ease;
 
       &:hover {
         border-color: var(--color-primario);
@@ -219,10 +221,11 @@
 }
 
 ::ng-deep .mat-mdc-form-field .mdc-floating-label {
-  transform: translateY(-100%) translateX(calc(1 * (52px + var(--mat-mdc-form-field-label-offset-x, 0px)))) !important;
+  transform: translateY(-100%)
+    translateX(calc(1 * (52px + var(--mat-mdc-form-field-label-offset-x, 0px)))) !important;
 }
 
-::ng-deep .form__field .mat-mdc-form-field-subscript-wrapper{
+::ng-deep .form__field .mat-mdc-form-field-subscript-wrapper {
   background: #ffffff;
 }
 
@@ -230,7 +233,7 @@
   height: 35px !important;
 }
 
-::ng-deep .mat-mdc-form-field-flex{
+::ng-deep .mat-mdc-form-field-flex {
   margin-top: -11px;
 }
 

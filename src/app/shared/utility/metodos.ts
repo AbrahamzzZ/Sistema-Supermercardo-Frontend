@@ -3,7 +3,6 @@ import { saveAs } from 'file-saver';
 import { IMAGE_DEFAULT } from '../../core/constants/imageDefault.const';
 
 export class Metodos {
-
   static formatearFecha(fecha: string | Date | null | undefined): string {
     if (!fecha) return '';
 
@@ -23,7 +22,7 @@ export class Metodos {
       year: 'numeric'
     });
   }
-  
+
   static generarCodigo(): string {
     const array = new Uint32Array(1);
     crypto.getRandomValues(array);
@@ -66,8 +65,13 @@ export class Metodos {
     saveAs(data, `${nombreArchivo}.xlsx`);
   }
 
-  static async exportarExcelConImagenes(nombreArchivo: string, columnas: { header: string; key: string; width?: number }[],
-    datos: Record<string, unknown>[], claveImagen: string, tamanoImagen = 60): Promise<void> {
+  static async exportarExcelConImagenes(
+    nombreArchivo: string,
+    columnas: { header: string; key: string; width?: number }[],
+    datos: Record<string, unknown>[],
+    claveImagen: string,
+    tamanoImagen = 60
+  ): Promise<void> {
     const exceljs: any = await import('exceljs');
     const Workbook = exceljs.Workbook ?? exceljs.default.Workbook;
 
@@ -97,7 +101,12 @@ export class Metodos {
     }
 
     const buffer = await libro.xlsx.writeBuffer();
-    saveAs(new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), `${nombreArchivo}.xlsx`);
+    saveAs(
+      new Blob([buffer], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      }),
+      `${nombreArchivo}.xlsx`
+    );
   }
 
   private static imagenAPng(src: string, tamano: number): Promise<string | null> {

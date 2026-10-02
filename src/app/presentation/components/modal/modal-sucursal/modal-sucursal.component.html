@@ -8,12 +8,11 @@
     (keyup)="aplicarFiltro($event)"
     placeholder="Ingrese nombre o código"
   />
-  @if(filtro){
+  @if (filtro) {
     <button mat-icon-button matSuffix (click)="limpiarFiltro(inputBuscador)">
       <mat-icon>close</mat-icon>
     </button>
   }
-
 </mat-form-field>
 
 <div class="sucursal-scroll">

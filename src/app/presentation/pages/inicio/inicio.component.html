@@ -27,7 +27,9 @@
   <section class="inicio__acciones">
     @for (accion of accionesRapidas; track accion.ruta) {
       <button type="button" class="accion" (click)="irA(accion.ruta)">
-        <span class="accion__icono"><mat-icon>{{ accion.icono }}</mat-icon></span>
+        <span class="accion__icono"
+          ><mat-icon>{{ accion.icono }}</mat-icon></span
+        >
         <span class="accion__titulo">{{ accion.titulo }}</span>
         <mat-icon class="accion__flecha">arrow_forward</mat-icon>
       </button>
@@ -38,7 +40,11 @@
     <section class="ofertas">
       <h2 class="inicio__subtitulo"><mat-icon>local_offer</mat-icon> Ofertas activas</h2>
       <div class="ofertas__viewport">
-        <div class="ofertas__track" [style.animationDuration]="animationDuration" [class.ofertas__track--quieto]="ofertas().length === 1">
+        <div
+          class="ofertas__track"
+          [style.animationDuration]="animationDuration"
+          [class.ofertas__track--quieto]="ofertas().length === 1"
+        >
           @for (i of [0, 1, 2, 3]; track i) {
             @for (oferta of ofertas(); track oferta.id_Oferta) {
               <div class="ofertas__item">
@@ -71,7 +77,10 @@
 
     @if (esAdministrador) {
       <section class="inicio__tarjeta">
-        <app-ia-chat [contexto]="contexto().datos" [tituloContexto]="contexto().titulo"></app-ia-chat>
+        <app-ia-chat
+          [contexto]="contexto().datos"
+          [tituloContexto]="contexto().titulo"
+        ></app-ia-chat>
       </section>
     }
   </div>

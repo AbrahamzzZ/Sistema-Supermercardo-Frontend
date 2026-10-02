@@ -46,26 +46,34 @@ export class TransportistaInicioComponent extends BaseListComponent<ITransportis
     super();
 
     effect(() => {
-      if(this.recurso.error()){
+      if (this.recurso.error()) {
         this.mostrarMensaje('Error al cargar los transportistas.', 'error');
       }
-    })
+    });
   }
 
   eliminar(transportista: ITransportista): void {
-    this.dialog.open(DialogoConfirmacionComponent, {
-      width: '500px',
-      data: { mensaje: `¿Está seguro de elimina al transportista ${transportista.nombres} ${transportista.apellidos}?` }
-    }).afterClosed().pipe(filter(Boolean), switchMap(() => this.transportistaServicio.eliminar(transportista.id_Transportista)))
-    .subscribe({
-      next: (resp) => {
-        if(resp.isSuccess) {
-          this.refrescarDesdeInicio();
-          this.mostrarMensaje('Transportista eliminada correctamente.', 'success');
+    this.dialog
+      .open(DialogoConfirmacionComponent, {
+        width: '500px',
+        data: {
+          mensaje: `¿Está seguro de elimina al transportista ${transportista.nombres} ${transportista.apellidos}?`
         }
-      },
-      error: () => this.mostrarMensaje('Error al eliminarel transportista.', 'error')
-    });
+      })
+      .afterClosed()
+      .pipe(
+        filter(Boolean),
+        switchMap(() => this.transportistaServicio.eliminar(transportista.id_Transportista))
+      )
+      .subscribe({
+        next: (resp) => {
+          if (resp.isSuccess) {
+            this.refrescarDesdeInicio();
+            this.mostrarMensaje('Transportista eliminada correctamente.', 'success');
+          }
+        },
+        error: () => this.mostrarMensaje('Error al eliminarel transportista.', 'error')
+      });
   }
 
   nuevo(): void {

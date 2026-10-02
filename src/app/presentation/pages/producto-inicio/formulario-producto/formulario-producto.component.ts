@@ -1,4 +1,12 @@
-import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy, signal, computed } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  inject,
+  OnInit,
+  ChangeDetectionStrategy,
+  signal,
+  computed
+} from '@angular/core';
 import { Validaciones } from '../../../../shared/utility/validaciones';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IProducto } from '../../../../core/interfaces/producto';
@@ -65,16 +73,17 @@ export class FormularioProductoComponent implements OnInit, CanComponentDeactive
   private tieneCambioSinGuardar(): boolean {
     const actual = this.productoModel();
     const inicial = this.valoresIniciales;
-    return actual.nombre !== inicial.nombre
-      || actual.descripcion !== inicial.descripcion
-      || actual.categoria !== inicial.categoria
-      || actual.paisOrigen !== inicial.paisOrigen
-      || actual.estado !== inicial.estado;
+    return (
+      actual.nombre !== inicial.nombre ||
+      actual.descripcion !== inicial.descripcion ||
+      actual.categoria !== inicial.categoria ||
+      actual.paisOrigen !== inicial.paisOrigen ||
+      actual.estado !== inicial.estado
+    );
   }
 
   @HostListener('window:beforeunload', ['$event'])
   onBeforeReload(e: BeforeUnloadEvent) {
-
     if (this.tieneCambioSinGuardar()) {
       e.preventDefault();
       e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
@@ -152,7 +161,10 @@ export class FormularioProductoComponent implements OnInit, CanComponentDeactive
         error: (err) => {
           console.error(err);
           this.guardando.set(false);
-          this.mostrarMensaje(this.esEdicion() ? 'Error al editar el producto' : 'Error al registrar el producto', 'error');
+          this.mostrarMensaje(
+            this.esEdicion() ? 'Error al editar el producto' : 'Error al registrar el producto',
+            'error'
+          );
         },
         complete: () => this.guardando.set(false)
       });

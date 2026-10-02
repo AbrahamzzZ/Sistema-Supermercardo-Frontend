@@ -42,28 +42,36 @@ export class ClienteInicioComponent extends BaseListComponent<ICliente> {
 
   constructor() {
     super();
-  
+
     effect(() => {
-      if(this.recurso.error()){
+      if (this.recurso.error()) {
         this.mostrarMensaje('Error al cargar los clientes.', 'error');
       }
-    })
+    });
   }
 
   eliminar(cliente: ICliente): void {
-    this.dialog.open(DialogoConfirmacionComponent, {
-      width: '500px',
-      data: { mensaje: `¿Está seguro de eliminar al cliente ${cliente.nombres} ${cliente.apellidos}?` }
-    }).afterClosed().pipe(filter(Boolean), switchMap(() => this.clienteServicio.eliminar(cliente.id_Cliente)))
-    .subscribe({
-      next: (resp) => {
-        if(resp.isSuccess) {
-          this.refrescarDesdeInicio();
-          this.mostrarMensaje('Cliente eliminada correctamente.', 'success');
+    this.dialog
+      .open(DialogoConfirmacionComponent, {
+        width: '500px',
+        data: {
+          mensaje: `¿Está seguro de eliminar al cliente ${cliente.nombres} ${cliente.apellidos}?`
         }
-      },
-      error: () => this.mostrarMensaje('Error al eliminar el cliente.', 'error')
-    });
+      })
+      .afterClosed()
+      .pipe(
+        filter(Boolean),
+        switchMap(() => this.clienteServicio.eliminar(cliente.id_Cliente))
+      )
+      .subscribe({
+        next: (resp) => {
+          if (resp.isSuccess) {
+            this.refrescarDesdeInicio();
+            this.mostrarMensaje('Cliente eliminada correctamente.', 'success');
+          }
+        },
+        error: () => this.mostrarMensaje('Error al eliminar el cliente.', 'error')
+      });
   }
 
   nuevo(): void {

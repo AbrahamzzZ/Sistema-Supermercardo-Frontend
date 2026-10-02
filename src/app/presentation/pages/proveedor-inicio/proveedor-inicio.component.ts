@@ -45,26 +45,34 @@ export class ProveedorInicioComponent extends BaseListComponent<IProveedor> {
     super();
 
     effect(() => {
-      if(this.recurso.error()){
+      if (this.recurso.error()) {
         this.mostrarMensaje('Error al cargar los proveedores.', 'error');
       }
-    })
+    });
   }
 
   eliminar(proveedor: IProveedor): void {
-    this.dialog.open(DialogoConfirmacionComponent, {
-      width: '500px',
-      data: { mensaje: `¿Está seguro de eliminar al proveedor ${proveedor.nombres} ${proveedor.apellidos}?` }
-    }).afterClosed().pipe(filter(Boolean), switchMap(() => this.proveedorServicio.eliminar(proveedor.id_Proveedor)))
-    .subscribe({
-      next: (resp) => {
-        if(resp.isSuccess) {
-          this.refrescarDesdeInicio();
-          this.mostrarMensaje('Proveedor eliminado correctamente.', 'success');
+    this.dialog
+      .open(DialogoConfirmacionComponent, {
+        width: '500px',
+        data: {
+          mensaje: `¿Está seguro de eliminar al proveedor ${proveedor.nombres} ${proveedor.apellidos}?`
         }
-      },
-      error: () => this.mostrarMensaje('Error al eliminar el proveedor.', 'error')
-    });
+      })
+      .afterClosed()
+      .pipe(
+        filter(Boolean),
+        switchMap(() => this.proveedorServicio.eliminar(proveedor.id_Proveedor))
+      )
+      .subscribe({
+        next: (resp) => {
+          if (resp.isSuccess) {
+            this.refrescarDesdeInicio();
+            this.mostrarMensaje('Proveedor eliminado correctamente.', 'success');
+          }
+        },
+        error: () => this.mostrarMensaje('Error al eliminar el proveedor.', 'error')
+      });
   }
 
   nuevo(): void {
@@ -72,7 +80,7 @@ export class ProveedorInicioComponent extends BaseListComponent<IProveedor> {
   }
 
   editar(proveedor: IProveedor): void {
-    this.router.navigate(['proveedor/editar',proveedor.id_Proveedor]);
+    this.router.navigate(['proveedor/editar', proveedor.id_Proveedor]);
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {

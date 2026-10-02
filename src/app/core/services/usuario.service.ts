@@ -19,9 +19,12 @@ export class UsuarioService {
   }
 
   listaPaginada(params: Signal<ParamsPaginacion>) {
-     return httpResource<ApiResponse<ApiPaginado<IUsuarioRol>>>(() => {
+    return httpResource<ApiResponse<ApiPaginado<IUsuarioRol>>>(() => {
       const p = params();
-      return { url: `${this.apiUrl}/paginacion`, params: {pageNumber: p.pageNumber, pageSize: p.pageSize, filtro: p.filtro}};
+      return {
+        url: `${this.apiUrl}/paginacion`,
+        params: { pageNumber: p.pageNumber, pageSize: p.pageSize, filtro: p.filtro }
+      };
     });
   }
 

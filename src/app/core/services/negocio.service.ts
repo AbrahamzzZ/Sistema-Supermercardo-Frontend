@@ -27,7 +27,9 @@ export class NegocioService {
   }
 
   obtenerProductosComprados() {
-    return this.http.get<ApiResponse<ProductoMasComprado[]>>(`${this.apiUrl}/producto-mas-comprado`);
+    return this.http.get<ApiResponse<ProductoMasComprado[]>>(
+      `${this.apiUrl}/producto-mas-comprado`
+    );
   }
 
   obtenerProductosVendidos() {

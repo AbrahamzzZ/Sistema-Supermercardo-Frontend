@@ -20,9 +20,12 @@ export class ProductoService {
   }
 
   listaPaginada(params: Signal<ParamsPaginacion>) {
-      return httpResource<ApiResponse<ApiPaginado<IProductoCategoria>>>(() => {
+    return httpResource<ApiResponse<ApiPaginado<IProductoCategoria>>>(() => {
       const p = params();
-      return { url: `${this.apiUrl}/paginacion`, params: {pageNumber: p.pageNumber, pageSize: p.pageSize, filtro: p.filtro}};
+      return {
+        url: `${this.apiUrl}/paginacion`,
+        params: { pageNumber: p.pageNumber, pageSize: p.pageSize, filtro: p.filtro }
+      };
     });
   }
 
@@ -35,7 +38,10 @@ export class ProductoService {
   }
 
   editar(producto: Partial<IProducto>) {
-    return this.http.put<ApiResponse<IProducto>>(`${this.apiUrl}/${producto.id_Producto}`, producto);
+    return this.http.put<ApiResponse<IProducto>>(
+      `${this.apiUrl}/${producto.id_Producto}`,
+      producto
+    );
   }
 
   eliminar(id: number) {

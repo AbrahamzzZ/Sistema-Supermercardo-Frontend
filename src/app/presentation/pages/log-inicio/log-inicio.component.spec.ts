@@ -9,9 +9,8 @@ describe('LogInicioComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [LogInicioComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(LogInicioComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

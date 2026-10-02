@@ -18,9 +18,12 @@ export class ProveedorService {
   }
 
   listaPaginada(params: Signal<ParamsPaginacion>) {
-     return httpResource<ApiResponse<ApiPaginado<IProveedor>>>(() => {
+    return httpResource<ApiResponse<ApiPaginado<IProveedor>>>(() => {
       const p = params();
-      return { url: `${this.apiUrl}/paginacion`, params: {pageNumber: p.pageNumber, pageSize: p.pageSize, filtro: p.filtro}};
+      return {
+        url: `${this.apiUrl}/paginacion`,
+        params: { pageNumber: p.pageNumber, pageSize: p.pageSize, filtro: p.filtro }
+      };
     });
   }
 
@@ -33,7 +36,10 @@ export class ProveedorService {
   }
 
   editar(proveedor: Partial<IProveedor>) {
-    return this.http.put<ApiResponse<IProveedor>>(`${this.apiUrl}/${proveedor.id_Proveedor}`, proveedor);
+    return this.http.put<ApiResponse<IProveedor>>(
+      `${this.apiUrl}/${proveedor.id_Proveedor}`,
+      proveedor
+    );
   }
 
   eliminar(id: number) {

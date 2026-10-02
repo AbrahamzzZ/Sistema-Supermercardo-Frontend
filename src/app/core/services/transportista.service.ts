@@ -17,9 +17,12 @@ export class TransportistaService {
   }
 
   listaPaginada(params: Signal<ParamsPaginacion>) {
-      return httpResource<ApiResponse<ApiPaginado<ITransportista>>>(() => {
+    return httpResource<ApiResponse<ApiPaginado<ITransportista>>>(() => {
       const p = params();
-      return { url: `${this.apiUrl}/paginacion`, params: {pageNumber: p.pageNumber, pageSize: p.pageSize, filtro: p.filtro}};
+      return {
+        url: `${this.apiUrl}/paginacion`,
+        params: { pageNumber: p.pageNumber, pageSize: p.pageSize, filtro: p.filtro }
+      };
     });
   }
 
@@ -32,7 +35,10 @@ export class TransportistaService {
   }
 
   editar(transportista: Partial<ITransportista>) {
-    return this.http.put<ApiResponse<ITransportista>>(`${this.apiUrl}/${transportista.id_Transportista}`, transportista);
+    return this.http.put<ApiResponse<ITransportista>>(
+      `${this.apiUrl}/${transportista.id_Transportista}`,
+      transportista
+    );
   }
 
   eliminar(id: number) {

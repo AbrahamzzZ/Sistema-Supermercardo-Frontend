@@ -19,7 +19,12 @@ import {
 } from '../../../../core/setting/menu/secciones-menu';
 import { MaterialModule } from '../../../ui/material-module';
 
-const MENU_INICIO: IMenu = { idMenu: 0, nombreMenu: 'Inicio', urlMenu: '/home', nombreIcono: 'home' };
+const MENU_INICIO: IMenu = {
+  idMenu: 0,
+  nombreMenu: 'Inicio',
+  urlMenu: '/home',
+  nombreIcono: 'home'
+};
 
 @Component({
   selector: 'app-sidnebar',
@@ -42,7 +47,12 @@ export class SidnebarComponent {
   seccionesAbiertas = new Set<string>([obtenerSeccionDeRuta(this.router.url)]);
 
   constructor() {
-    this.router.events.pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd), takeUntilDestroyed()).subscribe((e) => this.seccionesAbiertas.add(obtenerSeccionDeRuta(e.urlAfterRedirects)));
+    this.router.events
+      .pipe(
+        filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+        takeUntilDestroyed()
+      )
+      .subscribe((e) => this.seccionesAbiertas.add(obtenerSeccionDeRuta(e.urlAfterRedirects)));
   }
 
   toggleSeccion(nombre: string) {

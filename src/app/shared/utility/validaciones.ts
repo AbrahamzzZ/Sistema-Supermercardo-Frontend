@@ -2,19 +2,22 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { SchemaPath, validate } from '@angular/forms/signals';
 
 export class Validaciones {
-
   static soloLetrasSignal(path: SchemaPath<string>): void {
     validate(path, ({ value }) => {
       const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
-      return regex.test(value()) ? null : { kind: 'soloLetras', message: 'Solo debe contener letras.' };
+      return regex.test(value())
+        ? null
+        : { kind: 'soloLetras', message: 'Solo debe contener letras.' };
     });
   }
 
   static soloNumerosSignal(path: SchemaPath<string>, cantidad = 10): void {
-    validate(path, ({value}) =>{
+    validate(path, ({ value }) => {
       const regex = new RegExp(String.raw`^\d{${cantidad}}$`);
-      return regex.test(value()) ? null : { kind: 'soloNumeros', message: `Debe contener exactamente ${cantidad} dígitos.` };
-    })
+      return regex.test(value())
+        ? null
+        : { kind: 'soloNumeros', message: `Debe contener exactamente ${cantidad} dígitos.` };
+    });
   }
 
   static formatoClaveSignal(path: SchemaPath<string>): void {
@@ -24,7 +27,10 @@ export class Validaciones {
       const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z\d])[A-Za-z\d\W]{8,}$/;
       return regex.test(valor)
         ? null
-        : { kind: 'formatoClave', message: 'La clave debe incluir letras, números y un carácter especial.' };
+        : {
+            kind: 'formatoClave',
+            message: 'La clave debe incluir letras, números y un carácter especial.'
+          };
     });
   }
 
@@ -54,13 +60,21 @@ export class Validaciones {
     );
   }
 
-  static fechaFinValidaSignal(fechaFinPath: SchemaPath<Date>, fechaInicioPath: SchemaPath<Date>): void {
+  static fechaFinValidaSignal(
+    fechaFinPath: SchemaPath<Date>,
+    fechaInicioPath: SchemaPath<Date>
+  ): void {
     validate(fechaFinPath, ({ value, valueOf }) => {
       const fechaFin = value();
       const fechaInicio = valueOf(fechaInicioPath);
 
       if (!fechaFin || !fechaInicio) return null;
-      return fechaFin < fechaInicio ? { kind: 'fechaFinInvalida', message: 'La fecha fin debe ser posterior a la fecha inicio.' } : null;
+      return fechaFin < fechaInicio
+        ? {
+            kind: 'fechaFinInvalida',
+            message: 'La fecha fin debe ser posterior a la fecha inicio.'
+          }
+        : null;
     });
   }
 

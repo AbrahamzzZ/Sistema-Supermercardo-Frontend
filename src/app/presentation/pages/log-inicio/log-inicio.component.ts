@@ -40,10 +40,10 @@ export class LogInicioComponent extends BaseListComponent<ILog> {
     super();
 
     effect(() => {
-      if(this.recurso.error()){
+      if (this.recurso.error()) {
         this.mostrarMensaje('Error al cargar los logs.', 'error');
       }
-    })
+    });
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {

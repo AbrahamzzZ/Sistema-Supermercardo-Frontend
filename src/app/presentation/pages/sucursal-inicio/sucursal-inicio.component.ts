@@ -44,26 +44,32 @@ export class SucursalInicioComponent extends BaseListComponent<ISucursalNegocio>
     super();
 
     effect(() => {
-      if(this.recurso.error()){
+      if (this.recurso.error()) {
         this.mostrarMensaje('Error al cargar las sucursales.', 'error');
       }
-    })
+    });
   }
 
   eliminar(sucursal: ISucursalNegocio): void {
-    this.dialog.open(DialogoConfirmacionComponent, {
-      width: '500px',
-      data: { mensaje: `¿Está seguro de eliminar la sucursal ${sucursal.nombre_Sucursal}?` }
-    }).afterClosed().pipe(filter(Boolean), switchMap(() => this.sucursalServicio.eliminar(sucursal.id_Sucursal)))
-    .subscribe({
-      next: (resp) => {
-        if(resp.isSuccess) {
-          this.refrescarDesdeInicio();
-          this.mostrarMensaje('Sucursal eliminada correctamente.', 'success');
-        }
-      },
-      error: () => this.mostrarMensaje('Error al eliminar la sucursal.', 'error')
-    });
+    this.dialog
+      .open(DialogoConfirmacionComponent, {
+        width: '500px',
+        data: { mensaje: `¿Está seguro de eliminar la sucursal ${sucursal.nombre_Sucursal}?` }
+      })
+      .afterClosed()
+      .pipe(
+        filter(Boolean),
+        switchMap(() => this.sucursalServicio.eliminar(sucursal.id_Sucursal))
+      )
+      .subscribe({
+        next: (resp) => {
+          if (resp.isSuccess) {
+            this.refrescarDesdeInicio();
+            this.mostrarMensaje('Sucursal eliminada correctamente.', 'success');
+          }
+        },
+        error: () => this.mostrarMensaje('Error al eliminar la sucursal.', 'error')
+      });
   }
 
   nuevo(): void {

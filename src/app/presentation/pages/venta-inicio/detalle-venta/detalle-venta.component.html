@@ -3,7 +3,6 @@
 
   <div class="venta__contenedor">
     <form class="venta__formulario" [formGroup]="venta">
-
       <!-- BUSCADOR -->
       <div class="venta__busqueda">
         <div class="venta__busqueda-wapper">
@@ -18,13 +17,13 @@
             <mat-icon matSuffix>search</mat-icon>
           </mat-form-field>
 
-          @if(mensajeBusqueda){
+          @if (mensajeBusqueda) {
             <div class="venta__busqueda-mensaje">
               <mat-icon color="warn">error</mat-icon>
               <span class="venta__mensaje-error">{{ mensajeBusqueda }}</span>
             </div>
           }
-        </div>  
+        </div>
         <div class="venta__busqueda-actions">
           <button mat-raised-button color="warn" (click)="limpiar()">
             <mat-icon>cleaning_services</mat-icon>
@@ -36,7 +35,7 @@
             Descargar PDF
           </button>
         </div>
-       </div>
+      </div>
 
       <p>Detalles</p>
 
@@ -57,7 +56,7 @@
           <mat-form-field appearance="outline" class="form__field">
             <mat-label>Usuario: </mat-label>
             <input matInput formControlName="nombreUsuario" readonly />
-          </mat-form-field>     
+          </mat-form-field>
         </div>
 
         <!-- SUCURSAL -->
@@ -79,7 +78,7 @@
             <mat-label>Código: </mat-label>
             <input matInput formControlName="codigoCliente" readonly />
           </mat-form-field>
-          
+
           <mat-form-field appearance="outline" class="form__field">
             <mat-label>Cliente: </mat-label>
             <input matInput formControlName="cliente" readonly />

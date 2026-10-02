@@ -36,5 +36,11 @@ export function agruparMenusPorSeccion(menus: IMenu[]): ISeccionMenu[] {
   const nombres = [...SECCIONES_MENU.map((s) => s.nombre), SECCION_OTROS];
 
   return nombres
-    .map((nombre) => ({nombre, menus: menus.filter((m) => obtenerSeccionDeRuta(m.urlMenu) === nombre).sort((a, b) => posicion(a) - posicion(b))})).filter((s) => s.menus.length > 0);
+    .map((nombre) => ({
+      nombre,
+      menus: menus
+        .filter((m) => obtenerSeccionDeRuta(m.urlMenu) === nombre)
+        .sort((a, b) => posicion(a) - posicion(b))
+    }))
+    .filter((s) => s.menus.length > 0);
 }

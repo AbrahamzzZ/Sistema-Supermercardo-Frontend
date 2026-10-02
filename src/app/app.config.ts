@@ -54,9 +54,9 @@ export const appConfig: ApplicationConfig = {
       useClass: ErrorInterceptor,
       multi: true
     },
-    { 
-      provide: MatPaginatorIntl, 
-      useClass: PaginadorEspanol 
+    {
+      provide: MatPaginatorIntl,
+      useClass: PaginadorEspanol
     },
 
     provideAppInitializer(loadGoogleMaps)

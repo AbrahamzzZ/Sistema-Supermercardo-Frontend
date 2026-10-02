@@ -21,10 +21,13 @@ export class OfertaService {
   listaPaginada(params: Signal<ParamsPaginacion>) {
     return httpResource<ApiResponse<ApiPaginado<IOfertaProducto>>>(() => {
       const p = params();
-      return { url: `${this.apiUrl}/paginacion`, params: {pageNumber: p.pageNumber, pageSize: p.pageSize, filtro: p.filtro}};
+      return {
+        url: `${this.apiUrl}/paginacion`,
+        params: { pageNumber: p.pageNumber, pageSize: p.pageSize, filtro: p.filtro }
+      };
     });
   }
-    
+
   obtener(id: number) {
     return this.http.get<ApiResponse<IOferta>>(`${this.apiUrl}/${id}`);
   }

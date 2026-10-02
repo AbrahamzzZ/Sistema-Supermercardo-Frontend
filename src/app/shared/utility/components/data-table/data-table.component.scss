@@ -60,7 +60,8 @@ $message-bg-color: var(--color-superficie-alt);
 }
 
 @keyframes stockBajoAnimation {
-  0%, 100% {
+  0%,
+  100% {
     background-color: var(--color-advertencia-suave);
   }
   50% {
@@ -69,7 +70,8 @@ $message-bg-color: var(--color-superficie-alt);
 }
 
 @keyframes agotadoAnimation {
-  0%, 100% {
+  0%,
+  100% {
     background-color: var(--color-error-suave);
   }
   50% {
@@ -118,7 +120,6 @@ $message-bg-color: var(--color-superficie-alt);
 }
 
 @media (max-width: 768px) {
-
   .table {
     min-width: unset;
 

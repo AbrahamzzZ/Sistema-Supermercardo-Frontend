@@ -9,9 +9,8 @@ describe('MapaSucursalComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MapaSucursalComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(MapaSucursalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

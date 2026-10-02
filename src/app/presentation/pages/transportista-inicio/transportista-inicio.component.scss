@@ -174,10 +174,11 @@ $table-border-color: var(--color-borde);
 }
 
 ::ng-deep .mat-mdc-form-field .mdc-floating-label {
-  transform: translateY(-100%) translateX(calc(1 * (52px + var(--mat-mdc-form-field-label-offset-x, 0px)))) !important;
+  transform: translateY(-100%)
+    translateX(calc(1 * (52px + var(--mat-mdc-form-field-label-offset-x, 0px)))) !important;
 }
 
-::ng-deep .container__search__input .mat-mdc-form-field-subscript-wrapper{
+::ng-deep .container__search__input .mat-mdc-form-field-subscript-wrapper {
   background: transparent;
 }
 
@@ -185,7 +186,7 @@ $table-border-color: var(--color-borde);
   height: 35px !important;
 }
 
-::ng-deep .mat-mdc-form-field-flex{
+::ng-deep .mat-mdc-form-field-flex {
   margin-top: -11px;
 }
 
@@ -202,4 +203,3 @@ $table-border-color: var(--color-borde);
   transform: translateY(-50%) scale(0.75) !important;
   font-size: 12px;
 }
-

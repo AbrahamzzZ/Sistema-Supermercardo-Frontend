@@ -21,7 +21,10 @@ export class SucursalService {
   listaPaginada(params: Signal<ParamsPaginacion>) {
     return httpResource<ApiResponse<ApiPaginado<ISucursalNegocio>>>(() => {
       const p = params();
-      return { url: `${this.apiUrl}/paginacion`, params: {pageNumber: p.pageNumber, pageSize: p.pageSize, filtro: p.filtro}};
+      return {
+        url: `${this.apiUrl}/paginacion`,
+        params: { pageNumber: p.pageNumber, pageSize: p.pageSize, filtro: p.filtro }
+      };
     });
   }
 
@@ -34,7 +37,10 @@ export class SucursalService {
   }
 
   editar(sucursal: Partial<ISucursal>) {
-    return this.http.put<ApiResponse<ISucursal>>(`${this.apiUrl}/${sucursal.id_Sucursal}`, sucursal);
+    return this.http.put<ApiResponse<ISucursal>>(
+      `${this.apiUrl}/${sucursal.id_Sucursal}`,
+      sucursal
+    );
   }
 
   eliminar(id: number) {

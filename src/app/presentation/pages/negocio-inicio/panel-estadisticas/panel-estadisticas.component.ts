@@ -1,4 +1,15 @@
-import { Component, computed, effect, inject, input, OnInit, output, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  OnInit,
+  output,
+  signal,
+  viewChild,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration, ChartType } from 'chart.js';
@@ -8,7 +19,8 @@ import { NegocioService } from '../../../../core/services/negocio.service';
 import { ApiResponse } from '../../../../core/setting/api/apiResponse';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 
-export type ClaveEstadistica = 'comprados' | 'vendidos' | 'empleados' | 'clientes' | 'proveedores' | 'transportistas';
+export type ClaveEstadistica =
+  'comprados' | 'vendidos' | 'empleados' | 'clientes' | 'proveedores' | 'transportistas';
 
 export interface ContextoEstadistica {
   titulo: string;
@@ -44,34 +56,64 @@ export class PanelEstadisticasComponent implements OnInit {
 
   private readonly todas: Estadistica[] = [
     {
-      clave: 'comprados', titulo: 'Productos más comprados', icono: 'shopping_cart', tipo: 'bar', serie: 'Cantidad comprada',
+      clave: 'comprados',
+      titulo: 'Productos más comprados',
+      icono: 'shopping_cart',
+      tipo: 'bar',
+      serie: 'Cantidad comprada',
       obtener: () => this.negocioServicio.obtenerProductosComprados(),
-      etiqueta: (i) => i.nombre_Producto, valor: (i) => i.cantidad_Comprada
+      etiqueta: (i) => i.nombre_Producto,
+      valor: (i) => i.cantidad_Comprada
     },
     {
-      clave: 'vendidos', titulo: 'Productos más vendidos', icono: 'sell', tipo: 'bar', serie: 'Cantidad vendida',
+      clave: 'vendidos',
+      titulo: 'Productos más vendidos',
+      icono: 'sell',
+      tipo: 'bar',
+      serie: 'Cantidad vendida',
       obtener: () => this.negocioServicio.obtenerProductosVendidos(),
-      etiqueta: (i) => i.nombre_Producto, valor: (i) => i.cantidad_Vendida
+      etiqueta: (i) => i.nombre_Producto,
+      valor: (i) => i.cantidad_Vendida
     },
     {
-      clave: 'empleados', titulo: 'Empleados más productivos', icono: 'badge', tipo: 'pie', serie: 'Ventas realizadas',
+      clave: 'empleados',
+      titulo: 'Empleados más productivos',
+      icono: 'badge',
+      tipo: 'pie',
+      serie: 'Ventas realizadas',
       obtener: () => this.negocioServicio.obtenerVentaEmpleados(),
-      etiqueta: (i) => i.nombre_Completo, valor: (i) => i.ventas_Empleado
+      etiqueta: (i) => i.nombre_Completo,
+      valor: (i) => i.ventas_Empleado
     },
     {
-      clave: 'clientes', titulo: 'Clientes frecuentes', icono: 'groups', tipo: 'bar', serie: 'Compras totales',
+      clave: 'clientes',
+      titulo: 'Clientes frecuentes',
+      icono: 'groups',
+      tipo: 'bar',
+      serie: 'Compras totales',
       obtener: () => this.negocioServicio.obtenerTopClientes(),
-      etiqueta: (i) => i.nombre_Completo, valor: (i) => i.compras_Totales
+      etiqueta: (i) => i.nombre_Completo,
+      valor: (i) => i.compras_Totales
     },
     {
-      clave: 'proveedores', titulo: 'Proveedores preferidos', icono: 'local_shipping', tipo: 'bar', serie: 'Compras totales',
+      clave: 'proveedores',
+      titulo: 'Proveedores preferidos',
+      icono: 'local_shipping',
+      tipo: 'bar',
+      serie: 'Compras totales',
       obtener: () => this.negocioServicio.obtenerTopProveedores(),
-      etiqueta: (i) => i.nombre_Completo, valor: (i) => i.compras_Totales
+      etiqueta: (i) => i.nombre_Completo,
+      valor: (i) => i.compras_Totales
     },
     {
-      clave: 'transportistas', titulo: 'Viajes de transportistas', icono: 'route', tipo: 'pie', serie: 'Viajes realizados',
+      clave: 'transportistas',
+      titulo: 'Viajes de transportistas',
+      icono: 'route',
+      tipo: 'pie',
+      serie: 'Viajes realizados',
       obtener: () => this.negocioServicio.obtenerViajesTransportista(),
-      etiqueta: (i) => i.nombre_Completo, valor: (i) => i.viajes_Realizados
+      etiqueta: (i) => i.nombre_Completo,
+      valor: (i) => i.viajes_Realizados
     }
   ];
 
@@ -115,7 +157,9 @@ export class PanelEstadisticasComponent implements OnInit {
     effect(() => {
       this.contextoCambio.emit({
         titulo: this.seleccionada().titulo,
-        datos: this.etiquetas().map((etiqueta, i) => `${etiqueta}: ${this.valores()[i]}`).join('; ')
+        datos: this.etiquetas()
+          .map((etiqueta, i) => `${etiqueta}: ${this.valores()[i]}`)
+          .join('; ')
       });
     });
   }
@@ -180,7 +224,16 @@ export class PanelEstadisticasComponent implements OnInit {
 
   private generarColores(cantidad: number): string[] {
     // Tonos apagados que combinan con la paleta de la app (ver src/styles/_paleta.scss)
-    const base = ['#4479b0', '#86993f', '#5f9ea0', '#c9955c', '#8a7fb5', '#79acde', '#b07a6b', '#5c6b7a'];
+    const base = [
+      '#4479b0',
+      '#86993f',
+      '#5f9ea0',
+      '#c9955c',
+      '#8a7fb5',
+      '#79acde',
+      '#b07a6b',
+      '#5c6b7a'
+    ];
     return Array.from({ length: cantidad }, (_, i) => base[i % base.length]);
   }
 

@@ -16,10 +16,18 @@
     @if (!mensajes().length) {
       <div class="chat__bienvenida">
         <mat-icon>forum</mat-icon>
-        <p>Hola, soy tu asistente. Puedo analizar las estadísticas que estás viendo o responder tus dudas.</p>
+        <p>
+          Hola, soy tu asistente. Puedo analizar las estadísticas que estás viendo o responder tus
+          dudas.
+        </p>
 
         @if (contexto()) {
-          <button mat-stroked-button color="primary" class="chat__resumir" (click)="resumirGrafico()">
+          <button
+            mat-stroked-button
+            color="primary"
+            class="chat__resumir"
+            (click)="resumirGrafico()"
+          >
             <mat-icon>insights</mat-icon>
             Resumir "{{ tituloContexto() }}"
           </button>
@@ -27,14 +35,19 @@
 
         <div class="chat__sugerencias">
           @for (sugerencia of sugerencias; track sugerencia) {
-            <button type="button" class="chat__sugerencia" (click)="enviar(sugerencia)">{{ sugerencia }}</button>
+            <button type="button" class="chat__sugerencia" (click)="enviar(sugerencia)">
+              {{ sugerencia }}
+            </button>
           }
         </div>
       </div>
     }
 
     @for (mensaje of mensajes(); track $index) {
-      <div class="chat__burbuja chat__burbuja--{{ mensaje.rol }}" [class.chat__burbuja--error]="mensaje.error">
+      <div
+        class="chat__burbuja chat__burbuja--{{ mensaje.rol }}"
+        [class.chat__burbuja--error]="mensaje.error"
+      >
         {{ mensaje.texto }}
       </div>
     }
@@ -48,7 +61,13 @@
 
   <footer class="chat__pie">
     @if (mensajes().length && contexto()) {
-      <button mat-button color="primary" class="chat__resumir-mini" [disabled]="cargando()" (click)="resumirGrafico()">
+      <button
+        mat-button
+        color="primary"
+        class="chat__resumir-mini"
+        [disabled]="cargando()"
+        (click)="resumirGrafico()"
+      >
         <mat-icon>insights</mat-icon>
         Resumir gráfico actual
       </button>
@@ -62,7 +81,13 @@
         (keydown)="alPresionarTecla($event)"
         aria-label="Pregunta para el asistente"
       ></textarea>
-      <button mat-icon-button color="primary" matTooltip="Enviar" [disabled]="cargando() || !prompt.trim()" (click)="enviar()">
+      <button
+        mat-icon-button
+        color="primary"
+        matTooltip="Enviar"
+        [disabled]="cargando() || !prompt.trim()"
+        (click)="enviar()"
+      >
         <mat-icon>send</mat-icon>
       </button>
     </div>
