@@ -1,4 +1,12 @@
-import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy, signal, computed } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  inject,
+  OnInit,
+  ChangeDetectionStrategy,
+  signal,
+  computed
+} from '@angular/core';
 import { Validaciones } from '../../../../shared/utility/validaciones';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IUsuario } from '../../../../core/interfaces/usuario';
@@ -10,7 +18,15 @@ import { RolService } from '../../../../core/services/rol.service';
 import { IRol } from '../../../../core/interfaces/rol';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 import { ESPACIO_FIJO_ERRORES } from '../../../../shared/ui/form-field-options';
-import { email, form, FormField, maxLength, minLength, required, submit } from '@angular/forms/signals';
+import {
+  email,
+  form,
+  FormField,
+  maxLength,
+  minLength,
+  required,
+  submit
+} from '@angular/forms/signals';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -47,14 +63,16 @@ export class FormularioUsuarioComponent implements OnInit, CanComponentDeactive 
   private valoresIniciales = this.usuarioModel();
 
   protected readonly usuarioForm = form(this.usuarioModel, (schema) => {
-    required(schema.nombre_Completo, {message: 'Ingrese su nombre completo'});
-    maxLength(schema.nombre_Completo, 70, {message: 'El nombre es demasiado largo.'});
+    required(schema.nombre_Completo, { message: 'Ingrese su nombre completo' });
+    maxLength(schema.nombre_Completo, 70, { message: 'El nombre es demasiado largo.' });
     // Al editar, la clave es opcional: si se deja vacía se conserva la actual.
-    required(schema.clave, {message: 'Ingrese su clave', when: () => !this.esEdicion()});
-    minLength(schema.clave, 10, {message: 'La clave debe tener mínimo 10 caracteres.'});
-    required(schema.correo_Electronico, {message: 'Ingrese su correo electrónico.'});
-    maxLength(schema.correo_Electronico, 50, {message: 'El correo electrónico es demasiado largo.'});
-    email(schema.correo_Electronico, {message: 'Ingrese un correo valido'});
+    required(schema.clave, { message: 'Ingrese su clave', when: () => !this.esEdicion() });
+    minLength(schema.clave, 10, { message: 'La clave debe tener mínimo 10 caracteres.' });
+    required(schema.correo_Electronico, { message: 'Ingrese su correo electrónico.' });
+    maxLength(schema.correo_Electronico, 50, {
+      message: 'El correo electrónico es demasiado largo.'
+    });
+    email(schema.correo_Electronico, { message: 'Ingrese un correo valido' });
     Validaciones.soloLetrasSignal(schema.nombre_Completo);
     Validaciones.formatoClaveSignal(schema.clave);
     Validaciones.rolRequeridoSignal(schema.rol);
@@ -63,16 +81,17 @@ export class FormularioUsuarioComponent implements OnInit, CanComponentDeactive 
   private tieneCambioSinGuardar(): boolean {
     const actual = this.usuarioModel();
     const inicial = this.valoresIniciales;
-    return actual.nombre_Completo !== inicial.nombre_Completo
-      || actual.clave !== inicial.clave
-      || actual.correo_Electronico !== inicial.correo_Electronico
-      || actual.rol !== inicial.rol
-      || actual.estado !== inicial.estado;
+    return (
+      actual.nombre_Completo !== inicial.nombre_Completo ||
+      actual.clave !== inicial.clave ||
+      actual.correo_Electronico !== inicial.correo_Electronico ||
+      actual.rol !== inicial.rol ||
+      actual.estado !== inicial.estado
+    );
   }
 
   @HostListener('window:beforeunload', ['$event'])
   onBeforeReload(e: BeforeUnloadEvent) {
-
     if (this.tieneCambioSinGuardar()) {
       e.preventDefault();
       e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
@@ -150,7 +169,10 @@ export class FormularioUsuarioComponent implements OnInit, CanComponentDeactive 
         error: (err) => {
           console.error(err);
           this.guardando.set(false);
-          this.mostrarMensaje(this.esEdicion() ? 'Error al editar el usuario' : 'Error al registrar al usuario', 'error');
+          this.mostrarMensaje(
+            this.esEdicion() ? 'Error al editar el usuario' : 'Error al registrar al usuario',
+            'error'
+          );
         },
         complete: () => this.guardando.set(false)
       });

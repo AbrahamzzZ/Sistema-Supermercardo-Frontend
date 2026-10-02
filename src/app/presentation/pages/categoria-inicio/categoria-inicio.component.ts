@@ -41,26 +41,32 @@ export class CategoriaInicioComponent extends BaseListComponent<ICategoria> {
     super();
 
     effect(() => {
-      if(this.recurso.error()){
+      if (this.recurso.error()) {
         this.mostrarMensaje('Error al cargar las categorías.', 'error');
       }
-    })
+    });
   }
 
   eliminar(categoria: ICategoria): void {
-    this.dialog.open(DialogoConfirmacionComponent, {
-      width: '500px',
-      data: { mensaje: `¿Está seguro de eliminar la categoría ${categoria.nombre_Categoria}?` }
-    }).afterClosed().pipe(filter(Boolean), switchMap(() => this.categoriaServicio.eliminar(categoria.id_Categoria)))
-    .subscribe({
-      next: (resp) => {
-        if(resp.isSuccess) {
-          this.refrescarDesdeInicio();
-          this.mostrarMensaje('Categoría eliminada correctamente.', 'success');
-        }
-      },
-      error: () => this.mostrarMensaje('Error al eliminar la categoría.', 'error')
-    });
+    this.dialog
+      .open(DialogoConfirmacionComponent, {
+        width: '500px',
+        data: { mensaje: `¿Está seguro de eliminar la categoría ${categoria.nombre_Categoria}?` }
+      })
+      .afterClosed()
+      .pipe(
+        filter(Boolean),
+        switchMap(() => this.categoriaServicio.eliminar(categoria.id_Categoria))
+      )
+      .subscribe({
+        next: (resp) => {
+          if (resp.isSuccess) {
+            this.refrescarDesdeInicio();
+            this.mostrarMensaje('Categoría eliminada correctamente.', 'success');
+          }
+        },
+        error: () => this.mostrarMensaje('Error al eliminar la categoría.', 'error')
+      });
   }
 
   nuevo(): void {
@@ -68,7 +74,7 @@ export class CategoriaInicioComponent extends BaseListComponent<ICategoria> {
   }
 
   editar(categoria: ICategoria): void {
-    this.router.navigate(['categoria/editar',categoria.id_Categoria]);
+    this.router.navigate(['categoria/editar', categoria.id_Categoria]);
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {

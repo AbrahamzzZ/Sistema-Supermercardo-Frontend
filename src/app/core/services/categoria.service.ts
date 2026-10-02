@@ -20,7 +20,10 @@ export class CategoriaService {
   listaPaginada(params: Signal<ParamsPaginacion>) {
     return httpResource<ApiResponse<ApiPaginado<ICategoria>>>(() => {
       const p = params();
-      return { url: `${this.apiUrl}/paginacion`, params: {pageNumber: p.pageNumber, pageSize: p.pageSize, filtro: p.filtro}};
+      return {
+        url: `${this.apiUrl}/paginacion`,
+        params: { pageNumber: p.pageNumber, pageSize: p.pageSize, filtro: p.filtro }
+      };
     });
   }
 
@@ -33,7 +36,10 @@ export class CategoriaService {
   }
 
   editar(categoria: Partial<ICategoria>) {
-    return this.http.put<ApiResponse<ICategoria>>(`${this.apiUrl}/${categoria.id_Categoria}`, categoria);
+    return this.http.put<ApiResponse<ICategoria>>(
+      `${this.apiUrl}/${categoria.id_Categoria}`,
+      categoria
+    );
   }
 
   eliminar(id: number) {

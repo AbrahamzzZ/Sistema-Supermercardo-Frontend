@@ -25,7 +25,13 @@ interface AccionRapida {
 
 @Component({
   selector: 'app-inicio',
-  imports: [MaterialModule, FormatoFechaPipe, CabeceraNegocioComponent, PanelEstadisticasComponent, IaChatComponent],
+  imports: [
+    MaterialModule,
+    FormatoFechaPipe,
+    CabeceraNegocioComponent,
+    PanelEstadisticasComponent,
+    IaChatComponent
+  ],
   templateUrl: './inicio.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./inicio.component.scss']
@@ -40,7 +46,9 @@ export class InicioComponent implements OnInit {
   protected readonly esAdministrador = this.loginServicio.esAdministrador();
   protected readonly nombreUsuario = this.loginServicio.obtenerDatosToken()?.unique_name ?? '';
   protected readonly rolUsuario = this.loginServicio.obtenerDatosToken()?.role ?? '';
-  protected readonly estadisticasPermitidas: ClaveEstadistica[] | null = this.esAdministrador ? null : ['comprados', 'vendidos'];
+  protected readonly estadisticasPermitidas: ClaveEstadistica[] | null = this.esAdministrador
+    ? null
+    : ['comprados', 'vendidos'];
 
   protected readonly accionesRapidas: AccionRapida[] = [
     { titulo: 'Registrar venta', icono: 'point_of_sale', ruta: '/venta' },

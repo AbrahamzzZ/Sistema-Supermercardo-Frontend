@@ -9,9 +9,8 @@ describe('ModalLogComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ModalLogComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ModalLogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

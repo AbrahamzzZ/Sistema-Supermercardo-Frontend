@@ -45,26 +45,32 @@ export class OfertaInicioComponent extends BaseListComponent<IOfertaProducto> {
     super();
 
     effect(() => {
-      if(this.recurso.error()){
+      if (this.recurso.error()) {
         this.mostrarMensaje('Error al cargar las ofertas.', 'error');
       }
-    })
+    });
   }
 
   eliminar(oferta: IOferta): void {
-    this.dialog.open(DialogoConfirmacionComponent, {
-      width: '500px',
-      data: { mensaje: `¿Está seguro de eliminar la categoría ${oferta.nombre_Oferta}?` }
-    }).afterClosed().pipe(filter(Boolean), switchMap(() => this.ofertaServicio.eliminar(oferta.id_Oferta)))
-    .subscribe({
-      next: (resp) => {
-        if(resp.isSuccess) {
-          this.refrescarDesdeInicio();
-          this.mostrarMensaje('Oferta eliminada correctamente.', 'success');
-        }
-      },
-      error: () => this.mostrarMensaje('Error al eliminar la oferta.', 'error')
-    });
+    this.dialog
+      .open(DialogoConfirmacionComponent, {
+        width: '500px',
+        data: { mensaje: `¿Está seguro de eliminar la categoría ${oferta.nombre_Oferta}?` }
+      })
+      .afterClosed()
+      .pipe(
+        filter(Boolean),
+        switchMap(() => this.ofertaServicio.eliminar(oferta.id_Oferta))
+      )
+      .subscribe({
+        next: (resp) => {
+          if (resp.isSuccess) {
+            this.refrescarDesdeInicio();
+            this.mostrarMensaje('Oferta eliminada correctamente.', 'success');
+          }
+        },
+        error: () => this.mostrarMensaje('Error al eliminar la oferta.', 'error')
+      });
   }
 
   nuevo(): void {

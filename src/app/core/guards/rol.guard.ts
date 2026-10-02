@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RolGuard implements CanMatch {
-
   private readonly router = inject(Router);
   private readonly authService = inject(LoginService);
 

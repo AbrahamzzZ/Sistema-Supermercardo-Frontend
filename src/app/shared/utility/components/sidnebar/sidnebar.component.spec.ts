@@ -9,9 +9,8 @@ describe('SidnebarComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SidnebarComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(SidnebarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

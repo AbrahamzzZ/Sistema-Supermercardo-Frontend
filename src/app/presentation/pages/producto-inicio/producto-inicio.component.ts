@@ -47,14 +47,16 @@ export class ProductoInicioComponent extends BaseListComponent<IProductoCategori
     super();
 
     effect(() => {
-      if(this.recurso.error()){
+      if (this.recurso.error()) {
         this.mostrarMensaje('Error al cargar los productos.', 'error');
       }
-    })
+    });
   }
 
   verificarStockBajo(productos: IProducto[]): void {
-    const productosStockBajo = productos.filter((p) => p.stock !== undefined && p.stock < 10 && p.stock > 0);
+    const productosStockBajo = productos.filter(
+      (p) => p.stock !== undefined && p.stock < 10 && p.stock > 0
+    );
     const productosAgotados = productos.filter((p) => p.stock === 0);
 
     if (productosAgotados.length > 0) {
@@ -67,19 +69,25 @@ export class ProductoInicioComponent extends BaseListComponent<IProductoCategori
   }
 
   eliminar(producto: IProducto): void {
-    this.dialog.open(DialogoConfirmacionComponent, {
-      width: '500px',
-      data: { mensaje: `¿Está seguro de eliminar el producto ${producto.nombre_Producto}?` }
-    }).afterClosed().pipe(filter(Boolean), switchMap(() => this.productoServicio.eliminar(producto.id_Producto)))
-    .subscribe({
-      next: (resp) => {
-        if(resp.isSuccess) {
-          this.refrescarDesdeInicio();
-          this.mostrarMensaje('Producto eliminado correctamente.', 'success');
-        }
-      },
-      error: () => this.mostrarMensaje('Error al eliminar el producto.', 'error')
-    });
+    this.dialog
+      .open(DialogoConfirmacionComponent, {
+        width: '500px',
+        data: { mensaje: `¿Está seguro de eliminar el producto ${producto.nombre_Producto}?` }
+      })
+      .afterClosed()
+      .pipe(
+        filter(Boolean),
+        switchMap(() => this.productoServicio.eliminar(producto.id_Producto))
+      )
+      .subscribe({
+        next: (resp) => {
+          if (resp.isSuccess) {
+            this.refrescarDesdeInicio();
+            this.mostrarMensaje('Producto eliminado correctamente.', 'success');
+          }
+        },
+        error: () => this.mostrarMensaje('Error al eliminar el producto.', 'error')
+      });
   }
 
   nuevo(): void {
@@ -91,7 +99,12 @@ export class ProductoInicioComponent extends BaseListComponent<IProductoCategori
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' | 'warning' = 'success'): void {
-    const className = tipo === 'success' ? 'success-snackbar' : tipo === 'warning' ? 'warning-snackbar' : 'error-snackbar';
+    const className =
+      tipo === 'success'
+        ? 'success-snackbar'
+        : tipo === 'warning'
+          ? 'warning-snackbar'
+          : 'error-snackbar';
 
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 5000,

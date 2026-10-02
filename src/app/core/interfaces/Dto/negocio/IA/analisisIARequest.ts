@@ -1,3 +1,3 @@
-export interface AnalisisIARequest{
-    prompt: string;
+export interface AnalisisIARequest {
+  prompt: string;
 }

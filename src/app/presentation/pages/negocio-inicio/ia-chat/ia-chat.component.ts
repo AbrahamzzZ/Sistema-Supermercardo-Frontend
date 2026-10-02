@@ -1,4 +1,12 @@
-import { Component, ElementRef, inject, input, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  input,
+  signal,
+  viewChild,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../../../../shared/ui/material-module';
@@ -60,9 +68,10 @@ export class IaChatComponent {
         this.agregarMensaje({
           rol: 'ia',
           error: true,
-          texto: err.status === 400
-            ? 'Solo puedo responder preguntas relacionadas con tu negocio.'
-            : 'No se pudo conectar con el asistente. Intenta nuevamente.'
+          texto:
+            err.status === 400
+              ? 'Solo puedo responder preguntas relacionadas con tu negocio.'
+              : 'No se pudo conectar con el asistente. Intenta nuevamente.'
         });
       }
     });

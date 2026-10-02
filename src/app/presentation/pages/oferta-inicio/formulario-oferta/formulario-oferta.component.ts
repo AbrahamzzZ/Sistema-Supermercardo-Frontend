@@ -1,4 +1,12 @@
-import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy, signal, computed } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  inject,
+  OnInit,
+  ChangeDetectionStrategy,
+  signal,
+  computed
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OfertaService } from '../../../../core/services/oferta.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -11,7 +19,16 @@ import { IProducto } from '../../../../core/interfaces/producto';
 import { CanComponentDeactive } from '../../../../core/guards/formulario-incompleto.guard';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 import { ESPACIO_FIJO_ERRORES } from '../../../../shared/ui/form-field-options';
-import { form, FormField, max, maxLength, min, minLength, required, submit } from '@angular/forms/signals';
+import {
+  form,
+  FormField,
+  max,
+  maxLength,
+  min,
+  minLength,
+  required,
+  submit
+} from '@angular/forms/signals';
 
 @Component({
   selector: 'app-formulario-oferta',
@@ -49,16 +66,16 @@ export class FormularioOfertaComponent implements OnInit, CanComponentDeactive {
   private valoresIniciales = this.ofertaModel();
 
   protected readonly ofertaForm = form(this.ofertaModel, (schema) => {
-    required(schema.nombre, {message: 'Ingrese un nombre.'});
-    required(schema.descripcion, {message: 'Ingrese una descripción.'});
-    required(schema.descuento, {message: 'Ingrese un número para el descuento.'});
-    required(schema.fecha_Inicio, {message: 'Ingrese una fecha inicio.'});
-    required(schema.fecha_Fin, {message: 'Ingrese una fecha fin.'});
-    maxLength(schema.nombre, 30, {message: 'El nombre es demasiado largo.'});
-    minLength(schema.descripcion, 3, {message: 'La descripción es demasiado corta.'});
-    maxLength(schema.descripcion, 250, {message: 'La descripción es demasiado larga.'});
-    max(schema.descuento, 100 , {message: 'El descuento no valido.'});
-    min(schema.descuento, 1, {message: 'El descuento tiene que ser mayor que 0.'});
+    required(schema.nombre, { message: 'Ingrese un nombre.' });
+    required(schema.descripcion, { message: 'Ingrese una descripción.' });
+    required(schema.descuento, { message: 'Ingrese un número para el descuento.' });
+    required(schema.fecha_Inicio, { message: 'Ingrese una fecha inicio.' });
+    required(schema.fecha_Fin, { message: 'Ingrese una fecha fin.' });
+    maxLength(schema.nombre, 30, { message: 'El nombre es demasiado largo.' });
+    minLength(schema.descripcion, 3, { message: 'La descripción es demasiado corta.' });
+    maxLength(schema.descripcion, 250, { message: 'La descripción es demasiado larga.' });
+    max(schema.descuento, 100, { message: 'El descuento no valido.' });
+    min(schema.descuento, 1, { message: 'El descuento tiene que ser mayor que 0.' });
     Validaciones.productoRequeridoSignal(schema.producto);
     Validaciones.fechaFinValidaSignal(schema.fecha_Fin, schema.fecha_Inicio);
   });
@@ -66,13 +83,15 @@ export class FormularioOfertaComponent implements OnInit, CanComponentDeactive {
   private tieneCambioSinGuardar(): boolean {
     const actual = this.ofertaModel();
     const inicial = this.valoresIniciales;
-    return actual.nombre !== inicial.nombre
-      || actual.descripcion !== inicial.descripcion
-      || actual.producto !== inicial.producto
-      || actual.descuento !== inicial.descuento
-      || actual.estado !== inicial.estado
-      || this.fechaDistinta(actual.fecha_Inicio, inicial.fecha_Inicio)
-      || this.fechaDistinta(actual.fecha_Fin, inicial.fecha_Fin);
+    return (
+      actual.nombre !== inicial.nombre ||
+      actual.descripcion !== inicial.descripcion ||
+      actual.producto !== inicial.producto ||
+      actual.descuento !== inicial.descuento ||
+      actual.estado !== inicial.estado ||
+      this.fechaDistinta(actual.fecha_Inicio, inicial.fecha_Inicio) ||
+      this.fechaDistinta(actual.fecha_Fin, inicial.fecha_Fin)
+    );
   }
 
   private fechaDistinta(a: Date | null, b: Date | null): boolean {
@@ -147,7 +166,10 @@ export class FormularioOfertaComponent implements OnInit, CanComponentDeactive {
 
       const peticion = this.esEdicion()
         ? this.ofertaServicio.editar(datos)
-        : this.ofertaServicio.registrar({ ...datos, fecha_Creacion: this.formatearFecha(new Date()) });
+        : this.ofertaServicio.registrar({
+            ...datos,
+            fecha_Creacion: this.formatearFecha(new Date())
+          });
       const accion = this.esEdicion() ? 'editada' : 'registrada';
 
       this.guardando.set(true);
@@ -163,7 +185,10 @@ export class FormularioOfertaComponent implements OnInit, CanComponentDeactive {
         error: (err) => {
           console.error(err);
           this.guardando.set(false);
-          this.mostrarMensaje(this.esEdicion() ? 'Error al editar la oferta' : 'Error al registrar la oferta', 'error');
+          this.mostrarMensaje(
+            this.esEdicion() ? 'Error al editar la oferta' : 'Error al registrar la oferta',
+            'error'
+          );
         },
         complete: () => this.guardando.set(false)
       });

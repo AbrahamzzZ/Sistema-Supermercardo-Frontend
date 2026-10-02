@@ -12,13 +12,32 @@
           <!-- Foto -->
           <div class="foto">
             <span class="foto__titulo">Foto del transportista</span>
-            <input type="file" (change)="subirImagen($event)" accept="image/*" #fotoTransportista class="file-input" id="fileInput" />
+            <input
+              type="file"
+              (change)="subirImagen($event)"
+              accept="image/*"
+              #fotoTransportista
+              class="file-input"
+              id="fileInput"
+            />
 
-            <div class="foto__marco" [class.foto__marco--vacio]="!transportistaModel().imagenBase64">
+            <div
+              class="foto__marco"
+              [class.foto__marco--vacio]="!transportistaModel().imagenBase64"
+            >
               @if (imagenURL) {
-                <img [src]="imagenURL" (error)="usarImagenPredeterminada($event)" alt="Foto del transportista" />
-                <button mat-icon-button type="button" class="delete-button" aria-label="Eliminar foto"
-                  (click)="eliminarImagen(); fotoTransportista.value = ''">
+                <img
+                  [src]="imagenURL"
+                  (error)="usarImagenPredeterminada($event)"
+                  alt="Foto del transportista"
+                />
+                <button
+                  mat-icon-button
+                  type="button"
+                  class="delete-button"
+                  aria-label="Eliminar foto"
+                  (click)="eliminarImagen(); fotoTransportista.value = ''"
+                >
                   <mat-icon>delete</mat-icon>
                 </button>
               } @else {
@@ -34,7 +53,10 @@
               {{ transportistaModel().imagenBase64 ? 'Cambiar foto' : 'Subir foto' }}
             </label>
 
-            @if (transportistaForm.imagenBase64().touched() && transportistaForm.imagenBase64().invalid()) {
+            @if (
+              transportistaForm.imagenBase64().touched() &&
+              transportistaForm.imagenBase64().invalid()
+            ) {
               <mat-error class="form__error">
                 {{ transportistaForm.imagenBase64().errors()[0]?.message }}
               </mat-error>
@@ -43,65 +65,135 @@
 
           <!-- Datos -->
           <div class="form__datos">
-
             <mat-form-field appearance="outline" class="form__field">
               <mat-label>Código: </mat-label>
-              <input id="codigo" matInput type="text" [value]="transportistaModel().codigo" readonly aria-label="Código" />
+              <input
+                id="codigo"
+                matInput
+                type="text"
+                [value]="transportistaModel().codigo"
+                readonly
+                aria-label="Código"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form__field">
               <mat-label>Nombres: </mat-label>
-              <input id="nombres" matInput type="text" [formField]="transportistaForm.nombres" aria-label="Nombres">
+              <input
+                id="nombres"
+                matInput
+                type="text"
+                [formField]="transportistaForm.nombres"
+                aria-label="Nombres"
+              />
 
               @if (transportistaForm.nombres().touched() && transportistaForm.nombres().invalid()) {
-                <mat-error class="form__error">{{ transportistaForm.nombres().errors()[0]?.message }}</mat-error>
+                <mat-error class="form__error">{{
+                  transportistaForm.nombres().errors()[0]?.message
+                }}</mat-error>
               }
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form__field">
               <mat-label>Apellidos: </mat-label>
-              <input id="apellidos" matInput type="text" [formField]="transportistaForm.apellidos" aria-label="Apellidos" />
+              <input
+                id="apellidos"
+                matInput
+                type="text"
+                [formField]="transportistaForm.apellidos"
+                aria-label="Apellidos"
+              />
 
-              @if (transportistaForm.apellidos().touched() && transportistaForm.apellidos().invalid()) {
-                <mat-error class="form__error">{{ transportistaForm.apellidos().errors()[0]?.message }}</mat-error>
+              @if (
+                transportistaForm.apellidos().touched() && transportistaForm.apellidos().invalid()
+              ) {
+                <mat-error class="form__error">{{
+                  transportistaForm.apellidos().errors()[0]?.message
+                }}</mat-error>
               }
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form__field">
               <mat-label>Cédula: </mat-label>
-              <input id="cedula" matInput type="text" inputmode="numeric" [formField]="transportistaForm.cedula" aria-label="Cédula" />
+              <input
+                id="cedula"
+                matInput
+                type="text"
+                inputmode="numeric"
+                [formField]="transportistaForm.cedula"
+                aria-label="Cédula"
+              />
 
               @if (transportistaForm.cedula().touched() && transportistaForm.cedula().invalid()) {
-                <mat-error class="form__error">{{ transportistaForm.cedula().errors()[0]?.message }}</mat-error>
+                <mat-error class="form__error">{{
+                  transportistaForm.cedula().errors()[0]?.message
+                }}</mat-error>
               }
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form__field">
               <mat-label>Teléfono: </mat-label>
-              <input id="telefono" matInput type="text" inputmode="numeric" [formField]="transportistaForm.telefono" aria-label="Teléfono" />
+              <input
+                id="telefono"
+                matInput
+                type="text"
+                inputmode="numeric"
+                [formField]="transportistaForm.telefono"
+                aria-label="Teléfono"
+              />
 
-              @if (transportistaForm.telefono().touched() && transportistaForm.telefono().invalid()) {
-                <mat-error class="form__error">{{ transportistaForm.telefono().errors()[0]?.message }}</mat-error>
+              @if (
+                transportistaForm.telefono().touched() && transportistaForm.telefono().invalid()
+              ) {
+                <mat-error class="form__error">{{
+                  transportistaForm.telefono().errors()[0]?.message
+                }}</mat-error>
               }
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form__field form__field--completo">
               <mat-label>Correo Electrónico: </mat-label>
-              <input id="correo_Electronico" matInput type="email" [formField]="transportistaForm.correo_Electronico" aria-label="Correo Electrónico"/>
+              <input
+                id="correo_Electronico"
+                matInput
+                type="email"
+                [formField]="transportistaForm.correo_Electronico"
+                aria-label="Correo Electrónico"
+              />
 
-              @if (transportistaForm.correo_Electronico().touched() && transportistaForm.correo_Electronico().invalid()) {
-                <mat-error class="form__error">{{ transportistaForm.correo_Electronico().errors()[0]?.message }}</mat-error>
+              @if (
+                transportistaForm.correo_Electronico().touched() &&
+                transportistaForm.correo_Electronico().invalid()
+              ) {
+                <mat-error class="form__error">{{
+                  transportistaForm.correo_Electronico().errors()[0]?.message
+                }}</mat-error>
               }
             </mat-form-field>
 
-            <mat-checkbox class="form__estado" [formField]="transportistaForm.estado">Activo</mat-checkbox>
+            <mat-checkbox class="form__estado" [formField]="transportistaForm.estado"
+              >Activo</mat-checkbox
+            >
           </div>
         </div>
         <div class="form__action">
-          <button class="form__button form__button--primary" mat-raised-button type="button" [disabled]="guardando()" (click)="guardar()">
+          <button
+            class="form__button form__button--primary"
+            mat-raised-button
+            type="button"
+            [disabled]="guardando()"
+            (click)="guardar()"
+          >
             {{ esEdicion() ? 'Guardar cambios' : 'Registrar' }}
           </button>
-          <button class="form__button form__button--secondary" mat-stroked-button type="button" (click)="regresar()">Regresar</button>
+          <button
+            class="form__button form__button--secondary"
+            mat-stroked-button
+            type="button"
+            (click)="regresar()"
+          >
+            Regresar
+          </button>
         </div>
       </form>
     </mat-card-content>

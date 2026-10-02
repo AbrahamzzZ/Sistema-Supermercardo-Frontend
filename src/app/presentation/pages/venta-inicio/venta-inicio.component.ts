@@ -170,7 +170,9 @@ export class VentaInicioComponent implements OnInit, AfterViewInit {
         return;
       }
 
-      const productoExistente = this.productosAgregados.find((item) => item.id === this.productoSeleccionado?.id_Producto);
+      const productoExistente = this.productosAgregados.find(
+        (item) => item.id === this.productoSeleccionado?.id_Producto
+      );
       const cantidadExistente = productoExistente?.cantidad ?? 0;
       const cantidad = Number(this.producto.cantidad);
 
@@ -184,7 +186,9 @@ export class VentaInicioComponent implements OnInit, AfterViewInit {
           const subtotal = productoExistente.precioVenta * nuevaCantidad;
 
           productoExistente.cantidad = nuevaCantidad;
-          productoExistente.subtotal = this.redondearDinero(subtotal * (1 - descuentoAplicado / 100));
+          productoExistente.subtotal = this.redondearDinero(
+            subtotal * (1 - descuentoAplicado / 100)
+          );
         } else {
           const subtotal = precioVenta * cantidad;
           const montoDescuento = subtotal * (descuento / 100);
@@ -221,14 +225,15 @@ export class VentaInicioComponent implements OnInit, AfterViewInit {
   }
 
   calcularTotal() {
-    const total = this.redondearDinero(this.productosAgregados.reduce(
-      (acc, item) => acc + Number(item.precioVenta) * Number(item.cantidad),
-      0
-    ));
-    const totalConDescuento = this.redondearDinero(this.productosAgregados.reduce(
-      (acc, item) => acc + Number(item.subtotal),
-      0
-    ));
+    const total = this.redondearDinero(
+      this.productosAgregados.reduce(
+        (acc, item) => acc + Number(item.precioVenta) * Number(item.cantidad),
+        0
+      )
+    );
+    const totalConDescuento = this.redondearDinero(
+      this.productosAgregados.reduce((acc, item) => acc + Number(item.subtotal), 0)
+    );
     const montoDescuento = this.redondearDinero(total - totalConDescuento);
 
     this.totalSinDescuento = total;

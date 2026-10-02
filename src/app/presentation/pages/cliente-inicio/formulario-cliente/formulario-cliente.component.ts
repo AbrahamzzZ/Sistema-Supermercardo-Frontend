@@ -1,4 +1,12 @@
-import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy, signal, computed } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  inject,
+  OnInit,
+  ChangeDetectionStrategy,
+  signal,
+  computed
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ICliente } from '../../../../core/interfaces/cliente';
 import { Metodos } from '../../../../shared/utility/metodos';
@@ -8,7 +16,15 @@ import { Observable } from 'rxjs';
 import { CanComponentDeactive } from '../../../../core/guards/formulario-incompleto.guard';
 import { MaterialModule } from '../../../../shared/ui/material-module';
 import { ESPACIO_FIJO_ERRORES } from '../../../../shared/ui/form-field-options';
-import { email, form, FormField, maxLength, minLength, required, submit } from '@angular/forms/signals';
+import {
+  email,
+  form,
+  FormField,
+  maxLength,
+  minLength,
+  required,
+  submit
+} from '@angular/forms/signals';
 import { Validaciones } from '../../../../shared/utility/validaciones';
 
 @Component({
@@ -43,19 +59,21 @@ export class FormularioClienteComponent implements OnInit, CanComponentDeactive 
   private valoresIniciales = this.clienteModel();
 
   protected readonly clienteForm = form(this.clienteModel, (schema) => {
-    required(schema.nombres, {message: 'Ingrese un nombre.'});
-    minLength(schema.nombres, 3, {message: 'Nombres demasiado cortos.'});
-    maxLength(schema.nombres, 30, {message: 'Nombres demasiado largos.'});
-    required(schema.apellidos, {message: 'Ingrese sus apellidos.'});
-    minLength(schema.apellidos, 3, {message: 'Nombres demasiado cortos.'});
-    maxLength(schema.apellidos, 30, {message: 'Nombres demasiado largos.'});
-    required(schema.cedula, {message: 'Ingrese su cédula.'});
-    maxLength(schema.cedula, 10, {message: 'La cédula debe tener 10 dígitos.'});
-    required(schema.telefono, {message: 'Ingrese su teléfono.'});
-    maxLength(schema.telefono, 10, {message: 'El teléfono debe tener 10 dígitos.'});
-    required(schema.correo_Electronico, {message: 'Ingrese su correo electrónico.'});
-    maxLength(schema.correo_Electronico, 50, {message: 'El correo electrónico es demasiado largo.'});
-    email(schema.correo_Electronico, {message: 'Ingrese un correo valido'});
+    required(schema.nombres, { message: 'Ingrese un nombre.' });
+    minLength(schema.nombres, 3, { message: 'Nombres demasiado cortos.' });
+    maxLength(schema.nombres, 30, { message: 'Nombres demasiado largos.' });
+    required(schema.apellidos, { message: 'Ingrese sus apellidos.' });
+    minLength(schema.apellidos, 3, { message: 'Nombres demasiado cortos.' });
+    maxLength(schema.apellidos, 30, { message: 'Nombres demasiado largos.' });
+    required(schema.cedula, { message: 'Ingrese su cédula.' });
+    maxLength(schema.cedula, 10, { message: 'La cédula debe tener 10 dígitos.' });
+    required(schema.telefono, { message: 'Ingrese su teléfono.' });
+    maxLength(schema.telefono, 10, { message: 'El teléfono debe tener 10 dígitos.' });
+    required(schema.correo_Electronico, { message: 'Ingrese su correo electrónico.' });
+    maxLength(schema.correo_Electronico, 50, {
+      message: 'El correo electrónico es demasiado largo.'
+    });
+    email(schema.correo_Electronico, { message: 'Ingrese un correo valido' });
     Validaciones.soloLetrasSignal(schema.nombres);
     Validaciones.soloLetrasSignal(schema.apellidos);
     Validaciones.soloNumerosSignal(schema.cedula, 10);
@@ -65,16 +83,17 @@ export class FormularioClienteComponent implements OnInit, CanComponentDeactive 
   private tieneCambioSinGuardar(): boolean {
     const actual = this.clienteModel();
     const inicial = this.valoresIniciales;
-    return actual.nombres !== inicial.nombres
-      || actual.apellidos !== inicial.apellidos
-      || actual.cedula !== inicial.cedula
-      || actual.telefono !== inicial.telefono
-      || actual.correo_Electronico !== inicial.correo_Electronico;
+    return (
+      actual.nombres !== inicial.nombres ||
+      actual.apellidos !== inicial.apellidos ||
+      actual.cedula !== inicial.cedula ||
+      actual.telefono !== inicial.telefono ||
+      actual.correo_Electronico !== inicial.correo_Electronico
+    );
   }
 
   @HostListener('window:beforeunload', ['$event'])
   onBeforeReload(e: BeforeUnloadEvent) {
-
     if (this.tieneCambioSinGuardar()) {
       e.preventDefault();
       e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
@@ -142,7 +161,10 @@ export class FormularioClienteComponent implements OnInit, CanComponentDeactive 
         error: (err) => {
           console.error(err);
           this.guardando.set(false);
-          this.mostrarMensaje(this.esEdicion() ? 'Error al editar el Cliente' : 'Error al registrar el Cliente', 'error');
+          this.mostrarMensaje(
+            this.esEdicion() ? 'Error al editar el Cliente' : 'Error al registrar el Cliente',
+            'error'
+          );
         },
         complete: () => this.guardando.set(false)
       });

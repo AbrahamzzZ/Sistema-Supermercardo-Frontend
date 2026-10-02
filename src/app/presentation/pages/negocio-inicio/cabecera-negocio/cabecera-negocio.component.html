@@ -1,4 +1,9 @@
-<img class="cabecera__logo" [src]="logoURL()" (error)="usarLogoPredeterminado($event)" alt="Logo del negocio" />
+<img
+  class="cabecera__logo"
+  [src]="logoURL()"
+  (error)="usarLogoPredeterminado($event)"
+  alt="Logo del negocio"
+/>
 
 <div class="cabecera__info">
   <div class="cabecera__usuario">
@@ -22,7 +27,13 @@
 </div>
 
 @if (puedeEditar()) {
-  <button mat-flat-button color="primary" class="cabecera__editar" [disabled]="!negocio()" (click)="editar()">
+  <button
+    mat-flat-button
+    color="primary"
+    class="cabecera__editar"
+    [disabled]="!negocio()"
+    (click)="editar()"
+  >
     <mat-icon>edit</mat-icon>
     Editar información
   </button>

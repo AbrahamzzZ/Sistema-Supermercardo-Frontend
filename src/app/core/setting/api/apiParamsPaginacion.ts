@@ -1,5 +1,5 @@
 export interface ParamsPaginacion {
-    pageNumber: number;
-    pageSize: number;
-    filtro: string;
+  pageNumber: number;
+  pageSize: number;
+  filtro: string;
 }

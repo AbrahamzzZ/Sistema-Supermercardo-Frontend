@@ -21,24 +21,29 @@ export abstract class BaseListComponent<T> {
   }));
 
   protected abstract readonly recurso: HttpResourceRef<ApiResponse<ApiPaginado<T>> | undefined>;
-  public readonly items = computed<T[]>(() => this.recurso.hasValue() ? (this.recurso.value()?.data.items ?? []) : []);
-  public readonly totalRegistros = computed(() => this.recurso.hasValue() ? (this.recurso.value()?.data?.totalCount ?? 0) : 0);
+  public readonly items = computed<T[]>(() =>
+    this.recurso.hasValue() ? (this.recurso.value()?.data.items ?? []) : []
+  );
+  public readonly totalRegistros = computed(() =>
+    this.recurso.hasValue() ? (this.recurso.value()?.data?.totalCount ?? 0) : 0
+  );
   public readonly cargando = computed(() => this.recurso.isLoading());
   public listaData = new MatTableDataSource<T>();
   private readonly filtroSubject = new Subject<string>();
 
-  constructor () {
+  constructor() {
     effect(() => {
       this.listaData.data = this.items();
     });
 
-    this.filtroSubject.pipe(debounceTime(400), distinctUntilChanged(), takeUntilDestroyed())
-    .subscribe((f) => {
-      this.pagina.set(1);
-      this.filtro.set(f);
-    })
+    this.filtroSubject
+      .pipe(debounceTime(400), distinctUntilChanged(), takeUntilDestroyed())
+      .subscribe((f) => {
+        this.pagina.set(1);
+        this.filtro.set(f);
+      });
   }
-  
+
   filtrar(termino: string): void {
     this.filtroSubject.next(termino.trim());
   }
@@ -49,12 +54,12 @@ export abstract class BaseListComponent<T> {
   }
 
   refrescarDesdeInicio(): void {
-    if(this.pagina() === 1){
-      this.recurso.reload()
-    }else{
+    if (this.pagina() === 1) {
+      this.recurso.reload();
+    } else {
       this.pagina.set(1);
     }
   }
-  
+
   abstract get tituloExcel(): string;
 }

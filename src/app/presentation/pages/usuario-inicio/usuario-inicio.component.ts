@@ -44,26 +44,32 @@ export class UsuarioInicioComponent extends BaseListComponent<IUsuarioRol> {
     super();
 
     effect(() => {
-      if(this.recurso.error()){
+      if (this.recurso.error()) {
         this.mostrarMensaje('Error al cargar los usuarios.', 'error');
       }
-    })
+    });
   }
 
   eliminar(usuario: IUsuario): void {
-    this.dialog.open(DialogoConfirmacionComponent, {
-      width: '500px',
-      data: { mensaje: `¿Está seguro de eliminar al usuario ${usuario.nombre_Completo}?` }
-    }).afterClosed().pipe(filter(Boolean), switchMap(() => this.usuarioServicio.eliminar(usuario.id_Usuario)))
-    .subscribe({
-      next: (resp) => {
-        if(resp.isSuccess) {
-          this.refrescarDesdeInicio();
-          this.mostrarMensaje('Usaurio eliminado correctamente.', 'success');
-        }
-      },
-      error: () => this.mostrarMensaje('Error al eliminar el usuario.', 'error')
-    });
+    this.dialog
+      .open(DialogoConfirmacionComponent, {
+        width: '500px',
+        data: { mensaje: `¿Está seguro de eliminar al usuario ${usuario.nombre_Completo}?` }
+      })
+      .afterClosed()
+      .pipe(
+        filter(Boolean),
+        switchMap(() => this.usuarioServicio.eliminar(usuario.id_Usuario))
+      )
+      .subscribe({
+        next: (resp) => {
+          if (resp.isSuccess) {
+            this.refrescarDesdeInicio();
+            this.mostrarMensaje('Usaurio eliminado correctamente.', 'success');
+          }
+        },
+        error: () => this.mostrarMensaje('Error al eliminar el usuario.', 'error')
+      });
   }
 
   nuevo(): void {

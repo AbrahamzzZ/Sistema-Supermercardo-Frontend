@@ -1,4 +1,12 @@
-import { Component, HostListener, inject, OnInit, ChangeDetectionStrategy, signal, computed } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  inject,
+  OnInit,
+  ChangeDetectionStrategy,
+  signal,
+  computed
+} from '@angular/core';
 import { CanComponentDeactive } from '../../../../core/guards/formulario-incompleto.guard';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -49,17 +57,17 @@ export class FormularioSucursalComponent implements OnInit, CanComponentDeactive
   private valoresIniciales = this.sucursalModel();
 
   protected readonly sucursalForm = form(this.sucursalModel, (schema) => {
-    required(schema.nombre, {message: 'Ingrese un nombre.'});
-    required(schema.direccion, {message: 'Ingrese una dirección.'});
-    required(schema.ciudad, {message: 'Ingrese una ciudad.'});
-    required(schema.latitud, {message: 'Ingrese una latitud.'});
-    required(schema.longitud, {message: 'Ingrese una longitud.'});
-    minLength(schema.nombre, 5, {message: 'Nombre demasiado corto.'});
-    minLength(schema.direccion, 3, {message: 'Dirección demasiado corta.'});
-    minLength(schema.ciudad, 3, {message: 'El nombre de la ciudad es demasiado corto.'});
-    maxLength(schema.nombre, 30, {message: 'Nombre demasiado largo.'});
-    maxLength(schema.direccion, 90, {message: 'La dirección es demasiado larga.'});
-    maxLength(schema.ciudad, 90, {message: 'La ciudad es demasiado larga.'});
+    required(schema.nombre, { message: 'Ingrese un nombre.' });
+    required(schema.direccion, { message: 'Ingrese una dirección.' });
+    required(schema.ciudad, { message: 'Ingrese una ciudad.' });
+    required(schema.latitud, { message: 'Ingrese una latitud.' });
+    required(schema.longitud, { message: 'Ingrese una longitud.' });
+    minLength(schema.nombre, 5, { message: 'Nombre demasiado corto.' });
+    minLength(schema.direccion, 3, { message: 'Dirección demasiado corta.' });
+    minLength(schema.ciudad, 3, { message: 'El nombre de la ciudad es demasiado corto.' });
+    maxLength(schema.nombre, 30, { message: 'Nombre demasiado largo.' });
+    maxLength(schema.direccion, 90, { message: 'La dirección es demasiado larga.' });
+    maxLength(schema.ciudad, 90, { message: 'La ciudad es demasiado larga.' });
     Validaciones.soloLetrasSignal(schema.ciudad);
     Validaciones.coordenadaValidaSignal(schema.latitud, 'latitud');
     Validaciones.coordenadaValidaSignal(schema.longitud, 'longitud');
@@ -68,17 +76,18 @@ export class FormularioSucursalComponent implements OnInit, CanComponentDeactive
   private tieneCambioSinGuardar(): boolean {
     const actual = this.sucursalModel();
     const inicial = this.valoresIniciales;
-    return actual.nombre !== inicial.nombre
-      || actual.direccion !== inicial.direccion
-      || actual.latitud !== inicial.latitud
-      || actual.longitud !== inicial.longitud
-      || actual.ciudad !== inicial.ciudad
-      || actual.estado !== inicial.estado;
+    return (
+      actual.nombre !== inicial.nombre ||
+      actual.direccion !== inicial.direccion ||
+      actual.latitud !== inicial.latitud ||
+      actual.longitud !== inicial.longitud ||
+      actual.ciudad !== inicial.ciudad ||
+      actual.estado !== inicial.estado
+    );
   }
 
   @HostListener('window:beforeunload', ['$event'])
   onBeforeReload(e: BeforeUnloadEvent) {
-
     if (this.tieneCambioSinGuardar()) {
       e.preventDefault();
       e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
@@ -160,7 +169,10 @@ export class FormularioSucursalComponent implements OnInit, CanComponentDeactive
         error: (err) => {
           console.error(err);
           this.guardando.set(false);
-          this.mostrarMensaje(this.esEdicion() ? 'Error al editar la sucursal' : 'Error al registrar la sucursal', 'error');
+          this.mostrarMensaje(
+            this.esEdicion() ? 'Error al editar la sucursal' : 'Error al registrar la sucursal',
+            'error'
+          );
         },
         complete: () => this.guardando.set(false)
       });

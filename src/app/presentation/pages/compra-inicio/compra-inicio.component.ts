@@ -140,12 +140,18 @@ export class CompraInicioComponent implements OnInit, AfterViewInit {
           return;
         }
 
-        const subtotalCalculado = this.redondearDinero(Number(this.producto.precioCompra) * Number(this.producto.cantidad));
-        const productoExistente = this.productosAgregados.find((item) => item.id === this.productoSeleccionado?.id_Producto);
+        const subtotalCalculado = this.redondearDinero(
+          Number(this.producto.precioCompra) * Number(this.producto.cantidad)
+        );
+        const productoExistente = this.productosAgregados.find(
+          (item) => item.id === this.productoSeleccionado?.id_Producto
+        );
 
         if (productoExistente) {
           productoExistente.cantidad += Number(this.producto.cantidad);
-          productoExistente.subtotal = this.redondearDinero(productoExistente.precioCompra * productoExistente.cantidad);
+          productoExistente.subtotal = this.redondearDinero(
+            productoExistente.precioCompra * productoExistente.cantidad
+          );
         } else {
           this.productosAgregados.push({
             id: this.productoSeleccionado.id_Producto,

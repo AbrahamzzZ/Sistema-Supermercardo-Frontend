@@ -3,7 +3,12 @@
     <h2>Estadísticas</h2>
     <span>{{ seleccionada().titulo }}</span>
   </div>
-  <button mat-stroked-button color="primary" [disabled]="cargando() || !valores().length" (click)="descargarPDF()">
+  <button
+    mat-stroked-button
+    color="primary"
+    [disabled]="cargando() || !valores().length"
+    (click)="descargarPDF()"
+  >
     <mat-icon>picture_as_pdf</mat-icon>
     Exportar PDF
   </button>
@@ -34,6 +39,11 @@
       <p>No hay datos para esta estadística todavía.</p>
     </div>
   } @else {
-    <canvas baseChart [data]="chartData()" [type]="seleccionada().tipo" [options]="chartOptions()"></canvas>
+    <canvas
+      baseChart
+      [data]="chartData()"
+      [type]="seleccionada().tipo"
+      [options]="chartOptions()"
+    ></canvas>
   }
 </div>

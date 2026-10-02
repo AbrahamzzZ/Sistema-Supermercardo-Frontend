@@ -1,5 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { FormField, form, required, minLength, maxLength, email, submit } from '@angular/forms/signals';
+import {
+  FormField,
+  form,
+  required,
+  minLength,
+  maxLength,
+  email,
+  submit
+} from '@angular/forms/signals';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { INegocio } from '../../../../core/interfaces/negocio';

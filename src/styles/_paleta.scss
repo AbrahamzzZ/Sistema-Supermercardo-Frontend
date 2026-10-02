@@ -1,4 +1,4 @@
-@use "sass:map";
+@use 'sass:map';
 
 // =====================================================================
 //  Paleta de colores de la aplicación
@@ -12,10 +12,13 @@ $primario: (
   100: #d9e6f4,
   200: #bcd4ec,
   300: #9bc0e5,
-  400: #79acde, // color de marca
+  400: #79acde,
+  // color de marca
   500: #5a93cb,
-  600: #4479b0, // botones y acciones principales
-  700: #375f8c, // hover / presionado
+  600: #4479b0,
+  // botones y acciones principales
+  700: #375f8c,
+  // hover / presionado
   800: #2c4b6d,
   900: #213851,
   A100: #d9e6f4,
@@ -44,7 +47,8 @@ $primario: (
 $secundario: (
   50: #f9fbef,
   100: #f1f6dc,
-  200: #e2eeb7, // color de marca
+  200: #e2eeb7,
+  // color de marca
   300: #d0e293,
   400: #bdd26f,
   500: #a3b953,

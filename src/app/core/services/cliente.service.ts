@@ -20,7 +20,10 @@ export class ClienteService {
   listaPaginada(params: Signal<ParamsPaginacion>) {
     return httpResource<ApiResponse<ApiPaginado<ICliente>>>(() => {
       const p = params();
-      return {url: `${this.apiUrl}/paginacion`, params: {pageNumber: p.pageNumber, pageSize: p.pageSize, filtro: p.filtro}};
+      return {
+        url: `${this.apiUrl}/paginacion`,
+        params: { pageNumber: p.pageNumber, pageSize: p.pageSize, filtro: p.filtro }
+      };
     });
   }
 

@@ -80,7 +80,7 @@
 
   &__grupo--totales {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); 
+    grid-template-columns: repeat(4, 1fr);
   }
 
   .campo-horizontal {
@@ -118,7 +118,7 @@
   }
 }
 
-::ng-deep .form__field .mat-mdc-form-field-subscript-wrapper{
+::ng-deep .form__field .mat-mdc-form-field-subscript-wrapper {
   background: #ffffff;
 }
 
@@ -126,7 +126,7 @@
   height: 35px !important;
 }
 
-::ng-deep .mat-mdc-form-field-flex{
+::ng-deep .mat-mdc-form-field-flex {
   margin-top: -11px;
 }
 
@@ -149,7 +149,7 @@
   font-weight: 500;
 }
 
-::ng-deep .form__field__search .mat-mdc-text-field-wrapper{
+::ng-deep .form__field__search .mat-mdc-text-field-wrapper {
   height: 35px !important;
   width: 350px !important;
 }
