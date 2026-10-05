@@ -13,6 +13,7 @@ export abstract class BaseListComponent<T> {
   readonly pagina = signal(1);
   readonly pageSize = signal(5);
   readonly filtro = signal('');
+  private readonly respuestaAnterior = signal<ApiPaginado<T> | null>(null);
 
   protected readonly params = computed(() => ({
     pageNumber: this.pagina(),
@@ -21,17 +22,20 @@ export abstract class BaseListComponent<T> {
   }));
 
   protected abstract readonly recurso: HttpResourceRef<ApiResponse<ApiPaginado<T>> | undefined>;
-  public readonly items = computed<T[]>(() =>
-    this.recurso.hasValue() ? (this.recurso.value()?.data.items ?? []) : []
-  );
-  public readonly totalRegistros = computed(() =>
-    this.recurso.hasValue() ? (this.recurso.value()?.data?.totalCount ?? 0) : 0
-  );
+  public readonly items = computed<T[]>(() => this.recurso.hasValue() ? (this.recurso.value()?.data.items ?? []) : (this.respuestaAnterior()?.items ?? []));
+  public readonly totalRegistros = computed(() => this.recurso.hasValue() ? (this.recurso.value()?.data.totalCount ?? 0) : (this.respuestaAnterior()?.totalCount ?? 0));
   public readonly cargando = computed(() => this.recurso.isLoading());
   public listaData = new MatTableDataSource<T>();
   private readonly filtroSubject = new Subject<string>();
 
   constructor() {
+    effect(() => {
+      if (this.recurso.hasValue()) {
+        const respuesta = this.recurso.value()?.data;
+        if (respuesta) this.respuestaAnterior.set(respuesta);
+      }
+    });
+
     effect(() => {
       this.listaData.data = this.items();
     });

@@ -53,7 +53,6 @@ export class FormularioSucursalComponent implements OnInit, CanComponentDeactive
     estado: false
   });
 
-  // Valores con los que se inició el formulario (vacíos al registrar, los de la sucursal al editar).
   private valoresIniciales = this.sucursalModel();
 
   protected readonly sucursalForm = form(this.sucursalModel, (schema) => {
@@ -90,7 +89,6 @@ export class FormularioSucursalComponent implements OnInit, CanComponentDeactive
   onBeforeReload(e: BeforeUnloadEvent) {
     if (this.tieneCambioSinGuardar()) {
       e.preventDefault();
-      e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
     }
   }
 
@@ -102,7 +100,7 @@ export class FormularioSucursalComponent implements OnInit, CanComponentDeactive
     }
 
     this.negocioServicio.obtener(1).subscribe({
-      next: (resp: any) => {
+      next: (resp) => {
         this.negocio = resp.data;
       },
       error: () => {
@@ -140,7 +138,6 @@ export class FormularioSucursalComponent implements OnInit, CanComponentDeactive
       const valores = form().value();
       const sucursal: ISucursal = {
         id_Sucursal: this.idSucursal(),
-        // Al editar se conserva el negocio de la sucursal; al registrar se usa el negocio cargado.
         id_Negocio: valores.id_Negocio || this.negocio?.id_Negocio || 0,
         codigo: valores.codigo,
         nombre_Sucursal: valores.nombre.trim(),
@@ -162,7 +159,8 @@ export class FormularioSucursalComponent implements OnInit, CanComponentDeactive
         next: (data) => {
           if (data.isSuccess) {
             this.salidaAutorizada.set(true);
-            this.router.navigate(['/sucursal'], { skipLocationChange: true });
+            this.router.navigate(['/sucursal'], { skipLocationChange: true })
+            .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de sucursales.', 'error'));
             this.mostrarMensaje(`¡Sucursal ${accion} exitosamente!`, 'success');
           }
         },
@@ -180,7 +178,8 @@ export class FormularioSucursalComponent implements OnInit, CanComponentDeactive
   }
 
   regresar() {
-    this.router.navigate(['/sucursal']);
+    this.router.navigate(['/sucursal'])
+    .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de sucursales.', 'error'));
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {

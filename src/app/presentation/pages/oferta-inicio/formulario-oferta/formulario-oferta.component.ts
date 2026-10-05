@@ -62,7 +62,6 @@ export class FormularioOfertaComponent implements OnInit, CanComponentDeactive {
     estado: false
   });
 
-  // Valores con los que se inició el formulario (vacíos al registrar, los de la oferta al editar).
   private valoresIniciales = this.ofertaModel();
 
   protected readonly ofertaForm = form(this.ofertaModel, (schema) => {
@@ -102,7 +101,6 @@ export class FormularioOfertaComponent implements OnInit, CanComponentDeactive {
   onBeforeReload(e: BeforeUnloadEvent) {
     if (this.tieneCambioSinGuardar()) {
       e.preventDefault();
-      e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
     }
   }
 
@@ -114,7 +112,7 @@ export class FormularioOfertaComponent implements OnInit, CanComponentDeactive {
     }
 
     this.productoServicio.lista().subscribe({
-      next: (resp: any) => {
+      next: (resp) => {
         this.productos.set(resp.data);
       },
       error: (err) => {
@@ -126,7 +124,7 @@ export class FormularioOfertaComponent implements OnInit, CanComponentDeactive {
 
   private cargarOferta(): void {
     this.ofertaServicio.obtener(this.idOferta()).subscribe({
-      next: (resp: any) => {
+      next: (resp) => {
         if (resp?.data) {
           this.ofertaModel.set({
             codigo: resp.data.codigo,
@@ -151,7 +149,6 @@ export class FormularioOfertaComponent implements OnInit, CanComponentDeactive {
   async guardar() {
     await submit(this.ofertaForm, async (form) => {
       const valores = form().value();
-      // Al editar se envía lo mismo que antes (sin fecha_Creacion) más el código real de la oferta.
       const datos: Omit<IOferta, 'fecha_Creacion'> = {
         id_Oferta: this.idOferta(),
         codigo: valores.codigo,
@@ -178,7 +175,8 @@ export class FormularioOfertaComponent implements OnInit, CanComponentDeactive {
         next: (data) => {
           if (data.isSuccess) {
             this.salidaAutorizada.set(true);
-            this.router.navigate(['/oferta'], { skipLocationChange: true });
+            this.router.navigate(['/oferta'], { skipLocationChange: true })
+            .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de ofertas.', 'error'));
             this.mostrarMensaje(`¡Oferta ${accion} exitosamente!`, 'success');
           }
         },

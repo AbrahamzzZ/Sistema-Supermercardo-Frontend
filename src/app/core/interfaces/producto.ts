@@ -5,7 +5,7 @@ export interface IProducto {
   nombre_Producto: string;
   id_Categoria?: number;
   pais_Origen: string;
-  stock?: number | undefined;
+  stock?: number;
   precio_Compra?: number;
   precio_Venta?: number;
   estado: boolean;

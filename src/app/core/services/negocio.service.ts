@@ -27,13 +27,11 @@ export class NegocioService {
   }
 
   obtenerProductosComprados() {
-    return this.http.get<ApiResponse<ProductoMasComprado[]>>(
-      `${this.apiUrl}/producto-mas-comprado`
-    );
+    return this.http.get<ApiResponse<ProductoMasComprado[]>>(`${this.apiUrl}/productos-mas-comprados`);
   }
 
   obtenerProductosVendidos() {
-    return this.http.get<ApiResponse<ProductoMasVendido[]>>(`${this.apiUrl}/producto-mas-vendido`);
+    return this.http.get<ApiResponse<ProductoMasVendido[]>>(`${this.apiUrl}/productos-mas-vendidos`);
   }
 
   obtenerTopClientes() {

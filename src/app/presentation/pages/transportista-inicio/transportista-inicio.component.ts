@@ -77,11 +77,13 @@ export class TransportistaInicioComponent extends BaseListComponent<ITransportis
   }
 
   nuevo(): void {
-    this.router.navigate(['transportista/registro']);
+    this.router.navigate(['transportista/registro'])
+    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de registro.', 'error'));
   }
 
   editar(transportista: ITransportista): void {
-    this.router.navigate(['transportista/editar', transportista.id_Transportista]);
+    this.router.navigate(['transportista/editar', transportista.id_Transportista])
+    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de edición.', 'error'));
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {

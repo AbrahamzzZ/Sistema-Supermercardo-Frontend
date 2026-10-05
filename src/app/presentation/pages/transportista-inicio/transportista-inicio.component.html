@@ -36,6 +36,7 @@
       [columns]="columns"
       [totalRegistros]="totalRegistros()"
       [pageSize]="pageSize()"
+      [pageIndex]="pagina() - 1"
       [pageSizeOptions]="[5, 10, 20]"
       mensajeSinDatos="No hay transportistas que mostrar."
       (editar)="editar($event)"

@@ -74,11 +74,13 @@ export class OfertaInicioComponent extends BaseListComponent<IOfertaProducto> {
   }
 
   nuevo(): void {
-    this.router.navigate(['oferta/registro']);
+    this.router.navigate(['oferta/registro'])
+    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de registro.', 'error'));
   }
 
   editar(oferta: IOfertaProducto): void {
-    this.router.navigate(['oferta/editar', oferta.id_Oferta]);
+    this.router.navigate(['oferta/editar', oferta.id_Oferta])
+    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de edición.', 'error'));
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {
