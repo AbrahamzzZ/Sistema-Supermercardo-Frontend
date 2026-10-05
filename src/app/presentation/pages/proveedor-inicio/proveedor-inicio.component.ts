@@ -76,11 +76,13 @@ export class ProveedorInicioComponent extends BaseListComponent<IProveedor> {
   }
 
   nuevo(): void {
-    this.router.navigate(['proveedor/registro']);
+    this.router.navigate(['proveedor/registro'])
+    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de registro.', 'error'));
   }
 
   editar(proveedor: IProveedor): void {
-    this.router.navigate(['proveedor/editar', proveedor.id_Proveedor]);
+    this.router.navigate(['proveedor/editar', proveedor.id_Proveedor])
+    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de edición.', 'error'));
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {

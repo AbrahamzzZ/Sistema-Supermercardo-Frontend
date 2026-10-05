@@ -91,11 +91,13 @@ export class ProductoInicioComponent extends BaseListComponent<IProductoCategori
   }
 
   nuevo(): void {
-    this.router.navigate(['producto/registro']);
+    this.router.navigate(['producto/registro'])
+    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de registro.', 'error'));
   }
 
   editar(producto: IProducto): void {
-    this.router.navigate(['producto/editar', producto.id_Producto]);
+    this.router.navigate(['producto/editar', producto.id_Producto])
+    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de edición.', 'error'));
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' | 'warning' = 'success'): void {

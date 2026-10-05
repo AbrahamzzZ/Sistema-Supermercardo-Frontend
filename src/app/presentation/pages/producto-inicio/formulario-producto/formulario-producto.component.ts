@@ -51,7 +51,6 @@ export class FormularioProductoComponent implements OnInit, CanComponentDeactive
     estado: false
   });
 
-  // Valores con los que se inició el formulario (vacíos al registrar, los del producto al editar).
   private valoresIniciales = this.productoModel();
 
   protected readonly productoForm = form(this.productoModel, (schema) => {
@@ -86,7 +85,6 @@ export class FormularioProductoComponent implements OnInit, CanComponentDeactive
   onBeforeReload(e: BeforeUnloadEvent) {
     if (this.tieneCambioSinGuardar()) {
       e.preventDefault();
-      e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
     }
   }
 
@@ -98,7 +96,7 @@ export class FormularioProductoComponent implements OnInit, CanComponentDeactive
     }
 
     this.categoriaServicio.lista().subscribe({
-      next: (resp: any) => {
+      next: (resp) => {
         this.categorias.set(resp.data);
       },
       error: (err) => {
@@ -110,8 +108,8 @@ export class FormularioProductoComponent implements OnInit, CanComponentDeactive
 
   private cargarProducto(): void {
     this.productoServicio.obtener(this.idProducto()).subscribe({
-      next: (resp: any) => {
-        if (resp?.data) {
+      next: (resp) => {
+        if (resp.data) {
           this.productoModel.set({
             codigo: resp.data.codigo,
             nombre: resp.data.nombre_Producto,
@@ -154,7 +152,8 @@ export class FormularioProductoComponent implements OnInit, CanComponentDeactive
         next: (data) => {
           if (data.isSuccess) {
             this.salidaAutorizada.set(true);
-            this.router.navigate(['/producto'], { skipLocationChange: true });
+            this.router.navigate(['/producto'], { skipLocationChange: true })
+            .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de productos.', 'error'));
             this.mostrarMensaje(`¡Producto ${accion} exitosamente!`, 'success');
           }
         },
@@ -172,7 +171,8 @@ export class FormularioProductoComponent implements OnInit, CanComponentDeactive
   }
 
   regresar() {
-    this.router.navigate(['/producto']);
+    this.router.navigate(['/producto'])
+    .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de productos.', 'error'));
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {

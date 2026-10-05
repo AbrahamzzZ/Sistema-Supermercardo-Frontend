@@ -73,11 +73,13 @@ export class SucursalInicioComponent extends BaseListComponent<ISucursalNegocio>
   }
 
   nuevo(): void {
-    this.router.navigate(['sucursal/registro']);
+    this.router.navigate(['sucursal/registro'])
+    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de registro.', 'error'));
   }
 
   editar(sucursal: ISucursalNegocio): void {
-    this.router.navigate(['sucursal/editar', sucursal.id_Sucursal]);
+    this.router.navigate(['sucursal/editar', sucursal.id_Sucursal])
+    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de edición.', 'error'));
   }
 
   verMapa(): void {

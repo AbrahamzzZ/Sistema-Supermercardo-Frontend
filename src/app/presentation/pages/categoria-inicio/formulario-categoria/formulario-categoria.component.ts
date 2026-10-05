@@ -44,7 +44,6 @@ export class FormularioCategoriaComponent implements OnInit, CanComponentDeactiv
     estado: false
   });
 
-  // Valores con los que se inició el formulario (vacíos al registrar, los de la categoría al editar).
   private valoresIniciales = this.categoriaModel();
 
   protected readonly categoriaForm = form(this.categoriaModel, (schema) => {
@@ -64,7 +63,6 @@ export class FormularioCategoriaComponent implements OnInit, CanComponentDeactiv
   onBeforeReload(e: BeforeUnloadEvent) {
     if (this.tieneCambioSinGuardar()) {
       e.preventDefault();
-      e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
     }
   }
 
@@ -78,7 +76,7 @@ export class FormularioCategoriaComponent implements OnInit, CanComponentDeactiv
 
   private cargarCategoria(): void {
     this.categoriaServicio.obtener(this.idCategoria()).subscribe({
-      next: (resp: any) => {
+      next: (resp) => {
         if (resp?.data) {
           this.categoriaModel.set({
             codigo: resp.data.codigo,
@@ -116,7 +114,8 @@ export class FormularioCategoriaComponent implements OnInit, CanComponentDeactiv
         next: (data) => {
           if (data.isSuccess) {
             this.salidaAutorizada.set(true);
-            this.router.navigate(['/categoria'], { skipLocationChange: true });
+            this.router.navigate(['/categoria'], { skipLocationChange: true })
+            .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de categorías.', 'error'));
             this.mostrarMensaje(`¡Categoría ${accion} exitosamente!`, 'success');
           }
         },
@@ -134,7 +133,8 @@ export class FormularioCategoriaComponent implements OnInit, CanComponentDeactiv
   }
 
   regresar() {
-    this.router.navigate(['/categoria']);
+    this.router.navigate(['/categoria'])
+    .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de categorías.', 'error'));
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {

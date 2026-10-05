@@ -59,7 +59,6 @@ export class FormularioTransportistaComponent implements OnInit, CanComponentDea
     estado: false
   });
 
-  // Valores con los que se inició el formulario (vacíos al registrar, los del transportista al editar).
   private valoresIniciales = this.transportistaModel();
 
   protected readonly transportistaForm = form(this.transportistaModel, (schema) => {
@@ -103,7 +102,6 @@ export class FormularioTransportistaComponent implements OnInit, CanComponentDea
   onBeforeReload(e: BeforeUnloadEvent) {
     if (this.tieneCambioSinGuardar()) {
       e.preventDefault();
-      e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
     }
   }
 
@@ -117,9 +115,9 @@ export class FormularioTransportistaComponent implements OnInit, CanComponentDea
 
   private cargarTransportista(): void {
     this.transportistaServicio.obtener(this.idTransportista()).subscribe({
-      next: (resp: any) => {
-        if (resp?.data) {
-          const imagen = resp.data.imagen ?? resp.data.foto ?? resp.data.imagenBase64;
+      next: (resp) => {
+        if (resp.data) {
+          const imagen = resp.data.foto ?? resp.data.imagenBase64;
           const tieneImagen = !!imagen && typeof imagen === 'string';
 
           this.transportistaModel.set({
@@ -158,7 +156,6 @@ export class FormularioTransportistaComponent implements OnInit, CanComponentDea
         correo_Electronico: valores.correo_Electronico.trimEnd(),
         imagenBase64: valores.imagenBase64.trim(),
         estado: valores.estado,
-        // El formulario de edición anterior enviaba 'foto' vacío.
         ...(this.esEdicion() ? { foto: '' } : {})
       };
 
@@ -173,7 +170,8 @@ export class FormularioTransportistaComponent implements OnInit, CanComponentDea
         next: (data) => {
           if (data.isSuccess) {
             this.salidaAutorizada.set(true);
-            this.router.navigate(['/transportista'], { skipLocationChange: true });
+            this.router.navigate(['/transportista'], { skipLocationChange: true })
+            .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de transportistas.', 'error'));
             this.mostrarMensaje(`¡Transportista ${accion} exitosamente!`, 'success');
           }
         },
@@ -193,7 +191,8 @@ export class FormularioTransportistaComponent implements OnInit, CanComponentDea
   }
 
   regresar() {
-    this.router.navigate(['/transportista']);
+    this.router.navigate(['/transportista'])
+    .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de transportistas.', 'error'));
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {

@@ -75,11 +75,13 @@ export class ClienteInicioComponent extends BaseListComponent<ICliente> {
   }
 
   nuevo(): void {
-    this.router.navigate(['cliente/registro']);
+    this.router.navigate(['cliente/registro'])
+    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de registro.', 'error'));
   }
 
   editar(cliente: ICliente): void {
-    this.router.navigate(['cliente/editar', cliente.id_Cliente]);
+    this.router.navigate(['cliente/editar', cliente.id_Cliente])
+    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de edición.', 'error'));
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {

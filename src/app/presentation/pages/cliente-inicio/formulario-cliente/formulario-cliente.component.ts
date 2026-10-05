@@ -55,7 +55,6 @@ export class FormularioClienteComponent implements OnInit, CanComponentDeactive 
     correo_Electronico: ''
   });
 
-  // Valores con los que se inició el formulario (vacíos al registrar, los del cliente al editar).
   private valoresIniciales = this.clienteModel();
 
   protected readonly clienteForm = form(this.clienteModel, (schema) => {
@@ -96,7 +95,6 @@ export class FormularioClienteComponent implements OnInit, CanComponentDeactive 
   onBeforeReload(e: BeforeUnloadEvent) {
     if (this.tieneCambioSinGuardar()) {
       e.preventDefault();
-      e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
     }
   }
 
@@ -154,7 +152,8 @@ export class FormularioClienteComponent implements OnInit, CanComponentDeactive 
         next: (data) => {
           if (data.isSuccess) {
             this.salidaAutorizada.set(true);
-            this.router.navigate(['/cliente'], { skipLocationChange: true });
+            this.router.navigate(['/cliente'], { skipLocationChange: true })
+            .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de clientes.', 'error'));
             this.mostrarMensaje(`¡Cliente ${accion} exitosamente!`, 'success');
           }
         },
@@ -172,7 +171,8 @@ export class FormularioClienteComponent implements OnInit, CanComponentDeactive 
   }
 
   regresar() {
-    this.router.navigate(['/cliente']);
+    this.router.navigate(['/cliente'])
+    .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de clientes.', 'error'));
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {

@@ -73,11 +73,13 @@ export class UsuarioInicioComponent extends BaseListComponent<IUsuarioRol> {
   }
 
   nuevo(): void {
-    this.router.navigate(['usuario/registro']);
+    this.router.navigate(['usuario/registro'])
+    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de registro.', 'error'));
   }
 
   editar(usuario: IUsuarioRol): void {
-    this.router.navigate(['usuario/editar', usuario.id_Usuario]);
+    this.router.navigate(['usuario/editar', usuario.id_Usuario])
+    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de edición.', 'error'));
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {

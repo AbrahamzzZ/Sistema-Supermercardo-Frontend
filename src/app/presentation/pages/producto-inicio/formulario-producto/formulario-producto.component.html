@@ -10,12 +10,12 @@
       <form class="form" novalidate>
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>Codigo: </mat-label>
-          <input matInput type="text" [value]="productoModel().codigo" readonly />
+          <input id="codigo" matInput type="text" [value]="productoModel().codigo" readonly  aria-label="Código"/>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form__field">
           <mat-label>Nombre: </mat-label>
-          <input matInput type="text" [formField]="productoForm.nombre" />
+          <input id="nombre" matInput type="text" [formField]="productoForm.nombre" aria-label="Nombre"/>
           @if (productoForm.nombre().touched() && productoForm.nombre().invalid()) {
             <mat-error class="form__error">{{
               productoForm.nombre().errors()[0]?.message

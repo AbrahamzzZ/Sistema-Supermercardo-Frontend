@@ -56,7 +56,6 @@ export class FormularioProveedorComponent implements OnInit, CanComponentDeactiv
     estado: false
   });
 
-  // Valores con los que se inició el formulario (vacíos al registrar, los del proveedor al editar).
   private valoresIniciales = this.proveedorModel();
 
   protected readonly proveedorForm = form(this.proveedorModel, (schema) => {
@@ -98,7 +97,6 @@ export class FormularioProveedorComponent implements OnInit, CanComponentDeactiv
   onBeforeReload(e: BeforeUnloadEvent) {
     if (this.tieneCambioSinGuardar()) {
       e.preventDefault();
-      e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
     }
   }
 
@@ -158,7 +156,8 @@ export class FormularioProveedorComponent implements OnInit, CanComponentDeactiv
         next: (data) => {
           if (data.isSuccess) {
             this.salidaAutorizada.set(true);
-            this.router.navigate(['/proveedor'], { skipLocationChange: true });
+            this.router.navigate(['/proveedor'], { skipLocationChange: true })
+            .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de proveedores.', 'error'));
             this.mostrarMensaje(`¡Proveedor ${accion} exitosamente!`, 'success');
           }
         },
@@ -176,7 +175,8 @@ export class FormularioProveedorComponent implements OnInit, CanComponentDeactiv
   }
 
   regresar() {
-    this.router.navigate(['/proveedor']);
+    this.router.navigate(['/proveedor'])
+    .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de proveedores.', 'error'));
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {

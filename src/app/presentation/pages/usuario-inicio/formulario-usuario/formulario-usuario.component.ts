@@ -59,13 +59,11 @@ export class FormularioUsuarioComponent implements OnInit, CanComponentDeactive 
     estado: false
   });
 
-  // Valores con los que se inició el formulario (vacíos al registrar, los del usuario al editar).
   private valoresIniciales = this.usuarioModel();
 
   protected readonly usuarioForm = form(this.usuarioModel, (schema) => {
     required(schema.nombre_Completo, { message: 'Ingrese su nombre completo' });
     maxLength(schema.nombre_Completo, 70, { message: 'El nombre es demasiado largo.' });
-    // Al editar, la clave es opcional: si se deja vacía se conserva la actual.
     required(schema.clave, { message: 'Ingrese su clave', when: () => !this.esEdicion() });
     minLength(schema.clave, 10, { message: 'La clave debe tener mínimo 10 caracteres.' });
     required(schema.correo_Electronico, { message: 'Ingrese su correo electrónico.' });
@@ -94,7 +92,6 @@ export class FormularioUsuarioComponent implements OnInit, CanComponentDeactive 
   onBeforeReload(e: BeforeUnloadEvent) {
     if (this.tieneCambioSinGuardar()) {
       e.preventDefault();
-      e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
     }
   }
 
@@ -106,7 +103,7 @@ export class FormularioUsuarioComponent implements OnInit, CanComponentDeactive 
     }
 
     this.rolServicio.lista().subscribe({
-      next: (resp: any) => {
+      next: (resp) => {
         this.roles.set(resp.data);
       },
       error: (err) => {
@@ -162,7 +159,8 @@ export class FormularioUsuarioComponent implements OnInit, CanComponentDeactive 
         next: (data) => {
           if (data.isSuccess) {
             this.salidaAutorizada.set(true);
-            this.router.navigate(['/usuario'], { skipLocationChange: true });
+            this.router.navigate(['/usuario'], { skipLocationChange: true })
+            .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de usuarios.', 'error'));
             this.mostrarMensaje(`¡Usuario ${accion} exitosamente!`, 'success');
           }
         },
@@ -180,7 +178,8 @@ export class FormularioUsuarioComponent implements OnInit, CanComponentDeactive 
   }
 
   regresar() {
-    this.router.navigate(['/usuario']);
+    this.router.navigate(['/usuario'])
+    .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de usuarios.', 'error'));
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {

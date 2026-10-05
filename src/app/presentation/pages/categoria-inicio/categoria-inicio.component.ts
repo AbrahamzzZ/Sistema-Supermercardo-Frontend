@@ -70,11 +70,13 @@ export class CategoriaInicioComponent extends BaseListComponent<ICategoria> {
   }
 
   nuevo(): void {
-    this.router.navigate(['categoria/registro']);
+    this.router.navigate(['categoria/registro'])
+    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de registro.', 'error'));
   }
 
   editar(categoria: ICategoria): void {
-    this.router.navigate(['categoria/editar', categoria.id_Categoria]);
+    this.router.navigate(['categoria/editar', categoria.id_Categoria])
+    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de edición.', 'error'));
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {
