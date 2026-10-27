@@ -26,6 +26,12 @@ $message-bg-color: var(--color-superficie-alt);
     border-radius: 50%;
   }
 
+  &--actualizando {
+    opacity: 0.5;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
   &__estado-activo {
     color: green;
     font-weight: bold;
@@ -38,6 +44,47 @@ $message-bg-color: var(--color-superficie-alt);
     font-weight: bold;
     padding: 5px;
     text-align: center;
+  }
+}
+
+.skeleton {
+  display: block;
+  width: 80%;
+  height: 14px;
+  margin: 0 auto;
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--color-superficie-alt) 25%,
+    var(--color-borde) 50%,
+    var(--color-superficie-alt) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.2s ease-in-out infinite;
+
+  &--corto {
+    width: 40%;
+  }
+
+  &--circulo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+}
+
+@keyframes skeletonShimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
   }
 }
 

@@ -43,12 +43,9 @@
       </button>
     </div>
 
-    @if (cargando()) {
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    }
-
     <app-data-table
       [dataSource]="listaData"
+      [cargando]="cargando()"
       [columns]="columns"
       [totalRegistros]="totalRegistros()"
       [pageSize]="pageSize()"

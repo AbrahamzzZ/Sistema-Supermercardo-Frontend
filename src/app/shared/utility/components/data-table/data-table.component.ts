@@ -8,10 +8,11 @@ import {
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableColumn } from './table-column';
-import { MaterialModule } from '../../../ui/material-module';
+
 import { FormatoFechaPipe } from '../../../pipes/formato-fecha.pipe';
 import { Metodos } from '../../metodos';
 import { IMAGE_DEFAULT } from '../../../../core/constants/imageDefault.const';
+import { MaterialModule } from '../../../ui/material-module';
 
 @Component({
   selector: 'app-data-table',
@@ -35,6 +36,8 @@ export class DataTableComponent {
 
   @Input() mensajeSinDatos = 'No hay datos que mostrar.';
 
+  @Input() cargando = false;
+
   @Output() editar = new EventEmitter<any>();
 
   @Output() eliminar = new EventEmitter<any>();
@@ -47,6 +50,21 @@ export class DataTableComponent {
 
   get displayedColumns(): string[] {
     return this.columns.map((column) => column.key);
+  }
+
+  // Skeleton solo en la primera carga; al paginar/filtrar se mantienen las filas previas atenuadas.
+  get mostrarSkeleton(): boolean {
+    return this.cargando && this.dataSource.data.length === 0;
+  }
+
+  private _filasSkeleton: number[] = [];
+
+  // Se cachea para no entregar un array nuevo al mat-table en cada detección de cambios.
+  get filasSkeleton(): number[] {
+    if (this._filasSkeleton.length !== this.pageSize) {
+      this._filasSkeleton = Array.from({ length: this.pageSize }, (_, i) => i);
+    }
+    return this._filasSkeleton;
   }
 
   getEstado(estado: boolean): string {
