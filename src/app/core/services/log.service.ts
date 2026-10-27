@@ -1,4 +1,5 @@
-import { HttpClient, httpResource } from '@angular/common/http';
+import { HttpClient, HttpContext, httpResource } from '@angular/common/http';
+import { OMITIR_LOADER } from '../interceptor/loader.interceptor';
 import { inject, Injectable, Signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { ILog } from '../interfaces/log';
@@ -18,7 +19,8 @@ export class LogService {
       const p = params();
       return {
         url: `${this.apiUrl}/paginacion`,
-        params: { pageNumber: p.pageNumber, pageSize: p.pageSize, filtro: p.filtro }
+        params: { pageNumber: p.pageNumber, pageSize: p.pageSize, filtro: p.filtro },
+        context: new HttpContext().set(OMITIR_LOADER, true)
       };
     });
   }
