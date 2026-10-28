@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { LoginService } from '../../../../core/services/login.service';
+import { MenuService } from '../../../../core/services/menu.service';
 import { MainLayoutComponent } from './main-layout.component';
 
 describe('MainLayoutComponent', () => {
@@ -8,8 +9,14 @@ describe('MainLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MainLayoutComponent]
-    }).compileComponents();
+      imports: [MainLayoutComponent],
+      providers: [
+        { provide: LoginService, useValue: { obtenerDatosToken: () => null } },
+        { provide: MenuService, useValue: { obtener: vi.fn() } }
+      ]
+    })
+      .overrideComponent(MainLayoutComponent, { set: { template: '', imports: [] } })
+      .compileComponents();
 
     fixture = TestBed.createComponent(MainLayoutComponent);
     component = fixture.componentInstance;
