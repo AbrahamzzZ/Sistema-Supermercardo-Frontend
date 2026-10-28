@@ -88,7 +88,9 @@ describe('CategoriaInicioComponent', () => {
         { provide: MatDialog, useValue: dialogMock },
         { provide: MatSnackBar, useValue: snackBarMock }
       ]
-    }).compileComponents();
+    })
+      .overrideComponent(CategoriaInicioComponent, { set: { template: '', imports: [] } })
+      .compileComponents();
   });
 
   function crearComponente(): void {
@@ -145,7 +147,7 @@ describe('CategoriaInicioComponent', () => {
     expect(categoriaServiceMock.eliminar).toHaveBeenCalledWith(7);
     expect(recurso.reload).toHaveBeenCalled();
     expect(snackBarMock.open).toHaveBeenCalledWith(
-      'CategorÃ­a eliminada correctamente.',
+      'Categor\u00eda eliminada correctamente.',
       'Cerrar',
       expect.objectContaining({ panelClass: ['success-snackbar'] })
     );
@@ -157,7 +159,7 @@ describe('CategoriaInicioComponent', () => {
     crearComponente();
 
     expect(snackBarMock.open).toHaveBeenCalledWith(
-      'Error al cargar las categorÃ­as.',
+      'Error al cargar las categor\u00edas.',
       'Cerrar',
       expect.objectContaining({ panelClass: ['error-snackbar'] })
     );
@@ -171,7 +173,7 @@ describe('CategoriaInicioComponent', () => {
     component.eliminar(categorias[0]);
 
     expect(snackBarMock.open).toHaveBeenCalledWith(
-      'Error al eliminar la categorÃ­a.',
+      'Error al eliminar la categor\u00eda.',
       'Cerrar',
       expect.objectContaining({ panelClass: ['error-snackbar'] })
     );

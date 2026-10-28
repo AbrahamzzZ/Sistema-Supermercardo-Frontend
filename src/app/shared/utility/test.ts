@@ -9,7 +9,7 @@ export async function createPageFixture<T>(
     imports: [component],
     providers
   })
-    .overrideComponent(component, { set: { template: '' } })
+    .overrideComponent(component, { set: { template: '', imports: [] } })
     .compileComponents();
 
   return TestBed.createComponent(component);
