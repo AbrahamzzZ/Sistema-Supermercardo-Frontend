@@ -100,7 +100,7 @@ export class FormularioProductoComponent implements OnInit, CanComponentDeactive
         this.categorias.set(resp.data);
       },
       error: (err) => {
-        this.mostrarMensaje('Error al cargar las categorías.', 'error');
+        this.mostrarMensaje(err?.message || 'Error al cargar las categorías.', 'error');
         console.error('Error al obtener las categorías:', err);
       }
     });
@@ -122,7 +122,7 @@ export class FormularioProductoComponent implements OnInit, CanComponentDeactive
         }
       },
       error: (err) => {
-        this.mostrarMensaje('Error al cargar la infomación del producto.', 'error');
+        this.mostrarMensaje(err?.message || 'Error al cargar la infomación del producto.', 'error');
         console.error(err);
       }
     });
@@ -152,8 +152,11 @@ export class FormularioProductoComponent implements OnInit, CanComponentDeactive
         next: (data) => {
           if (data.isSuccess) {
             this.salidaAutorizada.set(true);
-            this.router.navigate(['/producto'], { skipLocationChange: true })
-            .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de productos.', 'error'));
+            this.router
+              .navigate(['/producto'], { skipLocationChange: true })
+              .catch(() =>
+                this.mostrarMensaje('No se pudo navegar a la lista de productos.', 'error')
+              );
             this.mostrarMensaje(`¡Producto ${accion} exitosamente!`, 'success');
           }
         },
@@ -161,7 +164,8 @@ export class FormularioProductoComponent implements OnInit, CanComponentDeactive
           console.error(err);
           this.guardando.set(false);
           this.mostrarMensaje(
-            this.esEdicion() ? 'Error al editar el producto' : 'Error al registrar el producto',
+            err?.message ||
+              (this.esEdicion() ? 'Error al editar el producto' : 'Error al registrar el producto'),
             'error'
           );
         },
@@ -171,8 +175,9 @@ export class FormularioProductoComponent implements OnInit, CanComponentDeactive
   }
 
   regresar() {
-    this.router.navigate(['/producto'])
-    .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de productos.', 'error'));
+    this.router
+      .navigate(['/producto'])
+      .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de productos.', 'error'));
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {

@@ -85,8 +85,11 @@ export class InicioComponent implements OnInit {
     this.productoServicio.lista().subscribe({
       next: (resp: any) => {
         const productos: IProductoCategoria[] = resp.data ?? [];
+        // Solo cuenta el stock: "estado" indica si el producto se marcó como agotado, no si queda poco
         this.productosStockBajo.set(
-          productos.filter((producto) => producto.estado && producto.stock < this.stockMinimo)
+          productos
+            .filter((producto) => producto.stock < this.stockMinimo)
+            .sort((a, b) => a.stock - b.stock)
         );
       },
       error: (err) => console.error('Error al obtener el stock de productos:', err)

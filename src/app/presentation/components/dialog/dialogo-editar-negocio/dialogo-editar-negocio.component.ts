@@ -120,7 +120,10 @@ export class DialogoEditarNegocioComponent {
         error: (err) => {
           console.error(err);
           this.guardando.set(false);
-          this.mostrarMensaje('Error al editar la información del negocio.', 'error');
+          this.mostrarMensaje(
+            err?.message || 'Error al editar la información del negocio.',
+            'error'
+          );
         }
       });
     });

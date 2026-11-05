@@ -73,13 +73,15 @@ export class UsuarioInicioComponent extends BaseListComponent<IUsuarioRol> {
   }
 
   nuevo(): void {
-    this.router.navigate(['usuario/registro'])
-    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de registro.', 'error'));
+    this.router
+      .navigate(['usuario/registro'])
+      .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de registro.', 'error'));
   }
 
   editar(usuario: IUsuarioRol): void {
-    this.router.navigate(['usuario/editar', usuario.id_Usuario])
-    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de edición.', 'error'));
+    this.router
+      .navigate(['usuario/editar', usuario.id_Usuario])
+      .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de edición.', 'error'));
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {
@@ -94,7 +96,18 @@ export class UsuarioInicioComponent extends BaseListComponent<IUsuarioRol> {
   }
 
   exportarExcel(): void {
-    const datos = this.listaData.data.map((usuario) => ({
+    this.cargarTodosParaExportar((params) => this.usuarioServicio.obtenerPagina(params)).subscribe({
+      next: (registros) => this.generarExcel(registros),
+      error: (err) =>
+        this.mostrarMensaje(
+          err?.message || 'No se pudo obtener la información para exportar.',
+          'error'
+        )
+    });
+  }
+
+  private generarExcel(registros: IUsuarioRol[]): void {
+    const datos = registros.map((usuario) => ({
       ID: usuario.id_Usuario,
       Código: usuario.codigo,
       'Nombre Completo': usuario.nombre_Completo,

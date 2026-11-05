@@ -77,13 +77,15 @@ export class TransportistaInicioComponent extends BaseListComponent<ITransportis
   }
 
   nuevo(): void {
-    this.router.navigate(['transportista/registro'])
-    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de registro.', 'error'));
+    this.router
+      .navigate(['transportista/registro'])
+      .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de registro.', 'error'));
   }
 
   editar(transportista: ITransportista): void {
-    this.router.navigate(['transportista/editar', transportista.id_Transportista])
-    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de edición.', 'error'));
+    this.router
+      .navigate(['transportista/editar', transportista.id_Transportista])
+      .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de edición.', 'error'));
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {
@@ -97,8 +99,21 @@ export class TransportistaInicioComponent extends BaseListComponent<ITransportis
     });
   }
 
-  async exportarExcel(): Promise<void> {
-    const datos = this.listaData.data.map((transportista) => ({
+  exportarExcel(): void {
+    this.cargarTodosParaExportar((params) =>
+      this.transportistaServicio.obtenerPagina(params)
+    ).subscribe({
+      next: (registros) => void this.generarExcel(registros),
+      error: (err) =>
+        this.mostrarMensaje(
+          err?.message || 'No se pudo obtener la información para exportar.',
+          'error'
+        )
+    });
+  }
+
+  private async generarExcel(registros: ITransportista[]): Promise<void> {
+    const datos = registros.map((transportista) => ({
       id: transportista.id_Transportista,
       foto: Metodos.base64AImagen(transportista.foto),
       codigo: transportista.codigo,

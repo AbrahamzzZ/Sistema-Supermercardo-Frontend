@@ -116,7 +116,7 @@ export class FormularioOfertaComponent implements OnInit, CanComponentDeactive {
         this.productos.set(resp.data);
       },
       error: (err) => {
-        this.mostrarMensaje('Error al cargar los productos.', 'error');
+        this.mostrarMensaje(err?.message || 'Error al cargar los productos.', 'error');
         console.error('Error al obtener los productos:', err);
       }
     });
@@ -140,7 +140,7 @@ export class FormularioOfertaComponent implements OnInit, CanComponentDeactive {
         }
       },
       error: (err) => {
-        this.mostrarMensaje('Error al cargar la infomación de la oferta.', 'error');
+        this.mostrarMensaje(err?.message || 'Error al cargar la infomación de la oferta.', 'error');
         console.error(err);
       }
     });
@@ -175,8 +175,11 @@ export class FormularioOfertaComponent implements OnInit, CanComponentDeactive {
         next: (data) => {
           if (data.isSuccess) {
             this.salidaAutorizada.set(true);
-            this.router.navigate(['/oferta'], { skipLocationChange: true })
-            .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de ofertas.', 'error'));
+            this.router
+              .navigate(['/oferta'], { skipLocationChange: true })
+              .catch(() =>
+                this.mostrarMensaje('No se pudo navegar a la lista de ofertas.', 'error')
+              );
             this.mostrarMensaje(`¡Oferta ${accion} exitosamente!`, 'success');
           }
         },
@@ -184,7 +187,8 @@ export class FormularioOfertaComponent implements OnInit, CanComponentDeactive {
           console.error(err);
           this.guardando.set(false);
           this.mostrarMensaje(
-            this.esEdicion() ? 'Error al editar la oferta' : 'Error al registrar la oferta',
+            err?.message ||
+              (this.esEdicion() ? 'Error al editar la oferta' : 'Error al registrar la oferta'),
             'error'
           );
         },

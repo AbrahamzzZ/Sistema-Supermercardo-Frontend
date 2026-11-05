@@ -13,14 +13,43 @@
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
 
-      <button
-        class="container__excel__button"
-        mat-raised-button
-        color="accent"
-        (click)="exportarExcel()"
-      >
-        <mat-icon class="container__excel__icon">file_download</mat-icon> Exportar a Excel
-      </button>
+      <!-- Rango de fechas y exportación en la misma fila, alineados verticalmente -->
+      <div class="container__search__acciones">
+        <!-- Rango de fechas: filtra la lista y define qué se exporta (máximo 3 meses para Excel) -->
+        <mat-form-field class="container__search__fechas" appearance="outline">
+          <mat-date-range-input
+            [rangePicker]="rangoFechas"
+            [max]="hoy"
+            aria-label="Rango de fechas"
+          >
+            <input
+              matStartDate
+              placeholder="Desde"
+              [value]="desde()"
+              (dateChange)="cambiarDesde($event.value)"
+              aria-label="Fecha desde"
+            />
+            <input
+              matEndDate
+              placeholder="Hasta"
+              [value]="hasta()"
+              (dateChange)="cambiarHasta($event.value)"
+              aria-label="Fecha hasta"
+            />
+          </mat-date-range-input>
+          <mat-datepicker-toggle matIconSuffix [for]="rangoFechas"></mat-datepicker-toggle>
+          <mat-date-range-picker #rangoFechas></mat-date-range-picker>
+        </mat-form-field>
+
+        <button
+          class="container__excel__button"
+          mat-raised-button
+          color="accent"
+          (click)="exportarExcel()"
+        >
+          <mat-icon class="container__excel__icon">file_download</mat-icon> Exportar a Excel
+        </button>
+      </div>
     </div>
 
     <app-data-table

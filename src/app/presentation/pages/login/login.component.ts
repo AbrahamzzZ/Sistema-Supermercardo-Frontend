@@ -69,16 +69,14 @@ export class LoginComponent implements OnInit {
           }
         },
         error: (error) => {
-          if (error.status === 500) {
-            this.mostrarMensaje(
-              'Su usuario está inactivo. Contacte con el administrador.',
-              'error'
-            );
-          } else if (error.status === 401) {
-            this.mostrarMensaje('Correo o clave incorrecta.', 'error');
-          } else {
-            this.mostrarMensaje('Error inesperado al iniciar sesión.', 'error');
-          }
+          // 401 llega sin transformar (lo deja pasar el interceptor) y el backend explica el motivo:
+          // credenciales inválidas, usuario inactivo o campos vacíos.
+          // El resto ya viene como { status, message } desde el interceptor (sin conexión, 429, 500...).
+          const mensaje =
+            error?.status === 401
+              ? error.error?.message || 'Correo o clave incorrecta.'
+              : error?.message || 'Error inesperado al iniciar sesión.';
+          this.mostrarMensaje(mensaje, 'error');
         }
       });
     }

@@ -125,7 +125,10 @@ export class FormularioProveedorComponent implements OnInit, CanComponentDeactiv
         }
       },
       error: (err) => {
-        this.mostrarMensaje('Error al cargar la infomación del proveedor.', 'error');
+        this.mostrarMensaje(
+          err?.message || 'Error al cargar la infomación del proveedor.',
+          'error'
+        );
         console.error(err);
       }
     });
@@ -156,8 +159,11 @@ export class FormularioProveedorComponent implements OnInit, CanComponentDeactiv
         next: (data) => {
           if (data.isSuccess) {
             this.salidaAutorizada.set(true);
-            this.router.navigate(['/proveedor'], { skipLocationChange: true })
-            .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de proveedores.', 'error'));
+            this.router
+              .navigate(['/proveedor'], { skipLocationChange: true })
+              .catch(() =>
+                this.mostrarMensaje('No se pudo navegar a la lista de proveedores.', 'error')
+              );
             this.mostrarMensaje(`¡Proveedor ${accion} exitosamente!`, 'success');
           }
         },
@@ -165,7 +171,10 @@ export class FormularioProveedorComponent implements OnInit, CanComponentDeactiv
           console.error(err);
           this.guardando.set(false);
           this.mostrarMensaje(
-            this.esEdicion() ? 'Error al editar el proveedor' : 'Error al registrar el proveedor',
+            err?.message ||
+              (this.esEdicion()
+                ? 'Error al editar el proveedor'
+                : 'Error al registrar el proveedor'),
             'error'
           );
         },
@@ -175,8 +184,9 @@ export class FormularioProveedorComponent implements OnInit, CanComponentDeactiv
   }
 
   regresar() {
-    this.router.navigate(['/proveedor'])
-    .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de proveedores.', 'error'));
+    this.router
+      .navigate(['/proveedor'])
+      .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de proveedores.', 'error'));
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {

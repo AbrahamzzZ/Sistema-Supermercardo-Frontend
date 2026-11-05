@@ -93,16 +93,29 @@ export class DetalleVentaComponent implements OnInit, AfterViewInit {
 
   filtrarVenta(numeroDocumento: string) {
     this.mensajeBusqueda = '';
-    if (!numeroDocumento.trim()) return;
+    numeroDocumento = numeroDocumento.trim();
+    if (!numeroDocumento) return;
 
-    if (numeroDocumento.length != 5) {
+    if (!/^\d+$/.test(numeroDocumento)) {
       this.limpiar();
-      this.mensajeBusqueda = 'No existe ningún detalle de venta con ese número de documento.';
+      this.mensajeBusqueda = 'El número de documento solo puede contener dígitos.';
+      return;
+    }
+
+    // Se busca al teclear: los números tienen al menos 5 dígitos (00001) y desde la venta 100000 tienen más
+    if (numeroDocumento.length < 5) {
+      this.limpiar();
       return;
     }
 
     this.servicio.obtener(numeroDocumento).subscribe({
       next: (resp: any) => {
+        if (!resp?.data) {
+          this.limpiar();
+          this.mensajeBusqueda = 'No existe ninguna venta con ese número de documento.';
+          return;
+        }
+
         const venta = resp.data;
 
         this.venta.patchValue({
@@ -127,14 +140,20 @@ export class DetalleVentaComponent implements OnInit, AfterViewInit {
             const detalle = resp.data;
             this.dataSource.data = Array.isArray(detalle) ? detalle : [detalle];
           },
-          error: () => {
-            this.mostrarMensaje('Error al obtener el detalle de la venta.', 'error');
+          error: (err) => {
+            this.mostrarMensaje(
+              err?.message || 'Error al obtener el detalle de la venta.',
+              'error'
+            );
           }
         });
       },
-      error: () => {
+      error: (err) => {
         this.limpiar();
-        this.mensajeBusqueda = 'No existe ningún detalle de venta con ese número de documento.';
+        this.mensajeBusqueda =
+          err?.status === 404
+            ? 'No existe ninguna venta con ese número de documento.'
+            : err?.message || 'No se pudo consultar la venta.';
       }
     });
   }
