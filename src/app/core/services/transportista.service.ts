@@ -17,6 +17,11 @@ export class TransportistaService {
     return this.http.get<ApiResponse<ITransportista[]>>(this.apiUrl);
   }
 
+  obtenerPagina(params: ParamsPaginacion) {
+    return this.http.get<ApiResponse<ApiPaginado<ITransportista>>>(`${this.apiUrl}/paginacion`, {
+      params: { pageNumber: params.pageNumber, pageSize: params.pageSize, filtro: params.filtro }
+    });
+  }
   listaPaginada(params: Signal<ParamsPaginacion>) {
     return httpResource<ApiResponse<ApiPaginado<ITransportista>>>(() => {
       const p = params();

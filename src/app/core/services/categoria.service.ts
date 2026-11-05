@@ -18,6 +18,11 @@ export class CategoriaService {
     return this.http.get<ApiResponse<ICategoria[]>>(this.apiUrl);
   }
 
+  obtenerPagina(params: ParamsPaginacion) {
+    return this.http.get<ApiResponse<ApiPaginado<ICategoria>>>(`${this.apiUrl}/paginacion`, {
+      params: { pageNumber: params.pageNumber, pageSize: params.pageSize, filtro: params.filtro }
+    });
+  }
   listaPaginada(params: Signal<ParamsPaginacion>) {
     return httpResource<ApiResponse<ApiPaginado<ICategoria>>>(() => {
       const p = params();

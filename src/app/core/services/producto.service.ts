@@ -20,6 +20,14 @@ export class ProductoService {
     return this.http.get<ApiResponse<IProductoCategoria[]>>(this.apiUrl);
   }
 
+  obtenerPagina(params: ParamsPaginacion) {
+    return this.http.get<ApiResponse<ApiPaginado<IProductoCategoria>>>(
+      `${this.apiUrl}/paginacion`,
+      {
+        params: { pageNumber: params.pageNumber, pageSize: params.pageSize, filtro: params.filtro }
+      }
+    );
+  }
   listaPaginada(params: Signal<ParamsPaginacion>) {
     return httpResource<ApiResponse<ApiPaginado<IProductoCategoria>>>(() => {
       const p = params();
