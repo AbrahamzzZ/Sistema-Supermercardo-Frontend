@@ -98,15 +98,15 @@
         </button>
       </div>
 
-      <!-- Oferta -->
+      <!-- Oferta: se detecta sola según el producto seleccionado y la fecha de hoy -->
       <div class="venta-formulario__fila">
         <mat-form-field appearance="outline" class="form__field">
-          <mat-label>Oferta</mat-label>
+          <mat-label>Oferta vigente</mat-label>
           <input
             id="oferta"
             matInput
-            placeholder="Nombre"
-            [value]="$safeNavigationMigration(ofertaSeleccionado?.nombre_Oferta)"
+            placeholder="Sin oferta"
+            [value]="$safeNavigationMigration(ofertaAplicada?.nombre_Oferta)"
             readonly
             aria-label="Oferta"
           />
@@ -117,18 +117,13 @@
           <input
             id="descuento"
             matInput
-            placeholder="Descuento"
-            [value]="$safeNavigationMigration(ofertaSeleccionado?.descuento)"
+            placeholder="0"
+            [value]="$safeNavigationMigration(ofertaAplicada?.descuento)"
             readonly
             aria-label="Descuento"
           />
           <span matSuffix>% &nbsp;</span>
         </mat-form-field>
-
-        <button mat-raised-button color="primary" (click)="abrirModalOfertas()">
-          <mat-icon>search</mat-icon>
-          Buscar
-        </button>
       </div>
 
       <!-- PRODUCTO -->
@@ -164,7 +159,8 @@
               id="precio_Venta"
               matInput
               type="number"
-              [(ngModel)]="producto.precioVenta"
+              [value]="producto.precioVenta"
+              readonly
               aria-label="Precio_Venta"
             />
             <span matTextPrefix>$&nbsp;</span>
@@ -237,7 +233,12 @@
             Agregar producto
           </button>
 
-          <button mat-raised-button color="primary" (click)="registrarVenta()">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="registrarVenta()"
+            [disabled]="registrando"
+          >
             Registrar venta
           </button>
         </div>
