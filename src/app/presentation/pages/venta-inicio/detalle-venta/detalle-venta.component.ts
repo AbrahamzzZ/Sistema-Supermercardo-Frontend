@@ -230,6 +230,11 @@ export class DetalleVentaComponent implements OnInit, AfterViewInit {
         finalY + 12
       );
       doc.text(
+        `Descuento aplicado: $${Number.parseFloat(this.venta.value.conDescuento || 0).toFixed(2)}`,
+        100,
+        finalY + 12
+      );
+      doc.text(
         `Pagó con: $${Number.parseFloat(this.venta.value.pagaCon).toFixed(2)}`,
         12,
         finalY + 18

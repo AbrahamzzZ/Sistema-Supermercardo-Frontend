@@ -5,6 +5,7 @@ import { IVenta } from '../interfaces/venta';
 import { ApiResponse } from '../setting/api/apiResponse';
 import { IVentaRepuesta } from '../interfaces/Dto/venta/iventa-repuesta';
 import { IDetallesVenta } from '../interfaces/Dto/venta/idetalles-venta';
+import { IVentaRegistrada } from '../interfaces/Dto/venta/iventa-registrada';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class VentaService {
   private readonly apiUrl: string = environment.API_URL + 'Venta';
 
   obtenerNuevoNumeroDocumento() {
-    return this.http.get<{ numeroDocumento: string }>(`${this.apiUrl}/numero-documento`);
+    return this.http.get<ApiResponse<string>>(`${this.apiUrl}/numero-documento`);
   }
 
   obtener(documento: string) {
@@ -26,6 +27,6 @@ export class VentaService {
   }
 
   registrar(venta: IVenta) {
-    return this.http.post<ApiResponse<IVenta>>(this.apiUrl, venta);
+    return this.http.post<ApiResponse<IVentaRegistrada>>(this.apiUrl, venta);
   }
 }
