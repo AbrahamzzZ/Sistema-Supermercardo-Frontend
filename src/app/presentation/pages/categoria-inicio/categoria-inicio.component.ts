@@ -70,13 +70,15 @@ export class CategoriaInicioComponent extends BaseListComponent<ICategoria> {
   }
 
   nuevo(): void {
-    this.router.navigate(['categoria/registro'])
-    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de registro.', 'error'));
+    this.router
+      .navigate(['categoria/registro'])
+      .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de registro.', 'error'));
   }
 
   editar(categoria: ICategoria): void {
-    this.router.navigate(['categoria/editar', categoria.id_Categoria])
-    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de edición.', 'error'));
+    this.router
+      .navigate(['categoria/editar', categoria.id_Categoria])
+      .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de edición.', 'error'));
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success'): void {
@@ -90,7 +92,20 @@ export class CategoriaInicioComponent extends BaseListComponent<ICategoria> {
   }
 
   exportarExcel(): void {
-    const datos = this.listaData.data.map((categoria) => ({
+    this.cargarTodosParaExportar((params) =>
+      this.categoriaServicio.obtenerPagina(params)
+    ).subscribe({
+      next: (registros) => this.generarExcel(registros),
+      error: (err) =>
+        this.mostrarMensaje(
+          err?.message || 'No se pudo obtener la información para exportar.',
+          'error'
+        )
+    });
+  }
+
+  private generarExcel(registros: ICategoria[]): void {
+    const datos = registros.map((categoria) => ({
       ID: categoria.id_Categoria,
       Código: categoria.codigo,
       Nombre: categoria.nombre_Categoria,

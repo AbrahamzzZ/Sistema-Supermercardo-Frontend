@@ -18,6 +18,11 @@ export class ProveedorService {
     return this.http.get<ApiResponse<IProveedor[]>>(this.apiUrl);
   }
 
+  obtenerPagina(params: ParamsPaginacion) {
+    return this.http.get<ApiResponse<ApiPaginado<IProveedor>>>(`${this.apiUrl}/paginacion`, {
+      params: { pageNumber: params.pageNumber, pageSize: params.pageSize, filtro: params.filtro }
+    });
+  }
   listaPaginada(params: Signal<ParamsPaginacion>) {
     return httpResource<ApiResponse<ApiPaginado<IProveedor>>>(() => {
       const p = params();

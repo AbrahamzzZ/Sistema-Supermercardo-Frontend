@@ -29,6 +29,26 @@ $table-border-color: var(--color-borde);
       width: 100%;
     }
 
+    // Fila con el rango de fechas a la izquierda y el botón de Excel a la derecha, centrados verticalmente
+    &__acciones {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      width: 100%;
+
+      // .container__excel__button trae "bottom: 10px" (sube el botón); aquí debe quedar a la par del campo
+      .container__excel__button {
+        bottom: 0;
+        margin: 0;
+      }
+    }
+
+    &__fechas {
+      flex: 0 0 250px;
+      width: 250px;
+    }
+
     &__button {
       white-space: nowrap;
       margin: 5px;
@@ -134,6 +154,16 @@ $table-border-color: var(--color-borde);
       &__button {
         width: 100%;
       }
+
+      &__acciones {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      &__fechas {
+        flex: 1 1 auto;
+        width: 100%;
+      }
     }
 
     &__excel {
@@ -191,6 +221,44 @@ $table-border-color: var(--color-borde);
   margin-left: 0px;
   transform: translateY(-50%) translateX(0) !important;
   font-size: 14px !important;
+}
+
+// Campo de rango de fechas: caja de 36px (igual que el botón) con el contenido centrado.
+// Anula el margin-top: -11px global de .mat-mdc-form-field-flex, que lo dejaba desalineado.
+::ng-deep .container__search__fechas {
+  .mat-mdc-text-field-wrapper {
+    height: 36px !important;
+  }
+
+  .mat-mdc-form-field-flex {
+    margin-top: 0 !important;
+    height: 36px;
+    align-items: center;
+  }
+
+  .mat-mdc-form-field-infix {
+    min-height: 36px;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    display: flex;
+    align-items: center;
+  }
+
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+
+  .mat-date-range-input {
+    font-size: 14px;
+  }
+
+  .mat-datepicker-toggle .mat-mdc-icon-button {
+    --mat-icon-button-state-layer-size: 32px;
+    --mdc-icon-button-state-layer-size: 32px;
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+  }
 }
 
 ::ng-deep .container__search__input .mdc-floating-label.mdc-floating-label--float-above {

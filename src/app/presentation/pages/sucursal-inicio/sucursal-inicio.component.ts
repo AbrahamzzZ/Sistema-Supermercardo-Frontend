@@ -73,13 +73,15 @@ export class SucursalInicioComponent extends BaseListComponent<ISucursalNegocio>
   }
 
   nuevo(): void {
-    this.router.navigate(['sucursal/registro'])
-    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de registro.', 'error'));
+    this.router
+      .navigate(['sucursal/registro'])
+      .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de registro.', 'error'));
   }
 
   editar(sucursal: ISucursalNegocio): void {
-    this.router.navigate(['sucursal/editar', sucursal.id_Sucursal])
-    .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de edición.', 'error'));
+    this.router
+      .navigate(['sucursal/editar', sucursal.id_Sucursal])
+      .catch(() => this.mostrarMensaje('No se pudo abrir el formulario de edición.', 'error'));
   }
 
   verMapa(): void {
@@ -98,7 +100,20 @@ export class SucursalInicioComponent extends BaseListComponent<ISucursalNegocio>
   }
 
   exportarExcel(): void {
-    const datos = this.listaData.data.map((sucursal) => ({
+    this.cargarTodosParaExportar((params) => this.sucursalServicio.obtenerPagina(params)).subscribe(
+      {
+        next: (registros) => this.generarExcel(registros),
+        error: (err) =>
+          this.mostrarMensaje(
+            err?.message || 'No se pudo obtener la información para exportar.',
+            'error'
+          )
+      }
+    );
+  }
+
+  private generarExcel(registros: ISucursalNegocio[]): void {
+    const datos = registros.map((sucursal) => ({
       ID: sucursal.id_Sucursal,
       Código: sucursal.codigo,
       Nombres: sucursal.nombre_Sucursal,

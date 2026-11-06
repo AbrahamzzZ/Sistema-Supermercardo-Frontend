@@ -11,7 +11,7 @@ import { catchError, Observable, throwError, timeout, TimeoutError } from 'rxjs'
 import { CLAVES_STORAGE } from '../constants/storage.const';
 
 const TIEMPO_ESPERA_MS = 30000; // Tiempo máximo de espera de una petición antes de cancelarla.
-const ESTADOS_CON_MENSAJE_DEL_BACKEND = [400, 404, 409, 422];
+const ESTADOS_CON_MENSAJE_DEL_BACKEND = [400, 403, 404, 409, 422, 429];
 
 export interface IErrorHttp {
   status: number;
@@ -77,6 +77,8 @@ export class ErrorInterceptor implements HttpInterceptor {
         return 'El archivo es demasiado grande. Use una imagen más liviana.';
       case 422:
         return 'No se pudo procesar la información enviada.';
+      case 429:
+        return 'Demasiadas solicitudes. Espere unos segundos e intente nuevamente.';
       case 500:
         return 'Error interno del servidor.';
       case 502:

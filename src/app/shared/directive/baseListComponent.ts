@@ -1,6 +1,7 @@
 import { computed, Directive, effect, signal } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subject } from 'rxjs';
+import { map, Observable, of, Subject } from 'rxjs';
+import { ParamsPaginacion } from '../../core/setting/api/apiParamsPaginacion';
 import { HttpResourceRef } from '@angular/common/http';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ApiResponse } from '../../core/setting/api/apiResponse';
@@ -22,8 +23,16 @@ export abstract class BaseListComponent<T> {
   }));
 
   protected abstract readonly recurso: HttpResourceRef<ApiResponse<ApiPaginado<T>> | undefined>;
-  public readonly items = computed<T[]>(() => this.recurso.hasValue() ? (this.recurso.value()?.data.items ?? []) : (this.respuestaAnterior()?.items ?? []));
-  public readonly totalRegistros = computed(() => this.recurso.hasValue() ? (this.recurso.value()?.data.totalCount ?? 0) : (this.respuestaAnterior()?.totalCount ?? 0));
+  public readonly items = computed<T[]>(() =>
+    this.recurso.hasValue()
+      ? (this.recurso.value()?.data.items ?? [])
+      : (this.respuestaAnterior()?.items ?? [])
+  );
+  public readonly totalRegistros = computed(() =>
+    this.recurso.hasValue()
+      ? (this.recurso.value()?.data.totalCount ?? 0)
+      : (this.respuestaAnterior()?.totalCount ?? 0)
+  );
   public readonly cargando = computed(() => this.recurso.isLoading());
   public listaData = new MatTableDataSource<T>();
   private readonly filtroSubject = new Subject<string>();
@@ -63,6 +72,19 @@ export abstract class BaseListComponent<T> {
     } else {
       this.pagina.set(1);
     }
+  }
+
+  // Para exportar: pide en una sola página todos los registros que cumplen el filtro actual,
+  // no solo los de la página visible
+  protected cargarTodosParaExportar(
+    obtenerPagina: (params: ParamsPaginacion) => Observable<ApiResponse<ApiPaginado<T>>>
+  ): Observable<T[]> {
+    const total = this.totalRegistros();
+    if (total === 0) return of([]);
+
+    return obtenerPagina({ pageNumber: 1, pageSize: total, filtro: this.filtro() }).pipe(
+      map((respuesta) => respuesta.data?.items ?? [])
+    );
   }
 
   abstract get tituloExcel(): string;

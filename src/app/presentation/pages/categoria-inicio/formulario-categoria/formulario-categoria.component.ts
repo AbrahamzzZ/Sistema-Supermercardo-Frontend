@@ -87,7 +87,10 @@ export class FormularioCategoriaComponent implements OnInit, CanComponentDeactiv
         }
       },
       error: (err) => {
-        this.mostrarMensaje('Error al cargar la infomación de la categoría.', 'error');
+        this.mostrarMensaje(
+          err?.message || 'Error al cargar la infomación de la categoría.',
+          'error'
+        );
         console.error(err);
       }
     });
@@ -114,8 +117,11 @@ export class FormularioCategoriaComponent implements OnInit, CanComponentDeactiv
         next: (data) => {
           if (data.isSuccess) {
             this.salidaAutorizada.set(true);
-            this.router.navigate(['/categoria'], { skipLocationChange: true })
-            .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de categorías.', 'error'));
+            this.router
+              .navigate(['/categoria'], { skipLocationChange: true })
+              .catch(() =>
+                this.mostrarMensaje('No se pudo navegar a la lista de categorías.', 'error')
+              );
             this.mostrarMensaje(`¡Categoría ${accion} exitosamente!`, 'success');
           }
         },
@@ -123,7 +129,10 @@ export class FormularioCategoriaComponent implements OnInit, CanComponentDeactiv
           console.error(err);
           this.guardando.set(false);
           this.mostrarMensaje(
-            this.esEdicion() ? 'Error al editar la categoría' : 'Error al registrar la categoría',
+            err?.message ||
+              (this.esEdicion()
+                ? 'Error al editar la categoría'
+                : 'Error al registrar la categoría'),
             'error'
           );
         },
@@ -133,8 +142,9 @@ export class FormularioCategoriaComponent implements OnInit, CanComponentDeactiv
   }
 
   regresar() {
-    this.router.navigate(['/categoria'])
-    .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de categorías.', 'error'));
+    this.router
+      .navigate(['/categoria'])
+      .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de categorías.', 'error'));
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {

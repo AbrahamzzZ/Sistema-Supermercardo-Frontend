@@ -137,7 +137,10 @@ export class FormularioTransportistaComponent implements OnInit, CanComponentDea
         }
       },
       error: (err) => {
-        this.mostrarMensaje('Error al cargar la infomación del transportista.', 'error');
+        this.mostrarMensaje(
+          err?.message || 'Error al cargar la infomación del transportista.',
+          'error'
+        );
         console.error(err);
       }
     });
@@ -170,8 +173,11 @@ export class FormularioTransportistaComponent implements OnInit, CanComponentDea
         next: (data) => {
           if (data.isSuccess) {
             this.salidaAutorizada.set(true);
-            this.router.navigate(['/transportista'], { skipLocationChange: true })
-            .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de transportistas.', 'error'));
+            this.router
+              .navigate(['/transportista'], { skipLocationChange: true })
+              .catch(() =>
+                this.mostrarMensaje('No se pudo navegar a la lista de transportistas.', 'error')
+              );
             this.mostrarMensaje(`¡Transportista ${accion} exitosamente!`, 'success');
           }
         },
@@ -179,9 +185,10 @@ export class FormularioTransportistaComponent implements OnInit, CanComponentDea
           console.error(err);
           this.guardando.set(false);
           this.mostrarMensaje(
-            this.esEdicion()
-              ? 'Error al editar el Transportista'
-              : 'Error al registrar el Transportista',
+            err?.message ||
+              (this.esEdicion()
+                ? 'Error al editar el Transportista'
+                : 'Error al registrar el Transportista'),
             'error'
           );
         },
@@ -191,8 +198,11 @@ export class FormularioTransportistaComponent implements OnInit, CanComponentDea
   }
 
   regresar() {
-    this.router.navigate(['/transportista'])
-    .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de transportistas.', 'error'));
+    this.router
+      .navigate(['/transportista'])
+      .catch(() =>
+        this.mostrarMensaje('No se pudo navegar a la lista de transportistas.', 'error')
+      );
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {

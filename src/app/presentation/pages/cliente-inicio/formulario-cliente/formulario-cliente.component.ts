@@ -122,7 +122,7 @@ export class FormularioClienteComponent implements OnInit, CanComponentDeactive 
         }
       },
       error: (err) => {
-        this.mostrarMensaje('Error al cargar la infomación del cliente.', 'error');
+        this.mostrarMensaje(err?.message || 'Error al cargar la infomación del cliente.', 'error');
         console.error(err);
       }
     });
@@ -152,8 +152,11 @@ export class FormularioClienteComponent implements OnInit, CanComponentDeactive 
         next: (data) => {
           if (data.isSuccess) {
             this.salidaAutorizada.set(true);
-            this.router.navigate(['/cliente'], { skipLocationChange: true })
-            .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de clientes.', 'error'));
+            this.router
+              .navigate(['/cliente'], { skipLocationChange: true })
+              .catch(() =>
+                this.mostrarMensaje('No se pudo navegar a la lista de clientes.', 'error')
+              );
             this.mostrarMensaje(`¡Cliente ${accion} exitosamente!`, 'success');
           }
         },
@@ -161,7 +164,8 @@ export class FormularioClienteComponent implements OnInit, CanComponentDeactive 
           console.error(err);
           this.guardando.set(false);
           this.mostrarMensaje(
-            this.esEdicion() ? 'Error al editar el Cliente' : 'Error al registrar el Cliente',
+            err?.message ||
+              (this.esEdicion() ? 'Error al editar el Cliente' : 'Error al registrar el Cliente'),
             'error'
           );
         },
@@ -171,8 +175,9 @@ export class FormularioClienteComponent implements OnInit, CanComponentDeactive 
   }
 
   regresar() {
-    this.router.navigate(['/cliente'])
-    .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de clientes.', 'error'));
+    this.router
+      .navigate(['/cliente'])
+      .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de clientes.', 'error'));
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {

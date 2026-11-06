@@ -20,7 +20,7 @@ import { IDetalleCompra } from '../../../core/interfaces/detalle-compra';
 import { ICompra } from '../../../core/interfaces/compra';
 import { CompraService } from '../../../core/services/compra.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { LoginService } from '../../../core/services/login.service';
+import { IErrorHttp } from '../../../core/interceptor/error.interceptor';
 import { DialogoNumeroDocumentoComponent } from '../../components/dialog/dialogo-numero-documento/dialogo-numero-documento.component';
 import { ISucursal } from '../../../core/interfaces/sucursal';
 import { ModalSucursalComponent } from '../../components/modal/modal-sucursal/modal-sucursal.component';
@@ -37,7 +37,6 @@ import { MatPaginator } from '@angular/material/paginator';
 export class CompraInicioComponent implements OnInit, AfterViewInit {
   private readonly servicioCompra = inject(CompraService);
   private readonly snackBar = inject(MatSnackBar);
-  private readonly loginServicio = inject(LoginService);
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
   public hoy = new Date().toISOString().substring(0, 10);
@@ -213,12 +212,9 @@ export class CompraInicioComponent implements OnInit, AfterViewInit {
       subTotal: p.subtotal
     }));
 
-    const datosToken = this.loginServicio.obtenerDatosToken();
-
     const compra: ICompra = {
       id: 0,
       numero_Documento: this.numeroDocumento,
-      id_Usuario: Number(datosToken?.nameid),
       id_Sucursal: this.sucursalSelecionada.id_Sucursal,
       id_Proveedor: this.proveedorSeleccionado.id_Proveedor,
       id_Transportista: this.transportistaSeleccionado.id_Transportista,
@@ -227,18 +223,23 @@ export class CompraInicioComponent implements OnInit, AfterViewInit {
       detalles: detalles
     };
 
-    this.servicioCompra.registrar(compra).subscribe((response) => {
-      if (response.isSuccess) {
-        this.mostrarMensaje('¡Compra registrada exitosamente!', 'success');
-        this.dialog.open(DialogoNumeroDocumentoComponent, {
-          width: '450px',
-          data: { numeroDocumento: this.numeroDocumento }
-        });
-        this.limpiar();
-        this.obtenerNumeroDocumento();
-        this.router.navigate(['/compra']);
-      } else {
-        this.mostrarMensaje('Error al registrar la compra', 'error');
+    this.servicioCompra.registrar(compra).subscribe({
+      next: (response) => {
+        if (response.isSuccess) {
+          this.mostrarMensaje('¡Compra registrada exitosamente!', 'success');
+          this.dialog.open(DialogoNumeroDocumentoComponent, {
+            width: '450px',
+            data: { numeroDocumento: this.numeroDocumento }
+          });
+          this.limpiar();
+          this.obtenerNumeroDocumento();
+          this.router.navigate(['/compra']);
+        } else {
+          this.mostrarMensaje(response.message || 'Error al registrar la compra', 'error');
+        }
+      },
+      error: (err: IErrorHttp) => {
+        this.mostrarMensaje(err?.message || 'Error al registrar la compra', 'error');
       }
     });
   }

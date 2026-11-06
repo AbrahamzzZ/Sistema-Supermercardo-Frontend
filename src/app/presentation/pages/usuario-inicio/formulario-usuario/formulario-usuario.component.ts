@@ -107,7 +107,7 @@ export class FormularioUsuarioComponent implements OnInit, CanComponentDeactive 
         this.roles.set(resp.data);
       },
       error: (err) => {
-        this.mostrarMensaje('Error al cargar los roles.', 'error');
+        this.mostrarMensaje(err?.message || 'Error al cargar los roles.', 'error');
         console.error('Error al obtener los roles:', err);
       }
     });
@@ -129,7 +129,7 @@ export class FormularioUsuarioComponent implements OnInit, CanComponentDeactive 
         }
       },
       error: (err) => {
-        this.mostrarMensaje('Error al cargar la infomación del usuario.', 'error');
+        this.mostrarMensaje(err?.message || 'Error al cargar la infomación del usuario.', 'error');
         console.error(err);
       }
     });
@@ -159,8 +159,11 @@ export class FormularioUsuarioComponent implements OnInit, CanComponentDeactive 
         next: (data) => {
           if (data.isSuccess) {
             this.salidaAutorizada.set(true);
-            this.router.navigate(['/usuario'], { skipLocationChange: true })
-            .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de usuarios.', 'error'));
+            this.router
+              .navigate(['/usuario'], { skipLocationChange: true })
+              .catch(() =>
+                this.mostrarMensaje('No se pudo navegar a la lista de usuarios.', 'error')
+              );
             this.mostrarMensaje(`¡Usuario ${accion} exitosamente!`, 'success');
           }
         },
@@ -168,7 +171,8 @@ export class FormularioUsuarioComponent implements OnInit, CanComponentDeactive 
           console.error(err);
           this.guardando.set(false);
           this.mostrarMensaje(
-            this.esEdicion() ? 'Error al editar el usuario' : 'Error al registrar al usuario',
+            err?.message ||
+              (this.esEdicion() ? 'Error al editar el usuario' : 'Error al registrar al usuario'),
             'error'
           );
         },
@@ -178,8 +182,9 @@ export class FormularioUsuarioComponent implements OnInit, CanComponentDeactive 
   }
 
   regresar() {
-    this.router.navigate(['/usuario'])
-    .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de usuarios.', 'error'));
+    this.router
+      .navigate(['/usuario'])
+      .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de usuarios.', 'error'));
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {

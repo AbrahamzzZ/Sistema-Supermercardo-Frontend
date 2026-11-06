@@ -29,16 +29,6 @@ describe('DetalleCompraComponent', () => {
     fixture.detectChanges();
   });
 
-  it('rejects document numbers that are not five characters long', () => {
-    const component = fixture.componentInstance;
-
-    component.filtrarCompra('123');
-
-    expect(component.mensajeBusqueda).toBe('El número de documento debe tener 5 dígitos.');
-    expect(compraService.obtener).not.toHaveBeenCalled();
-    expect(component.dataSource.data).toEqual([]);
-  });
-
   it('clears the current search when the document number is blank', () => {
     const component = fixture.componentInstance;
     component.compra.patchValue({ numeroDocumento: '54321' });

@@ -94,14 +94,21 @@ export class DetalleCompraComponent implements OnInit, AfterViewInit {
   filtrarCompra(numeroDocumento: string) {
     this.mensajeBusqueda = '';
 
-    if (!numeroDocumento.trim()) {
+    numeroDocumento = numeroDocumento.trim();
+    if (!numeroDocumento) {
       this.limpiar();
       return;
     }
 
-    if (numeroDocumento.length !== 5) {
+    if (!/^\d+$/.test(numeroDocumento)) {
       this.limpiar();
-      this.mensajeBusqueda = 'El número de documento debe tener 5 dígitos.';
+      this.mensajeBusqueda = 'El número de documento solo puede contener dígitos.';
+      return;
+    }
+
+    // Se busca al teclear: los números tienen al menos 5 dígitos (00001) y desde la compra 100000 tienen más
+    if (numeroDocumento.length < 5) {
+      this.limpiar();
       return;
     }
 
@@ -137,14 +144,20 @@ export class DetalleCompraComponent implements OnInit, AfterViewInit {
             const detalle = resp.data;
             this.dataSource.data = Array.isArray(detalle) ? detalle : [detalle];
           },
-          error: () => {
-            this.mostrarMensaje('Error al obtener el detalle de la compra.', 'error');
+          error: (err) => {
+            this.mostrarMensaje(
+              err?.message || 'Error al obtener el detalle de la compra.',
+              'error'
+            );
           }
         });
       },
-      error: () => {
+      error: (err) => {
         this.limpiar();
-        this.mensajeBusqueda = 'No existe ningún detalle de compra con ese número de documento.';
+        this.mensajeBusqueda =
+          err?.status === 404
+            ? 'No existe ninguna compra con ese número de documento.'
+            : err?.message || 'No se pudo consultar la compra.';
       }
     });
   }

@@ -11,6 +11,8 @@ describe('LogInicioComponent', () => {
   let fixture: Awaited<ReturnType<typeof createPageFixture<LogInicioComponent>>>;
   let dialog: { open: ReturnType<typeof vi.fn> };
   let snackBar: { open: ReturnType<typeof vi.fn> };
+  let listaPaginada: ReturnType<typeof vi.fn>;
+  let obtenerPagina: ReturnType<typeof vi.fn>;
 
   beforeEach(async () => {
     const resource = {
@@ -22,8 +24,10 @@ describe('LogInicioComponent', () => {
     };
     dialog = { open: vi.fn() };
     snackBar = { open: vi.fn() };
+    listaPaginada = vi.fn(() => resource);
+    obtenerPagina = vi.fn();
     fixture = await createPageFixture(LogInicioComponent, [
-      { provide: LogService, useValue: { listaPaginada: vi.fn(() => resource) } },
+      { provide: LogService, useValue: { listaPaginada, obtenerPagina } },
       { provide: MatDialog, useValue: dialog },
       { provide: MatSnackBar, useValue: snackBar }
     ]);
@@ -38,6 +42,43 @@ describe('LogInicioComponent', () => {
     expect(dialog.open).toHaveBeenCalledWith(
       expect.any(Function),
       expect.objectContaining({ width: '650px', data: log })
+    );
+  });
+
+  it('loads the last 30 days by default', () => {
+    const params = listaPaginada.mock.calls[0][0]();
+
+    expect(params.desde).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(params.hasta).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    const dias = (new Date(params.hasta).getTime() - new Date(params.desde).getTime()) / 86_400_000;
+    expect(Math.round(dias)).toBe(30);
+  });
+
+  it('rejects exporting a range longer than 3 months', () => {
+    const component = fixture.componentInstance;
+    component.cambiarDesde(new Date(2026, 0, 1));
+    component.cambiarHasta(new Date(2026, 4, 1));
+
+    component.exportarExcel();
+
+    expect(obtenerPagina).not.toHaveBeenCalled();
+    expect(snackBar.open).toHaveBeenCalledWith(
+      'El rango para exportar no puede superar 3 meses. Acote las fechas.',
+      'Cerrar',
+      expect.objectContaining({ panelClass: ['error-snackbar'] })
+    );
+  });
+
+  it('asks for both dates before exporting', () => {
+    fixture.componentInstance.cambiarHasta(null);
+
+    fixture.componentInstance.exportarExcel();
+
+    expect(obtenerPagina).not.toHaveBeenCalled();
+    expect(snackBar.open).toHaveBeenCalledWith(
+      'Seleccione la fecha inicial y final para exportar el log.',
+      'Cerrar',
+      expect.objectContaining({ panelClass: ['error-snackbar'] })
     );
   });
 

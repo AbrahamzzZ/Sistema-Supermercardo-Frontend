@@ -55,6 +55,7 @@ export const routes: Routes = [
       },
       {
         path: 'usuario/registro',
+        canMatch: [RolGuard],
         canActivate: [Autenticacion],
         canDeactivate: [FormularioIncompleto],
         component: FormularioUsuarioComponent,
@@ -62,6 +63,7 @@ export const routes: Routes = [
       },
       {
         path: 'usuario/editar/:id',
+        canMatch: [RolGuard],
         canActivate: [Autenticacion],
         canDeactivate: [FormularioIncompleto],
         component: FormularioUsuarioComponent,
@@ -78,6 +80,7 @@ export const routes: Routes = [
       },
       {
         path: 'cliente/registro',
+        canMatch: [RolGuard],
         canActivate: [Autenticacion],
         canDeactivate: [FormularioIncompleto],
         component: FormularioClienteComponent,
@@ -85,6 +88,7 @@ export const routes: Routes = [
       },
       {
         path: 'cliente/editar/:id',
+        canMatch: [RolGuard],
         canActivate: [Autenticacion],
         canDeactivate: [FormularioIncompleto],
         component: FormularioClienteComponent,
@@ -101,6 +105,7 @@ export const routes: Routes = [
       },
       {
         path: 'transportista/registro',
+        canMatch: [RolGuard],
         canActivate: [Autenticacion],
         canDeactivate: [FormularioIncompleto],
         component: FormularioTransportistaComponent,
@@ -108,6 +113,7 @@ export const routes: Routes = [
       },
       {
         path: 'transportista/editar/:id',
+        canMatch: [RolGuard],
         canActivate: [Autenticacion],
         canDeactivate: [FormularioIncompleto],
         component: FormularioTransportistaComponent,
@@ -124,6 +130,7 @@ export const routes: Routes = [
       },
       {
         path: 'proveedor/registro',
+        canMatch: [RolGuard],
         canActivate: [Autenticacion],
         canDeactivate: [FormularioIncompleto],
         component: FormularioProveedorComponent,
@@ -131,6 +138,7 @@ export const routes: Routes = [
       },
       {
         path: 'proveedor/editar/:id',
+        canMatch: [RolGuard],
         canActivate: [Autenticacion],
         canDeactivate: [FormularioIncompleto],
         component: FormularioProveedorComponent,
@@ -241,6 +249,7 @@ export const routes: Routes = [
       },
       {
         path: 'sucursal/registro',
+        canMatch: [RolGuard],
         component: FormularioSucursalComponent,
         canActivate: [Autenticacion],
         canDeactivate: [FormularioIncompleto],
@@ -248,6 +257,7 @@ export const routes: Routes = [
       },
       {
         path: 'sucursal/editar/:id',
+        canMatch: [RolGuard],
         component: FormularioSucursalComponent,
         canActivate: [Autenticacion],
         canDeactivate: [FormularioIncompleto],

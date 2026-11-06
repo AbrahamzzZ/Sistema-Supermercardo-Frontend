@@ -19,6 +19,11 @@ export class SucursalService {
     return this.http.get<ApiResponse<ISucursalNegocio[]>>(this.apiUrl);
   }
 
+  obtenerPagina(params: ParamsPaginacion) {
+    return this.http.get<ApiResponse<ApiPaginado<ISucursalNegocio>>>(`${this.apiUrl}/paginacion`, {
+      params: { pageNumber: params.pageNumber, pageSize: params.pageSize, filtro: params.filtro }
+    });
+  }
   listaPaginada(params: Signal<ParamsPaginacion>) {
     return httpResource<ApiResponse<ApiPaginado<ISucursalNegocio>>>(() => {
       const p = params();

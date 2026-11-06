@@ -127,7 +127,10 @@ export class FormularioSucursalComponent implements OnInit, CanComponentDeactive
         }
       },
       error: (err) => {
-        this.mostrarMensaje('Error al cargar la infomación de la sucursal.', 'error');
+        this.mostrarMensaje(
+          err?.message || 'Error al cargar la infomación de la sucursal.',
+          'error'
+        );
         console.error(err);
       }
     });
@@ -159,8 +162,11 @@ export class FormularioSucursalComponent implements OnInit, CanComponentDeactive
         next: (data) => {
           if (data.isSuccess) {
             this.salidaAutorizada.set(true);
-            this.router.navigate(['/sucursal'], { skipLocationChange: true })
-            .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de sucursales.', 'error'));
+            this.router
+              .navigate(['/sucursal'], { skipLocationChange: true })
+              .catch(() =>
+                this.mostrarMensaje('No se pudo navegar a la lista de sucursales.', 'error')
+              );
             this.mostrarMensaje(`¡Sucursal ${accion} exitosamente!`, 'success');
           }
         },
@@ -168,7 +174,8 @@ export class FormularioSucursalComponent implements OnInit, CanComponentDeactive
           console.error(err);
           this.guardando.set(false);
           this.mostrarMensaje(
-            this.esEdicion() ? 'Error al editar la sucursal' : 'Error al registrar la sucursal',
+            err?.message ||
+              (this.esEdicion() ? 'Error al editar la sucursal' : 'Error al registrar la sucursal'),
             'error'
           );
         },
@@ -178,8 +185,9 @@ export class FormularioSucursalComponent implements OnInit, CanComponentDeactive
   }
 
   regresar() {
-    this.router.navigate(['/sucursal'])
-    .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de sucursales.', 'error'));
+    this.router
+      .navigate(['/sucursal'])
+      .catch(() => this.mostrarMensaje('No se pudo navegar a la lista de sucursales.', 'error'));
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
