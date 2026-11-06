@@ -55,9 +55,8 @@ export class FormularioProductoComponent implements OnInit, CanComponentDeactive
 
   protected readonly productoForm = form(this.productoModel, (schema) => {
     required(schema.nombre, { message: 'Ingrese un nombre.' });
-    minLength(schema.nombre, 5, { message: 'El nombre del producto es demasiado corto.' });
+    minLength(schema.nombre, 3, { message: 'El nombre del producto es demasiado corto.' });
     maxLength(schema.nombre, 30, { message: 'El nombre del producto es demasiado largo.' });
-    required(schema.descripcion, { message: 'Ingrese una descripción.' });
     minLength(schema.descripcion, 4, { message: 'Descripción demasiado corta.' });
     maxLength(schema.descripcion, 50, { message: 'Descripción demasiado larga.' });
     required(schema.categoria, { message: 'Debe seleccionar una categoría.' });
@@ -113,7 +112,7 @@ export class FormularioProductoComponent implements OnInit, CanComponentDeactive
           this.productoModel.set({
             codigo: resp.data.codigo,
             nombre: resp.data.nombre_Producto,
-            descripcion: resp.data.descripcion,
+            descripcion: resp.data.descripcion ?? '',
             categoria: resp.data.id_Categoria,
             paisOrigen: resp.data.pais_Origen,
             estado: resp.data.estado

@@ -28,7 +28,7 @@
   .form {
     display: flex;
     flex-direction: column;
-    gap: 4px; // cada campo ya reserva espacio para su mensaje de error
+    gap: 4px;
 
     &__field {
       width: 100%;

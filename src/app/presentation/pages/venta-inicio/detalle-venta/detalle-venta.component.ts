@@ -261,7 +261,7 @@ export class DetalleVentaComponent implements OnInit, AfterViewInit {
       doc.text(
         `Cambio: $${Number.parseFloat(this.venta.value.cambio).toFixed(2)}`,
         100,
-        finalY + 12
+        finalY + 18
       );
 
       // Mensaje final

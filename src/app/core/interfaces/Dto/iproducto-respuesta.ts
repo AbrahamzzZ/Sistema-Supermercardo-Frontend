@@ -1,7 +1,7 @@
 export interface IProductoRespuesta {
   id_Producto: number;
   codigo: string;
-  descripcion: string;
+  descripcion: string | null;
   nombre_Producto: string;
   id_Categoria: number;
   nombre_Categoria: string;

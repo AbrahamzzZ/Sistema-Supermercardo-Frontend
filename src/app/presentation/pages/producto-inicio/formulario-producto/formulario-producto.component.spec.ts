@@ -46,4 +46,10 @@ describe('FormularioProductoComponent', () => {
       expect(serviceMock).not.toHaveBeenCalled();
     }
   });
+
+  it('allows an empty description', () => {
+    const form = fixture.componentInstance as any;
+
+    expect(form.productoForm.descripcion().invalid()).toBe(false);
+  });
 });
