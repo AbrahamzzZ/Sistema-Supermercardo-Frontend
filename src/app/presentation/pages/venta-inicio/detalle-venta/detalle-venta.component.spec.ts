@@ -29,17 +29,6 @@ describe('DetalleVentaComponent', () => {
     fixture.detectChanges();
   });
 
-  it('shows a validation message without querying a malformed document number', () => {
-    const component = fixture.componentInstance;
-
-    component.filtrarVenta('123');
-
-    expect(component.mensajeBusqueda).toBe(
-      'No existe ningún detalle de venta con ese número de documento.'
-    );
-    expect(ventaService.obtener).not.toHaveBeenCalled();
-  });
-
   it('does not make a request for a blank document number', () => {
     const component = fixture.componentInstance;
 

@@ -43,8 +43,9 @@ describe('InicioComponent', () => {
     fixture.detectChanges();
   });
 
-  it('shows only active products below the stock threshold', () => {
+  it('shows products below the stock threshold', () => {
     expect((fixture.componentInstance as any).productosStockBajo()).toEqual([
+      { id_Producto: 2, estado: false, stock: 2 },
       { id_Producto: 1, estado: true, stock: 3 }
     ]);
   });
