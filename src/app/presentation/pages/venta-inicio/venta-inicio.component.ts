@@ -1,11 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  inject,
-  OnInit,
-  ViewChild,
-  ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -24,7 +17,6 @@ import { DialogoNumeroDocumentoComponent } from '../../components/dialog/dialogo
 import { ModalSucursalComponent } from '../../components/modal/modal-sucursal/modal-sucursal.component';
 import { ISucursal } from '../../../core/interfaces/sucursal';
 import { MaterialModule } from '../../../shared/ui/material-module';
-import { MatPaginator } from '@angular/material/paginator';
 import { IErrorHttp } from '../../../core/interceptor/error.interceptor';
 
 interface ItemCarrito {
@@ -49,7 +41,7 @@ function fechaLocalHoy(): string {
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './venta-inicio.component.scss'
 })
-export class VentaInicioComponent implements OnInit, AfterViewInit {
+export class VentaInicioComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
   private readonly servicioVenta = inject(VentaService);
@@ -74,23 +66,16 @@ export class VentaInicioComponent implements OnInit, AfterViewInit {
     'accion'
   ];
 
-  public numeroDocumento = '';
   public totalSinDescuento = 0;
-  public pagaCon = 0;
+  public pagaCon: number | null = 0;
   public cambio = 0;
   public totalConDescuento = 0;
   public montoDescuento = 0;
   public registrando = false;
   private ofertas: IOfertaProducto[] = [];
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngOnInit(): void {
-    this.obtenerNumeroDocumento();
     this.cargarOfertas();
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
   }
 
   abrirModalSucursal() {
@@ -169,70 +154,69 @@ export class VentaInicioComponent implements OnInit, AfterViewInit {
     this.router.navigate(['venta/detalle-venta']);
   }
 
-  obtenerNumeroDocumento() {
-    this.servicioVenta.obtenerNuevoNumeroDocumento().subscribe({
-      next: (resp) => {
-        this.numeroDocumento = resp.data;
-      }
-    });
-  }
-
   agregarProducto() {
-    if (this.productoSeleccionado && this.producto.cantidad > 0) {
-      if (!Number.isInteger(this.producto.cantidad)) {
-        this.mostrarMensaje('La cantidad debe ser un número entero.', 'error');
-        return;
-      }
-
-      const productoExistente = this.productosAgregados.find(
-        (item) => item.id === this.productoSeleccionado?.id_Producto
-      );
-      const cantidadExistente = productoExistente?.cantidad ?? 0;
-      const cantidad = Number(this.producto.cantidad);
-
-      if (cantidadExistente + cantidad <= this.productoSeleccionado.stock!) {
-        const precioVenta = Number(this.productoSeleccionado.precio_Venta);
-        const descuento = this.ofertaVigente(this.productoSeleccionado.id_Producto)?.descuento ?? 0;
-
-        if (productoExistente) {
-          const nuevaCantidad = cantidadExistente + cantidad;
-          const subtotal = productoExistente.precioVenta * nuevaCantidad;
-
-          productoExistente.cantidad = nuevaCantidad;
-          productoExistente.subtotal = this.redondearDinero(
-            subtotal * (1 - productoExistente.descuento / 100)
-          );
-        } else {
-          const subtotal = precioVenta * cantidad;
-          const montoDescuento = subtotal * (descuento / 100);
-
-          this.productosAgregados.push({
-            id: this.productoSeleccionado.id_Producto,
-            nombre: this.productoSeleccionado.nombre_Producto,
-            precioVenta,
-            cantidad,
-            descuento,
-            subtotal: this.redondearDinero(subtotal - montoDescuento)
-          });
-        }
-
-        this.dataSource.data = [...this.productosAgregados];
-
-        this.calcularTotal();
-        this.productoSeleccionado = null;
-        this.ofertaAplicada = null;
-        this.producto.cantidad = 0;
-        this.producto.precioVenta = 0;
-      } else {
-        this.mostrarMensaje('La cantidad acumulada supera al stock del producto.', 'error');
-      }
-    } else {
-      this.mostrarMensaje('No se acepta cantidades negativas.', 'error');
+    if (!this.productoSeleccionado) {
+      this.mostrarMensaje('Debe seleccionar un producto.', 'error');
+      return;
     }
+
+    const cantidad = Number(this.producto.cantidad);
+    if (!cantidad || cantidad <= 0) {
+      this.mostrarMensaje('La cantidad debe ser mayor que 0.', 'error');
+      return;
+    }
+
+    if (!Number.isInteger(cantidad)) {
+      this.mostrarMensaje('La cantidad debe ser un número entero.', 'error');
+      return;
+    }
+
+    const productoExistente = this.productosAgregados.find(
+      (item) => item.id === this.productoSeleccionado?.id_Producto
+    );
+    const cantidadExistente = productoExistente?.cantidad ?? 0;
+
+    if (cantidadExistente + cantidad > this.productoSeleccionado.stock!) {
+      this.mostrarMensaje('La cantidad acumulada supera al stock del producto.', 'error');
+      return;
+    }
+
+    const precioVenta = Number(this.productoSeleccionado.precio_Venta);
+    const descuento = this.ofertaVigente(this.productoSeleccionado.id_Producto)?.descuento ?? 0;
+
+    if (productoExistente) {
+      const nuevaCantidad = cantidadExistente + cantidad;
+      const subtotal = productoExistente.precioVenta * nuevaCantidad;
+
+      productoExistente.cantidad = nuevaCantidad;
+      productoExistente.subtotal = this.redondearDinero(
+        subtotal * (1 - productoExistente.descuento / 100)
+      );
+    } else {
+      const subtotal = precioVenta * cantidad;
+      const montoDescuento = subtotal * (descuento / 100);
+
+      this.productosAgregados.push({
+        id: this.productoSeleccionado.id_Producto,
+        nombre: this.productoSeleccionado.nombre_Producto,
+        precioVenta,
+        cantidad,
+        descuento,
+        subtotal: this.redondearDinero(subtotal - montoDescuento)
+      });
+    }
+
+    this.dataSource.data = [...this.productosAgregados];
+
+    this.calcularTotal();
+    this.productoSeleccionado = null;
+    this.ofertaAplicada = null;
+    this.producto.cantidad = 0;
+    this.producto.precioVenta = 0;
   }
 
-  eliminarProducto(index: number) {
-    this.productosAgregados.splice(index, 1);
+  eliminarProducto(idProducto: number) {
+    this.productosAgregados = this.productosAgregados.filter((item) => item.id !== idProducto);
     this.dataSource.data = [...this.productosAgregados];
     this.calcularTotal();
   }
@@ -263,24 +247,26 @@ export class VentaInicioComponent implements OnInit, AfterViewInit {
     return Math.round((valor + Number.EPSILON) * 100) / 100;
   }
 
+  // Mientras el cajero escribe solo se actualiza el cambio, sin mensajes
   calcularCambio() {
     this.calcularTotal();
+  }
 
-    if (!isNaN(this.pagaCon)) {
-      if (this.pagaCon < 0) {
-        this.mostrarMensaje('No se permiten valores negativos en "Paga con".', 'error');
-        this.cambio = 0;
-      } else {
-        if (this.pagaCon < this.totalConDescuento) {
-          this.mostrarMensaje('El monto ingresado en "Paga con" es insuficiente.', 'error');
-          this.cambio = 0;
-        } else {
-          this.cambio = this.redondearDinero(this.pagaCon - this.totalConDescuento);
-        }
-      }
-    } else {
+  // Se valida al salir del campo, cuando el cajero ya terminó de escribir
+  validarPago() {
+    this.calcularTotal();
+
+    if (this.pagaCon === null || String(this.pagaCon).trim() === '') {
+      return;
+    }
+
+    const pago = Number(this.pagaCon);
+    if (isNaN(pago)) {
       this.mostrarMensaje('Debe ingresar un número válido en "Paga con".', 'error');
-      this.cambio = 0;
+    } else if (pago < 0) {
+      this.mostrarMensaje('No se permiten valores negativos en "Paga con".', 'error');
+    } else if (this.productosAgregados.length > 0 && pago < this.totalConDescuento) {
+      this.mostrarMensaje('El monto ingresado en "Paga con" es insuficiente.', 'error');
     }
   }
 
@@ -341,8 +327,6 @@ export class VentaInicioComponent implements OnInit, AfterViewInit {
           data: { numeroDocumento: registrada.numero_Documento }
         });
         this.limpiar();
-        this.obtenerNumeroDocumento();
-        this.router.navigate(['/venta']);
       },
       error: (err: IErrorHttp) => {
         this.registrando = false;

@@ -70,8 +70,10 @@
   gap: 12px;
 }
 
+// Sin paginador: altura fija con scroll y encabezado fijo para ver todo el carrito
 .venta-formulario__tabla {
-  overflow-x: auto;
+  overflow: auto;
+  max-height: 420px;
 }
 
 table {
