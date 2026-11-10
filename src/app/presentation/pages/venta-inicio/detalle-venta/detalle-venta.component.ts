@@ -1,12 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import {
-  AfterViewInit,
-  Component,
-  inject,
-  OnInit,
-  ViewChild,
-  ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { VentaService } from '../../../../core/services/venta.service';
@@ -14,7 +7,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { MaterialModule } from '../../../../shared/ui/material-module';
-import { MatPaginator } from '@angular/material/paginator';
 import { NegocioService } from '../../../../core/services/negocio.service';
 
 @Component({
@@ -24,7 +16,7 @@ import { NegocioService } from '../../../../core/services/negocio.service';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './detalle-venta.component.scss'
 })
-export class DetalleVentaComponent implements OnInit, AfterViewInit {
+export class DetalleVentaComponent implements OnInit {
   public mensajeBusqueda = '';
   public venta!: FormGroup;
   public nombreNegocio = '';
@@ -43,7 +35,6 @@ export class DetalleVentaComponent implements OnInit, AfterViewInit {
     'subTotal',
     'descuento'
   ];
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngOnInit(): void {
     this.venta = this.fb.group({
@@ -85,10 +76,6 @@ export class DetalleVentaComponent implements OnInit, AfterViewInit {
     }
 
     return `data:image/png;base64,${trimmed}`;
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
   }
 
   filtrarVenta(numeroDocumento: string) {

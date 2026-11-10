@@ -163,11 +163,9 @@
             <td mat-cell *matCellDef="let element">{{ element.descuento + '%' }}</td>
           </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="columnasTabla"></tr>
+          <tr mat-header-row *matHeaderRowDef="columnasTabla; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: columnasTabla"></tr>
         </table>
-
-        <mat-paginator [pageSize]="3" [pageSizeOptions]="[3]" showFirstLastButtons></mat-paginator>
       </div>
     </form>
   </div>
