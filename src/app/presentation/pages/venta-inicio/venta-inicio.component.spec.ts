@@ -13,7 +13,6 @@ describe('VentaInicioComponent', () => {
   let snackBar: { open: ReturnType<typeof vi.fn> };
   let dialog: { open: ReturnType<typeof vi.fn> };
   let ventaService: {
-    obtenerNuevoNumeroDocumento: ReturnType<typeof vi.fn>;
     registrar: ReturnType<typeof vi.fn>;
   };
 
@@ -41,7 +40,6 @@ describe('VentaInicioComponent', () => {
     snackBar = { open: vi.fn() };
     dialog = { open: vi.fn() };
     ventaService = {
-      obtenerNuevoNumeroDocumento: vi.fn(() => of({ isSuccess: true, data: '00001' })),
       registrar: vi.fn(() =>
         of({
           isSuccess: true,

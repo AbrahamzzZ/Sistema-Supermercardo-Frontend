@@ -14,10 +14,6 @@ export class VentaService {
   private readonly http = inject(HttpClient);
   private readonly apiUrl: string = environment.API_URL + 'Venta';
 
-  obtenerNuevoNumeroDocumento() {
-    return this.http.get<ApiResponse<string>>(`${this.apiUrl}/numero-documento`);
-  }
-
   obtener(documento: string) {
     return this.http.get<ApiResponse<IVentaRepuesta>>(`${this.apiUrl}/${documento}`);
   }
