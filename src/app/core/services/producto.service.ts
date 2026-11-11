@@ -14,7 +14,7 @@ import { ParamsPaginacion } from '../setting/api/apiParamsPaginacion';
 })
 export class ProductoService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = environment.API_URL + 'Producto';
+  private readonly apiUrl: string = environment.API.admin + 'Producto';
 
   lista() {
     return this.http.get<ApiResponse<IProductoCategoria[]>>(this.apiUrl);

@@ -11,7 +11,7 @@ import { ParamsPaginacion } from '../setting/api/apiParamsPaginacion';
 })
 export class TransportistaService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = environment.API_URL + 'Transportista';
+  private readonly apiUrl: string = environment.API.admin + 'Transportista';
 
   lista() {
     return this.http.get<ApiResponse<ITransportista[]>>(this.apiUrl);

@@ -12,7 +12,7 @@ import { ParamsPaginacion } from '../setting/api/apiParamsPaginacion';
 })
 export class ProveedorService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = environment.API_URL + 'Proveedor';
+  private readonly apiUrl: string = environment.API.admin + 'Proveedor';
 
   lista() {
     return this.http.get<ApiResponse<IProveedor[]>>(this.apiUrl);

@@ -13,7 +13,7 @@ import { ParamsPaginacion } from '../setting/api/apiParamsPaginacion';
 })
 export class OfertaService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = environment.API_URL + 'Oferta';
+  private readonly apiUrl: string = environment.API.admin + 'Oferta';
 
   lista() {
     return this.http.get<ApiResponse<IOfertaProducto[]>>(this.apiUrl);

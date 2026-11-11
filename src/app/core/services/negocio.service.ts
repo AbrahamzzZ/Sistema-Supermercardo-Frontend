@@ -16,7 +16,7 @@ import { AnalisisIARequest } from '../interfaces/Dto/negocio/IA/analisisIAReques
 })
 export class NegocioService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = environment.API_URL + 'Negocio';
+  private readonly apiUrl: string = environment.API.admin + 'Negocio';
 
   obtener(id: number) {
     return this.http.get<ApiResponse<INegocio>>(`${this.apiUrl}/${id}`);

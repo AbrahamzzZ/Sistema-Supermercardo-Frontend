@@ -1,5 +1,12 @@
+const GATEWAY = 'TU_API_URL';
+
 export const environment = {
   production: false,
-  API_URL: 'TU_API_URL',
-  API_GOOGLE_MAPS: 'TU_API_KEY'
+  API: {
+    admin: GATEWAY + 'admin/',
+    auth: GATEWAY + 'auth/',
+    order: GATEWAY + 'order/',
+    inventory: GATEWAY + 'inventory/'
+  },
+  API_GOOGLE_MAPS: ''
 };

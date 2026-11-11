@@ -12,7 +12,7 @@ import { ApiPaginado } from '../setting/api/apiPaginado';
 })
 export class CategoriaService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = environment.API_URL + 'Categoria';
+  private readonly apiUrl: string = environment.API.admin + 'Categoria';
 
   lista() {
     return this.http.get<ApiResponse<ICategoria[]>>(this.apiUrl);

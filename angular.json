@@ -57,6 +57,17 @@
               "extractLicenses": false,
               "sourceMap": true
             },
+            "monolito": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "environments/environment.ts",
+                  "with": "environments/environment.monolito.ts"
+                }
+              ]
+            },
             "testing": {
               "aot": false,
               "optimization": false,
@@ -75,6 +86,9 @@
             },
             "development": {
               "buildTarget": "Frontend:build:development"
+            },
+            "monolito": {
+              "buildTarget": "Frontend:build:monolito"
             }
           },
           "defaultConfiguration": "development"

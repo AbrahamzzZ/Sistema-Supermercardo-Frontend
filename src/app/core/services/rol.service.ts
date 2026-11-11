@@ -9,7 +9,7 @@ import { ApiResponse } from '../setting/api/apiResponse';
 })
 export class RolService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = environment.API_URL + 'Rol';
+  private readonly apiUrl: string = environment.API.auth + 'Rol';
 
   lista() {
     return this.http.get<ApiResponse<IRol[]>>(this.apiUrl);
