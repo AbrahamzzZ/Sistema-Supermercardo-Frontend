@@ -1,0 +1,12 @@
+const API = 'TU_API_URL';
+
+export const environment = {
+  production: false,
+  API: {
+    admin: API,
+    auth: API,
+    order: API,
+    inventory: API
+  },
+  API_GOOGLE_MAPS: ''
+};
