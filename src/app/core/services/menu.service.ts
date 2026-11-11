@@ -9,7 +9,7 @@ import { ApiResponse } from '../setting/api/apiResponse';
 })
 export class MenuService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = environment.API_URL + 'Menu';
+  private readonly apiUrl: string = environment.API.auth + 'Menu';
 
   obtener(id: number) {
     return this.http.get<ApiResponse<IMenu[]>>(`${this.apiUrl}/${id}`);

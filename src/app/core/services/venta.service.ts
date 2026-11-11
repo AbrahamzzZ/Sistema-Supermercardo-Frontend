@@ -12,7 +12,7 @@ import { IVentaRegistrada } from '../interfaces/Dto/venta/iventa-registrada';
 })
 export class VentaService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = environment.API_URL + 'Venta';
+  private readonly apiUrl: string = environment.API.order + 'Venta';
 
   obtener(documento: string) {
     return this.http.get<ApiResponse<IVentaRepuesta>>(`${this.apiUrl}/${documento}`);

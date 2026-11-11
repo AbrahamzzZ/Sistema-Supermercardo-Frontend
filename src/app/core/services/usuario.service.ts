@@ -13,7 +13,7 @@ import { ParamsPaginacion } from '../setting/api/apiParamsPaginacion';
 })
 export class UsuarioService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = environment.API_URL + 'Usuario';
+  private readonly apiUrl: string = environment.API.auth + 'Usuario';
 
   lista() {
     return this.http.get<ApiResponse<IUsuarioRol[]>>(this.apiUrl);

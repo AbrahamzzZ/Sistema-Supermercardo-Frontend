@@ -24,7 +24,7 @@ export class LoginService {
   private cerrarDialogoSinCerrarSesion = false;
   private readonly activityEvents = ['mousemove', 'mousedown', 'keypress', 'touchstart', 'scroll'];
   private readonly resetearPorActividad = () => this.resetear();
-  private readonly apiUrl: string = environment.API_URL + 'Usuario';
+  private readonly apiUrl: string = environment.API.auth + 'Usuario';
 
   constructor() {
     this.router.events.subscribe((event) => {

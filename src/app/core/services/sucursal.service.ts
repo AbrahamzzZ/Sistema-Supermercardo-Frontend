@@ -13,7 +13,7 @@ import { ParamsPaginacion } from '../setting/api/apiParamsPaginacion';
 })
 export class SucursalService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = environment.API_URL + 'Sucursal';
+  private readonly apiUrl: string = environment.API.admin + 'Sucursal';
 
   lista() {
     return this.http.get<ApiResponse<ISucursalNegocio[]>>(this.apiUrl);

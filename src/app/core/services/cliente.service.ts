@@ -12,7 +12,7 @@ import { ApiPaginado } from '../setting/api/apiPaginado';
 })
 export class ClienteService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = environment.API_URL + 'Cliente';
+  private readonly apiUrl: string = environment.API.admin + 'Cliente';
 
   lista() {
     return this.http.get<ApiResponse<ICliente[]>>(this.apiUrl);
