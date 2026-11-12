@@ -19,6 +19,7 @@ import { Router } from '@angular/router';
 import { IDetalleCompra } from '../../../core/interfaces/detalle-compra';
 import { ICompra } from '../../../core/interfaces/compra';
 import { CompraService } from '../../../core/services/compra.service';
+import { ProductoStockService } from '../../../core/services/producto-stock.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IErrorHttp } from '../../../core/interceptor/error.interceptor';
 import { DialogoNumeroDocumentoComponent } from '../../components/dialog/dialogo-numero-documento/dialogo-numero-documento.component';
@@ -39,6 +40,7 @@ export class CompraInicioComponent implements OnInit, AfterViewInit {
   private readonly snackBar = inject(MatSnackBar);
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
+  private readonly servicioProductoStock = inject(ProductoStockService);
   public hoy = new Date().toISOString().substring(0, 10);
   public tipoComprobante = 'Boleta';
   public proveedorSeleccionado: IProveedor | null = null;
@@ -110,12 +112,24 @@ export class CompraInicioComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe((result: IProducto) => {
-      if (result) {
-        this.productoSeleccionado = result;
+      if (!result) return;
 
-        this.producto.precioCompra = Number(result.precio_Compra);
-        this.producto.precioVenta = Number(result.precio_Venta);
-      }
+      this.servicioProductoStock.completar(result).subscribe({
+        next: (producto) => {
+          this.productoSeleccionado = producto;
+          this.producto.precioCompra = Number(producto.precio_Compra) || 0;
+          this.producto.precioVenta = Number(producto.precio_Venta) || 0;
+        },
+        error: (err: IErrorHttp) => {
+          this.productoSeleccionado = result;
+          this.producto.precioCompra = 0;
+          this.producto.precioVenta = 0;
+          this.mostrarMensaje(
+            `No se pudieron cargar los precios del producto. ${err.message}`,
+            'error'
+          );
+        }
+      });
     });
   }
 
