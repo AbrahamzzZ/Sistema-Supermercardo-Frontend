@@ -59,12 +59,22 @@ Recursos de cada módulo:
 
 | Módulo | Recursos |
 |---|---|
-| `admin` | Categoria, Cliente, Negocio, Oferta, Producto, Proveedor, Sucursal, Transportista |
+| `admin` | Categoria, Cliente, Negocio, Oferta, Producto, Proveedor, Sucursal, Transportista, Log |
 | `auth` | Usuario (incluido el login), Menu, Rol |
-| `order` | Compra, Venta, Log |
+| `order` | Compra, Venta |
 | `inventory` | ProductoStock, MovimientoStock |
 
 Para cambiar entre monolito y microservicios no se modifica ningún servicio, solo la configuración con la que se ejecuta. Al agregar un servicio nuevo, usa el módulo al que pertenece el recurso: `environment.API.<modulo> + 'Recurso'`.
+
+### Diferencias entre monolito y microservicios
+
+Cada archivo de entorno indica su arquitectura en `ARQUITECTURA` (`'monolito'` o `'microservicios'`). Úsala cuando un dato esté en lugares distintos según el backend, en vez de suponerlo por la forma de la respuesta:
+
+| Dato | Monolito | Microservicios |
+|---|---|---|
+| Stock y últimos precios de un producto | Vienen en el producto (`Producto`) | Están en Inventory (`ProductoStock`); Admin no los tiene |
+
+`ProductoStockService` resuelve esa diferencia: en el monolito usa los datos del producto y **nunca** llama a `ProductoStock` (no existe ahí); en microservicios los consulta en Inventory (un producto que nunca se compró queda con stock y precios en 0). Lo usan el modal de selección de productos, la compra y la venta.
 
 ## Documentación
 

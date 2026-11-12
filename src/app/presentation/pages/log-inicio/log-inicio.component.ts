@@ -58,7 +58,6 @@ export class LogInicioComponent extends BaseListComponent<ILog> {
     new Date(this.hoy.getFullYear(), this.hoy.getMonth(), this.hoy.getDate())
   );
 
-  // Paginación + filtro de texto + rango de fechas
   private readonly paramsLog = computed<ParamsLog>(() => ({
     ...this.params(),
     desde: formatearFecha(this.desde()),
@@ -66,9 +65,9 @@ export class LogInicioComponent extends BaseListComponent<ILog> {
   }));
 
   columns: TableColumn[] = [
-    { key: 'id_Log', label: 'No.', type: 'text' },
-    { key: 'codigo', label: 'Código de Error', type: 'text' },
+    { key: 'codigo', label: 'Código', type: 'text' },
     { key: 'fecha', label: 'Fecha', type: 'date' },
+    { key: 'servicio', label: 'Servicio', type: 'text' },
     { key: 'endpoint', label: 'Endpoint', type: 'text' },
     { key: 'metodo', label: 'Método', type: 'text' },
     { key: 'nivel', label: 'Nivel', type: 'text' },
@@ -148,6 +147,7 @@ export class LogInicioComponent extends BaseListComponent<ILog> {
       Detalle: log.detalle,
       'ID Usuario': log.id_Usuario,
       Fecha: Metodos.formatearFecha(log.fecha),
+      Servicio: log.servicio ?? '',
       Endpoint: log.endpoint,
       Metodo: log.metodo,
       Nivel: log.nivel
@@ -165,6 +165,7 @@ export class LogInicioComponent extends BaseListComponent<ILog> {
       'Detalle',
       'ID Usuario',
       'Fecha',
+      'Servicio',
       'EndPoint',
       'Metodo',
       'Nivel'

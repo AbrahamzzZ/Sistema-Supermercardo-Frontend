@@ -1,5 +1,5 @@
 export interface ILog {
-  id_Log: number;
+  id_Log: number | string;
   codigo: string;
   mensaje: string;
   detalle: string;
@@ -8,4 +8,5 @@ export interface ILog {
   endpoint: string;
   metodo: string;
   nivel: string;
+  servicio?: string;
 }

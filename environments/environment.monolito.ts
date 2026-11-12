@@ -1,7 +1,10 @@
+export type Arquitectura = 'monolito' | 'microservicios';
+
 const API = 'TU_API_URL';
 
 export const environment = {
   production: false,
+  ARQUITECTURA: 'monolito' as Arquitectura,
   API: {
     admin: API,
     auth: API,

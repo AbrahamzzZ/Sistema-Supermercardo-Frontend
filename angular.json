@@ -55,12 +55,14 @@
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "baseHref": "/MinimarketEase/"
             },
             "monolito": {
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
+              "baseHref": "/MinimarketEase/",
               "fileReplacements": [
                 {
                   "replace": "environments/environment.ts",

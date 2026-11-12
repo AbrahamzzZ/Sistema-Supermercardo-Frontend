@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { IProducto } from '../../../core/interfaces/producto';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { VentaService } from '../../../core/services/venta.service';
+import { ProductoStockService } from '../../../core/services/producto-stock.service';
 import { ModalClienteComponent } from '../../components/modal/modal-cliente/modal-cliente.component';
 import { ICliente } from '../../../core/interfaces/cliente';
 import { ModalProductoComponent } from '../../components/modal/modal-producto/modal-producto.component';
@@ -47,6 +48,7 @@ export class VentaInicioComponent implements OnInit {
   private readonly servicioVenta = inject(VentaService);
   private readonly ofertaServicio = inject(OfertaService);
   private readonly snackBar = inject(MatSnackBar);
+  private readonly servicioProductoStock = inject(ProductoStockService);
   public hoy = fechaLocalHoy();
   public tipoComprobante = 'Boleta';
   public clienteSeleccionado: ICliente | null = null;
@@ -108,19 +110,27 @@ export class VentaInicioComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: IProducto) => {
-      if (result) {
-        this.productoSeleccionado = result;
+      if (!result) return;
 
-        this.producto.precioVenta = Number(result.precio_Venta);
-        this.ofertaAplicada = this.ofertaVigente(result.id_Producto);
+      this.servicioProductoStock.completar(result).subscribe({
+        next: (producto) => {
+          this.productoSeleccionado = producto;
+          this.producto.precioVenta = Number(producto.precio_Venta) || 0;
+          this.ofertaAplicada = this.ofertaVigente(producto.id_Producto);
 
-        if (this.ofertaAplicada) {
-          this.mostrarMensaje(
-            `Oferta "${this.ofertaAplicada.nombre_Oferta}": ${this.ofertaAplicada.descuento}% de descuento en "${result.nombre_Producto}".`,
-            'oferta'
-          );
+          if (this.ofertaAplicada) {
+            this.mostrarMensaje(
+              `Oferta "${this.ofertaAplicada.nombre_Oferta}": ${this.ofertaAplicada.descuento}% de descuento en "${producto.nombre_Producto}".`,
+              'oferta'
+            );
+          }
+        },
+        error: (err: IErrorHttp) => {
+          this.productoSeleccionado = null;
+          this.producto.precioVenta = 0;
+          this.mostrarMensaje(`No se pudo obtener el stock del producto. ${err.message}`, 'error');
         }
-      }
+      });
     });
   }
 
@@ -176,7 +186,7 @@ export class VentaInicioComponent implements OnInit {
     );
     const cantidadExistente = productoExistente?.cantidad ?? 0;
 
-    if (cantidadExistente + cantidad > this.productoSeleccionado.stock!) {
+    if (cantidadExistente + cantidad > (this.productoSeleccionado.stock ?? 0)) {
       this.mostrarMensaje('La cantidad acumulada supera al stock del producto.', 'error');
       return;
     }

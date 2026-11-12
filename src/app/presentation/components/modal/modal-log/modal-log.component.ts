@@ -10,7 +10,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrl: './modal-log.component.scss'
 })
 export class ModalLogComponent {
-  public data = inject<{ mensaje: string; id_Log: number }>(MAT_DIALOG_DATA);
+  public data = inject<{ mensaje: string; id_Log: number | string }>(MAT_DIALOG_DATA);
 
   copy() {
     navigator.clipboard.writeText(JSON.stringify(this.data, null, 2));
