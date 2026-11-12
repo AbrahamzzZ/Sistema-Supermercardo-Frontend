@@ -17,7 +17,7 @@ export interface ParamsLog extends ParamsPaginacion {
 })
 export class LogService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl: string = environment.API.order + 'Log';
+  private readonly apiUrl: string = environment.API.admin + 'Log';
 
   obtenerPagina(params: ParamsLog) {
     return this.http.get<ApiResponse<ApiPaginado<ILog>>>(`${this.apiUrl}/paginacion`, {
@@ -33,7 +33,7 @@ export class LogService {
     }));
   }
 
-  obtener(id: number) {
+  obtener(id: number | string) {
     return this.http.get<ILog>(`${this.apiUrl}/${id}`);
   }
 
