@@ -34,7 +34,7 @@ export class ClienteInicioComponent extends BaseListComponent<ICliente> {
     { key: 'cedula', label: 'Cédula', type: 'text' },
     { key: 'telefono', label: 'Teléfono', type: 'text' },
     { key: 'correo_Electronico', label: 'Correo Electrónico', type: 'text' },
-    { key: 'fecha_Creacion', label: 'Fecha de Registro', type: 'date' },
+    { key: 'fechaCreacion', label: 'Fecha de Registro', type: 'date' },
     { key: 'accion', label: 'Acción', type: 'actions' }
   ];
 
@@ -116,7 +116,7 @@ export class ClienteInicioComponent extends BaseListComponent<ICliente> {
       Cedula: cliente.cedula,
       Telefono: cliente.telefono,
       'Correo Electronico': cliente.correo_Electronico,
-      'Fecha Creacion': Metodos.formatearFecha(cliente.fecha_Creacion)
+      'Fecha Creacion': Metodos.formatearFecha(cliente.fechaCreacion)
     }));
 
     if (!datos || datos.length === 0) {

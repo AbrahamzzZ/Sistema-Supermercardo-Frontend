@@ -35,7 +35,7 @@ export class ProveedorInicioComponent extends BaseListComponent<IProveedor> {
     { key: 'telefono', label: 'Teléfono', type: 'text' },
     { key: 'correo_Electronico', label: 'Correo Electrónico', type: 'text' },
     { key: 'estado', label: 'Estado', type: 'status' },
-    { key: 'fecha_Creacion', label: 'Fecha de Creación', type: 'date' },
+    { key: 'fechaCreacion', label: 'Fecha de Creación', type: 'date' },
     { key: 'accion', label: 'Acción', type: 'actions' }
   ];
 
@@ -121,7 +121,7 @@ export class ProveedorInicioComponent extends BaseListComponent<IProveedor> {
       Telefono: proveedor.telefono,
       'Correo Electronico': proveedor.correo_Electronico,
       Estado: this.getEstado(proveedor.estado),
-      'Fecha Creacion': Metodos.formatearFecha(proveedor.fecha_Creacion)
+      'Fecha Creacion': Metodos.formatearFecha(proveedor.fechaCreacion)
     }));
 
     if (!datos || datos.length === 0) {

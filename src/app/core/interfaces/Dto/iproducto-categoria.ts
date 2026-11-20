@@ -7,7 +7,7 @@ export interface IProductoCategoria {
   nombre_Categoria?: string;
   pais_Origen: string;
   stock: number;
-  precio_Compra: number;
-  precio_Venta: number;
+  precioCompra: number;
+  precioVenta: number;
   estado: boolean;
 }
