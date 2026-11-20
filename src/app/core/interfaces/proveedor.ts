@@ -7,5 +7,5 @@ export interface IProveedor {
   telefono: string;
   correo_Electronico: string;
   estado: boolean;
-  fecha_Creacion?: string;
+  fechaCreacion?: string;
 }

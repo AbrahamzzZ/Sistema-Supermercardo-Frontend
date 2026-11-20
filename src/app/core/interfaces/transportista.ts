@@ -9,5 +9,5 @@ export interface ITransportista {
   foto?: string;
   imagenBase64?: string | Uint8Array | File | null;
   estado: boolean;
-  fecha_Creacion?: string;
+  fechaCreacion?: string;
 }
