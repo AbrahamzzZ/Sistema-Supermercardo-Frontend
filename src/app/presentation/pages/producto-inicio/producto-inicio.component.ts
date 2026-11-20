@@ -35,8 +35,8 @@ export class ProductoInicioComponent extends BaseListComponent<IProductoCategori
     { key: 'nombre_Categoria', label: 'Categoría', type: 'text' },
     { key: 'pais_Origen', label: 'País de Origen', type: 'text' },
     { key: 'stock', label: 'Stock Disponible', type: 'text' },
-    { key: 'precio_Compra', label: 'Precio de Compra', type: 'currency' },
-    { key: 'precio_Venta', label: 'Precio de Venta', type: 'currency' },
+    { key: 'precioCompra', label: 'Precio de Compra', type: 'currency' },
+    { key: 'precioVenta', label: 'Precio de Venta', type: 'currency' },
     { key: 'estado', label: 'Estado', type: 'stock' },
     { key: 'accion', label: 'Acción', type: 'actions' }
   ];
@@ -140,8 +140,8 @@ export class ProductoInicioComponent extends BaseListComponent<IProductoCategori
       Categoría: producto.nombre_Categoria,
       'País Origen': producto.pais_Origen,
       Stock: producto.stock,
-      'Precio Compra': producto.precio_Compra,
-      'Precio Venta': producto.precio_Venta,
+      'Precio Compra': producto.precioCompra,
+      'Precio Venta': producto.precioVenta,
       Estado: this.getEstado(producto.estado)
     }));
 
