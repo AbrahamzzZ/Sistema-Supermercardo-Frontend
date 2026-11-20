@@ -36,7 +36,7 @@ export class TransportistaInicioComponent extends BaseListComponent<ITransportis
     { key: 'correo_Electronico', label: 'Correo Electrónico', type: 'text' },
     { key: 'foto', label: 'Foto', type: 'image' },
     { key: 'estado', label: 'Estado', type: 'status' },
-    { key: 'fecha_Creacion', label: 'Fecha de Creación', type: 'date' },
+    { key: 'fechaCreacion', label: 'Fecha de Creación', type: 'date' },
     { key: 'accion', label: 'Acción', type: 'actions' }
   ];
 
@@ -123,7 +123,7 @@ export class TransportistaInicioComponent extends BaseListComponent<ITransportis
       telefono: transportista.telefono,
       correo: transportista.correo_Electronico,
       estado: this.getEstado(transportista.estado),
-      fecha: Metodos.formatearFecha(transportista.fecha_Creacion)
+      fecha: Metodos.formatearFecha(transportista.fechaCreacion)
     }));
 
     if (!datos || datos.length === 0) {
