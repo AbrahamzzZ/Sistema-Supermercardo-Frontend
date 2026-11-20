@@ -60,7 +60,11 @@ export class InicioComponent implements OnInit {
   protected readonly ofertas = signal<IOfertaProducto[]>([]);
   protected readonly productosStockBajo = signal<IProductoCategoria[]>([]);
   protected readonly nombreNegocio = signal('');
-  protected readonly contexto = signal<ContextoEstadistica>({ titulo: '', datos: '' });
+  protected readonly contexto = signal<ContextoEstadistica>({
+    clave: 'comprados',
+    titulo: '',
+    datos: ''
+  });
 
   get animationDuration(): string {
     return `${this.ofertas().length * 3}s`;
