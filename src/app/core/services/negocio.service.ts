@@ -10,6 +10,7 @@ import { ProveedorPreferido } from '../interfaces/Dto/negocio/proveedor-preferid
 import { TransportistaViaje } from '../interfaces/Dto/negocio/transportista-viaje';
 import { EmpleadoProductivo } from '../interfaces/Dto/negocio/empleado-productivo';
 import { AnalisisIARequest } from '../interfaces/Dto/negocio/IA/analisisIARequest';
+import { ResumenGraficoIARequest } from '../interfaces/Dto/negocio/IA/resumenGraficoIARequest';
 
 @Injectable({
   providedIn: 'root'
@@ -53,5 +54,10 @@ export class NegocioService {
   consultarIA(prompt: string) {
     const body: AnalisisIARequest = { prompt };
     return this.http.post<ApiResponse<string>>(`${this.apiUrl}/analisis-ia`, body);
+  }
+
+  resumirGraficoIA(claveEstadistica: string) {
+    const body: ResumenGraficoIARequest = { claveEstadistica };
+    return this.http.post<ApiResponse<string>>(`${this.apiUrl}/resumen-grafico-ia`, body);
   }
 }

@@ -23,6 +23,7 @@ export type ClaveEstadistica =
   'comprados' | 'vendidos' | 'empleados' | 'clientes' | 'proveedores' | 'transportistas';
 
 export interface ContextoEstadistica {
+  clave: ClaveEstadistica;
   titulo: string;
   datos: string;
 }
@@ -156,6 +157,7 @@ export class PanelEstadisticasComponent implements OnInit {
   constructor() {
     effect(() => {
       this.contextoCambio.emit({
+        clave: this.seleccionada().clave,
         titulo: this.seleccionada().titulo,
         datos: this.etiquetas()
           .map((etiqueta, i) => `${etiqueta}: ${this.valores()[i]}`)
